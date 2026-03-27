@@ -823,6 +823,13 @@ body {
   margin-bottom: 0.6rem;
   line-height: 1.3;
 }
+#ann-tag-tooltip .att-desc {
+  font-size: 0.75rem;
+  color: var(--c-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.6rem;
+}
+#ann-tag-tooltip .att-desc:empty { display: none; }
 #ann-tag-tooltip .att-imgs {
   display: flex;
   gap: 0.5rem;
@@ -1845,7 +1852,8 @@ function buildMaurerCarouselGroup(sid, idx) {
     const tag = document.createElement('span');
     tag.className = 'maurer-tag' + (saved.includes(code) ? ' active' : '');
     tag.textContent = code;
-    tag.title = `${row[2]}\n${row[1]}`;
+    tag.dataset.name = row[2];
+    tag.dataset.desc = row[3] || '';
     if (!READONLY) tag.onclick = () => {
       tag.classList.toggle('active');
       const freshSaved = getMaurerForSession(sid);
@@ -2120,6 +2128,7 @@ function ensureAnnTooltip() {
   t.innerHTML = `
     <div class="att-code" id="att-code"></div>
     <div class="att-name" id="att-name"></div>
+    <div class="att-desc" id="att-desc"></div>
     <div class="att-imgs" id="att-imgs"></div>`;
   document.body.appendChild(t);
 }
@@ -2128,7 +2137,8 @@ function annTagHoverOn(e, tag) {
   const code = tag.dataset.code;
   if (!code) return;
   const group = code.substring(0, 3);
-  const name = (ANN_TAXONOMY[group] || {})[code] || '';
+  const name = tag.dataset.name || (ANN_TAXONOMY[group] || {})[code] || '';
+  const desc = tag.dataset.desc || '';
 
   // LEFT: exact catalog session for this code (static)
   const sess = ANN_TO_SESSION[code] || null;
@@ -2138,6 +2148,8 @@ function annTagHoverOn(e, tag) {
 
   document.getElementById('att-code').textContent = code;
   document.getElementById('att-name').textContent = name;
+  const descEl = document.getElementById('att-desc');
+  if (descEl) descEl.textContent = desc;
 
   const imgs = document.getElementById('att-imgs');
   imgs.innerHTML = '';
@@ -2295,7 +2307,7 @@ function annBuildPanel(item, ann) {
   // MAURER T-C — multi-select
   const maurerTags = MAURER_TC.map(m => {
     const sel = (ann.maurer_tc || []).includes(m.code) ? ' sel-maurer' : '';
-    return `<span class="ann-tag${sel}" data-code="${m.code}" title="${m.name} (${m.german}) — ${m.desc}">${m.code}</span>`;
+    return `<span class="ann-tag${sel}" data-code="${m.code}" data-name="${m.name}" data-desc="${m.desc}">${m.code}</span>`;
   }).join('');
 
   // Prefill info row
