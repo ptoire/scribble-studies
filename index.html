@@ -2090,7 +2090,7 @@ function annTagHoverOn(e, tag) {
   if (own) {
     const wrap = document.createElement('div');
     wrap.innerHTML = `<img src="${BASE_URL}${own.img_url}" alt="">
-      <div class="att-img-label">dataset · random</div>`;
+      <div class="att-img-label">${code}</div>`;
     imgs.appendChild(wrap);
   }
 
@@ -2206,7 +2206,7 @@ function annBuildPanel(item, ann) {
   // WHERE (K-B) — single-select
   const whereTags = taxEntries('K-B').map(([code, name]) => {
     const sel = ann.human_where.includes(code) ? ' sel-where' : '';
-    return `<span class="ann-tag${sel}" data-code="${code}" title="${name}">${code}</span>`;
+    return `<span class="ann-tag${sel}" data-code="${code}">${code}</span>`;
   }).join('');
 
   // PRIMARY — tabbed, single-select
@@ -2216,7 +2216,7 @@ function annBuildPanel(item, ann) {
   const primaryGroups = ANN_NON_B.map((l, i) => {
     const tags = taxEntries(`K-${l}`).map(([code, name]) => {
       const sel = ann.human_primary.includes(code) ? ' sel-primary' : '';
-      return `<span class="ann-tag${sel}" data-code="${code}" title="${name}">${code}</span>`;
+      return `<span class="ann-tag${sel}" data-code="${code}">${code}</span>`;
     }).join('');
     return `<div class="ann-tags" id="ann-pg-${l}" style="display:${i===0?'flex':'none'};flex-wrap:wrap;gap:0.28rem;">${tags}</div>`;
   }).join('');
@@ -2228,7 +2228,7 @@ function annBuildPanel(item, ann) {
   const secGroups = ANN_NON_B.map((l, i) => {
     const tags = taxEntries(`K-${l}`).map(([code, name]) => {
       const sel = ann.human_secondary.includes(code) ? ' sel-secondary' : '';
-      return `<span class="ann-tag${sel}" data-code="${code}" title="${name}">${code}</span>`;
+      return `<span class="ann-tag${sel}" data-code="${code}">${code}</span>`;
     }).join('');
     return `<div class="ann-tags" id="ann-sg-${l}" style="display:${i===0?'flex':'none'};flex-wrap:wrap;gap:0.28rem;">${tags}</div>`;
   }).join('');
