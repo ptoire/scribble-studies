@@ -14,5 +14,19 @@
       "T–CBA"
     ]
   },
-  "kellogg": {}
+  "kellogg": {
+    "8c6310f9b9d0437332de1fa3e763db480fac076800739e36e58c087d80a53ba6": {
+      "human_where": [],
+      "human_primary": [
+        "K-H",
+        "K-HE"
+      ],
+      "human_secondary": [
+        "K-DC"
+      ],
+      "maurer_tc": [],
+      "status": "confirmed",
+      "updated_at": "2026-03-27T17:23:46.796Z"
+    }
+  }
 }
