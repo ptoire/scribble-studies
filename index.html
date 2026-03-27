@@ -1381,9 +1381,14 @@ async function init() {
   } catch(e) {
     ANN_INDEX_DATA = null;
   }
-  // Load server-persisted annotations (merge: localStorage takes precedence)
+  // Load persisted annotations:
+  // - localhost: from server API (which reads annotations_local.json)
+  // - public: fetch annotations_local.json directly as static file
   try {
-    const r3 = await fetch('/api/annotations');
+    const annotUrl = READONLY
+      ? BASE_URL + 'data/annotations_local.json'
+      : '/api/annotations';
+    const r3 = await fetch(annotUrl);
     if (r3.ok) {
       const srv = await r3.json();
       if (srv.maurer) {
