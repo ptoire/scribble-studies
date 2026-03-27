@@ -58,7 +58,20 @@ def _do_push():
             if result.returncode == 0:
                 print("✓  Annotations pushed to GitHub Pages")
             else:
-                print(f"✗  Push failed: {result.stderr.strip()}")
+                # Remote has new commits (e.g. manual pushes) — pull then retry
+                print(f"·  Push rejected, pulling remote changes first...")
+                subprocess.run(
+                    ["git", "pull", "--rebase", "origin", "main"],
+                    cwd=SITE_DIR, capture_output=True
+                )
+                result2 = subprocess.run(
+                    ["git", "push", "origin", "HEAD:main"],
+                    cwd=SITE_DIR, capture_output=True, text=True
+                )
+                if result2.returncode == 0:
+                    print("✓  Annotations pushed to GitHub Pages (after pull)")
+                else:
+                    print(f"✗  Push failed: {result2.stderr.strip()}")
         else:
             print("·  No annotation changes to push")
     except Exception as e:
