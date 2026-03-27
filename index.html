@@ -1,0 +1,2145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Taxonomy of Children's Scribbles — After Kellogg (1969)</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@300;400;500&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --font-display: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body: 'DM Sans', 'Helvetica Neue', sans-serif;
+  --font-mono: 'IBM Plex Mono', 'Consolas', monospace;
+
+  --c-bg: #FAFAF7;
+  --c-bg-warm: #F5F4F0;
+  --c-bg-card: #FFFFFF;
+  --c-text: #1A1A1E;
+  --c-text-secondary: #5A5A64;
+  --c-text-tertiary: #8A8A96;
+  --c-border: #D8D8DC;
+  --c-border-light: #ECECEE;
+  --c-accent: #2C3E50;
+  --c-accent-light: #3498DB;
+  --c-tag-bg: #EEEEE8;
+  --c-tag-text: #4A4A54;
+  --c-group-A: #C0392B;
+  --c-group-B: #8E44AD;
+  --c-group-C: #2980B9;
+  --c-group-D: #27AE60;
+  --c-group-E: #D35400;
+  --c-group-F: #16A085;
+  --c-group-G: #2C3E50;
+  --c-group-H: #F39C12;
+  --c-group-I: #7F8C8D;
+  --c-canvas: #FFFFFF;
+  --c-stroke: #1A1A1E;
+  --c-stroke-anim: #C0392B;
+  --c-maurer-accent: #5C3D2E;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  color: var(--c-text);
+  background: var(--c-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+   ═══════════════════════════════════════════════════════════ */
+.site-header {
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  border-bottom: 1px solid var(--c-border);
+  background: linear-gradient(180deg, #F0EDE6 0%, var(--c-bg) 100%);
+}
+.site-header h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--c-text);
+  margin-bottom: 0.5rem;
+}
+.site-header .subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 400;
+  font-style: italic;
+  color: var(--c-text-secondary);
+  margin-bottom: 1.5rem;
+}
+.site-header .meta-info {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.05em;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════════════ */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(250, 250, 247, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--c-border-light);
+  padding: 0.6rem 1rem;
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nav-btn {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+  background: var(--c-bg-card);
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.nav-btn:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+.nav-btn.active { background: var(--c-text); color: #fff; border-color: var(--c-text); }
+
+/* ═══════════════════════════════════════════════════════════
+   MAIN
+   ═══════════════════════════════════════════════════════════ */
+.main { max-width: 1400px; margin: 0 auto; padding: 0 1.5rem 4rem; }
+
+/* ═══════════════════════════════════════════════════════════
+   GROUP SECTIONS
+   ═══════════════════════════════════════════════════════════ */
+.group-section { margin-top: 3rem; padding-top: 1.5rem; }
+.group-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 2px solid var(--c-text);
+}
+.group-letter {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--c-text);
+}
+.group-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--c-text);
+}
+.group-count {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--c-text-tertiary);
+  margin-left: auto;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD GRID
+   ═══════════════════════════════════════════════════════════ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+.card {
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.25s, transform 0.25s;
+  position: relative;
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.card-canvas-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;
+  background: var(--c-canvas);
+  overflow: hidden;
+}
+.card-canvas-wrap img {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 85%; max-height: 85%;
+  object-fit: contain;
+}
+.card-canvas-wrap canvas {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover .card-canvas-wrap canvas { opacity: 1; }
+.card:hover .card-canvas-wrap img { opacity: 0.15; }
+.card-info {
+  padding: 0.6rem 0.8rem;
+  border-top: 1px solid var(--c-border-light);
+}
+.card-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.04em;
+}
+.card-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--c-text);
+  line-height: 1.3;
+  margin-top: 0.15rem;
+}
+.card-stats {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--c-text-tertiary);
+  margin-top: 0.3rem;
+}
+.card.missing { opacity: 0.4; cursor: default; }
+.card.missing .card-canvas-wrap { display: flex; align-items: center; justify-content: center; }
+.card.missing .card-canvas-wrap::after {
+  content: 'Not yet recorded';
+  position: absolute;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--c-text-tertiary);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DETAIL OVERLAY
+   ═══════════════════════════════════════════════════════════ */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 200;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  overflow-y: auto;
+  padding: 2rem;
+}
+.overlay.active { display: flex; justify-content: center; align-items: flex-start; }
+.detail-panel {
+  background: var(--c-bg-card);
+  border-radius: 6px;
+  max-width: 900px;
+  width: 100%;
+  margin: 2rem auto;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+.detail-close {
+  position: absolute;
+  top: 1rem; right: 1.5rem;
+  font-size: 1.8rem;
+  background: none; border: none;
+  cursor: pointer;
+  color: var(--c-text-secondary);
+  z-index: 10; line-height: 1;
+}
+.detail-header {
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 1px solid var(--c-border-light);
+  position: relative;
+}
+.detail-code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.detail-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  margin-top: 0.3rem;
+}
+.detail-group-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  background: var(--c-tag-bg);
+  color: var(--c-tag-text);
+  border-radius: 3px;
+  margin-top: 0.5rem;
+  letter-spacing: 0.03em;
+}
+.detail-body { display: flex; flex-wrap: wrap; }
+.detail-canvas-section {
+  flex: 1 1 400px;
+  padding: 2rem;
+  background: var(--c-bg-warm);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.detail-canvas-container {
+  background: var(--c-canvas);
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+  position: relative;
+  width: 100%; max-width: 500px;
+}
+.detail-canvas-container canvas { display: block; width: 100%; height: auto; }
+.anim-controls { display: flex; gap: 0.5rem; align-items: center; }
+.anim-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+  background: var(--c-bg-card);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.anim-btn:hover { background: var(--c-accent); color: #fff; }
+.anim-btn.active { background: var(--c-text); color: #fff; }
+.anim-progress { font-family: var(--font-mono); font-size: 0.7rem; color: var(--c-text-tertiary); }
+.detail-info-section { flex: 1 1 300px; padding: 2rem; }
+.detail-info-section h3 {
+  font-family: var(--font-display);
+  font-size: 1.1rem; font-weight: 600;
+  margin-bottom: 0.5rem; margin-top: 1.5rem;
+  color: var(--c-text);
+}
+.detail-info-section h3:first-child { margin-top: 0; }
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--c-border-light);
+  font-size: 0.85rem;
+}
+.info-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--c-text-tertiary); }
+.info-value { font-weight: 500; }
+.maurer-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+.maurer-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 0.25rem 0.5rem;
+  background: var(--c-tag-bg);
+  border: 1px solid var(--c-border-light);
+  border-radius: 3px;
+  color: var(--c-tag-text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.maurer-tag:hover { background: var(--c-maurer-accent); color: #fff; }
+.maurer-tag.active { background: var(--c-maurer-accent); color: #fff; }
+.maurer-carousel-nav { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.35rem; }
+.maurer-nav-btn { font-size: 1rem; background: none; border: 1px solid var(--c-border); border-radius: 3px; width: 1.5rem; height: 1.5rem; cursor: pointer; flex-shrink: 0; color: var(--c-text-secondary); display: flex; align-items: center; justify-content: center; padding: 0; line-height: 1; }
+.maurer-nav-btn:hover { background: var(--c-border-light); }
+.maurer-carousel-label { font-family: var(--font-mono); font-size: 0.68rem; color: var(--c-text-secondary); flex: 1; text-align: center; }
+
+/* ═══════════════════════════════════════════════════════════
+   MAURER T–C ANNOTATION SECTION
+   ═══════════════════════════════════════════════════════════ */
+.maurer-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--c-text);
+}
+.maurer-section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.maurer-section .section-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--c-text-secondary);
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+.maurer-section .section-source {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-tertiary);
+  margin-bottom: 1.8rem;
+  letter-spacing: 0.02em;
+}
+.maurer-section .section-source em {
+  font-style: italic;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+}
+.maurer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.maurer-card {
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  padding: 1.2rem;
+  transition: box-shadow 0.2s;
+}
+.maurer-card:hover { box-shadow: var(--shadow-sm); }
+.maurer-card-code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 500;
+  color: var(--c-maurer-accent);
+  letter-spacing: 0.04em;
+}
+.maurer-card-name {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 600;
+  margin-top: 0.2rem;
+}
+.maurer-card-german {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--c-text-tertiary);
+  margin-top: 0.15rem;
+  font-style: italic;
+}
+.maurer-card-desc {
+  font-size: 0.85rem;
+  color: var(--c-text-secondary);
+  margin-top: 0.5rem;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BAND 3 DOCUMENTATION SECTION
+   ═══════════════════════════════════════════════════════════ */
+.band3-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-border);
+}
+.band3-section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.band3-section .section-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--c-text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.band3-section .section-source {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-tertiary);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+.band3-section .section-note {
+  font-size: 0.82rem;
+  color: var(--c-text-secondary);
+  margin-bottom: 2rem;
+  max-width: 720px;
+  line-height: 1.6;
+  font-style: italic;
+}
+.band3-group {
+  margin-bottom: 2.5rem;
+}
+.band3-group-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--c-border);
+}
+.band3-group-code {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--c-maurer-accent);
+  letter-spacing: 0.06em;
+}
+.band3-group-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+.band3-group-en {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--c-text-secondary);
+}
+.band3-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+.band3-table th {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--c-text-tertiary);
+  text-align: left;
+  padding: 0.3rem 0.6rem;
+  border-bottom: 1px solid var(--c-border);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.band3-table td {
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid var(--c-border-light);
+  vertical-align: top;
+  line-height: 1.4;
+}
+.band3-table td:first-child {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-maurer-accent);
+  white-space: nowrap;
+  font-weight: 500;
+  padding-right: 1rem;
+}
+.band3-table td:nth-child(2) {
+  font-style: italic;
+  color: var(--c-text-secondary);
+  padding-right: 1rem;
+}
+.band3-table td:nth-child(3) {
+  color: var(--c-text);
+}
+.band3-table td:nth-child(4) {
+  font-size: 0.78rem;
+  color: var(--c-text-tertiary);
+  font-style: italic;
+}
+.band3-table tr:hover td { background: var(--c-bg-warm); }
+.band3-note-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  padding: 0.1rem 0.35rem;
+  background: #F0EDE6;
+  border: 1px solid #D8D0C8;
+  border-radius: 2px;
+  color: var(--c-text-tertiary);
+  margin-left: 0.3rem;
+  vertical-align: middle;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+.site-footer {
+  margin-top: 4rem;
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid var(--c-border);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.03em;
+}
+
+@media (max-width: 768px) {
+  .site-header { padding: 2.5rem 1rem 2rem; }
+  .card-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.8rem; }
+  .detail-body { flex-direction: column; }
+  .overlay { padding: 0.5rem; }
+  .detail-panel { margin: 0.5rem auto; }
+  .band3-table td:nth-child(4) { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANNOTATOR
+   ═══════════════════════════════════════════════════════════ */
+.annotator-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--c-text);
+}
+.annotator-section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.annotator-section .section-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--c-text-secondary);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+.annotator-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+  padding: 0.8rem 1rem;
+  background: var(--c-bg-warm);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  flex-wrap: wrap;
+}
+.ann-counter-wrap { display: flex; flex-direction: column; flex: 1; min-width: 180px; }
+.annotator-counter {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--c-text-secondary);
+}
+.annotator-progress-bar {
+  width: 100%;
+  height: 3px;
+  background: var(--c-border);
+  border-radius: 2px;
+  margin-top: 0.35rem;
+  overflow: hidden;
+}
+.annotator-progress-fill {
+  height: 100%;
+  background: #5C3D2E;
+  border-radius: 2px;
+  transition: width 0.4s;
+}
+.ann-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  padding: 0.38rem 0.85rem;
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+  background: var(--c-bg-card);
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.ann-btn:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+.ann-btn.ann-primary { background: var(--c-text); color: #fff; border-color: var(--c-text); }
+.ann-btn.ann-primary:hover { background: #5C3D2E; border-color: #5C3D2E; }
+.ann-btn.ann-export { color: #5C3D2E; border-color: #5C3D2E; }
+.ann-btn.ann-export:hover { background: #5C3D2E; color: #fff; }
+.annotator-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.annotator-image-panel {
+  position: sticky;
+  top: 4rem;
+  background: var(--c-bg-warm);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.annotator-img-wrap {
+  width: 100%;
+  background: var(--c-canvas);
+  border: 1px solid var(--c-border);
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 220px;
+  overflow: hidden;
+}
+.annotator-img-wrap img {
+  max-width: 100%;
+  max-height: 380px;
+  object-fit: contain;
+  display: block;
+}
+.annotator-img-meta { width: 100%; text-align: center; }
+.annotator-img-code {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.06em;
+}
+.annotator-img-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.15rem;
+  line-height: 1.2;
+}
+.annotator-img-group {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--c-text-secondary);
+  margin-top: 0.1rem;
+}
+.ann-status-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+  margin-top: 0.5rem;
+}
+.ann-status-badge.s-unconfirmed { background: #F5F0E8; color: #8A6030; border: 1px solid #DDD0B8; }
+.ann-status-badge.s-confirmed   { background: #E8F5EC; color: #2E7040; border: 1px solid #B8DCC0; }
+.ann-status-badge.s-modified    { background: #EBF0F8; color: #2A4070; border: 1px solid #B8C8E0; }
+.annotator-panel {
+  background: var(--c-bg-card);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.ann-section {
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--c-border-light);
+}
+.ann-section:last-child { border-bottom: none; }
+.ann-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 500;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.55rem;
+}
+.ann-section-label .ann-hint {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.78rem;
+  margin-left: 0.4rem;
+}
+.ann-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.28rem;
+}
+.ann-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 0.22rem 0.48rem;
+  background: var(--c-tag-bg);
+  border: 1px solid var(--c-border-light);
+  border-radius: 3px;
+  color: var(--c-tag-text);
+  cursor: pointer;
+  transition: all 0.12s;
+  white-space: nowrap;
+}
+.ann-tag:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
+.ann-tag.sel-where     { background: #27AE60; color: #fff; border-color: #27AE60; }
+.ann-tag.sel-primary   { background: var(--c-text); color: #fff; border-color: var(--c-text); }
+.ann-tag.sel-secondary { background: #2980B9; color: #fff; border-color: #2980B9; }
+.ann-tag.sel-maurer    { background: #5C3D2E; color: #fff; border-color: #5C3D2E; }
+.ann-macro-tabs {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+.ann-macro-tab {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  padding: 0.18rem 0.45rem;
+  border: 1px solid var(--c-border);
+  border-radius: 2px;
+  background: var(--c-bg-warm);
+  color: var(--c-text-secondary);
+  cursor: pointer;
+  transition: all 0.1s;
+}
+.ann-macro-tab:hover { background: var(--c-border); }
+.ann-macro-tab.active { background: var(--c-text); color: #fff; border-color: var(--c-text); }
+.ann-save-bar {
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--c-bg-warm);
+  border-top: 2px solid var(--c-border-light);
+}
+.ann-save-feedback {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #2E7040;
+  margin-left: auto;
+}
+@media (max-width: 900px) {
+  .annotator-body { grid-template-columns: 1fr; }
+  .annotator-image-panel { position: static; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>Visual Taxonomy of Children's Scribbles</h1>
+  <p class="subtitle">After Rhoda Kellogg (1969), with spatial arrangement annotations following Maurer &amp; Riboni (2010/2016)</p>
+  <p class="meta-info">104 taxonomic units &middot; 9 morphological groups &middot; 16 spatial arrangement categories (T–C, Band 3) &middot; Recorded March 2026</p>
+</header>
+
+<nav class="nav-bar" id="nav"></nav>
+
+<main class="main" id="main"></main>
+
+<div class="overlay" id="overlay">
+  <div class="detail-panel" id="detail-panel"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   DATA — KELLOGG
+   ═══════════════════════════════════════════════════════════ */
+const GROUP_ORDER = [
+  "Basic Scribbles", "Placement Patterns", "Emergent Diagrams",
+  "Diagrams", "Combines", "Aggregates", "Mandalas", "Suns", "Radials"
+];
+const GROUP_LETTERS = {
+  "Basic Scribbles":"A","Placement Patterns":"B","Emergent Diagrams":"C",
+  "Diagrams":"D","Combines":"E","Aggregates":"F","Mandalas":"G","Suns":"H","Radials":"I"
+};
+
+const FULL_TAXONOMY = {
+  "K-A":{"01":"Dot","02":"Single Vertical Line","03":"Single Horizontal Line",
+    "04":"Single Diagonal Line","05":"Single Curved Line","06":"Multiple Vertical Lines",
+    "07":"Multiple Horizontal Lines","08":"Multiple Diagonal Lines","09":"Multiple Curved Lines",
+    "10":"Roving Open Line","11":"Roving Enclosing Line","12":"Zigzag / Waving Line",
+    "13":"Single Loop Line","14":"Multiple Loop Line","15":"Spiral Line",
+    "16":"Multi-Line Overlaid Circle","17":"Multi-Line Circumference Circle",
+    "18":"Circular Line Spread Out","19":"Single Crossed Circle","20":"Imperfect Circle"},
+  "K-B":{"01":"Overall Coverage","02":"Centered","03":"Spaced Border","04":"Vertical Half",
+    "05":"Horizontal Half","06":"Two-Sided Balance","07":"Diagonal Half","08":"Extended Diagonal",
+    "09":"Diagonal Axis","10":"Two-Thirds Division","11":"Quarter Page","12":"One-Corner Fan",
+    "13":"Two-Corner Arc","14":"Three-Corner Arc","15":"Two-Corner Pyramid",
+    "16":"Across the Page","17":"Base-Line Fan"},
+  "K-C":{"01":"Multiple Line Crossings","02":"Multiple Line Crosses","03":"Small Crossings",
+    "04":"Criss-Crossing Lines","05":"Parallel Line Crosses","06":"Multicrossed + T-Cross",
+    "07":"Added Line Crossings","08":"Squares from Crossings","09":"Ladder Cross Squares",
+    "10":"Border / Base / Sky Lines","11":"Implied Square","12":"Centeredness Markings",
+    "13":"Implied Circle","14":"Concentric Markings","15":"Implied Odd Shape",
+    "16":"Implied Triangle","17":"Pre-Diagrams"},
+  "K-D":{"01":"Greek Cross","02":"Square / Rectangle","03":"Circle / Oval",
+    "04":"Triangular Shape","05":"Odd Shape","06":"Diagonal Cross"},
+  "K-E":{"01":"Cross + Square / Circle / Odd","02":"Greek + Diagonal Cross","03":"Divided Square",
+    "04":"Two Squares","05":"Square + Circle / Odd","06":"Two Circles","07":"Triangle + Other",
+    "08":"Odd Shape + Circles","09":"Two Odd Shapes"},
+  "K-F":{"01":"Circles Only","02":"Squares Only","03":"Crosses + Circles + Squares",
+    "04":"Odd Shapes Only","05":"Square + Odd Shapes","06":"Circles + Odd Shapes",
+    "07":"Multilined Areas","08":"Multicrossed Areas","09":"Three Diagrams Combined"},
+  "K-G":{"01":"One-Line Center Crossing","02":"Multi Half-Crossed Circle",
+    "03":"Multi Crossed Circle","04":"Mandaloid Scribblings","05":"Mandaloid Structuring",
+    "06":"Cross Mandalas","07":"Cross + Square Mandalas","08":"Cross + Circle / Odd Mandalas",
+    "09":"Cross + Circle + Square Mandalas","10":"Concentric Mandalas","11":"Little Mandalas",
+    "12":"Imperfect Mandalas"},
+  "K-H":{"01":"Pre-Sun Scribblings","02":"Attempted Suns","03":"Suns with Center Marks",
+    "04":"Clear-Center Suns","05":"Sun Faces","06":"Sun Humans","07":"Suns in Aggregates",
+    "08":"Suns with Loop Rays","09":"Suns with Other Rays","10":"Sun Designs","11":"Enclosed Suns"},
+  "K-I":{"01":"Inherent Radials","02":"Lines at a Point","03":"Circumference Marks",
+    "04":"Lines from Point","05":"Complete Radials","06":"Radials in Aggregates","07":"Radial Designs"},
+};
+
+const GROUP_FOR_PREFIX = {
+  "K-A":"Basic Scribbles","K-B":"Placement Patterns","K-C":"Emergent Diagrams",
+  "K-D":"Diagrams","K-E":"Combines","K-F":"Aggregates","K-G":"Mandalas","K-H":"Suns","K-I":"Radials"
+};
+
+/* ═══════════════════════════════════════════════════════════
+   DATA — MAURER T–C SPATIAL ARRANGEMENTS
+   Source: Maurer, D., & Riboni, C. (2010/2016).
+   Wie Bilder «entstehen». Band 3: Beschreibende Methode.
+   Peter Lang. (T–C: Anordnungen, pp. V–XXII)
+   These 16 categories cover arrangements of forms relative
+   to each other (T–CA) and to the drawing surface (T–CB).
+   Used here for interactive annotation of recorded sessions.
+   ═══════════════════════════════════════════════════════════ */
+const MAURER_TC = [
+  {
+    code: "T-CAA", german: "Übereinander",
+    name: "Superimposition",
+    desc: "One form placed on top of another, partially or fully covering it."
+  },
+  {
+    code: "T-CAB", german: "Überschneiden",
+    name: "Intersection",
+    desc: "Two forms cross each other, creating a shared zone where contours meet."
+  },
+  {
+    code: "T-CAC", german: "Aneinander",
+    name: "Adjacency",
+    desc: "Two forms touch at their borders without overlapping or crossing."
+  },
+  {
+    code: "T-CAD", german: "Nebeneinander",
+    name: "Juxtaposition",
+    desc: "Forms placed near each other with visible space between them; not touching."
+  },
+  {
+    code: "T-CAE", german: "Ineinander",
+    name: "Containment",
+    desc: "One form placed entirely within another."
+  },
+  {
+    code: "T-CAF", german: "Aussparung",
+    name: "Gap / Avoidance",
+    desc: "A space is left around a form, as if the surrounding marks deliberately avoid it."
+  },
+  {
+    code: "T-CAG", german: "Anpassung",
+    name: "Adaptation",
+    desc: "One form adjusts its shape or trajectory in response to an existing form."
+  },
+  {
+    code: "T-CAH", german: "Gegenseitige Ausrichtung",
+    name: "Shared Orientation",
+    desc: "Two or more forms aligned along the same implicit axis, even without touching."
+  },
+  {
+    code: "T-CAI", german: "Streuung",
+    name: "Scattering",
+    desc: "Forms distributed across the surface without a visible organizing principle."
+  },
+  {
+    code: "T-CAK", german: "Reihenbildung",
+    name: "Row Formation",
+    desc: "Forms arranged in sequence along a direction, producing a linear series."
+  },
+  {
+    code: "T-CAL", german: "Parallele Anordnung",
+    name: "Parallel Arrangement",
+    desc: "Forms running in the same direction at approximately equal intervals."
+  },
+  {
+    code: "T-CAM", german: "Rechtwinklige Anordnung",
+    name: "Orthogonal Arrangement",
+    desc: "Forms organized according to horizontal and vertical axes, producing a grid-like structure."
+  },
+  {
+    code: "T-CAN", german: "Konzentrische Anordnung",
+    name: "Concentric Arrangement",
+    desc: "Forms sharing the same center, distributed at increasing distances from it."
+  },
+  {
+    code: "T-CAO", german: "Spiegelsymmetrie",
+    name: "Mirror Symmetry",
+    desc: "Forms reflected across an axis — left/right or top/bottom. Distinct from rotational symmetry."
+  },
+  {
+    code: "T-CAP", german: "Proportionen",
+    name: "Proportional Contrast",
+    desc: "A visible and intentional size relation between forms — one is markedly larger or smaller."
+  },
+  {
+    code: "T-CBA", german: "Platzierungsmuster",
+    name: "Placement Pattern",
+    desc: "The position of the drawing as a whole on the page surface — centred, marginal, distributed, etc."
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   DATA — BAND 3 COMPLETE DESCRIPTIVE CATALOGUE
+   Source: Maurer, D., & Riboni, C. (2010/2016).
+   Wie Bilder «entstehen». Band 3: Beschreibende Methode.
+   Peter Lang.
+   German originals extracted directly from the volume.
+   English translations by the author of this site.
+   Notes marked [interp.] are interpretive glosses by the
+   author and are not present in the original text.
+   ═══════════════════════════════════════════════════════════ */
+const BAND3_GROUPS = [
+  {
+    code: "T–AA", german: "Ohne Formdifferenzierung", english: "Without form differentiation",
+    note: "Undifferentiated marks with no identifiable form. [interp.]",
+    rows: []
+  },
+  {
+    code: "T–AB", german: "Einzelformen I", english: "Individual Forms I — with approximate line direction",
+    note: "Marks with a general orientation but not yet controlled as differentiated forms. Corresponds roughly to Kellogg's gross-motor Basic Scribbles. [interp.]",
+    rows: [
+      ["T–ABA","Bewegungen mit Richtungsänderungen","Movements with changes of direction",""],
+      ["T–ABB","Kreisende Bewegung","Circular / rotating movement",""],
+      ["T–ABC","Pendelbewegung","Pendular movement",""],
+      ["T–ABD","Striche","Strokes",""],
+      ["T–ABE","Schläge","Hits / impact marks",""],
+      ["T–ABF","Einzelformen I (andere)","Individual Forms I (other)",""],
+    ]
+  },
+  {
+    code: "T–ACA", german: "Offene Einzelformen", english: "Open individual forms — with differentiated line direction",
+    note: "",
+    rows: [
+      ["T–ACAA","Freie Linienführung","Free line / freely drawn line",""],
+      ["T–ACAB","Gerade","Straight line",""],
+      ["T–ACAC","Punkt","Point / dot",""],
+      ["T–ACADA","Zickzacklinie, Wellenlinie, Schleifenlinie u.E.","Zigzag, wavy, loop line, etc.",""],
+      ["T–ACADB","Linie mit Unterbrechungen","Line with interruptions",""],
+      ["T–ACADC","Offene gegliederte Linien (andere)","Open articulated lines (other)",""],
+      ["T–ACAE","Spirale","Spiral",""],
+      ["T–ACAF","Linienfragmente","Line fragments",""],
+      ["T–ACAG","Offene Einzelformen (andere)","Open individual forms (other)",""],
+      ["T–ACAH","Hilfskategorie (Anteil Gerade)","Auxiliary: proportion of straight lines","aux."],
+    ]
+  },
+  {
+    code: "T–ACB", german: "Geschlossene Einzelformen", english: "Closed individual forms",
+    note: "",
+    rows: [
+      ["T–ACBAA","Runde-eckige geschlossene Einzelformen (unspezifische)","Round-angular closed forms (unspecific)",""],
+      ["T–ACBAB","Runde-eckige geschlossene Einzelformen (andere)","Round-angular closed forms (other)",""],
+      ["T–ACBBA","Runde geschlossene Einzelformen (unspezifische)","Round closed forms (unspecific)",""],
+      ["T–ACBBB","Oval","Oval",""],
+      ["T–ACBBC","Kreis","Circle",""],
+      ["T–ACBBD","Runde geschlossene Einzelformen (andere)","Round closed forms (other)",""],
+      ["T–ACBCA","Eckige geschlossene Einzelformen (unspezifische)","Angular closed forms (unspecific)",""],
+      ["T–ACBCB","Trapez","Trapezoid",""],
+      ["T–ACBCC","Rechteck","Rectangle",""],
+      ["T–ACBCD","Quadrat","Square",""],
+      ["T–ACBCE","Dreieck","Triangle",""],
+      ["T–ACBCF","Vieleck","Polygon",""],
+      ["T–ACBCG","Eckige geschlossene Einzelformen (andere)","Angular closed forms (other)",""],
+      ["T–ACBD","Geschlossene Einzelformen (andere)","Closed individual forms (other)",""],
+    ]
+  },
+  {
+    code: "T–AD", german: "Zusammensetzungen", english: "Compositions",
+    note: "\"Vorformen\" = precursor configurations not yet fully stabilized; \"ausformulierte\" = fully articulated instances. [interp.]",
+    rows: [
+      ["T–ADA","Verbindungen","Connections / junctions",""],
+      ["T–ADBA","Gebilde (Vorformen)","Configurations (precursors)",""],
+      ["T–ADBB","Gebilde (ausformulierte)","Configurations (fully formed)",""],
+      ["T–ADCA","Kombinationen (aus einer Einzelform)","Combinations (from one form)",""],
+      ["T–ADCB","Kombinationen (aus zwei Einzelformen)","Combinations (from two forms)",""],
+      ["T–ADCC","Komplexe","Complexes",""],
+      ["T–ADDA","Strukturen (Vorformen)","Structures (precursors)",""],
+      ["T–ADDB","Strukturen (ausformulierte)","Structures (fully formed)",""],
+      ["T–ADEA","Muster (Vorformen)","Patterns (precursors)",""],
+      ["T–ADEB","Muster (ausformulierte)","Patterns (fully formed)",""],
+      ["T–ADEC","Mandalas","Mandalas",""],
+      ["T–ADF","Zusammensetzungen (andere)","Compositions (other)",""],
+      ["T–ADGA","Hilfskategorie (Kombinationen aus einer Einzelform)","Auxiliary: combinations from one form","aux."],
+      ["T–ADGB","Hilfskategorie (Kombinationen aus zwei Einzelformen)","Auxiliary: combinations from two forms","aux."],
+      ["T–ADGC","Hilfskategorie (Komplexe)","Auxiliary: complexes","aux."],
+      ["T–ADGD","Hilfskategorie (geometrische Gliederungen)","Auxiliary: geometric articulations","aux."],
+      ["T–ADGE","Hilfskategorie (Umfeld Mandalas)","Auxiliary: mandala environment","aux."],
+    ]
+  },
+  {
+    code: "T–AE", german: "Häufig zitierte Formen", english: "Frequently cited forms",
+    note: "",
+    rows: [
+      ["T–AEA","Hakenartige","Hook-like forms",""],
+      ["T–AEB","Tropfenartige","Drop-like forms",""],
+      ["T–AEC","Frühe rechtwinklige Linienpaare","Early right-angle line pairs",""],
+      ["T–AED","Frühe rechtwinklige Linienstrukturen","Early right-angle line structures",""],
+      ["T–AEE","Frühe radiale Linienanordnungen","Early radial line arrangements",""],
+      ["T–AEF","Geschlossene Form mit Einschlüssen","Closed form with inclusions",""],
+      ["T–AEG","Zentralkörper mit einem Fortsatz","Central body with one extension",""],
+      ["T–AEH","Zentralkörper mit gerichteten Fortsätzen","Central body with directed extensions",""],
+      ["T–AEI","Zentralkörper mit radial verteilten Fortsätzen","Central body with radially distributed extensions",""],
+      ["T–AEK","Offenes Rechteck","Open rectangle",""],
+      ["T–AEL","Häufig zitierte Formen (Entsprechungen)","Frequently cited forms (correspondences)",""],
+      ["T–AEM","Hilfskategorie (Vorläufer rechtwinkliger Linienpaare)","Auxiliary: precursors of right-angle line pairs","aux."],
+    ]
+  },
+  {
+    code: "T–AF", german: "Formale Ganzheiten (andere Aspekte)", english: "Formal wholes (other aspects)",
+    note: "Residual category for form-level observations not covered above. [interp.]",
+    rows: []
+  },
+  {
+    code: "T–B", german: "Variationen von Formattributen", english: "Variations of form attributes",
+    note: "",
+    rows: [
+      ["T–BAA","Verdichtungen","Densifications / compressions",""],
+      ["T–BAB","Dehnungen (Auseinanderziehen)","Elongations / stretchings",""],
+      ["T–BBA","Einschränkungen / Minderungen","Reductions / diminishments",""],
+      ["T–BBB","Erweiterungen / Ausdehnungen","Expansions / extensions",""],
+      ["T–BC","Variation der Ausrichtung","Variation of orientation",""],
+      ["T–BD","Variation der Grösse / Länge","Variation of size / length",""],
+      ["T–BE","Variationen von Formattributen (andere)","Variations of form attributes (other)",""],
+    ]
+  },
+  {
+    code: "T–C", german: "Anordnungen", english: "Arrangements",
+    note: "Full list used for interactive annotation above. T–CA = arrangements between forms; T–CB = arrangement relative to drawing surface.",
+    rows: [
+      ["T–CAA","Übereinander","Superimposition",""],
+      ["T–CAB","Überschneiden","Intersection",""],
+      ["T–CAC","Aneinander","Adjacency",""],
+      ["T–CAD","Nebeneinander","Juxtaposition",""],
+      ["T–CAE","Ineinander","Containment",""],
+      ["T–CAF","Aussparung","Gap / Avoidance",""],
+      ["T–CAG","Anpassung","Adaptation",""],
+      ["T–CAH","Gegenseitige Ausrichtung","Shared Orientation",""],
+      ["T–CAI","Streuung","Scattering",""],
+      ["T–CAK","Reihenbildung","Row Formation",""],
+      ["T–CAL","Parallele Anordnung","Parallel Arrangement",""],
+      ["T–CAM","Rechtwinklige Anordnung","Orthogonal Arrangement",""],
+      ["T–CAN","Konzentrische Anordnung","Concentric Arrangement",""],
+      ["T–CAO","Spiegelsymmetrie","Mirror Symmetry",""],
+      ["T–CAP","Proportionen","Proportional Contrast",""],
+      ["T–CAQ","Anordnungen von Formen zueinander (andere)","Arrangements between forms (other)",""],
+      ["T–CAR","Hilfskategorie (rechtwinklig zusammengesetzte Linienpaare)","Auxiliary: orthogonally composed line pairs","aux."],
+      ["T–CBA","Platzierungsmuster","Placement Pattern",""],
+      ["T–CBB","Anordnung von Formen zur Zeichenfläche (spezifische)","Specific surface placement",""],
+      ["T–CBC","Hilfskategorie (Platzierungsmuster Teile)","Auxiliary: placement pattern parts","aux."],
+    ]
+  },
+  {
+    code: "T–D", german: "Farbigkeit", english: "Colour",
+    note: "",
+    rows: [
+      ["T–DAA","Einfarbig","Monochromatic",""],
+      ["T–DAB","Mehrfarbig","Polychromatic",""],
+      ["T–DBA","Farbbetonung","Colour emphasis",""],
+      ["T–DBB","Farbwahl","Colour choice",""],
+      ["T–DBC","Farbverhältnisse","Colour relations",""],
+      ["T–DBD","Farbmischung","Colour mixing",""],
+      ["T–DBE","Umschriebene Fläche ausgemalt","Enclosed area filled with colour",""],
+      ["T–DBF","Malerische Behandlung","Painterly treatment",""],
+      ["T–DBG","Malerische Aspekte (andere)","Painterly aspects (other)",""],
+      ["T–DC","Farbigkeit (andere Aspekte)","Colour (other aspects)",""],
+      ["T–DDA","Hilfskategorie (Umfeld Farbbetonung)","Auxiliary: colour emphasis environment","aux."],
+      ["T–DDB","Hilfskategorie (Umfeld Farbmischung)","Auxiliary: colour mixing environment","aux."],
+    ]
+  },
+  {
+    code: "T–E", german: "Materialität", english: "Materiality",
+    note: "T–EAE (Perforation): occurs when the child presses hard enough to pierce the paper. [interp.]",
+    rows: [
+      ["T–EAA","Stifte (Ausführung durch)","Execution by pen / pencil",""],
+      ["T–EAB","Strichstärke (Variation)","Variation of stroke thickness",""],
+      ["T–EAC","Strichbreite (Variation)","Variation of stroke width",""],
+      ["T–EAD","Flächendeckend (Stifte)","Full surface coverage (pen)",""],
+      ["T–EAE","Perforation","Perforation (pen through paper)",""],
+      ["T–EAF","Stifte (andere Aspekte)","Pen / pencil (other aspects)",""],
+      ["T–EAG","Hilfskategorie (Umfeld flächendeckend)","Auxiliary: full-coverage environment","aux."],
+      ["T–EBA","Pinsel (Ausführung durch)","Execution by brush",""],
+      ["T–EBB","Flächendeckend (Pinsel)","Full surface coverage (brush)",""],
+      ["T–EBC","Deckungsgrad (Variation)","Variation of coverage degree",""],
+      ["T–EBD","Pinsel (andere Aspekte)","Brush (other aspects)",""],
+      ["T–EC","Materialität (andere Aspekte)","Materiality (other aspects)",""],
+    ]
+  },
+  {
+    code: "T–F", german: "Formale Durchführung", english: "Formal execution",
+    note: "Overall quality of execution: precision, control, regularity. [interp.]",
+    rows: [
+      ["T–FA","Formale Durchführung","Formal execution (overall quality)",""],
+      ["T–FB","Hilfskategorie (Umfeld formale Durchführung)","Auxiliary: formal execution environment","aux."],
+    ]
+  },
+  {
+    code: "T–G", german: "Verbale Bezeichnung des Graphischen", english: "Verbal designation of the graphic",
+    note: "Records cases where the child names or comments on what they are drawing.",
+    rows: [
+      ["T–GA","Bezeichnung nicht erkennbar","Designation not recognizable",""],
+      ["T–GB","Bezeichnung ahnbar","Designation guessable",""],
+      ["T–GC","Bezeichnung erkennbar über Kontext","Designation recognizable through context",""],
+      ["T–GD","Bezeichnung erkennbar","Designation clearly recognizable",""],
+    ]
+  },
+  {
+    code: "T–H", german: "Analogien", english: "Analogies",
+    note: "Seven sub-types covering visual, commented, typological, scriptural, spatial, colour, and material analogies.",
+    rows: [
+      ["T–HAA","Visuelle Analogie ahnbar","Visual analogy guessable","I"],
+      ["T–HAB","Visuelle Analogie erkennbar über Kontext","Visual analogy recognizable through context","I"],
+      ["T–HAC","Visuelle Analogie erkennbar","Visual analogy clearly recognizable","I"],
+      ["T–HBA","Kommentierte Analogie nicht erkennbar","Commented analogy not recognizable","II"],
+      ["T–HBB","Kommentierte Analogie möglich","Commented analogy possible","II"],
+      ["T–HBC","Kommentierte Analogie erkennbar","Commented analogy recognizable","II"],
+      ["T–HBD","Kommentierte Analogie erkennbar (vorh. Kommentar)","Commented analogy recognizable (existing comment)","II"],
+      ["T–HCA","Menschen","People","III"],
+      ["T–HCB","Tiere","Animals","III"],
+      ["T–HCC","Pflanzen","Plants","III"],
+      ["T–HCD","Sonne","Sun","III"],
+      ["T–HCE","Gebäude, Bauwerke","Buildings, structures","III"],
+      ["T–HCF","Transportmittel, Maschinen","Vehicles, machines","III"],
+      ["T–HCG","Möbel, Geräte, Instrumente","Furniture, tools, instruments","III"],
+      ["T–HCH","Gegenstände und Naturerscheinungen (andere)","Objects and natural phenomena (other)","III"],
+      ["T–HCI","Affekte, emotionale Attribute","Affects, emotional attributes","III"],
+      ["T–HCK","Stimmungen, stimmungsmässige Attribute","Moods, mood-related attributes","III"],
+      ["T–HCL","Ideen, Vorstellungen, Geschichten, Phantasien","Ideas, imaginings, stories, fantasies","III"],
+      ["T–HCM","Aktionen, Abläufe, Ereignisse","Actions, sequences, events","III"],
+      ["T–HCN","Lieder","Songs","III"],
+      ["T–HCO","Widmungen","Dedications","III"],
+      ["T–HCP","Bild im Bild","Picture within a picture","III"],
+      ["T–HCQ","Typen von Analogem (andere)","Types of the analogous (other)","III"],
+      ["T–HDA","Darstellung der Schrift (allgemein)","Representation of writing (general)","IV"],
+      ["T–HDBAA","Buchstaben ahnbar","Letters guessable","IV"],
+      ["T–HDBAB","Buchstaben erkennbar","Letters recognizable","IV"],
+      ["T–HDBBA","Wörter ahnbar","Words guessable","IV"],
+      ["T–HDBBB","Wörter erkennbar","Words recognizable","IV"],
+      ["T–HDBCA","Satzartiges ahnbar","Sentence-like forms guessable","IV"],
+      ["T–HDBCB","Satzartiges erkennbar","Sentence-like forms recognizable","IV"],
+      ["T–HDCAA","Zahlen ahnbar","Numbers guessable","IV"],
+      ["T–HDCAB","Zahlen erkennbar","Numbers recognizable","IV"],
+      ["T–HDCBC","Formelartiges","Formula-like forms","IV"],
+      ["T–HDD","Schriftartiges (anderes)","Script-like forms (other)","IV"],
+      ["T–HEA","Analoge Anordnung (Beziehungen)","Analogous arrangement (relations)","V"],
+      ["T–HEB","Analoge Anordnung (Raum)","Analogous arrangement (space)","V"],
+      ["T–HEC","Analoge Anordnung (Schrift)","Analogous arrangement (writing)","V"],
+      ["T–HED","Spiegelverkehrtes","Mirror-reversed forms","V"],
+      ["T–HEE","Analoge Anordnungen (andere)","Analogous arrangements (other)","V"],
+      ["T–HFA","Analoger Farbwechsel","Analogous colour change","VI"],
+      ["T–HFB","Analoge Farbzuordnung","Analogous colour assignment","VI"],
+      ["T–HFC","Analoge Farbigkeit (andere Aspekte)","Analogous colour (other aspects)","VI"],
+      ["T–HGA","Analoge Variationen des Auftrags","Analogous variations of application","VII"],
+      ["T–HGB","Analoge Zuordnungen des Auftrags","Analogous assignments of application","VII"],
+      ["T–HGC","Analoge Materialität (andere Aspekte)","Analogous materiality (other aspects)","VII"],
+      ["T–HH","Analoges Bildschema","Analogous image schema",""],
+      ["T–HI","Analogien (andere Aspekte)","Analogies (other aspects)",""],
+    ]
+  },
+  {
+    code: "T–I", german: "Index", english: "Index",
+    note: "Mark functioning by contiguity or causal relation rather than by resemblance or convention. [interp.]",
+    rows: []
+  },
+  {
+    code: "T–K", german: "Symbolische Bezeichnung des Nicht-Graphischen", english: "Symbolic designation of the non-graphic",
+    note: "Mark functioning as a conventional symbol for a non-graphic referent. [interp.]",
+    rows: []
+  },
+  {
+    code: "T–L", german: "Expression", english: "Expression",
+    note: "Mark interpreted as expressing an emotional or subjective state, independently of representational content. [interp.]",
+    rows: []
+  },
+  {
+    code: "T–M", german: "Impression des Graphischen", english: "Impression of the graphic",
+    note: "Impression the drawing produces on the observer, independently of the child's intention. [interp.]",
+    rows: []
+  },
+];
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════════════════════ */
+const BASE_URL = 'https://ptoire.github.io/kellogg-data/';
+let INDEX_DATA = null;
+let ANN_INDEX_DATA = null;
+let ANIM_CACHE = {};
+let cardAnimFrames = {};
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════ */
+async function init() {
+  try {
+    const resp = await fetch(BASE_URL + 'data/index.json');
+    INDEX_DATA = await resp.json();
+  } catch(e) {
+    document.getElementById('main').innerHTML =
+      '<p style="padding:2rem;color:red;">Error loading data. Ensure data/index.json exists.</p>';
+    return;
+  }
+  try {
+    const r2 = await fetch(BASE_URL + 'data/annotator_index.json');
+    ANN_INDEX_DATA = await r2.json();
+  } catch(e) {
+    ANN_INDEX_DATA = null;
+  }
+  // Load server-persisted annotations (merge: localStorage takes precedence)
+  try {
+    const r3 = await fetch('/api/annotations');
+    if (r3.ok) {
+      const srv = await r3.json();
+      if (srv.maurer) {
+        const loc = JSON.parse(localStorage.getItem('maurer_annotations') || '{}');
+        localStorage.setItem('maurer_annotations', JSON.stringify({...srv.maurer, ...loc}));
+      }
+      if (srv.kellogg) {
+        const loc = JSON.parse(localStorage.getItem(ANN_KEY) || '{}');
+        localStorage.setItem(ANN_KEY, JSON.stringify({...srv.kellogg, ...loc}));
+      }
+    }
+  } catch(e) {}
+  buildNav();
+  buildGrid();
+  buildAnnotatorSection();
+  buildMaurerAnnotationSection();
+  buildBand3Section();
+  buildFooter();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════════════════════ */
+function buildNav() {
+  const nav = document.getElementById('nav');
+  GROUP_ORDER.forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.textContent = `${GROUP_LETTERS[g]}. ${g}`;
+    btn.onclick = () =>
+      document.getElementById(`group-${GROUP_LETTERS[g]}`).scrollIntoView({behavior:'smooth',block:'start'});
+    nav.appendChild(btn);
+  });
+  const mbtn = document.createElement('button');
+  mbtn.className = 'nav-btn';
+  mbtn.textContent = '◈ Maurer T–C';
+  mbtn.onclick = () => document.getElementById('maurer-section').scrollIntoView({behavior:'smooth'});
+  nav.appendChild(mbtn);
+  const bbtn = document.createElement('button');
+  bbtn.className = 'nav-btn';
+  bbtn.textContent = '◉ Band 3 Catalogue';
+  bbtn.onclick = () => document.getElementById('band3-section').scrollIntoView({behavior:'smooth'});
+  nav.appendChild(bbtn);
+  const abtn = document.createElement('button');
+  abtn.className = 'nav-btn';
+  abtn.textContent = '✎ Annotator';
+  abtn.onclick = () => document.getElementById('annotator-section').scrollIntoView({behavior:'smooth'});
+  nav.appendChild(abtn);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KELLOGG GRID
+   ═══════════════════════════════════════════════════════════ */
+function buildGrid() {
+  const main = document.getElementById('main');
+  const sessionMap = {};
+  INDEX_DATA.sessions.forEach(s => { sessionMap[s.code] = s; });
+
+  GROUP_ORDER.forEach(groupName => {
+    const letter = GROUP_LETTERS[groupName];
+    const prefix = `K-${letter}`;
+    const taxItems = FULL_TAXONOMY[prefix];
+    const section = document.createElement('section');
+    section.className = 'group-section';
+    section.id = `group-${letter}`;
+
+    const present = Object.keys(taxItems).filter(n => sessionMap[`${prefix}-${n}`]);
+    section.innerHTML = `
+      <div class="group-header">
+        <span class="group-letter">${letter}</span>
+        <span class="group-name">${groupName}</span>
+        <span class="group-count">${present.length} / ${Object.keys(taxItems).length} recorded</span>
+      </div>
+    `;
+
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+
+    Object.entries(taxItems).forEach(([num, name]) => {
+      const code = `${prefix}-${num}`;
+      const session = sessionMap[code];
+      const card = document.createElement('div');
+
+      if (session) {
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-canvas-wrap">
+            <img src="${BASE_URL}img/${session.session_id}_thumb.png" alt="${name}" loading="lazy">
+            <canvas data-sid="${session.session_id}"></canvas>
+          </div>
+          <div class="card-info">
+            <div class="card-code">${code}</div>
+            <div class="card-name">${name}</div>
+            <div class="card-stats">${session.total_strokes} stroke${session.total_strokes!==1?'s':''} · ${session.total_points} points</div>
+          </div>
+        `;
+        card.onclick = () => openDetail(session);
+        card.onmouseenter = () => startCardAnim(card, session);
+        card.onmouseleave = () => stopCardAnim(card);
+      } else {
+        card.className = 'card missing';
+        card.innerHTML = `
+          <div class="card-canvas-wrap"></div>
+          <div class="card-info">
+            <div class="card-code">${code}</div>
+            <div class="card-name">${name}</div>
+            <div class="card-stats">not recorded</div>
+          </div>
+        `;
+      }
+      grid.appendChild(card);
+    });
+    section.appendChild(grid);
+    main.appendChild(section);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CARD ANIMATION
+   ═══════════════════════════════════════════════════════════ */
+async function startCardAnim(card, session) {
+  const canvas = card.querySelector('canvas');
+  if (!canvas) return;
+  const sid = session.session_id;
+  if (!ANIM_CACHE[sid]) {
+    try {
+      const resp = await fetch(BASE_URL + `data/${sid}_anim.json`);
+      ANIM_CACHE[sid] = await resp.json();
+    } catch(e) { return; }
+  }
+  const anim = ANIM_CACHE[sid];
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * 2;
+  canvas.height = rect.height * 2;
+  const ctx = canvas.getContext('2d');
+  const allPts = [];
+  anim.strokes.forEach(s => s.forEach(p => allPts.push(p)));
+  if (allPts.length < 2) return;
+  const tStart = allPts[0].t, tEnd = allPts[allPts.length-1].t;
+  const duration = tEnd - tStart;
+  const animDuration = 2000;
+  const scaleX = canvas.width / anim.w;
+  const scaleY = canvas.height / anim.h;
+  let startTime = performance.now();
+  let animId;
+  function drawFrame(now) {
+    const progress = Math.min(1, (now - startTime) / animDuration);
+    const tCurrent = tStart + progress * duration;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.strokeStyle = '#C0392B';
+    ctx.lineWidth = 3; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    anim.strokes.forEach(stroke => {
+      let started = false; ctx.beginPath();
+      for (const p of stroke) {
+        if (p.t > tCurrent) break;
+        if (!started) { ctx.moveTo(p.x*scaleX, p.y*scaleY); started = true; }
+        else { ctx.lineTo(p.x*scaleX, p.y*scaleY); }
+      }
+      if (started) ctx.stroke();
+    });
+    if (progress < 1) { animId = requestAnimationFrame(drawFrame); }
+    else { setTimeout(() => { if (cardAnimFrames[sid]) { startTime = performance.now(); animId = requestAnimationFrame(drawFrame); cardAnimFrames[sid] = animId; } }, 800); }
+    cardAnimFrames[sid] = animId;
+  }
+  animId = requestAnimationFrame(drawFrame);
+  cardAnimFrames[sid] = animId;
+}
+
+function stopCardAnim(card) {
+  const canvas = card.querySelector('canvas');
+  if (!canvas) return;
+  const sid = canvas.dataset.sid;
+  if (cardAnimFrames[sid]) { cancelAnimationFrame(cardAnimFrames[sid]); delete cardAnimFrames[sid]; }
+  const ctx = canvas.getContext('2d');
+  if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAURER AUTO-FILL
+   Infer Band 3 codes from Kellogg taxonomy code.
+   Only high-confidence mappings are included.
+   ═══════════════════════════════════════════════════════════ */
+function getMaurerAutoFill(code) {
+  const D = '\u2013'; // en-dash used in Band 3 codes
+  const result = [`T${D}DAA`, `T${D}EAA`]; // always: monochromatic, pen execution
+  const parts = code.split('-');
+  const group = parts.slice(0, 2).join('-'); // e.g. "K-B"
+  const num   = parts[2] || '';              // e.g. "05"
+  if (group === 'K-B') result.push(`T${D}CBA`);  // Placement Pattern
+  if (group === 'K-G') result.push(`T${D}ADEC`); // Mandalas
+  if (group === 'K-H') result.push(`T${D}AEI`);  // Suns → central body + radial extensions
+  if (group === 'K-I') result.push(`T${D}AEE`);  // Radials → early radial arrangements
+  if (group === 'K-A') {
+    if (num === '01') result.push(`T${D}ACAC`);                          // Dot
+    if (['02','03','04'].includes(num)) result.push(`T${D}ACAB`);        // Straight lines
+    if (num === '05') result.push(`T${D}ACAA`);                          // Curved line
+    if (num === '12') result.push(`T${D}ACADA`);                         // Zigzag/wavy
+    if (num === '15') result.push(`T${D}ACAE`);                          // Spiral
+  }
+  if (group === 'K-D') {
+    if (num === '02') result.push(`T${D}ACBCC`);  // Square/Rectangle → Rectangle
+    if (num === '03') result.push(`T${D}ACBBA`);  // Circle/Oval → round closed form
+    if (num === '04') result.push(`T${D}ACBCE`);  // Triangle
+  }
+  return result;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DETAIL VIEW
+   ═══════════════════════════════════════════════════════════ */
+async function openDetail(session) {
+  const overlay = document.getElementById('overlay');
+  const panel = document.getElementById('detail-panel');
+  const sid = session.session_id;
+  if (!ANIM_CACHE[sid]) {
+    try { const r = await fetch(BASE_URL + `data/${sid}_anim.json`); ANIM_CACHE[sid] = await r.json(); } catch(e) {}
+  }
+  const anim = ANIM_CACHE[sid];
+  const rawW = anim ? anim.w : 500;
+  const rawH = anim ? anim.h : 500;
+  const renderScale = Math.max(2, Math.min(8, Math.round(600 / Math.max(rawW, rawH, 1))));
+  panel.innerHTML = `
+    <div class="detail-header">
+      <button class="detail-close" onclick="closeDetail()">&times;</button>
+      <div class="detail-code">${session.code}</div>
+      <div class="detail-name">${session.name}</div>
+      <span class="detail-group-tag">${session.group}</span>
+    </div>
+    <div class="detail-body">
+      <div class="detail-canvas-section">
+        <div class="detail-canvas-container">
+          <canvas id="detail-canvas" width="${rawW * renderScale}" height="${rawH * renderScale}"></canvas>
+        </div>
+        <div class="anim-controls">
+          <button class="anim-btn" id="btn-play" onclick="toggleDetailAnim()">▶ Play</button>
+          <span class="anim-progress" id="anim-progress">0%</span>
+        </div>
+      </div>
+      <div class="detail-info-section">
+        <h3>Recording Data</h3>
+        <div class="info-row"><span class="info-label">Session ID</span><span class="info-value">${sid}</span></div>
+        <div class="info-row"><span class="info-label">Total Strokes</span><span class="info-value">${session.total_strokes}</span></div>
+        <div class="info-row"><span class="info-label">Total Points</span><span class="info-value">${session.total_points}</span></div>
+        <div class="info-row"><span class="info-label">Canvas Size</span><span class="info-value">${session.canvas_w} × ${session.canvas_h} px</span></div>
+        <div class="info-row"><span class="info-label">Crop Size</span><span class="info-value">${session.crop_w} × ${session.crop_h} px</span></div>
+        <div class="info-row"><span class="info-label">Recorded</span><span class="info-value">${new Date(session.timestamp).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'})}</span></div>
+        ${anim ? `<div class="info-row"><span class="info-label">Duration</span><span class="info-value">${getDuration(anim)}s</span></div>` : ''}
+        <h3>Maurer Band 3</h3>
+        <div class="maurer-carousel-nav">
+          <button class="maurer-nav-btn" onclick="maurerNavShift(-1)">&#x2039;</button>
+          <span class="maurer-carousel-label" id="maurer-group-label"></span>
+          <button class="maurer-nav-btn" onclick="maurerNavShift(1)">&#x203a;</button>
+        </div>
+        <div class="maurer-tags" id="detail-maurer-tags"></div>
+      </div>
+    </div>
+  `;
+
+  detailMaurerSid = sid;
+  detailMaurerGroupIdx = BAND3_GROUPS.findIndex(g => g.code === 'T\u2013C');
+  if (detailMaurerGroupIdx < 0) detailMaurerGroupIdx = 0;
+  // Auto-fill inferrable categories on first open
+  if (getMaurerForSession(sid).length === 0) {
+    const fill = getMaurerAutoFill(session.code);
+    if (fill.length) saveMaurerForSession(sid, fill);
+  }
+  buildMaurerCarouselGroup(sid, detailMaurerGroupIdx);
+
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (anim) drawStaticOnCanvas(anim);
+}
+
+function closeDetail() {
+  stopDetailAnim();
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function getDuration(anim) {
+  let tMin = Infinity, tMax = -Infinity;
+  anim.strokes.forEach(s => s.forEach(p => { if(p.t<tMin)tMin=p.t; if(p.t>tMax)tMax=p.t; }));
+  return (tMax - tMin).toFixed(1);
+}
+
+function drawStaticOnCanvas(anim) {
+  const canvas = document.getElementById('detail-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const scaleX = canvas.width / anim.w;
+  const scaleY = canvas.height / anim.h;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#1A1A1E'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  anim.strokes.forEach(stroke => {
+    if (stroke.length < 2) return;
+    ctx.beginPath(); ctx.moveTo(stroke[0].x * scaleX, stroke[0].y * scaleY);
+    for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x * scaleX, stroke[i].y * scaleY);
+    ctx.stroke();
+  });
+}
+
+let detailAnimId = null, detailPlaying = false;
+
+function toggleDetailAnim() {
+  if (detailPlaying) { stopDetailAnim(); return; }
+  const canvas = document.getElementById('detail-canvas');
+  if (!canvas) return;
+  const codeEl = document.querySelector('.detail-code');
+  if (!codeEl) return;
+  const session = INDEX_DATA.sessions.find(s => s.code === codeEl.textContent);
+  if (!session) return;
+  const anim = ANIM_CACHE[session.session_id];
+  if (!anim) return;
+  const ctx = canvas.getContext('2d');
+  const allPts = [];
+  anim.strokes.forEach(s => s.forEach(p => allPts.push(p)));
+  if (allPts.length < 2) return;
+  const tStart = allPts[0].t, tEnd = allPts[allPts.length-1].t;
+  const duration = tEnd - tStart;
+  const animDuration = Math.max(2000, duration * 400);
+  let startTime = performance.now();
+  detailPlaying = true;
+  document.getElementById('btn-play').textContent = '⏸ Pause';
+  document.getElementById('btn-play').classList.add('active');
+  const scaleX = canvas.width / anim.w;
+  const scaleY = canvas.height / anim.h;
+  function drawFrame(now) {
+    const progress = Math.min(1, (now - startTime) / animDuration);
+    const tCurrent = tStart + progress * duration;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    anim.strokes.forEach(stroke => {
+      let started = false, isActive = false; ctx.beginPath();
+      for (const p of stroke) {
+        if (p.t > tCurrent) { isActive = true; break; }
+        if (!started) { ctx.moveTo(p.x * scaleX, p.y * scaleY); started = true; } else { ctx.lineTo(p.x * scaleX, p.y * scaleY); }
+      }
+      if (started) { ctx.strokeStyle = isActive ? '#C0392B' : '#1A1A1E'; ctx.stroke(); }
+    });
+    document.getElementById('anim-progress').textContent = `${Math.round(progress*100)}%`;
+    if (progress < 1) { detailAnimId = requestAnimationFrame(drawFrame); }
+    else { detailPlaying = false; document.getElementById('btn-play').textContent = '▶ Play'; document.getElementById('btn-play').classList.remove('active'); }
+  }
+  detailAnimId = requestAnimationFrame(drawFrame);
+}
+
+function stopDetailAnim() {
+  if (detailAnimId) cancelAnimationFrame(detailAnimId);
+  detailAnimId = null; detailPlaying = false;
+  const btn = document.getElementById('btn-play');
+  if (btn) { btn.textContent = '▶ Play'; btn.classList.remove('active'); }
+}
+
+function resetDetailAnim() {
+  stopDetailAnim();
+  const codeEl = document.querySelector('.detail-code');
+  if (!codeEl) return;
+  const session = INDEX_DATA.sessions.find(s => s.code === codeEl.textContent);
+  if (session && ANIM_CACHE[session.session_id]) drawStaticOnCanvas(ANIM_CACHE[session.session_id]);
+  document.getElementById('anim-progress').textContent = '0%';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAURER PERSISTENCE
+   ═══════════════════════════════════════════════════════════ */
+function getMaurerForSession(sid) {
+  try { return JSON.parse(localStorage.getItem('maurer_annotations')||'{}')[sid] || []; } catch { return []; }
+}
+function saveMaurerForSession(sid, codes) {
+  try { const d = JSON.parse(localStorage.getItem('maurer_annotations')||'{}'); d[sid]=codes; localStorage.setItem('maurer_annotations',JSON.stringify(d)); } catch {}
+  postAnnotationsToServer();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAURER BAND 3 CAROUSEL (detail view)
+   ═══════════════════════════════════════════════════════════ */
+let detailMaurerSid = null;
+let detailMaurerGroupIdx = 0;
+
+function maurerNavShift(delta) {
+  detailMaurerGroupIdx = (detailMaurerGroupIdx + delta + BAND3_GROUPS.length) % BAND3_GROUPS.length;
+  buildMaurerCarouselGroup(detailMaurerSid, detailMaurerGroupIdx);
+}
+
+function buildMaurerCarouselGroup(sid, idx) {
+  const g = BAND3_GROUPS[idx];
+  const labelEl = document.getElementById('maurer-group-label');
+  if (labelEl) labelEl.textContent = `${g.code} · ${g.english}  (${idx + 1}/${BAND3_GROUPS.length})`;
+  const container = document.getElementById('detail-maurer-tags');
+  if (!container) return;
+  container.innerHTML = '';
+  const tagRows = g.rows.length > 0 ? g.rows : [[g.code, g.german, g.english, '']];
+  tagRows.forEach(row => {
+    const code = row[0];
+    const saved = getMaurerForSession(sid);
+    const tag = document.createElement('span');
+    tag.className = 'maurer-tag' + (saved.includes(code) ? ' active' : '');
+    tag.textContent = code;
+    tag.title = `${row[2]}\n${row[1]}`;
+    tag.onclick = () => {
+      tag.classList.toggle('active');
+      const freshSaved = getMaurerForSession(sid);
+      const otherCodes = freshSaved.filter(c => !tagRows.some(r => r[0] === c));
+      const thisCodes = Array.from(container.querySelectorAll('.maurer-tag.active')).map(t => t.textContent);
+      saveMaurerForSession(sid, [...otherCodes, ...thisCodes]);
+    };
+    container.appendChild(tag);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MAURER T–C ANNOTATION SECTION
+   ═══════════════════════════════════════════════════════════ */
+function buildMaurerAnnotationSection() {
+  const main = document.getElementById('main');
+  const section = document.createElement('section');
+  section.className = 'maurer-section';
+  section.id = 'maurer-section';
+
+  section.innerHTML = `
+    <h2>Maurer T–C · Spatial Arrangements</h2>
+    <p class="section-subtitle">Arrangement categories used to annotate recorded sessions</p>
+    <p class="section-source">
+      Source: Maurer, D., &amp; Riboni, C. (2010/2016).
+      <em>Wie Bilder «entstehen». Band 3: Beschreibende Methode.</em>
+      Peter Lang. — Categories T–CA and T–CB (Anordnungen von Formen zueinander;
+      Anordnung von Formen zur Zeichenfläche), pp. V–XXII.
+      German originals from the source text; English translations and descriptions by the author.
+    </p>
+    <div class="maurer-grid" id="maurer-grid"></div>
+  `;
+
+  const grid = section.querySelector('.maurer-grid');
+  MAURER_TC.forEach(mp => {
+    const card = document.createElement('div');
+    card.className = 'maurer-card';
+    card.innerHTML = `
+      <div class="maurer-card-code">${mp.code}</div>
+      <div class="maurer-card-name">${mp.name}</div>
+      <div class="maurer-card-german">${mp.german}</div>
+      <div class="maurer-card-desc">${mp.desc}</div>
+    `;
+    grid.appendChild(card);
+  });
+  main.appendChild(section);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   BAND 3 FULL CATALOGUE SECTION
+   ═══════════════════════════════════════════════════════════ */
+function buildBand3Section() {
+  const main = document.getElementById('main');
+  const section = document.createElement('section');
+  section.className = 'band3-section';
+  section.id = 'band3-section';
+
+  section.innerHTML = `
+    <h2>Band 3 · Complete Descriptive Catalogue</h2>
+    <p class="section-subtitle">Full system of observational categories for the morphological analysis of early drawings</p>
+    <p class="section-source">
+      Maurer, D., &amp; Riboni, C. (2010/2016).
+      <em>Wie Bilder «entstehen». Band 3: Beschreibende Methode.</em>
+      Peter Lang. (Open access: DOI 10.3726/b15847)
+    </p>
+    <p class="section-note">
+      German category names are reproduced directly from the source volume. English translations are by the author of this site.
+      Notes marked <span class="band3-note-badge">interp.</span> are interpretive glosses not present in the original text.
+      Auxiliary categories (<span class="band3-note-badge">aux.</span>) are residual coding tools used by researchers, not primary descriptive categories.
+    </p>
+    <div id="band3-groups"></div>
+  `;
+
+  const container = section.querySelector('#band3-groups');
+  BAND3_GROUPS.forEach(g => {
+    const div = document.createElement('div');
+    div.className = 'band3-group';
+
+    let tableHTML = '';
+    if (g.rows.length > 0) {
+      const hasSubtype = g.rows.some(r => r[3] && r[3] !== '');
+      tableHTML = `
+        <table class="band3-table">
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>German</th>
+              <th>English</th>
+              ${hasSubtype ? '<th>Sub-type</th>' : ''}
+            </tr>
+          </thead>
+          <tbody>
+            ${g.rows.map(r => `
+              <tr>
+                <td>${r[0]}</td>
+                <td>${r[1]}</td>
+                <td>${r[2]}${r[3]==='aux.'?` <span class="band3-note-badge">aux.</span>`:''}${r[3]==='interp.'?` <span class="band3-note-badge">interp.</span>`:''}</td>
+                ${hasSubtype ? `<td>${r[3] && r[3]!=='aux.' && r[3]!=='interp.' ? r[3] : ''}</td>` : ''}
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+    }
+
+    div.innerHTML = `
+      <div class="band3-group-header">
+        <span class="band3-group-code">${g.code}</span>
+        <span class="band3-group-name">${g.german}</span>
+        <span class="band3-group-en">· ${g.english}</span>
+      </div>
+      ${g.note ? `<p style="font-size:0.8rem;color:var(--c-text-secondary);margin-bottom:0.8rem;font-style:italic;">${g.note}</p>` : ''}
+      ${tableHTML}
+    `;
+    container.appendChild(div);
+  });
+
+  main.appendChild(section);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════════════════════ */
+function buildFooter() {
+  const main = document.getElementById('main');
+  const footer = document.createElement('footer');
+  footer.className = 'site-footer';
+  footer.innerHTML = `
+    Visual Taxonomy of Children's Scribbles · After Kellogg (1969) ·
+    Spatial arrangement annotations: Maurer &amp; Riboni (2010/2016),
+    <em style="font-style:italic">Wie Bilder «entstehen»</em>, Band 3, Peter Lang<br>
+    Recorded and catalogued as part of a doctoral thesis at TU Berlin, Design &amp; Computation, 2026<br>
+    <a href="https://pietrolugaro.com" style="color:var(--c-text-tertiary)">pietrolugaro.com</a>
+  `;
+  main.appendChild(footer);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANNOTATOR
+   ═══════════════════════════════════════════════════════════ */
+const ANN_KEY = 'kellogg_full_annotations';
+let annIdx = 0;
+let annItems = [];  // items from annotator_index.json
+
+const ANN_GROUP_NAMES = { A:'Basic', B:'Placement', C:'Emergent', D:'Diagrams', E:'Combines', F:'Aggregates', G:'Mandalas', H:'Suns', I:'Radials' };
+const ANN_NON_B = ['A','C','D','E','F','G','H','I'];
+
+// Sort taxonomy entries numerically (fixes K-A-10 appearing before K-A-01)
+function taxEntries(prefix) {
+  return Object.entries(FULL_TAXONOMY[prefix]).sort((a, b) => parseInt(a[0], 10) - parseInt(b[0], 10));
+}
+
+function annStore() {
+  try { return JSON.parse(localStorage.getItem(ANN_KEY) || '{}'); } catch { return {}; }
+}
+function annStoreSet(s) {
+  try { localStorage.setItem(ANN_KEY, JSON.stringify(s)); } catch {}
+  postAnnotationsToServer();
+}
+function postAnnotationsToServer() {
+  try {
+    const maurer  = JSON.parse(localStorage.getItem('maurer_annotations') || '{}');
+    const kellogg = JSON.parse(localStorage.getItem(ANN_KEY) || '{}');
+    fetch('/api/annotations', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({maurer, kellogg})
+    }).catch(() => {});
+  } catch {}
+}
+
+function annGet(sha) {
+  const ls = annStore()[sha];
+  if (ls) return ls;
+  // fall back to seed from annotator_index.json
+  const item = annItems.find(i => i.sha === sha);
+  if (item) return {
+    human_where:     item.human_where    || [],
+    human_primary:   item.human_primary  || [],
+    human_secondary: item.human_secondary|| [],
+    maurer_tc:       item.maurer_tc      || [],
+    status:          item.status         || 'seeded_unconfirmed',
+    updated_at:      item.updated_at     || null,
+  };
+  return { human_where:[], human_primary:[], human_secondary:[], maurer_tc:[], status:'unconfirmed', updated_at:null };
+}
+
+function annSet(sha, data) {
+  const store = annStore();
+  store[sha] = { ...data, updated_at: new Date().toISOString() };
+  annStoreSet(store);
+}
+
+function annCountDone() {
+  const store = annStore();
+  return annItems.filter(item => {
+    const a = store[item.sha] || item;
+    return a.human_where?.length || a.human_primary?.length || a.human_secondary?.length || a.maurer_tc?.length;
+  }).length;
+}
+
+function exportAnnotationsJSON() {
+  const store = annStore();
+  const out = annItems.map(item => {
+    const a = store[item.sha] || item;
+    return {
+      sha:             item.sha,
+      img_url:         item.img_url,
+      prefill_labels:  item.prefill_labels,
+      human_where:     a.human_where     || [],
+      human_primary:   a.human_primary   || [],
+      human_secondary: a.human_secondary || [],
+      maurer_tc:       a.maurer_tc       || [],
+      status:          a.status          || 'unconfirmed',
+      updated_at:      a.updated_at      || null,
+    };
+  });
+  const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const el = document.createElement('a');
+  el.href = url; el.download = 'kellogg_annotations.json';
+  document.body.appendChild(el); el.click();
+  document.body.removeChild(el);
+  URL.revokeObjectURL(url);
+}
+
+function buildAnnotatorSection() {
+  const main = document.getElementById('main');
+  const section = document.createElement('section');
+  section.className = 'annotator-section';
+  section.id = 'annotator-section';
+
+  if (!ANN_INDEX_DATA) {
+    section.innerHTML = `
+      <h2>Annotator</h2>
+      <p class="section-subtitle">Dataset not generated yet.</p>
+      <div style="padding:1.5rem;background:var(--c-bg-warm);border:1px solid var(--c-border-light);border-radius:4px;font-family:var(--font-mono);font-size:0.82rem;line-height:1.8;">
+        run:<br>
+        <strong>python build_annotator_data.py</strong><br><br>
+        then run server:<br>
+        <strong>python server.py</strong><br><br>
+        e ricarica la pagina.
+      </div>
+    `;
+    main.appendChild(section);
+    return;
+  }
+
+  annItems = ANN_INDEX_DATA.items || [];
+
+  section.innerHTML = `
+    <h2>Annotator</h2>
+    <p class="section-subtitle">Children's drawings from dataset Kellogg / Maurer · annote K-categories and Maurer T–C · export JSON </p>
+    <div class="annotator-toolbar">
+      <div class="ann-counter-wrap">
+        <span class="annotator-counter" id="ann-counter">—</span>
+        <div class="annotator-progress-bar"><div class="annotator-progress-fill" id="ann-pfill" style="width:0%"></div></div>
+      </div>
+      <button class="ann-btn" onclick="annNav(-1)">← Prev</button>
+      <button class="ann-btn" onclick="annNav(1)">Next →</button>
+      <button class="ann-btn ann-export" onclick="exportAnnotationsJSON()">⬇ Export JSON</button>
+    </div>
+    <div class="annotator-body">
+      <div class="annotator-image-panel" id="ann-img-panel">
+        <div class="annotator-img-wrap">
+          <img id="ann-img" src="" alt="" style="max-width:100%;max-height:380px;object-fit:contain;">
+        </div>
+        <div class="annotator-img-meta">
+          <div class="annotator-img-code" id="ann-meta-code">—</div>
+          <div class="annotator-img-name" id="ann-meta-name" style="font-size:0.85rem;font-family:var(--font-mono);color:var(--c-text-secondary);margin-top:0.3rem;word-break:break-all;"></div>
+          <div class="ann-status-badge s-unconfirmed" id="ann-status-badge">unconfirmed</div>
+        </div>
+      </div>
+      <div class="annotator-panel" id="ann-panel"></div>
+    </div>
+  `;
+  main.appendChild(section);
+  annLoad(0);
+}
+
+function annNav(dir) {
+  const n = annIdx + dir;
+  if (n >= 0 && n < annItems.length) annLoad(n);
+}
+
+function annLoad(idx) {
+  annIdx = idx;
+  const item = annItems[idx];
+  const sha = item.sha;
+  const ann = annGet(sha);
+
+  document.getElementById('ann-img').src = BASE_URL + item.img_url;
+  document.getElementById('ann-img').alt = sha;
+  document.getElementById('ann-meta-code').textContent = `${idx + 1} / ${annItems.length}`;
+  document.getElementById('ann-meta-name').textContent = item.prefill_labels.length
+    ? item.prefill_labels.join('  ·  ')
+    : sha.slice(0, 16) + '…';
+  annBadge(ann.status || 'unconfirmed');
+
+  const done = annCountDone();
+  document.getElementById('ann-counter').textContent = `${idx + 1} / ${annItems.length}  ·  ${done} annotated`;
+  document.getElementById('ann-pfill').style.width = `${(done / annItems.length * 100).toFixed(1)}%`;
+
+  annBuildPanel(item, ann);
+}
+
+function annBuildPanel(item, ann) {
+  const panel = document.getElementById('ann-panel');
+
+  // WHERE (K-B) — single-select, sorted numerically
+  const whereTags = taxEntries('K-B').map(([num, name]) => {
+    const code = `K-B-${num}`;
+    const sel = ann.human_where.includes(code) ? ' sel-where' : '';
+    return `<span class="ann-tag${sel}" data-code="${code}" title="${name}">${code}</span>`;
+  }).join('');
+
+  // PRIMARY — tabbed, single-select
+  const primaryTabs = ANN_NON_B.map((l, i) =>
+    `<button class="ann-macro-tab${i===0?' active':''}" data-letter="${l}" onclick="annTab(this,'primary')">${l}. ${ANN_GROUP_NAMES[l]}</button>`
+  ).join('');
+  const primaryGroups = ANN_NON_B.map((l, i) => {
+    const tags = taxEntries(`K-${l}`).map(([num, name]) => {
+      const code = `K-${l}-${num}`;
+      const sel = ann.human_primary.includes(code) ? ' sel-primary' : '';
+      return `<span class="ann-tag${sel}" data-code="${code}" title="${name}">${code}</span>`;
+    }).join('');
+    return `<div class="ann-tags" id="ann-pg-${l}" style="display:${i===0?'flex':'none'};flex-wrap:wrap;gap:0.28rem;">${tags}</div>`;
+  }).join('');
+
+  // SECONDARY — tabbed, multi-select
+  const secTabs = ANN_NON_B.map((l, i) =>
+    `<button class="ann-macro-tab${i===0?' active':''}" data-letter="${l}" onclick="annTab(this,'secondary')">${l}. ${ANN_GROUP_NAMES[l]}</button>`
+  ).join('');
+  const secGroups = ANN_NON_B.map((l, i) => {
+    const tags = taxEntries(`K-${l}`).map(([num, name]) => {
+      const code = `K-${l}-${num}`;
+      const sel = ann.human_secondary.includes(code) ? ' sel-secondary' : '';
+      return `<span class="ann-tag${sel}" data-code="${code}" title="${name}">${code}</span>`;
+    }).join('');
+    return `<div class="ann-tags" id="ann-sg-${l}" style="display:${i===0?'flex':'none'};flex-wrap:wrap;gap:0.28rem;">${tags}</div>`;
+  }).join('');
+
+  // MAURER T-C — multi-select
+  const maurerTags = MAURER_TC.map(m => {
+    const sel = (ann.maurer_tc || []).includes(m.code) ? ' sel-maurer' : '';
+    return `<span class="ann-tag${sel}" data-code="${m.code}" title="${m.name} (${m.german}) — ${m.desc}">${m.code}</span>`;
+  }).join('');
+
+  // Prefill info row
+  const prefillRow = item.prefill_labels.length
+    ? `<div class="ann-section" style="background:var(--c-bg-warm);">
+         <div class="ann-section-label">PREFILL · Original label(s)<span class="ann-hint">from the archive, read-only</span></div>
+         <div class="ann-tags">${item.prefill_labels.map(c => `<span class="ann-tag" style="opacity:0.7;cursor:default;" title="${(ANN_INDEX_DATA.label_names||{})[c]||''}">${c}</span>`).join('')}</div>
+       </div>` : '';
+
+  panel.innerHTML = `
+    ${prefillRow}
+    <div class="ann-section">
+      <div class="ann-section-label">WHERE · Placement Pattern<span class="ann-hint">single choice — K-B</span></div>
+      <div class="ann-tags" id="ann-where-tags">${whereTags}</div>
+    </div>
+    <div class="ann-section">
+      <div class="ann-section-label">PRIMARY · Kellogg Category<span class="ann-hint">single choice</span></div>
+      <div class="ann-macro-tabs" id="ann-primary-tabs">${primaryTabs}</div>
+      <div id="ann-primary-groups">${primaryGroups}</div>
+    </div>
+    <div class="ann-section">
+      <div class="ann-section-label">SECONDARY · Additional Categories<span class="ann-hint">multiple</span></div>
+      <div class="ann-macro-tabs" id="ann-secondary-tabs">${secTabs}</div>
+      <div id="ann-secondary-groups">${secGroups}</div>
+    </div>
+    <div class="ann-section">
+      <div class="ann-section-label">MAURER T–C · Spatial Arrangements<span class="ann-hint">multiple</span></div>
+      <div class="ann-tags" id="ann-maurer-tags">${maurerTags}</div>
+    </div>
+    <div class="ann-save-bar">
+      <button class="ann-btn ann-primary" onclick="annSave()">Save</button>
+      <button class="ann-btn" onclick="annClear()">Clear</button>
+      <span class="ann-save-feedback" id="ann-save-fb"></span>
+    </div>
+  `;
+
+  annAttach('ann-where-tags', 'sel-where', false);
+  ANN_NON_B.forEach(l => {
+    annAttach(`ann-pg-${l}`, 'sel-primary', false);
+    annAttach(`ann-sg-${l}`, 'sel-secondary', true);
+  });
+  annAttach('ann-maurer-tags', 'sel-maurer', true);
+}
+
+function annAttach(id, selClass, multi) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  container.querySelectorAll('.ann-tag').forEach(tag => {
+    tag.addEventListener('click', () => {
+      if (multi) {
+        tag.classList.toggle(selClass);
+      } else {
+        document.getElementById('ann-panel').querySelectorAll(`.ann-tag.${selClass}`).forEach(t => t.classList.remove(selClass));
+        tag.classList.add(selClass);
+      }
+    });
+  });
+}
+
+function annTab(btn, type) {
+  const letter = btn.dataset.letter;
+  const tabsId = type === 'primary' ? 'ann-primary-tabs' : 'ann-secondary-tabs';
+  document.getElementById(tabsId).querySelectorAll('.ann-macro-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  ANN_NON_B.forEach(l => {
+    const el = document.getElementById(`ann-${type==='primary'?'pg':'sg'}-${l}`);
+    if (el) el.style.display = l === letter ? 'flex' : 'none';
+  });
+}
+
+function annSelCodes(selector) {
+  return Array.from(document.querySelectorAll(selector)).map(t => t.dataset.code).filter(Boolean);
+}
+
+function annSave() {
+  const sha = annItems[annIdx].sha;
+  const human_where     = annSelCodes('#ann-where-tags .ann-tag.sel-where');
+  const human_primary   = annSelCodes('#ann-panel .ann-tag.sel-primary');
+  const human_secondary = annSelCodes('#ann-panel .ann-tag.sel-secondary').filter(c => !human_primary.includes(c));
+  const maurer_tc       = annSelCodes('#ann-maurer-tags .ann-tag.sel-maurer');
+  const hasData = human_where.length || human_primary.length || human_secondary.length || maurer_tc.length;
+  const status = hasData ? 'confirmed' : 'unconfirmed';
+  annSet(sha, { human_where, human_primary, human_secondary, maurer_tc, status });
+  annBadge(status);
+  const done = annCountDone();
+  document.getElementById('ann-counter').textContent = `${annIdx + 1} / ${annItems.length}  ·  ${done} annotated`;
+  document.getElementById('ann-pfill').style.width = `${(done / annItems.length * 100).toFixed(1)}%`;
+  const fb = document.getElementById('ann-save-fb');
+  fb.textContent = 'Saved ✓';
+  setTimeout(() => { if (fb) fb.textContent = ''; }, 2000);
+}
+
+function annClear() {
+  annSet(annItems[annIdx].sha, { human_where:[], human_primary:[], human_secondary:[], maurer_tc:[], status:'unconfirmed' });
+  annLoad(annIdx);
+}
+
+function annBadge(status) {
+  const badge = document.getElementById('ann-status-badge');
+  if (!badge) return;
+  badge.className = 'ann-status-badge';
+  const map = { unconfirmed:'s-unconfirmed', confirmed:'s-confirmed', modified:'s-modified', seeded_unconfirmed:'s-unconfirmed' };
+  badge.classList.add(map[status] || 's-unconfirmed');
+  badge.textContent = status.replace('seeded_', '');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EVENTS
+   ═══════════════════════════════════════════════════════════ */
+document.getElementById('overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('overlay')) closeDetail();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
