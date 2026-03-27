@@ -926,7 +926,6 @@ const FULL_TAXONOMY = {
 // Annotator taxonomy: uses the archive's alphanumeric codes (K-HA, K-HE, etc.)
 const ANN_TAXONOMY = {
   "K-A":{
-    "K-AA":"The Basic Scribbles","K-AB":"Scribble Margins","K-AC":"Differentiation of the Basic Scribbles",
     "K-ACA":"Dot","K-ACB":"Single Vertical Line","K-ACC":"Single Horizontal Line",
     "K-ACD":"Single Diagonal Line","K-ACE":"Single Curved Line","K-ACF":"Multiple Vertical Lines",
     "K-ACG":"Multiple Horizontal Lines","K-ACH":"Multiple Diagonal Lines","K-ACI":"Multiple Curved Lines",
@@ -1463,7 +1462,7 @@ function buildGrid() {
     const grid = document.createElement('div');
     grid.className = 'card-grid';
 
-    Object.entries(taxItems).forEach(([num, name]) => {
+    Object.entries(taxItems).sort((a, b) => parseInt(a[0]) - parseInt(b[0])).forEach(([num, name]) => {
       const code = `${prefix}-${num}`;
       const session = sessionMap[code];
       const card = document.createElement('div');
@@ -2015,7 +2014,25 @@ function exportAnnotationsJSON() {
 
 /* ── Annotator tag hover tooltip ────────────────────────────────────────── */
 let ANN_PREFILL_INDEX = {};   // code → [annItem, ...]
-let ANN_SESSION_GROUP = {};   // "K-H" → [session, ...]
+let ANN_TO_SESSION = {};      // annCode → exact catalog session (e.g. "K-CC" → session K-C-03)
+
+// K-A is special: letters skip J, so hardcode the mapping
+const K_A_SESS_MAP = {
+  'K-ACA':'K-A-01','K-ACB':'K-A-02','K-ACC':'K-A-03','K-ACD':'K-A-04',
+  'K-ACE':'K-A-05','K-ACF':'K-A-06','K-ACG':'K-A-07','K-ACH':'K-A-08',
+  'K-ACI':'K-A-09','K-ACK':'K-A-10','K-ACL':'K-A-11','K-ACM':'K-A-12',
+  'K-ACN':'K-A-13','K-ACO':'K-A-14','K-ACP':'K-A-15','K-ACQ':'K-A-16',
+  'K-ACR':'K-A-17','K-ACS':'K-A-18',
+};
+
+function annCodeToSessionCode(annCode) {
+  if (annCode.startsWith('K-A')) return K_A_SESS_MAP[annCode] || null;
+  const group = annCode.substring(0, 3);
+  const lastLetter = annCode[annCode.length - 1];
+  const pos = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.indexOf(lastLetter);
+  if (pos < 0) return null;
+  return `${group}-${String(pos + 1).padStart(2, '0')}`;
+}
 
 function buildAnnHoverIndices() {
   ANN_PREFILL_INDEX = {};
@@ -2024,10 +2041,15 @@ function buildAnnHoverIndices() {
       (ANN_PREFILL_INDEX[code] = ANN_PREFILL_INDEX[code] || []).push(item);
     });
   });
-  ANN_SESSION_GROUP = {};
-  (INDEX_DATA?.sessions || []).forEach(s => {
-    const g = s.code.substring(0, 3);  // "K-H"
-    (ANN_SESSION_GROUP[g] = ANN_SESSION_GROUP[g] || []).push(s);
+  // Build exact ANN code → catalog session map
+  ANN_TO_SESSION = {};
+  const sessionByCode = {};
+  (INDEX_DATA?.sessions || []).forEach(s => { sessionByCode[s.code] = s; });
+  Object.keys(ANN_TAXONOMY).forEach(group => {
+    Object.keys(ANN_TAXONOMY[group]).forEach(annCode => {
+      const sc = annCodeToSessionCode(annCode);
+      if (sc && sessionByCode[sc]) ANN_TO_SESSION[annCode] = sessionByCode[sc];
+    });
   });
 }
 
@@ -2046,13 +2068,11 @@ function annTagHoverOn(e, tag) {
   const code = tag.dataset.code;
   if (!code) return;
   const group = code.substring(0, 3);
-  const allNames = ANN_TAXONOMY[group] || {};
-  const name = allNames[code] || '';
+  const name = (ANN_TAXONOMY[group] || {})[code] || '';
 
-  // random archive session in same group
-  const sessions = ANN_SESSION_GROUP[group] || [];
-  const sess = sessions.length ? sessions[Math.floor(Math.random() * sessions.length)] : null;
-  // random own drawing with this prefill code
+  // LEFT: exact catalog session for this code (static)
+  const sess = ANN_TO_SESSION[code] || null;
+  // RIGHT: random drawing from annotator dataset with this prefill code (changes each hover)
   const ownPool = ANN_PREFILL_INDEX[code] || [];
   const own = ownPool.length ? ownPool[Math.floor(Math.random() * ownPool.length)] : null;
 
@@ -2070,7 +2090,7 @@ function annTagHoverOn(e, tag) {
   if (own) {
     const wrap = document.createElement('div');
     wrap.innerHTML = `<img src="${BASE_URL}${own.img_url}" alt="">
-      <div class="att-img-label">dataset</div>`;
+      <div class="att-img-label">dataset · random</div>`;
     imgs.appendChild(wrap);
   }
 
