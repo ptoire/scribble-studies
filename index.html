@@ -580,6 +580,40 @@ body {
   .band3-table td:nth-child(4) { display: none; }
 }
 
+/* ── Archive section ─────────────────────────────────────────────────────── */
+.archive-section { margin-bottom: 3rem; }
+.arch-filters { margin-bottom: 1.2rem; }
+.arch-clear-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.7rem; }
+.arch-clear-btn { font-size:0.75rem; font-family:var(--font-mono); padding:0.2em 0.7em;
+  border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm);
+  cursor:pointer; color:var(--c-text-secondary); }
+.arch-clear-btn:hover { background:var(--c-border); }
+.arch-selected-count { font-size:0.75rem; font-family:var(--font-mono); color:var(--c-text-secondary); }
+.arch-group { margin-bottom:0.5rem; }
+.arch-group-name { font-size:0.72rem; font-family:var(--font-mono); font-weight:700;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--c-text-secondary);
+  margin-bottom:0.3rem; }
+.arch-codes { display:flex; flex-wrap:wrap; gap:0.22rem; }
+.arch-btn { font-size:0.73rem; font-family:var(--font-mono); padding:0.18em 0.45em;
+  border:1px solid var(--c-border-light); border-radius:3px; background:var(--c-tag-bg);
+  color:var(--c-tag-text); cursor:pointer; transition:background 0.1s,color 0.1s,border-color 0.1s; }
+.arch-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.arch-btn.active { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.arch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:0.8rem; }
+.arch-card { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+.arch-card img { display:block; width:100%; aspect-ratio:4/3; object-fit:contain; background:#fff; padding:0.3rem; box-sizing:border-box; }
+.arch-card-meta { padding:0.4rem 0.5rem; }
+.arch-card-path { font-size:0.68rem; font-family:var(--font-mono); color:var(--c-text-secondary);
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:0.3rem; }
+.arch-chips { display:flex; flex-wrap:wrap; gap:0.2rem; }
+.arch-chip { font-size:0.68rem; font-family:var(--font-mono); padding:0.1em 0.35em;
+  border:1px solid var(--c-border-light); border-radius:2px; background:var(--c-tag-bg);
+  color:var(--c-tag-text); cursor:default; }
+.arch-chip.match { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.arch-empty { padding:2rem; text-align:center; color:var(--c-text-secondary);
+  font-family:var(--font-mono); font-size:0.85rem; border:1px dashed var(--c-border-light);
+  border-radius:4px; }
+
 /* ═══════════════════════════════════════════════════════════
    ANNOTATOR
    ═══════════════════════════════════════════════════════════ */
@@ -1741,6 +1775,7 @@ async function init() {
   // K-B: pre-render full-page blurred previews (needs layout to be settled)
   requestAnimationFrame(() => requestAnimationFrame(initPlacementPreviews));
   buildAnnotatorSection();
+  buildArchiveSection();
   buildMaurerAnnotationSection();
   buildBand3Section();
   buildFooter();
@@ -1774,6 +1809,11 @@ function buildNav() {
   abtn.textContent = '✎ Annotator';
   abtn.onclick = () => document.getElementById('annotator-section').scrollIntoView({behavior:'smooth'});
   nav.appendChild(abtn);
+  const arcbtn = document.createElement('button');
+  arcbtn.className = 'nav-btn';
+  arcbtn.textContent = '⊞ Archive';
+  arcbtn.onclick = () => document.getElementById('archive-section').scrollIntoView({behavior:'smooth'});
+  nav.appendChild(arcbtn);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2611,6 +2651,109 @@ function annAddHoverHandlers(container) {
     tag.addEventListener('mouseenter', e => annTagHoverOn(e, tag));
     tag.addEventListener('mouseleave', annTagHoverOff);
   });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   KELLOGG ARCHIVE
+   ═══════════════════════════════════════════════════════════ */
+let archiveSelected = new Set();
+
+function buildArchiveSection() {
+  const main = document.getElementById('main');
+  if (!ANN_INDEX_DATA) return;
+  const section = document.createElement('section');
+  section.className = 'archive-section';
+  section.id = 'archive-section';
+
+  // Build filter buttons grouped by taxonomy group
+  const filterHTML = Object.entries(ANN_TAXONOMY).map(([group, codes]) => {
+    const validCodes = Object.entries(codes).filter(([c, n]) => n !== c);
+    if (!validCodes.length) return '';
+    const letter = group.split('-')[1]; // 'A', 'B', ...
+    const groupName = ANN_GROUP_NAMES[letter] || group;
+    const btns = validCodes.map(([code]) =>
+      `<button class="arch-btn" data-code="${code}" onclick="archiveToggle('${code}')" title="${codes[code]}">${code}</button>`
+    ).join('');
+    return `<div class="arch-group">
+      <div class="arch-group-name">${letter}. ${groupName}</div>
+      <div class="arch-codes">${btns}</div>
+    </div>`;
+  }).join('');
+
+  section.innerHTML = `
+    <h2>Kellogg Archive</h2>
+    <p class="section-subtitle">Browse annotated drawings by category — multi-select to find images with multiple labels</p>
+    <div class="arch-filters">
+      <div class="arch-clear-row">
+        <button class="arch-clear-btn" onclick="archiveClearAll()">Clear selection</button>
+        <span class="arch-selected-count" id="arch-count"></span>
+      </div>
+      ${filterHTML}
+    </div>
+    <div class="arch-grid" id="arch-grid">
+      <div class="arch-empty">Select one or more categories above to browse annotated images.</div>
+    </div>
+  `;
+  main.appendChild(section);
+}
+
+function archiveToggle(code) {
+  if (archiveSelected.has(code)) archiveSelected.delete(code);
+  else archiveSelected.add(code);
+  // Update button states
+  document.querySelectorAll('#archive-section .arch-btn').forEach(b => {
+    b.classList.toggle('active', archiveSelected.has(b.dataset.code));
+  });
+  // Update count label
+  const count = document.getElementById('arch-count');
+  if (count) count.textContent = archiveSelected.size ? `${archiveSelected.size} selected` : '';
+  archiveRender();
+}
+
+function archiveClearAll() {
+  archiveSelected.clear();
+  document.querySelectorAll('#archive-section .arch-btn').forEach(b => b.classList.remove('active'));
+  const count = document.getElementById('arch-count');
+  if (count) count.textContent = '';
+  archiveRender();
+}
+
+function archiveRender() {
+  const grid = document.getElementById('arch-grid');
+  if (!grid) return;
+  if (!archiveSelected.size) {
+    grid.innerHTML = '<div class="arch-empty">Select one or more categories above to browse annotated images.</div>';
+    return;
+  }
+  const sel = [...archiveSelected];
+  const store = annStore();
+  const results = [];
+  (annItems || []).forEach(item => {
+    const rec = store[item.sha] || {};
+    const labels = [...(rec.human_secondary || []), ...(rec.human_where || [])];
+    if (labels.length && sel.some(c => labels.includes(c))) {
+      results.push({ item, labels });
+    }
+  });
+  if (!results.length) {
+    grid.innerHTML = '<div class="arch-empty">No annotated images found for the selected categories.</div>';
+    return;
+  }
+  grid.innerHTML = results.map(({ item, labels }) => {
+    const chips = labels.map(code => {
+      const matchCls = archiveSelected.has(code) ? ' match' : '';
+      return `<span class="arch-chip${matchCls}" data-code="${code}"
+        onmouseenter="annTagHoverOn(event,this)" onmouseleave="annTagHoverOff()">${code}</span>`;
+    }).join('');
+    const pathShort = (item.orig_path || item.sha.substring(0, 12) + '…').split('/').pop();
+    return `<div class="arch-card">
+      <img src="${BASE_URL}${item.img_url}" alt="" loading="lazy">
+      <div class="arch-card-meta">
+        <div class="arch-card-path" title="${item.orig_path || ''}">${pathShort}</div>
+        <div class="arch-chips">${chips}</div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function buildAnnotatorSection() {
