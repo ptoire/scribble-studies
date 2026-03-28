@@ -338,6 +338,20 @@ body {
   color: var(--c-text);
 }
 .detail-info-section h3:first-child { margin-top: 0; }
+.detail-section-label {
+  font-family:var(--font-mono); font-size:0.58rem; font-weight:700;
+  letter-spacing:0.1em; text-transform:uppercase; color:var(--c-text-tertiary);
+  margin:1rem 0 0.35rem;
+}
+.detail-drawing-scene {
+  font-family:var(--font-display); font-size:1rem; font-style:italic;
+  color:var(--c-text); line-height:1.75; margin-bottom:0.7rem;
+}
+.detail-drawing-instructions {
+  font-family:var(--font-body); font-size:0.8rem; color:var(--c-text-secondary);
+  line-height:1.7; padding:0.5rem 0.7rem;
+  background:var(--c-bg-warm); border-left:3px solid var(--c-border); border-radius:0 3px 3px 0;
+}
 .info-row {
   display: flex;
   justify-content: space-between;
@@ -1401,6 +1415,13 @@ body {
 .is-chip:hover { box-shadow: var(--shadow-sm); }
 .is-chip-code { font-family:var(--font-mono); font-size:0.58rem; font-weight:700; letter-spacing:0.04em; }
 .is-chip-name { font-family:var(--font-display); font-size:0.72rem; line-height:1.15; }
+.is-chip-count {
+  display:inline-flex; align-items:center; justify-content:center;
+  font-family:var(--font-mono); font-size:0.48rem; font-weight:700;
+  background:var(--c-accent); color:#fff; border-radius:50%;
+  min-width:1.2em; height:1.2em; padding:0 0.15em; margin-left:0.2em;
+  vertical-align:middle; line-height:1;
+}
 .is-chip[data-group="Spatial Primitive"] .is-chip-code { color:var(--c-is-spatial); }
 .is-chip[data-group="Path Family"]       .is-chip-code { color:var(--c-is-path); }
 .is-chip[data-group="Containment Family"].is-chip-code { color:var(--c-is-contain); }
@@ -1576,7 +1597,14 @@ body {
   transition:box-shadow 0.2s, transform 0.2s; position:relative;
 }
 .is-archive-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.is-archive-card-img-wrap { position:relative; }
 .is-archive-card img { display:block; width:100%; aspect-ratio:3/2; object-fit:contain; background:#fff; border-bottom:1px solid var(--c-border-light); }
+.is-archive-card-anim {
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  background:#fff; opacity:0; transition:opacity 0.18s;
+  pointer-events:none; display:block; border-bottom:1px solid var(--c-border-light);
+}
+.is-archive-card:hover .is-archive-card-anim { opacity:1; }
 .is-archive-card-info { padding:0.38rem 0.55rem; }
 .is-archive-card-schema { font-family:var(--font-mono); font-size:0.6rem; font-weight:700; color:var(--c-text-tertiary); letter-spacing:0.04em; }
 .is-archive-card-name { font-family:var(--font-display); font-size:0.88rem; font-weight:600; line-height:1.2; }
@@ -5653,6 +5681,7 @@ function buildISStudioSection() {
   isRenderSwatches();
   isSetupCanvas();
   isRenderArchive();
+  isUpdateChipCounts();
 }
 
 // ── Thumb zoom globals ────────────────────────────────────────────────────────
@@ -6080,6 +6109,7 @@ function isSaveSession() {
   const fb = document.getElementById('is-save-fb');
   if (fb) { fb.textContent = 'Saved ✓'; setTimeout(() => { if (fb) fb.textContent = ''; }, 2500); }
   isRenderArchive();
+  isUpdateChipCounts();
 
   // Auto-save skeleton (no PNGs) to server — degrades gracefully on public page
   try {
@@ -6110,7 +6140,10 @@ function isRenderArchive() {
     card.className = 'is-archive-card';
     const date = new Date(sess.timestamp).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
     card.innerHTML = `
-      <img src="${sess.thumb_dataurl}" alt="${sess.schema_name}">
+      <div class="is-archive-card-img-wrap">
+        <img src="${sess.thumb_dataurl}" alt="${sess.schema_name}">
+        <canvas class="is-archive-card-anim" width="300" height="200"></canvas>
+      </div>
       <div class="is-archive-card-info">
         <div class="is-archive-card-schema">${sess.schema_code}</div>
         <div class="is-archive-card-name">${sess.schema_name}</div>
@@ -6118,17 +6151,87 @@ function isRenderArchive() {
       </div>
       <div class="is-archive-card-del" title="Delete session">✕</div>
     `;
-    card.querySelector('img').addEventListener('click', () => isOpenDetail(sess));
+    card.addEventListener('mouseenter', () => isCardHoverStart(card, sess));
+    card.addEventListener('mouseleave', () => isCardHoverEnd(card));
+    card.querySelector('.is-archive-card-img-wrap').addEventListener('click', () => isOpenDetail(sess));
     card.querySelector('.is-archive-card-info').addEventListener('click', () => isOpenDetail(sess));
     card.querySelector('.is-archive-card-del').addEventListener('click', e => {
       e.stopPropagation();
       if (confirm('Delete this session?')) {
         isSaveSessions(isGetSessions().filter(s => s.session_id !== sess.session_id));
         isRenderArchive();
+        isUpdateChipCounts();
       }
     });
     grid.appendChild(card);
   });
+}
+
+// ── Chip saved-count badges ───────────────────────────────────────────────────
+function isUpdateChipCounts() {
+  const sessions = isGetSessions();
+  const counts = {};
+  sessions.forEach(s => { counts[s.schema_code] = (counts[s.schema_code] || 0) + 1; });
+  document.querySelectorAll('#is-chip-grid .is-chip').forEach(ch => {
+    const n = counts[ch.dataset.code] || 0;
+    let badge = ch.querySelector('.is-chip-count');
+    if (n > 0) {
+      if (!badge) { badge = document.createElement('span'); badge.className = 'is-chip-count'; ch.appendChild(badge); }
+      badge.textContent = n;
+    } else {
+      if (badge) badge.remove();
+    }
+  });
+}
+
+// ── Archive card hover animation ─────────────────────────────────────────────
+function isCardHoverStart(card, sess) {
+  const cvs = card.querySelector('.is-archive-card-anim');
+  if (!cvs || !sess.anim) return;
+  const ctx = cvs.getContext('2d');
+  const W = cvs.width, H = cvs.height; // 300×200
+  const anim = sess.anim;
+  const scaleX = W / anim.w, scaleY = H / anim.h;
+  const allPts = anim.strokes.flat();
+  if (!allPts.length) return;
+  const tStart = allPts[0].t, tEnd = allPts[allPts.length - 1].t;
+  const duration = Math.max(100, tEnd - tStart);
+  const animDuration = Math.max(800, duration); // real speed, min 0.8s
+
+  const startTime = performance.now();
+  let rafId;
+  card._isHoverAnimId = null;
+
+  function frame(now) {
+    const progress = Math.min(1, (now - startTime) / animDuration);
+    const tCur = tStart + progress * duration;
+    ctx.clearRect(0, 0, W, H);
+    ctx.lineWidth = 1.5; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#1A1A1E'; ctx.fillStyle = '#1A1A1E';
+    anim.strokes.forEach(stroke => {
+      if (!stroke.length) return;
+      let started = false;
+      ctx.beginPath();
+      for (const p of stroke) {
+        if (p.t > tCur) break;
+        const px = p.x * scaleX, py = p.y * scaleY;
+        if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+      }
+      if (started) ctx.stroke();
+    });
+    if (progress < 1) {
+      rafId = requestAnimationFrame(frame);
+      card._isHoverAnimId = rafId;
+    }
+  }
+  rafId = requestAnimationFrame(frame);
+  card._isHoverAnimId = rafId;
+}
+
+function isCardHoverEnd(card) {
+  if (card._isHoverAnimId) { cancelAnimationFrame(card._isHoverAnimId); card._isHoverAnimId = null; }
+  const cvs = card.querySelector('.is-archive-card-anim');
+  if (cvs) { const ctx = cvs.getContext('2d'); ctx.clearRect(0, 0, cvs.width, cvs.height); }
 }
 
 function isExportAll() {
@@ -6157,6 +6260,14 @@ function isOpenDetail(sess) {
 
   const date = new Date(sess.timestamp).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
 
+  const schema = IS_BY_CODE[sess.schema_code] || {};
+  const sceneHtml = schema.drawing_scene
+    ? `<div class="detail-section-label">Drawing scene</div>
+       <div class="detail-drawing-scene">${schema.drawing_scene}</div>` : '';
+  const instrHtml = schema.drawing_instructions
+    ? `<div class="detail-section-label">How to draw it</div>
+       <div class="detail-drawing-instructions">${schema.drawing_instructions}</div>` : '';
+
   panel.innerHTML = `
     <div class="detail-header">
       <button class="detail-close" onclick="isCloseDetail()">&times;</button>
@@ -6171,15 +6282,17 @@ function isOpenDetail(sess) {
         </div>
         <div class="anim-controls">
           <button class="anim-btn" id="btn-play" onclick="isTogglePlay()">▶ Play</button>
-          <span class="anim-progress" id="anim-progress">0%</span>
+          <span class="anim-progress" id="anim-progress"></span>
         </div>
       </div>
       <div class="detail-info-section">
-        <h3>Session Info</h3>
+        ${sceneHtml}
+        ${instrHtml}
+        <div class="detail-section-label" style="margin-top:${sceneHtml ? '1.2rem' : '0'}">Session info</div>
         <div class="info-row"><span class="info-label">Schema</span><span class="info-value">${sess.schema_code}</span></div>
         <div class="info-row"><span class="info-label">Group</span><span class="info-value">${sess.schema_group || '—'}</span></div>
-        <div class="info-row"><span class="info-label">Total Strokes</span><span class="info-value">${sess.total_strokes}</span></div>
-        <div class="info-row"><span class="info-label">Total Points</span><span class="info-value">${sess.total_points}</span></div>
+        <div class="info-row"><span class="info-label">Strokes</span><span class="info-value">${sess.total_strokes}</span></div>
+        <div class="info-row"><span class="info-label">Points</span><span class="info-value">${sess.total_points}</span></div>
         <div class="info-row"><span class="info-label">Recorded</span><span class="info-value">${date}</span></div>
       </div>
     </div>
@@ -6235,8 +6348,8 @@ function isTogglePlay() {
   if (allPts.length < 2) return;
   const tStart = allPts[0].t, tEnd = allPts[allPts.length - 1].t;
   const duration = Math.max(1, tEnd - tStart);
-  // Play at 40% of recorded speed, minimum 2 s
-  const animDuration = Math.max(2000, duration * 0.4);
+  // Play at real speed, minimum 1 s
+  const animDuration = Math.max(1000, duration);
   let startTime = performance.now();
   _isDetailPlaying = true;
   const btn = document.getElementById('btn-play');
