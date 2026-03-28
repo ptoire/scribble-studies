@@ -2668,7 +2668,9 @@ function buildAnnotatorSection() {
           <canvas class="ann-draw-canvas" id="ann-draw-canvas"></canvas>
         </div>
         </div>
-        ${READONLY ? '' : `<div class="ann-draw-toolbar">
+        ${READONLY ? `<div style="margin-top:0.4rem;">
+          <button id="sa-overlay-btn" class="ann-draw-btn" onclick="saToggleOverlay()" title="Show or hide the colored annotation traces overlaid on the image">◎ Show spatial labels</button>
+        </div>` : `<div class="ann-draw-toolbar">
           <button class="ann-draw-btn active" id="ann-draw-toggle" onclick="saToggleDraw()">✏ Draw</button>
           <button class="ann-draw-btn" onclick="saNewAnnotation()" title="New annotation group (Alt+Enter)">+ New</button>
           <button class="ann-draw-btn" onclick="saDeleteSelected()">✕ Delete</button>
@@ -2992,6 +2994,7 @@ let saZoom         = 1.0;  // current zoom level
 let saDrawActive   = true; // pen mode on
 let saSoftBrush    = false; // soft/fuzzy brush for placement patterns
 let saHoverId      = null; // id of annotation under mouse cursor
+let saShowOverlay  = !READONLY; // in public view: off by default, toggled by button
 let saDrawing      = false;
 let saDrawLast     = null;
 let saDrawCurrent  = null; // annotation being drawn
@@ -3070,6 +3073,16 @@ function saResetZoom() {
   if (pct)    pct.value    = '100%';
   if (slider) slider.value = 100;
   annDrawResizeCanvas();
+}
+
+function saToggleOverlay() {
+  saShowOverlay = !saShowOverlay;
+  const btn = document.getElementById('sa-overlay-btn');
+  if (btn) {
+    btn.textContent = saShowOverlay ? '◉ Hide spatial labels' : '◎ Show spatial labels';
+    btn.classList.toggle('active', saShowOverlay);
+  }
+  saRepaint();
 }
 
 function saToggleSoft() {
@@ -3201,6 +3214,7 @@ function saRepaint() {
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (!saShowOverlay) return;
   ctx.lineCap = 'round'; ctx.lineJoin = 'round';
 
   const hasSelection = !!saSelectedId;
