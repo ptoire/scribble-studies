@@ -2765,11 +2765,11 @@ function archiveRender() {
     const hasPrefill = prefillSet.size > 0;
     let sourceBadge = '';
     if (hasManual && hasPrefill) {
-      sourceBadge = `<div class="arch-source"><span class="arch-src-manual">annotata</span> + <span class="arch-src-prefill">Kellogg</span></div>`;
+      sourceBadge = `<div class="arch-source"><span class="arch-src-manual">manually annotated</span> + <span class="arch-src-prefill">Kellogg</span></div>`;
     } else if (hasManual) {
-      sourceBadge = `<div class="arch-source"><span class="arch-src-manual">annotata da me</span></div>`;
+      sourceBadge = `<div class="arch-source"><span class="arch-src-manual">manually annotated</span></div>`;
     } else {
-      sourceBadge = `<div class="arch-source"><span class="arch-src-prefill">pre-classificata da Rhoda Kellogg</span></div>`;
+      sourceBadge = `<div class="arch-source"><span class="arch-src-prefill">pre-classified by Rhoda Kellogg</span></div>`;
     }
     const pathShort = (item.orig_path || item.sha.substring(0, 12) + '…').split('/').pop();
     return `<div class="arch-card">
