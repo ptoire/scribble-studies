@@ -606,6 +606,11 @@ body {
 .arch-card-path { font-size:0.68rem; font-family:var(--font-mono); color:var(--c-text-secondary);
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:0.3rem; }
 .arch-chips { display:flex; flex-wrap:wrap; gap:0.2rem; }
+.arch-source { font-size:0.65rem; color:var(--c-text-secondary); margin-bottom:0.3rem; }
+.arch-src-manual  { color:#2a7a2a; font-weight:600; }
+.arch-src-prefill { color:#5a6a8a; font-weight:600; }
+.arch-chip-manual  { border-bottom:2px solid #2a7a2a; }
+.arch-chip-prefill { border-bottom:2px solid #9aadcc; opacity:0.85; }
 .arch-chip { font-size:0.68rem; font-family:var(--font-mono); padding:0.1em 0.35em;
   border:1px solid var(--c-border-light); border-radius:2px; background:var(--c-tag-bg);
   color:var(--c-tag-text); cursor:default; }
@@ -2722,7 +2727,7 @@ function archiveRender() {
   const grid = document.getElementById('arch-grid');
   if (!grid) return;
   if (!archiveSelected.size) {
-    grid.innerHTML = '<div class="arch-empty">Select one or more categories above to browse annotated images.</div>';
+    grid.innerHTML = '<div class="arch-empty">Select one or more categories above to browse images.</div>';
     return;
   }
   const sel = [...archiveSelected];
@@ -2730,26 +2735,48 @@ function archiveRender() {
   const results = [];
   (annItems || []).forEach(item => {
     const rec = store[item.sha] || {};
-    const labels = [...(rec.human_secondary || []), ...(rec.human_where || [])];
-    if (labels.length && sel.some(c => labels.includes(c))) {
-      results.push({ item, labels });
+    // Labels from two sources
+    const prefillSet = new Set(item.prefill_labels || []);
+    const manualSet  = new Set([...(rec.human_secondary || []), ...(rec.human_where || [])]);
+    // Only show if at least one selected category appears in either source
+    const matchPrefill = sel.some(c => prefillSet.has(c));
+    const matchManual  = sel.some(c => manualSet.has(c));
+    if (matchPrefill || matchManual) {
+      results.push({ item, prefillSet, manualSet });
     }
   });
   if (!results.length) {
-    grid.innerHTML = '<div class="arch-empty">No annotated images found for the selected categories.</div>';
+    grid.innerHTML = '<div class="arch-empty">No images found for the selected categories.</div>';
     return;
   }
-  grid.innerHTML = results.map(({ item, labels }) => {
-    const chips = labels.map(code => {
-      const matchCls = archiveSelected.has(code) ? ' match' : '';
-      return `<span class="arch-chip${matchCls}" data-code="${code}"
+  grid.innerHTML = results.map(({ item, prefillSet, manualSet }) => {
+    // Build chip list: manual first (highlighted), then prefill-only
+    const allCodes = new Set([...manualSet, ...prefillSet]);
+    const chips = [...allCodes].sort().map(code => {
+      const isManual  = manualSet.has(code);
+      const isPrefill = prefillSet.has(code);
+      const matchCls  = archiveSelected.has(code) ? ' match' : '';
+      const srcCls    = isManual ? ' arch-chip-manual' : ' arch-chip-prefill';
+      return `<span class="arch-chip${matchCls}${srcCls}" data-code="${code}"
         onmouseenter="annTagHoverOn(event,this)" onmouseleave="annTagHoverOff()">${code}</span>`;
     }).join('');
+    // Source badge
+    const hasManual  = manualSet.size > 0;
+    const hasPrefill = prefillSet.size > 0;
+    let sourceBadge = '';
+    if (hasManual && hasPrefill) {
+      sourceBadge = `<div class="arch-source"><span class="arch-src-manual">annotata</span> + <span class="arch-src-prefill">Kellogg</span></div>`;
+    } else if (hasManual) {
+      sourceBadge = `<div class="arch-source"><span class="arch-src-manual">annotata da me</span></div>`;
+    } else {
+      sourceBadge = `<div class="arch-source"><span class="arch-src-prefill">pre-classificata da Rhoda Kellogg</span></div>`;
+    }
     const pathShort = (item.orig_path || item.sha.substring(0, 12) + '…').split('/').pop();
     return `<div class="arch-card">
       <img src="${BASE_URL}${item.img_url}" alt="" loading="lazy">
       <div class="arch-card-meta">
         <div class="arch-card-path" title="${item.orig_path || ''}">${pathShort}</div>
+        ${sourceBadge}
         <div class="arch-chips">${chips}</div>
       </div>
     </div>`;
