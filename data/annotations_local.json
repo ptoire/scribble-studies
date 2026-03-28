@@ -33,7 +33,8 @@
       ],
       "human_secondary": [
         "K-DC",
-        "K-EF"
+        "K-EF",
+        "K-ACL"
       ],
       "maurer_tc": [],
       "spatial_annotations": [
@@ -5837,8 +5838,8 @@
               "soft": false
             }
           ],
-          "label": null,
-          "label_type": null
+          "label": "K-ACL",
+          "label_type": "kellogg"
         }
       ],
       "status": "confirmed",
