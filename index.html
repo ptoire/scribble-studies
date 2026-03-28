@@ -3082,7 +3082,8 @@ function saToggleOverlay() {
     btn.textContent = saShowOverlay ? '◉ Hide spatial labels' : '◎ Show spatial labels';
     btn.classList.toggle('active', saShowOverlay);
   }
-  saRepaint();
+  // annDrawResizeCanvas sizes the canvas buffer (if image is loaded) then calls saRepaint()
+  annDrawResizeCanvas();
 }
 
 function saToggleSoft() {
