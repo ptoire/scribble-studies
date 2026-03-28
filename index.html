@@ -1268,6 +1268,158 @@ body {
   white-space: pre;
   background: var(--c-bg);
 }
+
+/* ═══════════════════════════════════════════════════════════
+   IS STUDIO — Image Schemata Studio
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --c-is-core:     #2C3E50;
+  --c-is-force:    #922B21;
+  --c-is-orient:   #1A5276;
+  --c-is-other:    #5D6D7E;
+}
+.is-studio-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--c-text);
+}
+.is-studio-section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.is-studio-section .section-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--c-text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+.is-studio-body {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.is-left-panel {
+  position: sticky;
+  top: 4rem;
+  background: var(--c-bg-warm);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  padding: 0.9rem;
+  max-height: calc(100vh - 5rem);
+  overflow-y: auto;
+}
+.is-chip-grid { display:flex; flex-wrap:wrap; gap:0.25rem; margin-bottom:0.9rem; }
+.is-chip {
+  display: flex; flex-direction: column;
+  padding: 0.22rem 0.45rem;
+  border: 1px solid var(--c-border-light);
+  border-radius: 3px;
+  background: var(--c-bg-card);
+  cursor: pointer;
+  transition: all 0.12s;
+}
+.is-chip:hover { box-shadow: var(--shadow-sm); }
+.is-chip-code { font-family:var(--font-mono); font-size:0.58rem; font-weight:700; letter-spacing:0.04em; }
+.is-chip-name { font-family:var(--font-display); font-size:0.72rem; line-height:1.15; }
+.is-chip[data-group="Core"]        .is-chip-code { color: var(--c-is-core); }
+.is-chip[data-group="Force"]       .is-chip-code { color: var(--c-is-force); }
+.is-chip[data-group="Orientational"].is-chip-code { color: var(--c-is-orient); }
+.is-chip[data-group="Other"]       .is-chip-code { color: var(--c-is-other); }
+.is-chip.active { box-shadow: var(--shadow-sm); }
+.is-chip.active[data-group="Core"]        { border-color:var(--c-is-core);    background:rgba(44,62,80,0.07); }
+.is-chip.active[data-group="Force"]       { border-color:var(--c-is-force);   background:rgba(146,43,33,0.07); }
+.is-chip.active[data-group="Orientational"]{ border-color:var(--c-is-orient); background:rgba(26,82,118,0.07); }
+.is-chip.active[data-group="Other"]       { border-color:var(--c-is-other);   background:rgba(93,109,126,0.07); }
+.is-info-panel { border-top:1px solid var(--c-border-light); padding-top:0.8rem; }
+.is-info-placeholder { font-family:var(--font-mono); font-size:0.7rem; color:var(--c-text-tertiary); text-align:center; padding:1.2rem 0; }
+.is-info-name { font-family:var(--font-display); font-size:1.3rem; font-weight:600; line-height:1.2; margin-bottom:0.3rem; }
+.is-info-meta { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem; flex-wrap:wrap; }
+.is-group-badge {
+  font-family:var(--font-mono); font-size:0.58rem; font-weight:700;
+  padding:0.1rem 0.38rem; border-radius:3px; letter-spacing:0.05em; text-transform:uppercase;
+}
+.is-group-badge.Core         { background:rgba(44,62,80,0.1);   color:var(--c-is-core); }
+.is-group-badge.Force        { background:rgba(146,43,33,0.1);  color:var(--c-is-force); }
+.is-group-badge.Orientational{ background:rgba(26,82,118,0.1);  color:var(--c-is-orient); }
+.is-group-badge.Other        { background:rgba(93,109,126,0.1); color:var(--c-is-other); }
+.is-source-cite { font-family:var(--font-mono); font-size:0.62rem; color:var(--c-text-tertiary); font-style:italic; }
+.is-definition { font-size:0.82rem; color:var(--c-text-secondary); line-height:1.55; margin-bottom:0.7rem; font-style:italic; }
+.is-kellogg-box {
+  background:var(--c-bg-card); border:1px solid var(--c-border-light);
+  border-radius:3px; padding:0.55rem 0.65rem; margin-bottom:0.6rem;
+}
+.is-kellogg-label { font-family:var(--font-mono); font-size:0.58rem; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--c-text-tertiary); margin-bottom:0.3rem; }
+.is-kellogg-chips { display:flex; flex-wrap:wrap; gap:0.18rem; margin-bottom:0.3rem; }
+.is-k-chip {
+  font-family:var(--font-mono); font-size:0.6rem; padding:0.08em 0.32em;
+  border-radius:2px; border:1px solid var(--c-border-light);
+  background:var(--c-tag-bg); color:var(--c-tag-text); white-space:nowrap;
+}
+.is-k-chip.primary   { border-color:var(--c-text); background:var(--c-text); color:#fff; }
+.is-k-chip.secondary { opacity:0.65; }
+.is-kellogg-note { font-size:0.7rem; color:var(--c-text-secondary); font-style:italic; line-height:1.5; margin-top:0.3rem; }
+.is-draw-prompt {
+  font-size:0.75rem; color:var(--c-text-secondary); margin-top:0.6rem;
+  padding:0.45rem 0.55rem; background:var(--c-bg-warm);
+  border-left:2px solid var(--c-border); line-height:1.4; font-style:italic;
+}
+.is-right-panel { display:flex; flex-direction:column; gap:0.9rem; }
+.is-toolbar {
+  display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap;
+  padding:0.55rem 0.75rem;
+  background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px;
+}
+.is-toolbar-label { font-family:var(--font-mono); font-size:0.62rem; color:var(--c-text-tertiary); letter-spacing:0.05em; }
+.is-color-swatches { display:flex; gap:0.22rem; }
+.is-swatch {
+  width:17px; height:17px; border-radius:2px;
+  border:2px solid transparent; cursor:pointer; transition:transform 0.1s;
+}
+.is-swatch:hover { transform:scale(1.18); }
+.is-swatch.active { border-color:var(--c-text); }
+.is-canvas-wrap {
+  position:relative; border:1px solid var(--c-border); border-radius:3px;
+  background:#fff; overflow:hidden; aspect-ratio:1200/800; max-width:100%;
+}
+#is-canvas { display:block; width:100%; height:100%; touch-action:none; cursor:crosshair; }
+.is-canvas-placeholder {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  pointer-events:none; font-family:var(--font-display); font-style:italic;
+  color:var(--c-border); font-size:1rem; user-select:none;
+}
+.is-save-bar { display:flex; align-items:center; gap:0.5rem; }
+.is-save-feedback { font-family:var(--font-mono); font-size:0.7rem; color:#2E7040; }
+.is-archive-header { display:flex; align-items:center; gap:1rem; margin-bottom:0.7rem; padding-top:0.5rem; border-top:1px solid var(--c-border-light); }
+.is-archive-title { font-family:var(--font-display); font-size:1.1rem; font-weight:600; }
+.is-archive-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(170px,1fr)); gap:0.8rem; }
+.is-archive-card {
+  background:var(--c-bg-card); border:1px solid var(--c-border-light);
+  border-radius:4px; overflow:hidden; cursor:pointer;
+  transition:box-shadow 0.2s, transform 0.2s; position:relative;
+}
+.is-archive-card:hover { box-shadow:var(--shadow-md); transform:translateY(-2px); }
+.is-archive-card img { display:block; width:100%; aspect-ratio:3/2; object-fit:contain; background:#fff; border-bottom:1px solid var(--c-border-light); }
+.is-archive-card-info { padding:0.38rem 0.55rem; }
+.is-archive-card-schema { font-family:var(--font-mono); font-size:0.6rem; font-weight:700; color:var(--c-text-tertiary); letter-spacing:0.04em; }
+.is-archive-card-name { font-family:var(--font-display); font-size:0.88rem; font-weight:600; line-height:1.2; }
+.is-archive-card-meta { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); margin-top:0.15rem; }
+.is-archive-card-del {
+  position:absolute; top:0.28rem; right:0.28rem;
+  width:17px; height:17px; background:rgba(255,255,255,0.88);
+  border:1px solid var(--c-border); border-radius:2px;
+  font-size:0.6rem; cursor:pointer; display:none;
+  align-items:center; justify-content:center; color:var(--c-text-secondary);
+}
+.is-archive-card:hover .is-archive-card-del { display:flex; }
+.is-archive-card-del:hover { background:#C0392B; color:#fff; border-color:#C0392B; }
+.is-archive-empty { padding:2rem; text-align:center; font-family:var(--font-mono); font-size:0.8rem; color:var(--c-text-tertiary); border:1px dashed var(--c-border-light); border-radius:4px; }
+@media (max-width:900px) {
+  .is-studio-body { grid-template-columns:1fr; }
+  .is-left-panel  { position:static; max-height:none; }
+}
 </style>
 </head>
 <body>
@@ -1820,6 +1972,7 @@ async function init() {
   } catch(e) {}
   buildNav();
   buildGrid();
+  buildISStudioSection();
   // K-B: pre-render full-page blurred previews (needs layout to be settled)
   requestAnimationFrame(() => requestAnimationFrame(initPlacementPreviews));
   buildAnnotatorSection();
@@ -1842,6 +1995,11 @@ function buildNav() {
       document.getElementById(`group-${GROUP_LETTERS[g]}`).scrollIntoView({behavior:'smooth',block:'start'});
     nav.appendChild(btn);
   });
+  const isbtn = document.createElement('button');
+  isbtn.className = 'nav-btn';
+  isbtn.textContent = '◈ IS Studio';
+  isbtn.onclick = () => document.getElementById('is-studio-section').scrollIntoView({behavior:'smooth'});
+  nav.appendChild(isbtn);
   const mbtn = document.createElement('button');
   mbtn.className = 'nav-btn';
   mbtn.textContent = '◈ Maurer T–C';
@@ -4423,6 +4581,626 @@ function annDataCopy() {
 document.getElementById('ann-data-modal')?.addEventListener('click', e => {
   if (e.target === document.getElementById('ann-data-modal')) annDataClose();
 });
+
+/* ═══════════════════════════════════════════════════════════
+   IS STUDIO — Image Schemata Studio
+   Data, state, and all functions.
+   ═══════════════════════════════════════════════════════════ */
+
+const IMAGE_SCHEMATA = [
+  { code:"CONTAINER", name:"Container / Containment", group:"Core",
+    source:"Johnson 1987; Lakoff 1987",
+    definition:"Bounded space with interior, boundary, and exterior. The fundamental schema of enclosure.",
+    kellogg_primary:["K-D-02","K-D-03","K-A-11","K-A-13","K-A-19","K-A-20"],
+    kellogg_secondary:["K-G-10","K-H-04","K-A-15","K-A-16","K-A-17","K-A-18"],
+    kellogg_note:"Any closed or enclosing form activates containment. Priority: closures (K-D), enclosing lines (K-A-11, K-A-13), concentric structures (K-G-10)."
+  },
+  { code:"PATH", name:"Source-Path-Goal / Path", group:"Core",
+    source:"Johnson 1987; Lakoff 1987",
+    definition:"A trajectory from source to destination through contiguous locations with a direction.",
+    kellogg_primary:["K-A-02","K-A-03","K-A-04","K-A-05","K-A-10","K-A-12"],
+    kellogg_secondary:["K-A-06","K-A-07","K-A-08","K-A-09","K-B-16","K-B-17"],
+    kellogg_note:"All line types encode path. Single lines (K-A-02 to K-A-05) are clearest. Multiple lines (K-A-06–09) add iteration to path."
+  },
+  { code:"LINK", name:"Link", group:"Core",
+    source:"Johnson 1987",
+    definition:"A connection between two or more entities. The schema of binding and relation.",
+    kellogg_primary:["K-D-01","K-D-06"],
+    kellogg_secondary:["K-A-19","K-E-01","K-E-02","K-E-03"],
+    kellogg_note:"Crosses (K-D-01, K-D-06) are the purest link forms. Combines (K-E) enact linking of distinct diagram types."
+  },
+  { code:"CENTER-PERIPHERY", name:"Center-Periphery", group:"Core",
+    source:"Lakoff 1987",
+    definition:"A structure with a salient center and progressively less important periphery.",
+    kellogg_primary:["K-B-02","K-G-10","K-H-04","K-I-04","K-I-05"],
+    kellogg_secondary:["K-C-12","K-G-06","K-A-13","K-A-15"],
+    kellogg_note:"Mandalas (K-G), suns (K-H), and radials (K-I) are the canonical center-periphery forms. K-B-02 (centered placement) enacts it at page level."
+  },
+  { code:"BALANCE", name:"Balance", group:"Core",
+    source:"Johnson 1987",
+    definition:"Equilibrium of opposing forces or symmetrical spatial distribution.",
+    kellogg_primary:["K-B-06","K-G-06","K-I-05","K-D-01","K-D-03"],
+    kellogg_secondary:["K-B-02","K-D-02","K-D-04"],
+    kellogg_note:"Symmetrical forms and balanced placement enact this schema. Greek cross (K-D-01) and complete radials (K-I-05) are equilibrium diagrams."
+  },
+  { code:"ITERATION", name:"Iteration", group:"Other",
+    source:"Hampe 2005",
+    definition:"Repetition of a pattern or unit, producing rhythm and accumulation.",
+    kellogg_primary:["K-A-06","K-A-07","K-A-08","K-A-09","K-A-14"],
+    kellogg_secondary:["K-F-01","K-F-02","K-A-12","K-A-17"],
+    kellogg_note:"Multiple line types (K-A-06–09) are the clearest iteration forms. Aggregates (K-F) extend iteration to diagram-level repetition."
+  },
+  { code:"CYCLE", name:"Cycle", group:"Other",
+    source:"Johnson 1987",
+    definition:"A temporal circle: beginning, proceeding, and returning to the start.",
+    kellogg_primary:["K-A-15","K-A-16","K-D-03","K-G-10"],
+    kellogg_secondary:["K-A-11","K-A-13","K-A-14","K-A-17"],
+    kellogg_note:"Spirals (K-A-15) enact open-ended cycle. Circles (K-D-03, K-A-16–17) enact closed cycle. Concentric mandalas (K-G-10) layer cycles."
+  },
+  { code:"COMPULSION", name:"Compulsion", group:"Force",
+    source:"Johnson 1987",
+    definition:"An external force moving an entity along a path; felt necessity of motion.",
+    kellogg_primary:["K-A-14","K-A-15","K-A-16"],
+    kellogg_secondary:["K-A-12","K-A-13"],
+    kellogg_note:"Perseverative loops (K-A-14) and spirals (K-A-15) are the primary compulsion forms — motion that continues beyond apparent intention."
+  },
+  { code:"COUNTERFORCE", name:"Counterforce", group:"Force",
+    source:"Johnson 1987",
+    definition:"Two equally strong forces colliding head-on, producing tension or reversal.",
+    kellogg_primary:["K-A-12"],
+    kellogg_secondary:["K-C-01","K-C-02","K-C-03"],
+    kellogg_note:"Zigzag/waving line (K-A-12): each inflection point is a counterforce event. Line crossings (K-C) enact perpendicular counterforces."
+  },
+  { code:"DIVERSION", name:"Diversion", group:"Force",
+    source:"Johnson 1987",
+    definition:"A force vector deflected from its trajectory by an interaction.",
+    kellogg_primary:["K-A-04","K-A-05","K-A-08","K-A-09"],
+    kellogg_secondary:["K-A-10","K-A-12"],
+    kellogg_note:"Diagonal (K-A-04) and curved lines (K-A-05) enact deflection from canonical axes. Roving lines (K-A-10) enact continuous diversion."
+  },
+  { code:"ENABLEMENT", name:"Enablement", group:"Force",
+    source:"Johnson 1987",
+    definition:"Felt capacity for action; potential force vectors; the precondition of drawing.",
+    kellogg_primary:["K-B-01","K-B-17"],
+    kellogg_secondary:["K-B-16"],
+    kellogg_note:"Overall coverage (K-B-01) enacts preparatory field-making. Base-line fan (K-B-17) enacts directed capacity from a stable ground."
+  },
+  { code:"RESTRAINT", name:"Restraint", group:"Force",
+    source:"Johnson 1987",
+    definition:"A force preventing or limiting movement; the felt constraint of boundaries.",
+    kellogg_primary:["K-B-03"],
+    kellogg_secondary:["K-B-02","K-D-02","K-D-03"],
+    kellogg_note:"Spaced border (K-B-03) enacts restraint as empty margin — the page boundary as felt limit. Closed forms (K-D) internalize restraint."
+  },
+  { code:"SUPERIMPOSITION", name:"Superimposition", group:"Other",
+    source:"Johnson 1987",
+    definition:"Layering one schema or form on top of another; co-presence in the same space.",
+    kellogg_primary:["K-A-16","K-A-19","K-E-01"],
+    kellogg_secondary:["K-G-03","K-C-07"],
+    kellogg_note:"Multiple-line overlaid circle (K-A-16) is pure superimposition. Crossed circle (K-A-19) combines LINK and SUPERIMPOSITION. Combines (K-E-01) superimpose distinct diagrams."
+  },
+  { code:"UP-DOWN", name:"Up-Down", group:"Orientational",
+    source:"Johnson 1987; Lakoff 1987",
+    definition:"Vertical orientation relative to gravity; the primary bodily axis.",
+    kellogg_primary:["K-A-02","K-A-06","K-B-17"],
+    kellogg_secondary:["K-C-10"],
+    kellogg_note:"Vertical lines (K-A-02, K-A-06) are the clearest up-down enactments. Base-line fan (K-B-17) encodes the ground/sky axis."
+  },
+  { code:"SURFACE", name:"Surface", group:"Other",
+    source:"Hampe 2005",
+    definition:"A planar face or field; the ground of inscription.",
+    kellogg_primary:["K-B-01","K-F-07"],
+    kellogg_secondary:["K-A-03","K-A-07","K-B-05"],
+    kellogg_note:"Overall coverage (K-B-01) treats the page as surface to saturate. Multilined areas (K-F-07) build surface through accumulation."
+  },
+  { code:"PART-WHOLE", name:"Part-Whole", group:"Core",
+    source:"Lakoff 1987",
+    definition:"A whole consisting of parts in a configuration; the schema of composition.",
+    kellogg_primary:["K-E-01","K-E-02","K-E-03","K-F-03"],
+    kellogg_secondary:["K-B-06","K-B-11"],
+    kellogg_note:"All Combines (K-E) and Aggregates (K-F) are part-whole enactments. K-B-11 (quarter-page) enacts part-whole at page level."
+  },
+  { code:"COLLECTION", name:"Collection", group:"Other",
+    source:"Hampe 2005",
+    definition:"A grouping of multiple discrete units treated as a single entity.",
+    kellogg_primary:["K-F-01","K-F-02","K-F-03","K-F-04"],
+    kellogg_secondary:["K-A-06","K-A-07","K-A-08","K-A-09"],
+    kellogg_note:"Aggregates (K-F-01 to K-F-04) are the canonical collection forms. Multiple line types (K-A-06–09) are collections of strokes."
+  },
+  { code:"FULL-EMPTY", name:"Full-Empty", group:"Other",
+    source:"Hampe 2005",
+    definition:"The opposition between presence and absence of content within a container.",
+    kellogg_primary:["K-H-04","K-G-10"],
+    kellogg_secondary:["K-B-01","K-B-03"],
+    kellogg_note:"Clear-center suns (K-H-04) enact the full-empty contrast within the same drawing. Concentric mandalas (K-G-10) alternate filled and empty rings."
+  },
+];
+
+// Lookup Kellogg name from "K-A-01" style code using existing FULL_TAXONOMY
+function isKName(code) {
+  const parts = code.split('-'); // ["K","A","01"]
+  if (parts.length === 3) {
+    const prefix = `${parts[0]}-${parts[1]}`; // "K-A"
+    const num = parts[2];                       // "01"
+    if (FULL_TAXONOMY[prefix]?.[num]) return FULL_TAXONOMY[prefix][num];
+  }
+  return code;
+}
+
+// ── IS Studio state ──
+let isSelectedSchema  = null;
+let isStrokes         = [];   // [{pts:[{x,y,t,pressure}], color, size}, ...]
+let isCurrentStroke   = null;
+let isDrawColor       = '#1A1A1E';
+let isBrushSize       = 6;
+const IS_SESSIONS_KEY = 'is_studio_sessions';
+
+function isGetSessions() {
+  try { return JSON.parse(localStorage.getItem(IS_SESSIONS_KEY) || '[]'); } catch { return []; }
+}
+function isSaveSessions(arr) {
+  try { localStorage.setItem(IS_SESSIONS_KEY, JSON.stringify(arr)); } catch {}
+}
+
+// ── Build section ──────────────────────────────────────────────────────────
+function buildISStudioSection() {
+  const main = document.getElementById('main');
+  const section = document.createElement('section');
+  section.className = 'is-studio-section';
+  section.id = 'is-studio-section';
+
+  section.innerHTML = `
+    <h2>Image Schemata Studio</h2>
+    <p class="section-subtitle">Draw diagrams enacting cognitive image schemata — guided by the Kellogg taxonomy</p>
+    <div class="is-studio-body">
+      <div class="is-left-panel" id="is-left-panel">
+        <div class="is-chip-grid" id="is-chip-grid"></div>
+        <div class="is-info-panel" id="is-info-panel">
+          <div class="is-info-placeholder">Select a schema above to begin</div>
+        </div>
+      </div>
+      <div class="is-right-panel">
+        <div class="is-toolbar">
+          <span class="is-toolbar-label">BRUSH</span>
+          <input type="range" id="is-brush-size" min="2" max="16" value="6" style="width:75px;cursor:pointer;"
+            oninput="isBrushSize=parseInt(this.value)">
+          <span class="is-toolbar-label">COLOR</span>
+          <div class="is-color-swatches" id="is-swatches"></div>
+          <button class="ann-btn" onclick="isUndo()" title="Undo last stroke">↩ Undo</button>
+          <button class="ann-btn" onclick="isClear()">Clear</button>
+          <div style="flex:1"></div>
+          <button class="ann-btn ann-primary" id="is-save-btn" onclick="isSaveSession()" disabled>Save session</button>
+          <span class="is-save-feedback" id="is-save-fb"></span>
+        </div>
+        <div class="is-canvas-wrap">
+          <canvas id="is-canvas" width="1200" height="800"></canvas>
+          <div class="is-canvas-placeholder" id="is-placeholder">Select a schema and draw here</div>
+        </div>
+        <div class="is-save-bar">
+          <button class="ann-btn" onclick="isExportAll()">⬇ Export all sessions</button>
+        </div>
+        <div class="is-archive-header">
+          <span class="is-archive-title">Saved Sessions</span>
+        </div>
+        <div class="is-archive-grid" id="is-archive-grid"></div>
+      </div>
+    </div>
+  `;
+
+  main.appendChild(section);
+  isRenderChips();
+  isRenderSwatches();
+  isSetupCanvas();
+  isRenderArchive();
+}
+
+function isRenderChips() {
+  const grid = document.getElementById('is-chip-grid');
+  if (!grid) return;
+  IMAGE_SCHEMATA.forEach(schema => {
+    const chip = document.createElement('div');
+    chip.className = 'is-chip';
+    chip.dataset.code  = schema.code;
+    chip.dataset.group = schema.group;
+    chip.innerHTML = `<span class="is-chip-code">${schema.code}</span><span class="is-chip-name">${schema.name}</span>`;
+    chip.addEventListener('click', () => isSelectSchema(schema.code));
+    grid.appendChild(chip);
+  });
+}
+
+function isRenderSwatches() {
+  const wrap = document.getElementById('is-swatches');
+  if (!wrap) return;
+  ['#1A1A1E','#C0392B','#2980B9','#27AE60','#8E44AD'].forEach((c, i) => {
+    const sw = document.createElement('div');
+    sw.className   = 'is-swatch' + (i === 0 ? ' active' : '');
+    sw.style.background = c;
+    sw.addEventListener('click', () => {
+      isDrawColor = c;
+      wrap.querySelectorAll('.is-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+    });
+    wrap.appendChild(sw);
+  });
+}
+
+function isSelectSchema(code) {
+  isSelectedSchema = IMAGE_SCHEMATA.find(s => s.code === code) || null;
+  document.querySelectorAll('#is-chip-grid .is-chip').forEach(ch => {
+    ch.classList.toggle('active', ch.dataset.code === code);
+  });
+  isRenderInfo();
+  isUpdateSaveBtn();
+  const ph = document.getElementById('is-placeholder');
+  if (ph) ph.style.display = (isStrokes.length === 0) ? 'flex' : 'none';
+}
+
+function isRenderInfo() {
+  const panel = document.getElementById('is-info-panel');
+  if (!panel) return;
+  if (!isSelectedSchema) {
+    panel.innerHTML = '<div class="is-info-placeholder">Select a schema above to begin</div>';
+    return;
+  }
+  const s = isSelectedSchema;
+  const gc = s.group.replace(/\s+/g,'');
+  const primChips = s.kellogg_primary.map(c =>
+    `<span class="is-k-chip primary" title="${isKName(c)}">${c}</span>`).join('');
+  const secChips = s.kellogg_secondary.map(c =>
+    `<span class="is-k-chip secondary" title="${isKName(c)}">${c}</span>`).join('');
+  panel.innerHTML = `
+    <div class="is-info-name">${s.name}</div>
+    <div class="is-info-meta">
+      <span class="is-group-badge ${gc}">${s.group}</span>
+      <span class="is-source-cite">${s.source}</span>
+    </div>
+    <div class="is-definition">${s.definition}</div>
+    <hr style="border:none;border-top:1px solid var(--c-border-light);margin:0.55rem 0;">
+    <div class="is-kellogg-box">
+      <div class="is-kellogg-label">Primary Kellogg forms</div>
+      <div class="is-kellogg-chips">${primChips}</div>
+      <div class="is-kellogg-label" style="margin-top:0.35rem;">Secondary Kellogg forms</div>
+      <div class="is-kellogg-chips">${secChips}</div>
+      <div class="is-kellogg-note">${s.kellogg_note}</div>
+    </div>
+    <div class="is-draw-prompt">Draw a diagram that enacts this schema using the Kellogg forms listed above as a guide.</div>
+  `;
+}
+
+// ── Canvas drawing ──────────────────────────────────────────────────────────
+function isSetupCanvas() {
+  const canvas = document.getElementById('is-canvas');
+  if (!canvas) return;
+  let drawing = false;
+
+  function getPos(e) {
+    const r = canvas.getBoundingClientRect();
+    return {
+      x: (e.clientX - r.left) / r.width,
+      y: (e.clientY - r.top)  / r.height,
+      t: Date.now(),
+      pressure: (e.pressure > 0) ? e.pressure : 0.5,
+    };
+  }
+  function onStart(e) {
+    e.preventDefault();
+    drawing = true;
+    canvas.setPointerCapture(e.pointerId);
+    const p = getPos(e);
+    isCurrentStroke = { pts: [p], color: isDrawColor, size: isBrushSize };
+    const ph = document.getElementById('is-placeholder');
+    if (ph) ph.style.display = 'none';
+  }
+  function onMove(e) {
+    if (!drawing || !isCurrentStroke) return;
+    e.preventDefault();
+    isCurrentStroke.pts.push(getPos(e));
+    isRedrawCanvas();
+  }
+  function onEnd() {
+    if (!drawing || !isCurrentStroke) return;
+    drawing = false;
+    if (isCurrentStroke.pts.length > 0) isStrokes.push(isCurrentStroke);
+    isCurrentStroke = null;
+    isRedrawCanvas();
+    isUpdateSaveBtn();
+  }
+  canvas.addEventListener('pointerdown', onStart, { passive: false });
+  canvas.addEventListener('pointermove', onMove,  { passive: false });
+  canvas.addEventListener('pointerup',     onEnd);
+  canvas.addEventListener('pointercancel', onEnd);
+}
+
+function isRedrawCanvas() {
+  const canvas = document.getElementById('is-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, 1200, 800);
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  isStrokes.forEach(s => isDrawStroke(ctx, s));
+  if (isCurrentStroke) isDrawStroke(ctx, isCurrentStroke);
+}
+
+function isDrawStroke(ctx, stroke) {
+  const pts = stroke.pts;
+  if (!pts || !pts.length) return;
+  ctx.strokeStyle = stroke.color;
+  ctx.fillStyle   = stroke.color;
+  ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  if (pts.length === 1) {
+    const lw = Math.max(1, Math.min(20, stroke.size * (pts[0].pressure > 0 ? pts[0].pressure * 2 : 1)));
+    ctx.beginPath();
+    ctx.arc(pts[0].x * 1200, pts[0].y * 800, lw / 2, 0, Math.PI * 2);
+    ctx.fill();
+    return;
+  }
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p  = pts[i];
+    const pn = pts[i + 1];
+    const lw = Math.max(1, Math.min(20, stroke.size * (p.pressure > 0 ? p.pressure * 2 : 1)));
+    ctx.lineWidth = lw;
+    ctx.beginPath();
+    ctx.moveTo(p.x * 1200, p.y * 800);
+    ctx.lineTo(pn.x * 1200, pn.y * 800);
+    ctx.stroke();
+  }
+}
+
+function isUndo() {
+  if (!isStrokes.length) return;
+  isStrokes.pop();
+  isRedrawCanvas();
+  isUpdateSaveBtn();
+  if (!isStrokes.length) {
+    const ph = document.getElementById('is-placeholder');
+    if (ph) ph.style.display = 'flex';
+  }
+}
+
+function isClear() {
+  isStrokes = []; isCurrentStroke = null;
+  isRedrawCanvas();
+  isUpdateSaveBtn();
+  const ph = document.getElementById('is-placeholder');
+  if (ph) ph.style.display = 'flex';
+}
+
+function isUpdateSaveBtn() {
+  const btn = document.getElementById('is-save-btn');
+  if (btn) btn.disabled = !(isSelectedSchema && isStrokes.length > 0);
+}
+
+// ── Save session ──────────────────────────────────────────────────────────────
+function isSaveSession() {
+  if (!isSelectedSchema || !isStrokes.length) return;
+  const canvas = document.getElementById('is-canvas');
+  if (!canvas) return;
+  const schema    = isSelectedSchema;
+  const sessionId = `IS_${schema.code}_${Date.now()}`;
+
+  // Full-res PNG
+  const fullDataUrl = canvas.toDataURL('image/png');
+
+  // Thumbnail 300×200
+  const tc = document.createElement('canvas');
+  tc.width = 300; tc.height = 200;
+  const tctx = tc.getContext('2d');
+  tctx.fillStyle = '#fff'; tctx.fillRect(0, 0, 300, 200);
+  tctx.drawImage(canvas, 0, 0, 300, 200);
+  const thumbDataUrl = tc.toDataURL('image/png');
+
+  // Anim JSON: denormalize x,y; preserve t
+  const animStrokes = isStrokes.map(s => s.pts.map(p => ({ x: p.x * 1200, y: p.y * 800, t: p.t })));
+  const totalPoints = animStrokes.reduce((n, s) => n + s.length, 0);
+
+  const session = {
+    session_id:    sessionId,
+    schema_code:   schema.code,
+    schema_name:   schema.name,
+    schema_group:  schema.group,
+    timestamp:     new Date().toISOString(),
+    thumb_dataurl: thumbDataUrl,
+    full_dataurl:  fullDataUrl,
+    anim:          { w: 1200, h: 800, strokes: animStrokes },
+    total_strokes: isStrokes.length,
+    total_points:  totalPoints,
+  };
+
+  const sessions = isGetSessions();
+  sessions.push(session);
+  isSaveSessions(sessions);
+  isClear();
+
+  const fb = document.getElementById('is-save-fb');
+  if (fb) { fb.textContent = 'Saved ✓'; setTimeout(() => { if (fb) fb.textContent = ''; }, 2500); }
+  isRenderArchive();
+
+  // Optional: POST to server (degrades gracefully on public page)
+  try {
+    fetch('/api/is_sessions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessions }),
+    }).catch(() => {});
+  } catch {}
+}
+
+// ── Archive ───────────────────────────────────────────────────────────────────
+function isRenderArchive() {
+  const grid = document.getElementById('is-archive-grid');
+  if (!grid) return;
+  const sessions = isGetSessions();
+  if (!sessions.length) {
+    grid.innerHTML = '<div class="is-archive-empty">No sessions saved yet. Draw and save a session to see it here.</div>';
+    return;
+  }
+  grid.innerHTML = '';
+  [...sessions].reverse().forEach(sess => {
+    const card = document.createElement('div');
+    card.className = 'is-archive-card';
+    const date = new Date(sess.timestamp).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    card.innerHTML = `
+      <img src="${sess.thumb_dataurl}" alt="${sess.schema_name}">
+      <div class="is-archive-card-info">
+        <div class="is-archive-card-schema">${sess.schema_code}</div>
+        <div class="is-archive-card-name">${sess.schema_name}</div>
+        <div class="is-archive-card-meta">${sess.total_strokes} stroke${sess.total_strokes !== 1 ? 's' : ''} · ${date}</div>
+      </div>
+      <div class="is-archive-card-del" title="Delete session">✕</div>
+    `;
+    card.querySelector('img').addEventListener('click', () => isOpenDetail(sess));
+    card.querySelector('.is-archive-card-info').addEventListener('click', () => isOpenDetail(sess));
+    card.querySelector('.is-archive-card-del').addEventListener('click', e => {
+      e.stopPropagation();
+      if (confirm('Delete this session?')) {
+        isSaveSessions(isGetSessions().filter(s => s.session_id !== sess.session_id));
+        isRenderArchive();
+      }
+    });
+    grid.appendChild(card);
+  });
+}
+
+function isExportAll() {
+  const sessions = isGetSessions();
+  if (!sessions.length) { alert('No sessions to export.'); return; }
+  const blob = new Blob([JSON.stringify(sessions, null, 2)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'is_studio_sessions.json';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ── Session detail + playback ─────────────────────────────────────────────────
+let _isDetailSess    = null;
+let _isDetailAnimId  = null;
+let _isDetailPlaying = false;
+
+function isOpenDetail(sess) {
+  const overlay = document.getElementById('overlay');
+  const panel   = document.getElementById('detail-panel');
+  if (!overlay || !panel) return;
+  _isDetailSess    = sess;
+  _isDetailPlaying = false;
+  if (_isDetailAnimId) { cancelAnimationFrame(_isDetailAnimId); _isDetailAnimId = null; }
+
+  const date = new Date(sess.timestamp).toLocaleDateString('en-GB', {day:'numeric', month:'long', year:'numeric'});
+
+  panel.innerHTML = `
+    <div class="detail-header">
+      <button class="detail-close" onclick="isCloseDetail()">&times;</button>
+      <div class="detail-code">${sess.schema_code}</div>
+      <div class="detail-name">${sess.schema_name}</div>
+      <span class="detail-group-tag">${sess.schema_group || ''}</span>
+    </div>
+    <div class="detail-body">
+      <div class="detail-canvas-section">
+        <div class="detail-canvas-container">
+          <canvas id="detail-canvas" width="1200" height="800" style="width:100%;height:auto;"></canvas>
+        </div>
+        <div class="anim-controls">
+          <button class="anim-btn" id="btn-play" onclick="isTogglePlay()">▶ Play</button>
+          <span class="anim-progress" id="anim-progress">0%</span>
+        </div>
+      </div>
+      <div class="detail-info-section">
+        <h3>Session Info</h3>
+        <div class="info-row"><span class="info-label">Schema</span><span class="info-value">${sess.schema_code}</span></div>
+        <div class="info-row"><span class="info-label">Group</span><span class="info-value">${sess.schema_group || '—'}</span></div>
+        <div class="info-row"><span class="info-label">Total Strokes</span><span class="info-value">${sess.total_strokes}</span></div>
+        <div class="info-row"><span class="info-label">Total Points</span><span class="info-value">${sess.total_points}</span></div>
+        <div class="info-row"><span class="info-label">Recorded</span><span class="info-value">${date}</span></div>
+      </div>
+    </div>
+  `;
+
+  isDrawStatic(sess.anim);
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function isCloseDetail() {
+  if (_isDetailAnimId) { cancelAnimationFrame(_isDetailAnimId); _isDetailAnimId = null; }
+  _isDetailPlaying = false;
+  _isDetailSess    = null;
+  document.getElementById('overlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function isDrawStatic(anim) {
+  const canvas = document.getElementById('detail-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  ctx.clearRect(0, 0, 1200, 800);
+  ctx.strokeStyle = '#1A1A1E'; ctx.fillStyle = '#1A1A1E';
+  ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+  anim.strokes.forEach(stroke => {
+    if (!stroke.length) return;
+    if (stroke.length === 1) {
+      ctx.beginPath(); ctx.arc(stroke[0].x, stroke[0].y, 1, 0, Math.PI * 2); ctx.fill();
+    } else {
+      ctx.beginPath(); ctx.moveTo(stroke[0].x, stroke[0].y);
+      for (let i = 1; i < stroke.length; i++) ctx.lineTo(stroke[i].x, stroke[i].y);
+      ctx.stroke();
+    }
+  });
+}
+
+function isTogglePlay() {
+  if (_isDetailPlaying) {
+    if (_isDetailAnimId) { cancelAnimationFrame(_isDetailAnimId); _isDetailAnimId = null; }
+    _isDetailPlaying = false;
+    const btn = document.getElementById('btn-play');
+    if (btn) { btn.textContent = '▶ Play'; btn.classList.remove('active'); }
+    if (_isDetailSess) isDrawStatic(_isDetailSess.anim);
+    return;
+  }
+  if (!_isDetailSess) return;
+  const canvas = document.getElementById('detail-canvas');
+  if (!canvas) return;
+  const anim   = _isDetailSess.anim;
+  const ctx    = canvas.getContext('2d');
+  const allPts = anim.strokes.flat();
+  if (allPts.length < 2) return;
+  const tStart = allPts[0].t, tEnd = allPts[allPts.length - 1].t;
+  const duration = Math.max(1, tEnd - tStart);
+  // Play at 40% of recorded speed, minimum 2 s
+  const animDuration = Math.max(2000, duration * 0.4);
+  let startTime = performance.now();
+  _isDetailPlaying = true;
+  const btn = document.getElementById('btn-play');
+  if (btn) { btn.textContent = '⏸ Pause'; btn.classList.add('active'); }
+
+  function frame(now) {
+    const progress = Math.min(1, (now - startTime) / animDuration);
+    const tCur = tStart + progress * duration;
+    ctx.clearRect(0, 0, 1200, 800);
+    ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    anim.strokes.forEach(stroke => {
+      if (!stroke.length) return;
+      let started = false, active = false;
+      ctx.beginPath();
+      for (const p of stroke) {
+        if (p.t > tCur) { active = true; break; }
+        if (!started) { ctx.moveTo(p.x, p.y); started = true; } else ctx.lineTo(p.x, p.y);
+      }
+      if (started) {
+        ctx.strokeStyle = active ? '#C0392B' : '#1A1A1E';
+        ctx.stroke();
+      }
+    });
+    const pe = document.getElementById('anim-progress');
+    if (pe) pe.textContent = `${Math.round(progress * 100)}%`;
+    if (progress < 1) {
+      _isDetailAnimId = requestAnimationFrame(frame);
+    } else {
+      _isDetailPlaying = false;
+      if (btn) { btn.textContent = '▶ Play'; btn.classList.remove('active'); }
+    }
+  }
+  _isDetailAnimId = requestAnimationFrame(frame);
+}
 </script>
 <div id="ann-data-modal">
   <div id="ann-data-modal-box">
