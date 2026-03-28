@@ -2665,10 +2665,15 @@ let archiveSelected = new Set();
 
 function buildArchiveSection() {
   const main = document.getElementById('main');
-  if (!ANN_INDEX_DATA) return;
   const section = document.createElement('section');
   section.className = 'archive-section';
   section.id = 'archive-section';
+
+  if (!ANN_INDEX_DATA) {
+    section.innerHTML = `<h2>Kellogg Archive</h2><p class="section-subtitle">Dataset not generated yet — run <code>python build_annotator_data.py</code> first.</p>`;
+    main.appendChild(section);
+    return;
+  }
 
   // Build filter buttons grouped by taxonomy group
   const filterHTML = Object.entries(ANN_TAXONOMY).map(([group, codes]) => {
