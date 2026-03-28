@@ -581,7 +581,50 @@ body {
 }
 
 /* ── Archive section ─────────────────────────────────────────────────────── */
-.archive-section { margin-bottom: 3rem; }
+.archive-section {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--c-border);
+  margin-bottom: 3rem;
+}
+.archive-section h2 {
+  font-family: var(--font-display);
+  font-size: 2rem; font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.archive-section .section-subtitle {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--c-text-secondary);
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+.archive-section .section-source {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.4rem;
+}
+.archive-section .section-note {
+  font-size: 0.82rem;
+  color: var(--c-text-secondary);
+  margin-bottom: 2rem;
+  max-width: 760px;
+  line-height: 1.6;
+}
+.archive-section .section-note details {
+  margin-top: 0.5rem;
+}
+.archive-section .section-note summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-tertiary);
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+.archive-section .section-note details[open] summary { margin-bottom: 0.4rem; }
 .arch-filters { margin-bottom: 1.2rem; }
 .arch-clear-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.7rem; }
 .arch-clear-btn { font-size:0.75rem; font-family:var(--font-mono); padding:0.2em 0.7em;
@@ -2670,7 +2713,7 @@ function buildArchiveSection() {
   section.id = 'archive-section';
 
   if (!ANN_INDEX_DATA) {
-    section.innerHTML = `<h2>Kellogg Archive</h2><p class="section-subtitle">Dataset not generated yet — run <code>python build_annotator_data.py</code> first.</p>`;
+    section.innerHTML = `<h2>Kellogg Archive</h2><p class="section-subtitle">Dataset not generated yet — run <code>python build_annotator_data.py</code> first.</p><p class="section-note">Children's drawings from the Rhoda Kellogg Child Art Collection, digital re-edition by Maurer &amp; Riboni (Zurich University of the Arts).</p>`;
     main.appendChild(section);
     return;
   }
@@ -2692,7 +2735,20 @@ function buildArchiveSection() {
 
   section.innerHTML = `
     <h2>Kellogg Archive</h2>
-    <p class="section-subtitle">Browse annotated drawings by category — multi-select to find images with multiple labels</p>
+    <p class="section-subtitle">Children's drawings classified according to the Kellogg taxonomy — browse by category</p>
+    <div class="section-note">
+      <p>This archive reproduces a partial selection of drawings from the <em>Rhoda Kellogg Child Art Collection</em>,
+      originally assembled at the Golden Gate Kindergarten Association (San Francisco). The original collection holds
+      over half a million drawings, of which approximately 8,000 were made available in microfiche form
+      (Microcard Editions, Washington D.C.). The images shown here come from the digital re-edition
+      published by Maurer &amp; Riboni at the Zurich University of the Arts, which is publicly accessible online.</p>
+      <details>
+        <summary>References</summary>
+        <p class="section-source">Kellogg, R., &amp; O'Dell, S. (1967). <em>The psychology of children's art.</em> CRM.</p>
+        <p class="section-source">Maurer, D., &amp; Riboni, C. (n.d.). <em>Rhoda Kellogg Child Art Collection (digital archive).</em> Zurich University of the Arts. https://www.early-pictures.ch/kellogg/archive/en/categories</p>
+        <p class="section-source">Maurer, D., Riboni, C., &amp; Gujer, B. (2009). Early pictures in ontogeny. <em>IMAGE: Zeitschrift für interdisziplinäre Bildwissenschaft, 9</em>(1), 15–23.</p>
+      </details>
+    </div>
     <div class="arch-filters">
       <div class="arch-clear-row">
         <button class="arch-clear-btn" onclick="archiveClearAll()">Clear selection</button>
