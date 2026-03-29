@@ -126210,5 +126210,150 @@
     "total_strokes": 4,
     "total_points": 477,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_PATH_1774823924856",
+    "schema_code": "PATH",
+    "schema_name": "Path",
+    "schema_group": "Spatial Primitive",
+    "timestamp": "2026-03-29T22:38:44.883Z",
+    "author": {
+      "username": "Author",
+      "created_at": "2026-03-29T22:38:44.883Z"
+    },
+    "anim": {
+      "w": 1200,
+      "h": 800,
+      "strokes": [
+        {
+          "color": "#FF1020",
+          "size": 16,
+          "pts": [
+            {
+              "x": 506,
+              "y": 550,
+              "t": 1774823919459,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 509,
+              "y": 546,
+              "t": 1774823919556,
+              "pressure": 0.5,
+              "velocity": 53
+            },
+            {
+              "x": 520,
+              "y": 527,
+              "t": 1774823919563,
+              "pressure": 0.5,
+              "velocity": 3116
+            },
+            {
+              "x": 549,
+              "y": 494,
+              "t": 1774823919570,
+              "pressure": 0.5,
+              "velocity": 6222
+            },
+            {
+              "x": 575,
+              "y": 469,
+              "t": 1774823919577,
+              "pressure": 0.5,
+              "velocity": 5196
+            },
+            {
+              "x": 596,
+              "y": 449,
+              "t": 1774823919591,
+              "pressure": 0.5,
+              "velocity": 2094
+            },
+            {
+              "x": 607,
+              "y": 440,
+              "t": 1774823919598,
+              "pressure": 0.5,
+              "velocity": 2041
+            },
+            {
+              "x": 620,
+              "y": 433,
+              "t": 1774823919605,
+              "pressure": 0.5,
+              "velocity": 2101
+            },
+            {
+              "x": 630,
+              "y": 429,
+              "t": 1774823919612,
+              "pressure": 0.5,
+              "velocity": 1554
+            },
+            {
+              "x": 639,
+              "y": 426,
+              "t": 1774823919619,
+              "pressure": 0.5,
+              "velocity": 1290
+            },
+            {
+              "x": 649,
+              "y": 424,
+              "t": 1774823919626,
+              "pressure": 0.5,
+              "velocity": 1442
+            },
+            {
+              "x": 659,
+              "y": 423,
+              "t": 1774823919633,
+              "pressure": 0.5,
+              "velocity": 1442
+            },
+            {
+              "x": 667,
+              "y": 423,
+              "t": 1774823919640,
+              "pressure": 0.5,
+              "velocity": 1224
+            },
+            {
+              "x": 673,
+              "y": 423,
+              "t": 1774823919646,
+              "pressure": 0.5,
+              "velocity": 952
+            },
+            {
+              "x": 677,
+              "y": 423,
+              "t": 1774823919660,
+              "pressure": 0.5,
+              "velocity": 306
+            },
+            {
+              "x": 682,
+              "y": 423,
+              "t": 1774823919667,
+              "pressure": 0.5,
+              "velocity": 612
+            },
+            {
+              "x": 686,
+              "y": 423,
+              "t": 1774823919674,
+              "pressure": 0.5,
+              "velocity": 612
+            }
+          ]
+        }
+      ]
+    },
+    "total_strokes": 1,
+    "total_points": 17,
+    "stroke_annotations": []
   }
 ]
