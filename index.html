@@ -8455,6 +8455,27 @@ function buildISStudioSection() {
   isSetupCanvas();
   isRenderArchive();
   isUpdateChipCounts();
+  // Mobile hover: activate card animation when finger moves over a card
+  if (!window._isTouchMoveSetup) {
+    window._isTouchMoveSetup = true;
+    let _activeTouchCard = null;
+    document.addEventListener('touchmove', (e) => {
+      const t = e.touches[0];
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      const card = el && el.closest('.is-archive-card');
+      if (card !== _activeTouchCard) {
+        if (_activeTouchCard) isCardHoverEnd(_activeTouchCard);
+        _activeTouchCard = card || null;
+        if (card && card._isSess) isCardHoverStart(card, card._isSess);
+      }
+    }, { passive: true });
+    document.addEventListener('touchend', () => {
+      if (_activeTouchCard) { isCardHoverEnd(_activeTouchCard); _activeTouchCard = null; }
+    }, { passive: true });
+    document.addEventListener('touchcancel', () => {
+      if (_activeTouchCard) { isCardHoverEnd(_activeTouchCard); _activeTouchCard = null; }
+    }, { passive: true });
+  }
   // Init username display
   const ud = document.getElementById('is-username-display');
   if (ud) ud.textContent = isGetUsername();
@@ -9274,9 +9295,7 @@ function isRenderArchive() {
     `;
     card.addEventListener('mouseenter', () => isCardHoverStart(card, sess));
     card.addEventListener('mouseleave', () => isCardHoverEnd(card));
-    card.addEventListener('touchstart', () => isCardHoverStart(card, sess), { passive: true });
-    card.addEventListener('touchend',   (e) => { isCardHoverEnd(card); e.currentTarget.blur(); }, { passive: true });
-    card.addEventListener('touchcancel',() => isCardHoverEnd(card), { passive: true });
+    card._isSess = sess;
     card.querySelector('.is-archive-card-img-wrap').addEventListener('click', () => isOpenDetail(sess));
     card.querySelector('.is-archive-card-info').addEventListener('click', () => isOpenDetail(sess));
     const delBtn = card.querySelector('.is-archive-card-del');
