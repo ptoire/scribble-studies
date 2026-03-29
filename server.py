@@ -20,6 +20,7 @@ import os
 import re
 import subprocess
 import threading
+import urllib.request
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 
@@ -29,6 +30,7 @@ ANNOT_FILE    = SITE_DIR / "data" / "annotations_local.json"
 IS_FILE       = SITE_DIR / "data" / "is_sessions_local.json"
 K_TO_IS_FILE  = SITE_DIR / "data" / "k_to_is_local.json"
 PORT          = 8080
+WORKER_URL    = "https://kellogg-sync.crampodigesso.workers.dev"
 
 SHA_RE = re.compile(r"^/img/segmented/([a-f0-9]{64})\.(png|jpg|jpeg|webp)$", re.IGNORECASE)
 
@@ -101,6 +103,22 @@ def _load_is_sessions():
         return out
     except Exception:
         return []
+
+
+def _forward_to_worker(sessions):
+    """Forward sessions to Cloudflare Worker (server-to-server, no CORS)."""
+    try:
+        body = json.dumps({"sessions": sessions}).encode("utf-8")
+        req = urllib.request.Request(
+            WORKER_URL + "/sessions",
+            data=body,
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            print(f"✓  Worker sync: {resp.read().decode()}")
+    except Exception as e:
+        print(f"·  Worker sync failed: {e}")
 
 
 def _save_is_sessions(incoming):
@@ -189,6 +207,9 @@ class Handler(SimpleHTTPRequestHandler):
                 self._send_json({"ok": True})
                 print(f"✓  IS sessions updated ({len(incoming)} submitted)")
                 schedule_push()
+                # Forward to Worker in background (no CORS issues server-to-server)
+                t = threading.Thread(target=_forward_to_worker, args=(incoming,), daemon=True)
+                t.start()
             except Exception as e:
                 self._send_json({"error": str(e)}, 500)
 

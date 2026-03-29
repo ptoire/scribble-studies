@@ -9165,19 +9165,20 @@ function isSaveSession() {
   isRenderArchive();
   isUpdateChipCounts();
 
-  // Sync — strip full_dataurl but keep thumb; send only the new session to Worker
+  // Sync — strip full_dataurl but keep thumb; send only the new session
   const { full_dataurl: _fd, ...sessionToSync } = session;
   if (!READONLY) {
-    // Localhost: POST all sessions to local server
-    const syncAll = sessions.map(({ full_dataurl, ...r }) => r);
+    // Localhost: POST to local server — server proxies to Worker server-side (no CORS)
     fetch('/api/is_sessions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessions: syncAll }),
+      body: JSON.stringify({ sessions: [sessionToSync] }),
+    }).then(() => {
+      const fb2 = document.getElementById('is-save-fb');
+      if (fb2) { fb2.textContent = '✓ Synced to GitHub'; setTimeout(() => { fb2.textContent = ''; }, 4000); }
     }).catch(() => {});
-  }
-  // Always sync only the new session via Worker (keeps payload small)
-  if (GH_WORKER_URL) {
+  } else if (GH_WORKER_URL) {
+    // GitHub Pages: HTTPS → Worker, no CORS issue
     const fb2 = document.getElementById('is-save-fb');
     ghSyncSessions([sessionToSync]).then(ok => {
       if (fb2) fb2.textContent = ok ? '✓ Synced to GitHub' : '✓ Saved locally';
