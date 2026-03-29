@@ -1736,6 +1736,47 @@ body {
   border-radius:2px; border:1px solid rgba(41,128,185,0.35); color:#2980B9;
   background:rgba(41,128,185,0.05);
 }
+/* IS Studio — kpicker overlay inside canvas container */
+#is-det-kpicker {
+  display: none;
+  position: absolute; top: 0; right: 0;
+  width: 58%; height: 100%;
+  background: rgba(252,252,248,0.97);
+  border-left: 1.5px solid #d8d8d0;
+  overflow-y: auto;
+  z-index: 5;
+  padding: 0.5rem 0.4rem;
+  box-sizing: border-box;
+}
+.k-picker-header {
+  font-family: var(--font-mono); font-size: 0.55rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: #888;
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-bottom: 0.35rem; padding-bottom: 0.3rem;
+  border-bottom: 1px solid #e8e8e0;
+}
+.k-picker-tabs {
+  display: flex; flex-wrap: wrap; gap: 0.2rem;
+  margin-bottom: 0.35rem;
+}
+.k-card-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: 0.3rem; overflow-y: auto;
+}
+.k-card-chip {
+  display: flex; flex-direction: column;
+  border: 1.5px solid #e0e0d8; border-radius: 3px;
+  cursor: pointer; background: #fff; overflow: hidden;
+  padding: 0; text-align: left;
+  transition: border-color 0.1s, box-shadow 0.1s;
+}
+.k-card-chip:hover { border-color: #aaa; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.k-card-chip.active { border-width: 2px; box-shadow: 0 0 0 1px currentColor; }
+.k-card-chip img { display:block; width:100%; aspect-ratio:4/3; object-fit:contain; background:#f5f5f0; }
+.k-card-chip-noimg { width:100%; aspect-ratio:4/3; background:#f0f0ec; }
+.k-card-chip-info { padding: 0.15rem 0.22rem 0.18rem; }
+.k-card-chip-code { font-family:var(--font-mono); font-size:0.47rem; color:#999; line-height:1.3; }
+.k-card-chip-name { font-family:var(--font-body); font-size:0.55rem; color:#333; line-height:1.25; font-weight:500; }
 @media (max-width:900px) {
   .is-studio-body { grid-template-columns:1fr; }
   .is-left-panel  { position:static; max-height:none; }
@@ -9324,10 +9365,11 @@ function isDet_buildKPicker(sess) {
   const el = document.getElementById('is-det-kpicker');
   if (!el) return;
   if (_isDet_selStroke === null) {
-    el.innerHTML = '<div style="font-family:var(--font-mono);font-size:0.6rem;color:#999;padding:0.2rem;">Click a stroke to select it</div>';
+    el.innerHTML = '<div style="padding:0.6rem;font-family:var(--font-mono);font-size:0.6rem;color:#aaa;">Click a stroke<br>to label it</div>';
     return;
   }
   const currCodes = new Set(_isDet_labels[_isDet_selStroke] || []);
+  const hasClear = currCodes.size > 0;
 
   // Group tabs
   const tabsHtml = GROUP_ORDER.map(g => {
@@ -9336,35 +9378,40 @@ function isDet_buildKPicker(sess) {
     const col = _isDet_groupColors[grp] || '#888';
     const active = _isDet_pickerGroup === ltr;
     return `<button onclick="isDet_setPickerGroup('${ltr}')"
-      style="font-family:var(--font-mono);font-size:0.58rem;padding:0.15rem 0.35rem;border-radius:3px;cursor:pointer;
+      style="font-family:var(--font-mono);font-size:0.55rem;padding:0.12rem 0.3rem;border-radius:3px;cursor:pointer;
       border:1px solid ${active?col:'#ddd'};background:${active?col:'#fff'};color:${active?'#fff':col};font-weight:600;">${ltr}</button>`;
   }).join('');
 
-  // Chips for current group
+  // Card chips for current group
   const grp = 'K-' + _isDet_pickerGroup;
   const col = _isDet_groupColors[grp] || '#888';
   const taxEntries = Object.entries(FULL_TAXONOMY[grp] || {}).sort((a,b) => parseInt(a[0])-parseInt(b[0]));
-  const chipsHtml = taxEntries.map(([num, name]) => {
+  const cardsHtml = taxEntries.map(([num, name]) => {
     const kc = grp + '-' + num;
     const active = currCodes.has(kc);
-    return `<button
-      onclick="isDet_applyLabel(${_isDet_selStroke},'${kc}')"
-      onmouseenter="isDet_showTip(event,'${kc}')"
-      onmousemove="isDet_posTip(event)"
-      onmouseleave="isDet_hideTip()"
-      style="font-family:var(--font-mono);font-size:0.58rem;padding:0.12rem 0.35rem;border-radius:3px;cursor:pointer;text-align:left;
-      border:1px solid ${active?col:'#ddd'};background:${active?col+'18':'#fff'};
-      color:${active?col:'#555'};">${kc}</button>`;
+    const archSess = INDEX_DATA && INDEX_DATA.sessions
+      ? INDEX_DATA.sessions.find(s => s.code === kc) : null;
+    const imgHtml = archSess
+      ? `<img src="${BASE_URL}img/${archSess.session_id}_thumb.png" alt="${kc}" loading="lazy" onerror="this.style.display='none'">`
+      : '<div class="k-card-chip-noimg"></div>';
+    return `<button class="k-card-chip${active?' active':''}"
+      style="border-color:${active?col:'#e0e0d8'};color:${col};"
+      onclick="isDet_applyLabel(${_isDet_selStroke},'${kc}')">
+      ${imgHtml}
+      <div class="k-card-chip-info">
+        <div class="k-card-chip-code">${kc}</div>
+        <div class="k-card-chip-name">${name}</div>
+      </div>
+    </button>`;
   }).join('');
 
-  const hasClear = currCodes.size > 0;
   el.innerHTML =
-    `<div style="font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.07em;color:#888;margin-bottom:0.4rem;">
-      LABEL STROKE ${_isDet_selStroke+1}
-      ${hasClear ? `<button onclick="isDet_clearStroke(${_isDet_selStroke})" style="margin-left:0.6rem;font-family:var(--font-mono);font-size:0.55rem;border:1px solid #ddd;background:#fff;color:#999;border-radius:3px;padding:0 0.3rem;cursor:pointer;">clear all</button>` : ''}
+    `<div class="k-picker-header">
+      Stroke ${_isDet_selStroke+1}
+      ${hasClear ? `<button onclick="isDet_clearStroke(${_isDet_selStroke})" style="font-family:var(--font-mono);font-size:0.5rem;border:1px solid #ddd;background:#fff;color:#999;border-radius:3px;padding:0 0.28rem;cursor:pointer;margin-left:auto;">clear</button>` : ''}
     </div>`
-    + `<div style="display:flex;flex-wrap:wrap;gap:0.2rem;margin-bottom:0.45rem;">${tabsHtml}</div>`
-    + `<div style="display:flex;flex-direction:column;gap:0.15rem;max-height:180px;overflow-y:auto;">${chipsHtml}</div>`;
+    + `<div class="k-picker-tabs">${tabsHtml}</div>`
+    + `<div class="k-card-grid">${cardsHtml}</div>`;
 }
 
 function isDet_setPickerGroup(ltr) {
@@ -9443,6 +9490,7 @@ function isOpenDetail(sess) {
       <div class="detail-canvas-section">
         <div class="detail-canvas-container">
           <canvas id="detail-canvas" width="1200" height="800" style="width:100%;height:auto;cursor:default;"></canvas>
+          <div id="is-det-kpicker"></div>
         </div>
         <div class="anim-controls">
           <button class="anim-btn" id="btn-play" onclick="isTogglePlay()">&#9654; Play</button>
@@ -9452,7 +9500,6 @@ function isOpenDetail(sess) {
         <div id="is-det-legend" style="margin-top:0.6rem;"></div>
       </div>
       <div class="detail-info-section">
-        <div id="is-det-kpicker" style="display:none;margin-bottom:1rem;padding:0.6rem;border:1px solid #e0e0e0;border-radius:4px;background:#fafaf8;"></div>
         ${sceneHtml}
         ${instrHtml}
         <div class="detail-section-label" style="margin-top:${sceneHtml ? '1.2rem' : '0'}">Session info</div>
