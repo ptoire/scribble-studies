@@ -8238,6 +8238,7 @@ let isDrawColor       = BRUSH_PALETTE[0];
 let isBrushSize       = 6;
 const IS_SESSIONS_KEY = 'is_studio_sessions';
 const IS_DELETED_KEY  = 'is_studio_deleted'; // persisted set of locally-deleted session IDs
+const IS_SYNCED_KEY   = 'is_studio_synced';  // IDs confirmed present on server at last Refresh
 const IS_USERNAME_KEY = 'is_username';
 
 function isGetDeleted() {
@@ -8246,6 +8247,12 @@ function isGetDeleted() {
 function isAddDeleted(id) {
   const s = isGetDeleted(); s.add(id);
   try { localStorage.setItem(IS_DELETED_KEY, JSON.stringify([...s])); } catch {}
+}
+function isGetSynced() {
+  try { return new Set(JSON.parse(localStorage.getItem(IS_SYNCED_KEY) || '[]')); } catch { return new Set(); }
+}
+function isSaveSynced(ids) {
+  try { localStorage.setItem(IS_SYNCED_KEY, JSON.stringify([...ids])); } catch {}
 }
 
 // ── Username (persistent across sessions) ─────────────────────────────────────
@@ -8327,15 +8334,21 @@ async function isLoadFromServer() {
   try {
     // Worker is the single source of truth for all devices
     const serverSessions = await ghFetchSessions();
+    const serverIds = new Set(serverSessions.map(s => s.session_id));
     const deleted = isGetDeleted();
-    const local = isGetSessions();
+    const synced = isGetSynced();
+    let local = isGetSessions();
+    // Remove sessions that were previously synced but are no longer on server (deleted elsewhere)
+    local = local.filter(s => !synced.has(s.session_id) || serverIds.has(s.session_id));
     const localById = {};
     local.forEach(s => { if (s.session_id) localById[s.session_id] = s; });
     let added = 0;
     serverSessions.forEach(ss => {
       if (!localById[ss.session_id] && !deleted.has(ss.session_id)) { local.push(ss); added++; }
     });
-    if (added > 0) { isSaveSessions(local); isRenderArchive(); isUpdateChipCounts(); }
+    isSaveSynced(serverIds);
+    const changed = added > 0 || local.length !== isGetSessions().length;
+    if (changed) { isSaveSessions(local); isRenderArchive(); isUpdateChipCounts(); }
   } catch {}
   finally {
     if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
@@ -9213,8 +9226,7 @@ function isRenderArchive() {
     card.className = 'is-archive-card';
     const date = new Date(sess.timestamp).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
     const author = sess.author?.username || 'unknown';
-    const isOwn = !READONLY || author === currentUser;
-    const canDelete = !READONLY || isOwn; // localhost: all; public: own only
+    const canDelete = !READONLY; // deletion only from localhost
     const authorLine = `<div class="is-archive-card-author">${author}</div>`;
     const modLine = sess.modified_at
       ? `<div class="is-archive-card-mod">modified by author ${new Date(sess.modified_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>`
