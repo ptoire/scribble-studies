@@ -8173,7 +8173,7 @@ const IS_USERNAME_KEY = 'is_username';
 function isGetUsername() {
   let u = localStorage.getItem(IS_USERNAME_KEY);
   if (!u) {
-    u = 'anon_' + Math.random().toString(36).slice(2, 8);
+    u = READONLY ? 'anon_' + Math.random().toString(36).slice(2, 8) : 'Author';
     localStorage.setItem(IS_USERNAME_KEY, u);
   }
   return u;
@@ -8203,10 +8203,19 @@ function isSaveSessions(arr) {
 // Merge server sessions into localStorage (called on init and on "Refresh")
 async function isLoadFromServer() {
   try {
+    let serverSessions = [];
     const resp = await fetch('/api/is_sessions');
-    if (!resp.ok) return;
-    const data = await resp.json();
-    const serverSessions = data.sessions || [];
+    if (resp.ok) {
+      const data = await resp.json();
+      serverSessions = data.sessions || [];
+    } else {
+      // GitHub Pages static fallback: fetch the JSON file directly
+      const fallback = await fetch('data/is_sessions_local.json');
+      if (fallback.ok) {
+        const raw = await fallback.json();
+        serverSessions = Array.isArray(raw) ? raw : (raw.sessions || []);
+      }
+    }
     if (!serverSessions.length) return;
     const local = isGetSessions();
     const localIds = new Set(local.map(s => s.session_id));
