@@ -102421,5 +102421,108 @@
     "total_strokes": 1,
     "total_points": 55,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_SCALE_1774821414229",
+    "schema_code": "SCALE",
+    "schema_name": "Scale",
+    "schema_group": "Rhythm",
+    "timestamp": "2026-03-29T21:56:54.346Z",
+    "author": {
+      "username": "anon_km6kr4",
+      "created_at": "2026-03-29T21:56:54.346Z"
+    },
+    "anim": {
+      "w": 1200,
+      "h": 800,
+      "strokes": [
+        {
+          "color": "#0D0D0D",
+          "size": 6,
+          "pts": [
+            {
+              "x": 802,
+              "y": 763,
+              "t": 1774821405626,
+              "pressure": 1,
+              "velocity": 0
+            },
+            {
+              "x": 802,
+              "y": 757,
+              "t": 1774821405688,
+              "pressure": 1,
+              "velocity": 91
+            },
+            {
+              "x": 796,
+              "y": 837,
+              "t": 1774821405791,
+              "pressure": 1,
+              "velocity": 772
+            },
+            {
+              "x": 796,
+              "y": 838,
+              "t": 1774821405896,
+              "pressure": 1,
+              "velocity": 18
+            },
+            {
+              "x": 796,
+              "y": 744,
+              "t": 1774821406149,
+              "pressure": 1,
+              "velocity": 373
+            },
+            {
+              "x": 815,
+              "y": 614,
+              "t": 1774821406209,
+              "pressure": 1,
+              "velocity": 2195
+            },
+            {
+              "x": 830,
+              "y": 525,
+              "t": 1774821406236,
+              "pressure": 1,
+              "velocity": 3335
+            },
+            {
+              "x": 843,
+              "y": 406,
+              "t": 1774821406277,
+              "pressure": 1,
+              "velocity": 2920
+            },
+            {
+              "x": 845,
+              "y": 374,
+              "t": 1774821406305,
+              "pressure": 1,
+              "velocity": 1149
+            },
+            {
+              "x": 847,
+              "y": 340,
+              "t": 1774821406336,
+              "pressure": 1,
+              "velocity": 1098
+            },
+            {
+              "x": 864,
+              "y": 211,
+              "t": 1774821406355,
+              "pressure": 1,
+              "velocity": 6818
+            }
+          ]
+        }
+      ]
+    },
+    "total_strokes": 1,
+    "total_points": 11,
+    "stroke_annotations": []
   }
 ]
