@@ -105,14 +105,17 @@ def _load_is_sessions():
         return []
 
 
-def _forward_to_worker(sessions):
-    """Forward sessions to Cloudflare Worker (server-to-server, no CORS)."""
+def _forward_to_worker(sessions, deleted=None):
+    """Forward sessions/deletions to Cloudflare Worker (server-to-server, no CORS)."""
     try:
-        body = json.dumps({"sessions": sessions}).encode("utf-8")
+        payload = {"sessions": sessions}
+        if deleted:
+            payload["deleted"] = deleted
+        body = json.dumps(payload).encode("utf-8")
         req = urllib.request.Request(
             WORKER_URL + "/sessions",
             data=body,
-            headers={"Content-Type": "application/json"},
+            headers={"Content-Type": "application/json", "User-Agent": "kellogg-localhost/1.0"},
             method="POST"
         )
         with urllib.request.urlopen(req, timeout=15) as resp:
@@ -203,12 +206,13 @@ class Handler(SimpleHTTPRequestHandler):
             try:
                 data = json.loads(self._read_body())
                 incoming = data.get("sessions", data) if isinstance(data, dict) else data
+                deleted = data.get("deleted", []) if isinstance(data, dict) else []
                 _save_is_sessions(incoming)
                 self._send_json({"ok": True})
-                print(f"✓  IS sessions updated ({len(incoming)} submitted)")
+                print(f"✓  IS sessions updated ({len(incoming)} submitted, {len(deleted)} deleted)")
                 schedule_push()
                 # Forward to Worker in background (no CORS issues server-to-server)
-                t = threading.Thread(target=_forward_to_worker, args=(incoming,), daemon=True)
+                t = threading.Thread(target=_forward_to_worker, args=(incoming, deleted), daemon=True)
                 t.start()
             except Exception as e:
                 self._send_json({"error": str(e)}, 500)

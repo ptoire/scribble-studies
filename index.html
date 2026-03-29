@@ -8293,13 +8293,13 @@ async function ghFetchSessions() {
   } catch { return []; }
 }
 
-async function ghSyncSessions(incoming) {
+async function ghSyncSessions(incoming, deleted = []) {
   if (!GH_WORKER_URL) return false;
   try {
     const resp = await fetch(GH_WORKER_URL + '/sessions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessions: incoming })
+      body: JSON.stringify({ sessions: incoming, deleted })
     });
     return resp.ok;
   } catch { return false; }
@@ -9238,11 +9238,13 @@ function isRenderArchive() {
         if (confirm('Delete this session?')) {
           const updated = isGetSessions().filter(s => s.session_id !== sess.session_id);
           isSaveSessions(updated);
-          // Sync deletion to server
-          try {
-            const skeletons = updated.map(({full_dataurl, ...r}) => r);
-            fetch('/api/is_sessions', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({sessions: skeletons}) }).catch(()=>{});
-          } catch {}
+          // Propagate deletion
+          if (!READONLY) {
+            fetch('/api/is_sessions', { method:'POST', headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ sessions: [], deleted: [sess.session_id] }) }).catch(()=>{});
+          } else if (GH_WORKER_URL) {
+            ghSyncSessions([], [sess.session_id]);
+          }
           isRenderArchive(); isUpdateChipCounts();
         }
       });
