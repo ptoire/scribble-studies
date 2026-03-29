@@ -126104,5 +126104,60 @@
     "total_strokes": 1,
     "total_points": 43,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_PATH_1774825943043",
+    "schema_code": "PATH",
+    "schema_name": "Path",
+    "schema_group": "Spatial Primitive",
+    "timestamp": "2026-03-29T23:12:23.169Z",
+    "author": {
+      "username": "anon_cfpcce",
+      "created_at": "2026-03-29T23:12:23.192Z"
+    },
+    "thumb_dataurl": "data:image/png;base64,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",
+    "anim": {
+      "w": 1200,
+      "h": 800,
+      "strokes": [
+        {
+          "color": "#0D0D0D",
+          "size": 6,
+          "pts": [
+            {
+              "x": 1049,
+              "y": 720,
+              "t": 1774825931314,
+              "pressure": 1,
+              "velocity": 0
+            },
+            {
+              "x": 1049,
+              "y": 358,
+              "t": 1774825931350,
+              "pressure": 1,
+              "velocity": 10030
+            },
+            {
+              "x": 1049,
+              "y": 381,
+              "t": 1774825931381,
+              "pressure": 1,
+              "velocity": 737
+            },
+            {
+              "x": 1343,
+              "y": 336,
+              "t": 1774825931718,
+              "pressure": 1,
+              "velocity": 883
+            }
+          ]
+        }
+      ]
+    },
+    "total_strokes": 1,
+    "total_points": 4,
+    "stroke_annotations": []
   }
 ]
