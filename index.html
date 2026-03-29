@@ -8343,20 +8343,38 @@ async function isLoadFromServer() {
     let changed = false;
     if (serverSessions.length > 0) {
       const serverIds = new Set(serverSessions.map(s => s.session_id));
-      // Remove sessions that were previously synced but are no longer on server (deleted elsewhere)
-      const before = local.length;
-      local = local.filter(s => !synced.has(s.session_id) || serverIds.has(s.session_id));
-      if (local.length !== before) changed = true;
-      const localById = {};
-      local.forEach(s => { if (s.session_id) localById[s.session_id] = s; });
-      serverSessions.forEach(ss => {
-        if (!ss.session_id) return;
-        if (!localById[ss.session_id] && !deleted.has(ss.session_id)) {
-          local.push(ss); changed = true;
-        } else if (localById[ss.session_id] && !localById[ss.session_id].thumb_dataurl && ss.thumb_dataurl) {
-          localById[ss.session_id].thumb_dataurl = ss.thumb_dataurl; changed = true;
-        }
-      });
+      if (READONLY) {
+        // On GitHub Pages / mobile: server is the authority. Replace local cache
+        // with server list, preserving full_dataurl from local if present.
+        const localById = {};
+        local.forEach(s => { if (s.session_id) localById[s.session_id] = s; });
+        local = serverSessions
+          .filter(ss => !deleted.has(ss.session_id))
+          .map(ss => {
+            const cached = localById[ss.session_id];
+            if (!cached) return ss;
+            return {
+              ...ss,
+              full_dataurl: cached.full_dataurl || ss.full_dataurl,
+            };
+          });
+        changed = true;
+      } else {
+        // On localhost: merge (local sessions may not be synced to server yet)
+        const before = local.length;
+        local = local.filter(s => !synced.has(s.session_id) || serverIds.has(s.session_id));
+        if (local.length !== before) changed = true;
+        const localById = {};
+        local.forEach(s => { if (s.session_id) localById[s.session_id] = s; });
+        serverSessions.forEach(ss => {
+          if (!ss.session_id) return;
+          if (!localById[ss.session_id] && !deleted.has(ss.session_id)) {
+            local.push(ss); changed = true;
+          } else if (localById[ss.session_id] && !localById[ss.session_id].thumb_dataurl && ss.thumb_dataurl) {
+            localById[ss.session_id].thumb_dataurl = ss.thumb_dataurl; changed = true;
+          }
+        });
+      }
       isSaveSynced(serverIds);
     }
     if (changed) { isSaveSessions(local); isRenderArchive(); isUpdateChipCounts(); }
