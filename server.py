@@ -89,16 +89,15 @@ def _do_push():
 
 
 def _load_is_sessions():
-    """Load IS sessions file; return list (strip image data-URLs for safety)."""
+    """Load IS sessions file; return list (strip only full_dataurl, keep thumb)."""
     if not IS_FILE.exists():
         return []
     try:
         data = json.loads(IS_FILE.read_text(encoding="utf-8"))
         sessions = data if isinstance(data, list) else data.get("sessions", [])
-        # Strip large fields before returning to network clients
         out = []
         for s in sessions:
-            s2 = {k: v for k, v in s.items() if k not in ("thumb_dataurl", "full_dataurl")}
+            s2 = {k: v for k, v in s.items() if k != "full_dataurl"}
             out.append(s2)
         return out
     except Exception:
@@ -121,9 +120,9 @@ def _save_is_sessions(incoming):
         if not sid:
             continue
         if sid in existing:
-            # Preserve existing entry but update mutable fields from incoming
+            # Update all fields except full_dataurl (thumb is allowed)
             existing[sid].update({k: v for k, v in s.items()
-                                   if k not in ("thumb_dataurl", "full_dataurl")})
+                                   if k != "full_dataurl"})
         else:
             existing[sid] = s
     merged = list(existing.values())

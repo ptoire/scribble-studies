@@ -8208,6 +8208,15 @@ async function isLoadFromServer() {
     if (resp.ok) {
       const data = await resp.json();
       serverSessions = data.sessions || [];
+      // On localhost: push all local sessions (with thumbs) back to update server file
+      if (!READONLY) {
+        const local = isGetSessions();
+        if (local.length) {
+          const withThumbs = local.map(({full_dataurl, ...r}) => r);
+          fetch('/api/is_sessions', { method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({sessions: withThumbs}) }).catch(()=>{});
+        }
+      }
     } else {
       // GitHub Pages static fallback: fetch the JSON file directly
       const fallback = await fetch('data/is_sessions_local.json');
@@ -9005,10 +9014,10 @@ function isSaveSession() {
   isRenderArchive();
   isUpdateChipCounts();
 
-  // Auto-save skeleton (no PNGs) to server — degrades gracefully on public page
+  // Auto-save to server (thumb included, full drawing excluded) — degrades gracefully on public page
   try {
     const skeletonSessions = sessions.map(s => {
-      const { thumb_dataurl, full_dataurl, ...rest } = s;
+      const { full_dataurl, ...rest } = s;
       return rest;
     });
     fetch('/api/is_sessions', {
@@ -9072,7 +9081,7 @@ function isRenderArchive() {
           isSaveSessions(updated);
           // Sync deletion to server
           try {
-            const skeletons = updated.map(({thumb_dataurl, full_dataurl, ...r}) => r);
+            const skeletons = updated.map(({full_dataurl, ...r}) => r);
             fetch('/api/is_sessions', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({sessions: skeletons}) }).catch(()=>{});
           } catch {}
           isRenderArchive(); isUpdateChipCounts();
@@ -9515,7 +9524,7 @@ function isDet_adminSave(sessionId) {
   isSaveSessions(sessions);
   // Sync to server
   try {
-    const skeletons = sessions.map(({thumb_dataurl, full_dataurl, ...r}) => r);
+    const skeletons = sessions.map(({full_dataurl, ...r}) => r);
     fetch('/api/is_sessions', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({sessions: skeletons}) }).catch(()=>{});
   } catch {}
   isCloseDetail();
