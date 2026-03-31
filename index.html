@@ -2743,6 +2743,18 @@ async function init() {
   buildBibliography();
   buildFooter();
   await initSectionIntros();
+
+  // Deep-link: scroll to hash section after all content is built
+  if (window.location.hash) {
+    const el = document.getElementById(window.location.hash.slice(1));
+    if (el) {
+      setTimeout(() => {
+        const navH = document.getElementById('nav')?.offsetHeight || 48;
+        const top  = el.getBoundingClientRect().top + window.scrollY - navH - 8;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 150);
+    }
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
