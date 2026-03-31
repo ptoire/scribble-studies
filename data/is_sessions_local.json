@@ -143933,6 +143933,12 @@
     },
     "total_strokes": 2,
     "total_points": 262,
-    "stroke_annotations": []
+    "stroke_annotations": [],
+    "stroke_kellogg": {
+      "1": [
+        "K-A-15"
+      ]
+    },
+    "modified_at": "2026-03-31T23:05:07.584Z"
   }
 ]
