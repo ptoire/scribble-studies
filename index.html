@@ -2777,6 +2777,7 @@ let cardAnimFrames = {};
    INIT
    ═══════════════════════════════════════════════════════════ */
 async function init() {
+  history.scrollRestoration = 'manual'; // prevent browser from interfering with hash scroll
   try {
     const resp = await fetch(BASE_URL + 'data/index.json');
     INDEX_DATA = await resp.json();
@@ -2826,19 +2827,22 @@ async function init() {
   buildBibliography();
   buildFooter();
 
-  // Deep-link: scroll to hash section after all sections are built (before async intro fetch)
+  await initSectionIntros();
+
+  // Deep-link: scroll after all content + images are loaded and layout is stable
   if (window.location.hash) {
-    const hashId = window.location.hash.slice(1);
-    setTimeout(() => {
-      const el  = document.getElementById(hashId);
+    const _hashScroll = () => {
+      const el = document.getElementById(window.location.hash.slice(1));
       if (!el) return;
       const navH = document.getElementById('nav')?.offsetHeight || 48;
       el.style.scrollMarginTop = (navH + 8) + 'px';
       el.scrollIntoView({ behavior: 'instant' });
-    }, 400);
+    };
+    // Fire on window load (all images settled) — most reliable
+    window.addEventListener('load', _hashScroll, { once: true });
+    // Also try after a short delay in case load already fired
+    setTimeout(_hashScroll, 800);
   }
-
-  await initSectionIntros();
 }
 
 /* ═══════════════════════════════════════════════════════════
