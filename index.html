@@ -1997,6 +1997,8 @@ body {
   #gm-legend { display:none !important; }
   #gm-tt { display:none !important; }
   #gm-c { touch-action:none; }
+  /* Mobile map: hide 3D/2D toggle and Kellogg layer button (forced via JS) */
+  #gm-btn3d, #gm-btn2d, #gm-btnK { display:none !important; }
 }
 /* ═══════════════════════════════════════════════════════════
    IS<>Kellogg Associative Map section
@@ -3047,6 +3049,7 @@ function buildGrid() {
             <div class="card-stats">${session.total_strokes} stroke${session.total_strokes!==1?'s':''} · ${session.total_points} points</div>
           </div>
         `;
+        card._session = session;
         card.onclick = () => openDetail(session);
         card.onmouseenter = () => startCardAnim(card, session);
         card.onmouseleave = () => stopCardAnim(card);
@@ -3066,6 +3069,28 @@ function buildGrid() {
     section.appendChild(grid);
     main.appendChild(section);
   });
+
+  // Mobile touch hover: activate card animation when finger slides over a .card
+  if (!window._taxTouchSetup) {
+    window._taxTouchSetup = true;
+    let _activeTaxCard = null;
+    document.addEventListener('touchmove', e => {
+      const t = e.touches[0];
+      const el = document.elementFromPoint(t.clientX, t.clientY);
+      const card = el && el.closest('.card');
+      if (card !== _activeTaxCard) {
+        if (_activeTaxCard) stopCardAnim(_activeTaxCard);
+        _activeTaxCard = card || null;
+        if (card && card._session) startCardAnim(card, card._session);
+      }
+    }, { passive: true });
+    document.addEventListener('touchend', () => {
+      if (_activeTaxCard) { stopCardAnim(_activeTaxCard); _activeTaxCard = null; }
+    }, { passive: true });
+    document.addEventListener('touchcancel', () => {
+      if (_activeTaxCard) { stopCardAnim(_activeTaxCard); _activeTaxCard = null; }
+    }, { passive: true });
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -3584,7 +3609,6 @@ function buildBibliography() {
     <p id="ref-7">Hampe, B., &amp; Grady, J. E. (Eds.). (2005). <em>From perception to meaning: Image schemas in cognitive linguistics.</em> Mouton de Gruyter. <a href="#" class="bib-back" onclick="bibBack(this.closest('p').id);return false;">&#8593; back</a></p>
     <p id="ref-8">Hedblom, M. M., Neuhaus, F., &amp; Mossakowski, T. (2025). The Diagrammatic Image Schema Language (DISL). <em>Spatial Cognition &amp; Computation, 25</em>(2), 138-175. <a href="https://doi.org/10.1080/13875868.2024.2377284" style="color:var(--c-accent);">https://doi.org/10.1080/13875868.2024.2377284</a> <a href="#" class="bib-back" onclick="bibBack(this.closest('p').id);return false;">&#8593; back</a></p>
     <p id="ref-9">Olivier, F., &amp; Bouraoui, Z. (2025). Grounding agent reasoning in image schemas: A neurosymbolic approach to embodied cognition. In <em>Proceedings of the 24th International Conference on Autonomous Agents and Multiagent Systems (AAMAS 2025), Blue Sky Ideas Track.</em> IFAAMAS. <a href="#" class="bib-back" onclick="bibBack(this.closest('p').id);return false;">&#8593; back</a></p>
-    <p id="ref-10">Bastian, M., Heymann, S., &amp; Jacomy, M. (2009). Gephi: An open source software for exploring and manipulating networks. <em>Proceedings of the Third International ICWSM Conference.</em> <a href="#" class="bib-back" onclick="bibBack(this.closest('p').id);return false;">&#8593; back</a></p>
   `;
   main.appendChild(bib);
 }
@@ -11194,15 +11218,15 @@ function initGMSection() {
   let gmPanelEditMode = false;
   let gmPanelCurrentCode = null;
   let gmDescs = {
-    A:'Basic Scribbles \u2014 the primary gestural marks from which all drawing emerges.',
-    B:'Placement Patterns \u2014 the spatial arrangement of marks on the page surface.',
-    C:'Emergent Diagrams \u2014 configurations that imply geometric structure without fully achieving it.',
-    D:'Diagrams \u2014 fully articulated geometric forms: crosses, rectangles, circles, triangles.',
-    E:'Combines \u2014 two different diagram types joined into a single configuration.',
-    F:'Aggregates \u2014 groupings of multiple diagram units distributed across the surface.',
-    G:'Mandalas \u2014 radially symmetrical structures organised around a centre.',
-    H:'Suns \u2014 circular forms with radiating elements.',
-    I:'Radials \u2014 marks radiating from a central point.'
+    A:'Basic Scribbles: the primary gestural marks from which all drawing emerges.',
+    B:'Placement Patterns: the spatial arrangement of marks on the page surface.',
+    C:'Emergent Diagrams: configurations that imply geometric structure without fully achieving it.',
+    D:'Diagrams: fully articulated geometric forms, including crosses, rectangles, circles, and triangles.',
+    E:'Combines: two different diagram types joined into a single configuration.',
+    F:'Aggregates: groupings of multiple diagram units distributed across the surface.',
+    G:'Mandalas: radially symmetrical structures organised around a centre.',
+    H:'Suns: circular forms with radiating elements.',
+    I:'Radials: marks radiating from a central point.'
   };
 
   function gmRefreshEdges() {
@@ -11296,7 +11320,7 @@ function initGMSection() {
     }
 
     const sess = gmStudioSessions.filter(s2=>s2.schema_code===s.code);
-    let stH = '<div class="p-lbl">Your drawings \u2014 IS Studio</div>';
+    let stH = '<div class="p-lbl">Your drawings: IS Studio</div>';
     stH += sess.length ? '<div class="p-studio-grid">'+sess.slice(0,6).map(s2=>s2.thumb_dataurl?'<img src="'+s2.thumb_dataurl+'" class="p-studio-img" title="'+s2.timestamp+'">':"<div class='p-studio-ph'>no image</div>").join('')+'</div>'
       : '<div class="p-studio-ph" style="height:48px">No drawings yet</div>';
     const srcH = (s.sources||[]).map(src=>'<li class="src-item">'+src+'</li>').join('');
@@ -11310,7 +11334,7 @@ function initGMSection() {
       +renderDrawingInstructions(s.code)
       +'<hr class="pd"><div class="p-lbl">DISL conceptual primitives</div><div class="p-chips">'+dislChips+'</div>'
       +'<details class="disl-details"><summary class="disl-summary">DISL Formalization</summary>'+renderDISLStrip(s.code)+'</details>'
-      +'<hr class="pd"><div class="p-lbl" style="overflow:hidden">Kellogg correspondences \u2014 '+rows.length+' categories'+editBtn+'</div>'
+      +'<hr class="pd"><div class="p-lbl" style="overflow:hidden">Kellogg correspondences: '+rows.length+' categories'+editBtn+'</div>'
       +'<div style="font-family:var(--font-mono);font-size:.54rem;color:var(--gm-dimmer);margin-bottom:.6rem">Kellogg category \u00b7 type \u00b7 rationale</div>'
       +mapH+stH
       +((s.parents||[]).length||(s.related||[]).length ? '<hr class="pd"><div class="p-lbl">Graph relations</div>'+(parentChips?'<div style="font-family:var(--font-mono);font-size:.54rem;color:var(--gm-dimmer);margin-bottom:.2rem">PARENTS</div><div class="p-chips">'+parentChips+'</div>':'')+(ancestorChips?'<div style="font-family:var(--font-mono);font-size:.54rem;color:var(--gm-dimmer);margin-bottom:.2rem;margin-top:.35rem">ALL ANCESTORS</div><div class="p-chips">'+ancestorChips+'</div>':'')+(relChips?'<div style="font-family:var(--font-mono);font-size:.54rem;color:var(--gm-dimmer);margin-bottom:.2rem;margin-top:.35rem">RELATED</div><div class="p-chips">'+relChips+'</div>':'') :'')
@@ -11365,7 +11389,7 @@ function initGMSection() {
       +'<div class="p-type">Kellogg Taxonomy \u00b7 Group K-'+node.group+'</div><div class="p-name">'+node.name+'</div><div class="p-code">'+node.code+'</div>'
       +kImgH
       +'<hr class="pd"><div class="p-lbl">About this Kellogg category</div>'+descH
-      +'<hr class="pd"><div class="p-lbl" style="overflow:hidden">Image Schema correspondences \u2014 '+sorted.length+' schemas'+editBtn+'</div>'
+      +'<hr class="pd"><div class="p-lbl" style="overflow:hidden">Image Schema correspondences: '+sorted.length+' schemas'+editBtn+'</div>'
       +'<div style="font-family:var(--font-mono);font-size:.54rem;color:var(--gm-dimmer);margin-bottom:.6rem">IS schema \u00b7 type \u00b7 rationale. Click any code to navigate.</div>'
       +mapH;
     document.getElementById('gm-panel').classList.add('open');
@@ -11516,30 +11540,54 @@ function initGMSection() {
   };
 
   // Loop
-  // Mobile: switch to 2D, fit all nodes into view, add pinch-to-zoom
+  // Mobile: force 2D, enable Kellogg layer, fit view, pinch-zoom around pinch center
   if (window.innerWidth <= 600) {
     window.gmSetMode('2d');
-    document.getElementById('gm-hud').innerHTML = 'drag = pan &nbsp;&middot;&nbsp; pinch = zoom<br>tap node = details';
-    // Fit all IS nodes into 2D view
-    const xs = gmIsNodes.map(n => n.x), ys = gmIsNodes.map(n => n.y);
+    // Activate Kellogg layer by default on mobile
+    gmShowKellogg = true;
+    gmRefreshEdges();
+    document.getElementById('gm-btnK').classList.add('on');
+    document.getElementById('gm-btnK').textContent = '\u2022 Hide Kellogg';
+    // Fit all IS + Kellogg nodes into 2D view
+    const allN = [...gmIsNodes, ...gmKelNodes];
+    const xs = allN.map(n => n.x), ys = allN.map(n => n.y);
     const cx = (Math.max(...xs) + Math.min(...xs)) / 2;
     const cy2 = (Math.max(...ys) + Math.min(...ys)) / 2;
     const maxR = Math.max((Math.max(...xs) - Math.min(...xs)) / 2, (Math.max(...ys) - Math.min(...ys)) / 2, 60);
     gmPan2x = cx; gmPan2y = cy2;
-    gmZoom2 = Math.min(2.0, Math.max(0.15, Math.min(gmCanvas.width, gmCanvas.height) * 0.38 / maxR));
-    // Pinch-to-zoom
-    let _pinchDist = 0;
+    gmZoom2 = Math.min(2.0, Math.max(0.08, Math.min(gmCanvas.width, gmCanvas.height) * 0.38 / maxR));
+    // Pinch-to-zoom: zoom around the midpoint of the two fingers
+    let _pinchDist = 0, _pinchMidX = 0, _pinchMidY = 0;
     gmCanvas.addEventListener('touchstart', e => {
-      if (e.touches.length === 2) _pinchDist = Math.hypot(
-        e.touches[0].clientX - e.touches[1].clientX,
-        e.touches[0].clientY - e.touches[1].clientY);
+      if (e.touches.length === 2) {
+        _pinchDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY);
+        const r = gmCanvas.getBoundingClientRect();
+        _pinchMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+        _pinchMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+      }
     }, { passive: true });
     gmCanvas.addEventListener('touchmove', e => {
       if (e.touches.length !== 2) return;
       e.preventDefault();
       const d = Math.hypot(e.touches[0].clientX - e.touches[1].clientX,
                            e.touches[0].clientY - e.touches[1].clientY);
-      if (_pinchDist > 0) gmZoom2 = Math.max(0.15, Math.min(8, gmZoom2 * (d / _pinchDist)));
+      if (_pinchDist > 0 && d > 0) {
+        const r = gmCanvas.getBoundingClientRect();
+        const cy2d = gmCanvas.height / 2 + 24;
+        // World coords under the pinch midpoint before zoom
+        const wx = (_pinchMidX - gmCanvas.width / 2) / gmZoom2 + gmPan2x;
+        const wy = (_pinchMidY - cy2d) / gmZoom2 + gmPan2y;
+        const factor = d / _pinchDist;
+        gmZoom2 = Math.max(0.08, Math.min(8, gmZoom2 * factor));
+        // Adjust pan so the world point stays under the finger midpoint
+        gmPan2x = wx - (_pinchMidX - gmCanvas.width / 2) / gmZoom2;
+        gmPan2y = wy - (_pinchMidY - cy2d) / gmZoom2;
+        // Update midpoint and dist for next frame
+        _pinchMidX = (e.touches[0].clientX + e.touches[1].clientX) / 2 - r.left;
+        _pinchMidY = (e.touches[0].clientY + e.touches[1].clientY) / 2 - r.top;
+      }
       _pinchDist = d;
     }, { passive: false });
     gmCanvas.addEventListener('touchend', () => { _pinchDist = 0; });
@@ -11602,7 +11650,7 @@ function renderDISLStrip(isCode) {
       ? '<span class="disl-empty-scene">&#8709; empty scene</span>'
       : scene.axioms.map(ax => '<span class="disl-axiom ' + _dislPredClass(ax) + '">' + ax + '</span>').join('');
     return '<div class="disl-scene' + (isGen ? ' disl-scene-general' : '') + '">'
-      + '<div class="disl-scene-label">' + scene.label + (isGen ? ' \u2014 always true' : '') + '</div>'
+      + '<div class="disl-scene-label">' + scene.label + (isGen ? ' (always true)' : '') + '</div>'
       + '<div class="disl-scene-axioms">' + axHTML + '</div>'
       + '</div>';
   }).join('');
