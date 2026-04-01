@@ -128,6 +128,28 @@ def _forward_to_worker(sessions, deleted=None):
         print(f"·  Worker sync failed: {e}")
 
 
+def _startup_sync():
+    """On startup: push any local sessions missing from the Worker."""
+    try:
+        req = urllib.request.Request(
+            WORKER_URL + "/sessions",
+            headers={"User-Agent": "kellogg-localhost/1.0"},
+        )
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            worker_sessions = json.loads(resp.read().decode())
+        worker_ids = {s["session_id"] for s in worker_sessions if "session_id" in s}
+
+        local = _load_is_sessions()  # already strips full_dataurl
+        missing = [s for s in local if s.get("session_id") not in worker_ids]
+        if missing:
+            print(f"·  Syncing {len(missing)} local session(s) missing from Worker...")
+            _forward_to_worker(missing)
+        else:
+            print(f"·  Worker already up to date ({len(worker_ids)} sessions)")
+    except Exception as e:
+        print(f"·  Startup sync skipped: {e}")
+
+
 def _save_drawing_files(session_id, dataurl=None, anim=None):
     """Save full-res PNG and/or anim JSON for a session to data/drawings/."""
     DRAWINGS_DIR.mkdir(parents=True, exist_ok=True)
@@ -303,4 +325,5 @@ print(f"Scribble Studies  →  http://localhost:{PORT}")
 print(f"Segmented images  →  {SEGMENTED_DIR}")
 print("Auto-push to GitHub Pages 15s after last save (annotations + IS sessions)")
 print("Ctrl+C to stop\n")
+threading.Thread(target=_startup_sync, daemon=True).start()
 HTTPServer(("127.0.0.1", PORT), Handler).serve_forever()
