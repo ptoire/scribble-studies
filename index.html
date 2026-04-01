@@ -1854,6 +1854,9 @@ body {
 
 /* ── Mobile IS Studio (phones) ─────────────────────────────────────────── */
 @media (max-width:600px) {
+  /* Prevent chip grid from widening page */
+  .is-studio-section { overflow-x:clip; }
+
   /* Studio body: no gap between panels */
   .is-studio-body { gap:0; }
 
@@ -1867,6 +1870,7 @@ body {
     border-left: none; border-right: none;
     max-height: none;
     overflow: visible;
+    max-width: 100%;
     gap: 0.25rem;
     box-shadow: 0 2px 6px rgba(0,0,0,0.07);
   }
@@ -1896,9 +1900,10 @@ body {
   .is-guide-chips { max-height:0; overflow:hidden; transition:max-height 0.3s ease; }
   .is-guide-chips.mob-open { max-height:500px; }
 
-  /* Canvas: full-width square */
+  /* Canvas: full-width square, capped to viewport */
   .is-canvas-wrap {
     width: 100% !important;
+    max-width: 100vw;
     aspect-ratio: 1 / 1;
     border-radius: 0;
     border-left: none; border-right: none;
