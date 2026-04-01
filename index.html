@@ -1429,6 +1429,17 @@ body {
   gap: 1.1rem;
   align-items: start;
 }
+.is-usage-note {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  color: var(--c-text-secondary);
+  background: var(--c-bg-warm);
+  border: 1px solid var(--c-border-light);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.2rem;
+}
 .is-left-panel {
   position: sticky; top: 4rem;
   display: flex; flex-direction: column; gap: 0.55rem;
@@ -1875,6 +1886,7 @@ body {
 
 /* ── Mobile IS Studio (phones) ─────────────────────────────────────────── */
 @media (max-width:600px) {
+  .is-usage-note { font-size:0.75rem; padding:0.5rem 0.75rem; margin-bottom:0.6rem; border-radius:0; border-left:none; border-right:none; }
   /* Studio body: single column, no gap */
   .is-studio-body { gap:0; }
 
@@ -1980,9 +1992,10 @@ body {
   .arch-card-meta { display:none; }
   .arch-mobile-label { grid-column:1/-1; font-family:var(--font-mono); font-size:0.7rem; color:var(--c-accent); padding:0.3rem 0.1rem 0.1rem; }
 
-  /* Associative Map: compact height, hide legend, enable touch */
+  /* Associative Map: compact height, hide legend, hide tooltip, enable touch */
   #gm-map-container { height:380px; }
   #gm-legend { display:none !important; }
+  #gm-tt { display:none !important; }
   #gm-c { touch-action:none; }
 }
 /* ═══════════════════════════════════════════════════════════
@@ -2104,7 +2117,8 @@ body {
 }
 #gm-map-container .p-type { font-family:var(--font-mono); font-size:0.56rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--gm-dimmer); margin-bottom:0.3rem; }
 #gm-map-container .p-name { font-family:var(--font-serif); font-size:1.7rem; font-weight:300; line-height:1.15; margin-bottom:0.15rem; color:var(--gm-text); }
-#gm-map-container .p-code { font-family:var(--font-mono); font-size:0.65rem; color:var(--gm-accent); margin-bottom:1rem; letter-spacing:0.04em; }
+#gm-map-container .p-code { font-family:var(--font-mono); font-size:0.65rem; color:var(--gm-accent); margin-bottom:0.6rem; letter-spacing:0.04em; }
+#gm-map-container .p-kthumb { display:block; width:100%; max-width:160px; height:auto; margin:0 0 1rem; border-radius:3px; border:1px solid var(--gm-border); background:rgba(255,255,255,0.04); }
 #gm-map-container hr.pd { border:none; border-top:1px solid var(--gm-border); margin:0.9rem 0; }
 #gm-map-container .p-lbl { font-family:var(--font-mono); font-size:0.56rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gm-dimmer); margin-bottom:0.4rem; }
 #gm-map-container .p-def  { font-family:var(--font-serif); font-size:0.98rem; font-weight:300; line-height:1.65; color:rgba(232,230,224,0.82); margin-bottom:0.7rem; }
@@ -8892,8 +8906,9 @@ function buildISStudioSection() {
       <p>Image schemata are a concept introduced simultaneously and independently by Mark Johnson in The Body in the Mind (1987) <a href="#ref-4" class="cite-link">[4]</a> and George Lakoff in Women, Fire, and Dangerous Things (1987) <a href="#ref-5" class="cite-link">[5]</a>. The theory proposes that a significant part of human conceptual structure, including abstract reasoning, is grounded in recurring patterns of sensorimotor experience. These patterns, which Johnson and Lakoff call image schemata, emerge from the body's repeated interactions with the physical world: the experience of being inside or outside something gives rise to the CONTAINER schema; the experience of moving from one place to another gives rise to the PATH schema; the experience of maintaining equilibrium gives rise to the BALANCE schema; the experience of exerting or resisting force gives rise to a family of force schemata including COMPULSION, BLOCKAGE, COUNTERFORCE, and ENABLEMENT. The theory has remained central to cognitive linguistics and embodied cognition research, and has been developed and refined by subsequent researchers including Hampe and Grady <a href="#ref-7" class="cite-link">[7]</a>, Mandler <a href="#ref-7" class="cite-link">[7]</a>, and Zlatev <a href="#ref-7" class="cite-link">[7]</a>, among others.</p>
       <p>One recurring difficulty in this field is the visual representation of image schemata. Because they are dynamic structures that unfold in time and involve change, force, and spatial relation, static diagrams can only partially capture them. The diagrams used across the cognitive linguistics literature have no shared formal language and are not mutually comparable. The Diagrammatic Image Schema Language (DISL), developed by Hedblom, Neuhaus, and Mossakowski (2025) <a href="#ref-8" class="cite-link">[8]</a>, represents the most systematic attempt so far to address this: a standardised notation in which each schema is decomposed into conceptual primitives and described as a sequence of spatial scenes. DISL is itself a static notation in the sense that it produces a strip of discrete frames, but it is formally defined and internally consistent in a way that previous informal diagrams were not, and it can in principle be serialised and processed computationally. A related research direction by Olivier and Bouraoui (2025) <a href="#ref-9" class="cite-link">[9]</a> argues that any adequate formalism for image schemata must be qualitative, typed, temporal, and capable of non-monotonic reasoning, since image schemata involve default behaviours, force dynamics, and change over time.</p>
       <p>The IS Studio is a speculative tool based on the hypothesis at the centre of this research: that children's scribbles, when recorded as full spatiotemporal sequences, might offer a way to enact and explore image schemata in material form. The association map proposes structural correspondences between Kellogg graphic categories and image schemata. A spiral, for example, shares structural features with PATH, CYCLE, and COMPULSION. A closed circle shares structural features with CONTAINER. A radial pattern shares structural features with CENTER-PERIPHERY and BALANCE. Whether these correspondences are meaningful in a deeper cognitive sense is an open question this research does not claim to resolve. The studio offers a way to explore them in practice.</p>
-      <p>How to use this studio: Select an image schema from the list on the left. You will see which Kellogg graphic categories are proposed as structurally related to it, along with drawing instructions in two formats: a standard version and a simplified version, which you can toggle using the A/a button. The instructions are derived from the DISL strip for that schema, translated into plain language. Draw on the canvas using a mouse, trackpad, or graphic tablet. Try to enact the schema using the suggested Kellogg forms as a guide, but without trying to represent anything: the goal is to make a diagram, not a picture. When you are done, click Save session. Each session is saved as a static image and as a full spatiotemporal recording containing every point you drew, in order, with its timestamp and pressure value.</p>
     </div>
+
+    <div class="is-usage-note" id="is-usage-note"><strong>How to use:</strong> Select an image schema from the list. You will see related Kellogg categories and drawing instructions — toggle the simplified version with the A/a button. Draw on the canvas; use the suggested Kellogg forms as a guide without trying to represent anything. Click <em>Save session</em> when done: each session is saved as a static image and a full spatiotemporal recording.</div>
 
     <div class="is-studio-body">
       <!-- LEFT PANEL: schema chips + visual guide -->
@@ -11038,7 +11053,7 @@ function initGMSection() {
   });
   gmCanvas.addEventListener('pointermove', e => {
     const {mx,my}=gmPxy(e);
-    if (gmPointerDown) {
+    if (gmPointerDown && e.isPrimary) {
       const dx=mx-gmPLastX, dy=my-gmPLastY;
       if (Math.abs(dx)>1||Math.abs(dy)>1) gmPMoved=true;
       if (gmMode==='3d') {
@@ -11050,9 +11065,11 @@ function initGMSection() {
       }
       gmPLastX=mx; gmPLastY=my;
     }
-    const node=gmNodeAt(mx,my);
-    if (node!==gmHoverNode) { gmHoverNode=node; gmShowTT(node,mx,my); }
-    else if (node) gmMoveTT(mx,my);
+    if (e.isPrimary) {
+      const node=gmNodeAt(mx,my);
+      if (node!==gmHoverNode) { gmHoverNode=node; gmShowTT(node,mx,my); }
+      else if (node) gmMoveTT(mx,my);
+    }
   });
   gmCanvas.addEventListener('pointerup', e => {
     gmPointerDown=false;
@@ -11341,9 +11358,12 @@ function initGMSection() {
       ? '<div class="p-instr gm-edit-rationale" contenteditable="true" data-kgroup="'+node.group+'" onblur="window.gmOnDescBlur(this)">'+(gmDescs[node.group]||'')+'</div>'
       : '<div class="p-instr">'+(gmDescs[node.group]||'')+'</div>';
     const scrollTop = keepScroll ? (document.getElementById('gm-panel-body')||{}).scrollTop||0 : 0;
+    const kSess = (INDEX_DATA?.sessions||[]).find(s => s.code === node.code);
+    const kImgH = kSess ? '<img class="p-kthumb" src="'+BASE_URL+'img/'+kSess.session_id+'_thumb.png" alt="" loading="lazy">' : '';
     document.getElementById('gm-panel-body').innerHTML =
        '<div style="width:24px;height:2px;background:'+gmHex(col)+';border-radius:1px;margin-bottom:1rem;opacity:0.7"></div>'
       +'<div class="p-type">Kellogg Taxonomy \u00b7 Group K-'+node.group+'</div><div class="p-name">'+node.name+'</div><div class="p-code">'+node.code+'</div>'
+      +kImgH
       +'<hr class="pd"><div class="p-lbl">About this Kellogg category</div>'+descH
       +'<hr class="pd"><div class="p-lbl" style="overflow:hidden">Image Schema correspondences \u2014 '+sorted.length+' schemas'+editBtn+'</div>'
       +'<div style="font-family:var(--font-mono);font-size:.54rem;color:var(--gm-dimmer);margin-bottom:.6rem">IS schema \u00b7 type \u00b7 rationale. Click any code to navigate.</div>'
@@ -11362,9 +11382,13 @@ function initGMSection() {
     gmMode=m;
     document.getElementById('gm-btn3d').classList.toggle('on',m==='3d');
     document.getElementById('gm-btn2d').classList.toggle('on',m==='2d');
-    document.getElementById('gm-hud').innerHTML=m==='3d'
-      ? 'scroll = zoom toward cursor &nbsp;&middot;&nbsp; left-drag = pan<br>right-drag = orbit &nbsp;&middot;&nbsp; click node = details<br>shift+click = multi-select'
-      : 'scroll = zoom &nbsp;&middot;&nbsp; drag = pan<br>right-drag = rotate &nbsp;&middot;&nbsp; click node = details';
+    if (window.innerWidth <= 600) {
+      document.getElementById('gm-hud').innerHTML = 'drag = pan &nbsp;&middot;&nbsp; pinch = zoom<br>tap node = details';
+    } else {
+      document.getElementById('gm-hud').innerHTML=m==='3d'
+        ? 'scroll = zoom toward cursor &nbsp;&middot;&nbsp; left-drag = pan<br>right-drag = orbit &nbsp;&middot;&nbsp; click node = details<br>shift+click = multi-select'
+        : 'scroll = zoom &nbsp;&middot;&nbsp; drag = pan<br>right-drag = rotate &nbsp;&middot;&nbsp; click node = details';
+    }
   };
   window.gmToggleKellogg = function() {
     gmShowKellogg=!gmShowKellogg;
@@ -11731,6 +11755,8 @@ function gmBuildCorrespondenceTable() {
   <canvas id="gm-c"></canvas>
 
   <div id="gm-topbar">
+    <button class="tb-btn" onclick="window.gmResetCam()">&#8635; Reset view</button>
+    <div class="tb-sep"></div>
     <button class="tb-btn" id="gm-btnBack" onclick="window.gmHistBack()" title="Back" disabled style="opacity:.35">&larr; Back</button>
     <button class="tb-btn" id="gm-btnFwd"  onclick="window.gmHistFwd()"  title="Forward" disabled style="opacity:.35">Fwd &rarr;</button>
     <div class="tb-sep"></div>
@@ -11746,7 +11772,6 @@ function gmBuildCorrespondenceTable() {
     <button class="tb-btn"    id="gm-fSpace"      onclick="window.gmSetFilter('space','gm-fSpace')">Space &amp; Structure</button>
     <div class="tb-spacer"></div>
     <button class="tb-btn" id="gm-btnAR" onclick="window.gmToggleAutoRotate()">&#10227; Auto-rotate</button>
-    <button class="tb-btn" onclick="window.gmResetCam()">&#8635; Reset view</button>
     <div class="tb-sep"></div>
     <input type="text" id="gm-search" placeholder="search schema or K-code&hellip;" oninput="window.gmOnSearch(this.value)" onkeydown="window.gmOnSearchKey(event)">
   </div>
