@@ -1960,9 +1960,19 @@ body {
     padding:0.3rem 0.5rem; flex-wrap:wrap; gap:0.3rem;
   }
 
-  /* Archive: 2-column grid */
+  /* IS Archive: 2-column grid */
   .is-archive-grid { grid-template-columns:repeat(2,1fr) !important; gap:0.5rem; }
   .is-archive-card-meta { font-size:0.58rem; }
+
+  /* Kellogg Archive: 6-column browse grid, image only */
+  .arch-grid { grid-template-columns:repeat(6,1fr) !important; gap:0.2rem !important; margin-top:0.4rem; }
+  .arch-card img { aspect-ratio:1/1; padding:0.1rem; }
+  .arch-card-meta { display:none; }
+
+  /* Associative Map: compact height, hide legend, enable touch */
+  #gm-map-container { height:380px; }
+  #gm-legend { display:none !important; }
+  #gm-c { touch-action:none; }
 }
 /* ═══════════════════════════════════════════════════════════
    IS<>Kellogg Associative Map section
@@ -4020,8 +4030,15 @@ function buildArchiveSection() {
 }
 
 function archiveToggle(code) {
-  if (archiveSelected.has(code)) archiveSelected.delete(code);
-  else archiveSelected.add(code);
+  const isMobile = window.innerWidth <= 600;
+  const wasSelected = archiveSelected.has(code);
+  if (isMobile) {
+    archiveSelected.clear();
+    if (!wasSelected) archiveSelected.add(code);
+  } else {
+    if (wasSelected) archiveSelected.delete(code);
+    else archiveSelected.add(code);
+  }
   // Update button states
   document.querySelectorAll('#archive-section .arch-btn').forEach(b => {
     b.classList.toggle('active', archiveSelected.has(b.dataset.code));
@@ -4029,6 +4046,20 @@ function archiveToggle(code) {
   // Update count label
   const count = document.getElementById('arch-count');
   if (count) count.textContent = archiveSelected.size ? `${archiveSelected.size} selected` : '';
+  // On mobile: move grid immediately below the selected group
+  if (isMobile) {
+    const grid = document.getElementById('arch-grid');
+    if (grid) {
+      if (archiveSelected.size) {
+        const activeBtn = document.querySelector(`.arch-btn[data-code="${code}"]`);
+        const group = activeBtn?.closest('.arch-group');
+        if (group) group.after(grid);
+      } else {
+        const filters = document.querySelector('#archive-section .arch-filters');
+        if (filters) filters.after(grid);
+      }
+    }
+  }
   archiveRender();
 }
 
@@ -11020,6 +11051,35 @@ function initGMSection() {
   });
   gmCanvas.addEventListener('pointerleave', () => { gmPointerDown=false; });
   gmCanvas.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Mobile: default to 2D + pinch-to-zoom
+  if (window.innerWidth <= 600) {
+    window.gmSetMode('2d');
+    document.getElementById('gm-hud').innerHTML = 'drag = pan &nbsp;&middot;&nbsp; pinch = zoom<br>tap node = details';
+    let _pinchDist = 0;
+    gmCanvas.addEventListener('touchstart', e => {
+      if (e.touches.length === 2) {
+        _pinchDist = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+      }
+    }, { passive: true });
+    gmCanvas.addEventListener('touchmove', e => {
+      if (e.touches.length === 2) {
+        e.preventDefault();
+        const d = Math.hypot(
+          e.touches[0].clientX - e.touches[1].clientX,
+          e.touches[0].clientY - e.touches[1].clientY
+        );
+        if (_pinchDist > 0 && gmMode === '2d') {
+          gmZoom2 = Math.max(0.15, Math.min(8, gmZoom2 * (d / _pinchDist)));
+        }
+        _pinchDist = d;
+      }
+    }, { passive: false });
+    gmCanvas.addEventListener('touchend', () => { _pinchDist = 0; });
+  }
   gmCanvas.addEventListener('wheel', e => {
     e.preventDefault();
     const {mx,my}=gmPxy(e);
