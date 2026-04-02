@@ -2947,6 +2947,13 @@ function buildNav() {
   // Close dropdown when clicking outside
   document.addEventListener('click', () => wrap.classList.remove('open'));
 
+  // ── About (top of page) ──────────────────────────────────────────────────
+  const aboutBtn = document.createElement('button');
+  aboutBtn.className = 'nav-btn';
+  aboutBtn.textContent = '\u2605 About';
+  aboutBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  nav.appendChild(aboutBtn);
+
   // ── Other sections (in page order) ───────────────────────────────────────
   const sections = [
     { label: '\u270e Annotator',             id: 'annotator-section' },
