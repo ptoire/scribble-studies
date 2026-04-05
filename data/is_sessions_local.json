@@ -149376,5 +149376,2773 @@
     "total_strokes": 1,
     "total_points": 220,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_BALANCE_1775152223006",
+    "schema_code": "BALANCE",
+    "schema_name": "Balance",
+    "schema_group": "Orientational",
+    "timestamp": "2026-04-02T17:50:31.690Z",
+    "author": {
+      "username": "anon_67r6xq",
+      "created_at": "2026-04-02T17:50:31.690Z"
+    },
+    "thumb_dataurl": "data:image/png;base64,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",
+    "anim": {
+      "w": 1200,
+      "h": 800,
+      "strokes": [
+        {
+          "color": "#B0E040",
+          "size": 16,
+          "pts": [
+            {
+              "x": 549,
+              "y": 410,
+              "t": 1775152100747,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 548,
+              "y": 410,
+              "t": 1775152101448,
+              "pressure": 0.5,
+              "velocity": 2
+            },
+            {
+              "x": 547,
+              "y": 410,
+              "t": 1775152101469,
+              "pressure": 0.5,
+              "velocity": 57
+            },
+            {
+              "x": 546,
+              "y": 410,
+              "t": 1775152101480,
+              "pressure": 0.5,
+              "velocity": 108
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152101499,
+              "pressure": 0.5,
+              "velocity": 63
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152101517,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152101630,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152101646,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152101663,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 546,
+              "y": 408,
+              "t": 1775152101680,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 547,
+              "y": 408,
+              "t": 1775152101698,
+              "pressure": 0.5,
+              "velocity": 66
+            },
+            {
+              "x": 548,
+              "y": 408,
+              "t": 1775152101713,
+              "pressure": 0.5,
+              "velocity": 80
+            },
+            {
+              "x": 549,
+              "y": 408,
+              "t": 1775152101730,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 550,
+              "y": 408,
+              "t": 1775152101746,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 552,
+              "y": 408,
+              "t": 1775152101763,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 553,
+              "y": 408,
+              "t": 1775152101779,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 553,
+              "y": 410,
+              "t": 1775152101796,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 554,
+              "y": 411,
+              "t": 1775152101813,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 554,
+              "y": 412,
+              "t": 1775152101830,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 554,
+              "y": 413,
+              "t": 1775152101846,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 553,
+              "y": 414,
+              "t": 1775152101863,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 552,
+              "y": 416,
+              "t": 1775152101880,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 550,
+              "y": 417,
+              "t": 1775152101896,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 548,
+              "y": 417,
+              "t": 1775152101913,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 547,
+              "y": 416,
+              "t": 1775152101930,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 546,
+              "y": 416,
+              "t": 1775152101946,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 544,
+              "y": 414,
+              "t": 1775152101963,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 544,
+              "y": 413,
+              "t": 1775152101980,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 544,
+              "y": 413,
+              "t": 1775152101997,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 413,
+              "t": 1775152102030,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 412,
+              "t": 1775152102046,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 544,
+              "y": 412,
+              "t": 1775152102063,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 411,
+              "t": 1775152102080,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152102096,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 544,
+              "y": 410,
+              "t": 1775152102113,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 408,
+              "t": 1775152102130,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 544,
+              "y": 408,
+              "t": 1775152102146,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 544,
+              "y": 408,
+              "t": 1775152102163,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 546,
+              "y": 408,
+              "t": 1775152102180,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 546,
+              "y": 408,
+              "t": 1775152102196,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 547,
+              "y": 408,
+              "t": 1775152102213,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 548,
+              "y": 408,
+              "t": 1775152102230,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 548,
+              "y": 410,
+              "t": 1775152102246,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 548,
+              "y": 411,
+              "t": 1775152102263,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 549,
+              "y": 412,
+              "t": 1775152102280,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 548,
+              "y": 413,
+              "t": 1775152102296,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 548,
+              "y": 414,
+              "t": 1775152102313,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 547,
+              "y": 416,
+              "t": 1775152102329,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 544,
+              "y": 416,
+              "t": 1775152102346,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 543,
+              "y": 416,
+              "t": 1775152102363,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 542,
+              "y": 414,
+              "t": 1775152102379,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 541,
+              "y": 413,
+              "t": 1775152102396,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 540,
+              "y": 411,
+              "t": 1775152102413,
+              "pressure": 0.5,
+              "velocity": 157
+            },
+            {
+              "x": 540,
+              "y": 410,
+              "t": 1775152102429,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 540,
+              "y": 407,
+              "t": 1775152102446,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 540,
+              "y": 406,
+              "t": 1775152102463,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 541,
+              "y": 405,
+              "t": 1775152102479,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 541,
+              "y": 405,
+              "t": 1775152102496,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 542,
+              "y": 405,
+              "t": 1775152102513,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 543,
+              "y": 405,
+              "t": 1775152102530,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 544,
+              "y": 405,
+              "t": 1775152102546,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 546,
+              "y": 405,
+              "t": 1775152102563,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 547,
+              "y": 405,
+              "t": 1775152102579,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 548,
+              "y": 406,
+              "t": 1775152102596,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 549,
+              "y": 407,
+              "t": 1775152102613,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 549,
+              "y": 407,
+              "t": 1775152102630,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 550,
+              "y": 408,
+              "t": 1775152102646,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 550,
+              "y": 410,
+              "t": 1775152102663,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 550,
+              "y": 411,
+              "t": 1775152102679,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 550,
+              "y": 412,
+              "t": 1775152102696,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 550,
+              "y": 413,
+              "t": 1775152102713,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 550,
+              "y": 413,
+              "t": 1775152102730,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 550,
+              "y": 414,
+              "t": 1775152102746,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 549,
+              "y": 416,
+              "t": 1775152102763,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 547,
+              "y": 416,
+              "t": 1775152102780,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 546,
+              "y": 417,
+              "t": 1775152102796,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 544,
+              "y": 417,
+              "t": 1775152102813,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 542,
+              "y": 417,
+              "t": 1775152102829,
+              "pressure": 0.5,
+              "velocity": 149
+            },
+            {
+              "x": 542,
+              "y": 416,
+              "t": 1775152102846,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 541,
+              "y": 414,
+              "t": 1775152102863,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 540,
+              "y": 413,
+              "t": 1775152102879,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 540,
+              "y": 411,
+              "t": 1775152102896,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 540,
+              "y": 410,
+              "t": 1775152102913,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 540,
+              "y": 408,
+              "t": 1775152102929,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 540,
+              "y": 408,
+              "t": 1775152102946,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 540,
+              "y": 407,
+              "t": 1775152102963,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 540,
+              "y": 407,
+              "t": 1775152102996,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 540,
+              "y": 406,
+              "t": 1775152103013,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 540,
+              "y": 406,
+              "t": 1775152103029,
+              "pressure": 0.5,
+              "velocity": 0
+            }
+          ]
+        },
+        {
+          "color": "#0D0D0D",
+          "size": 7,
+          "pts": [
+            {
+              "x": 306,
+              "y": 588,
+              "t": 1775152107830,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 306,
+              "y": 588,
+              "t": 1775152107997,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 306,
+              "y": 587,
+              "t": 1775152108013,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 305,
+              "y": 581,
+              "t": 1775152108030,
+              "pressure": 0.5,
+              "velocity": 357
+            },
+            {
+              "x": 302,
+              "y": 573,
+              "t": 1775152108049,
+              "pressure": 0.5,
+              "velocity": 456
+            },
+            {
+              "x": 299,
+              "y": 560,
+              "t": 1775152108063,
+              "pressure": 0.5,
+              "velocity": 970
+            },
+            {
+              "x": 295,
+              "y": 545,
+              "t": 1775152108081,
+              "pressure": 0.5,
+              "velocity": 818
+            },
+            {
+              "x": 293,
+              "y": 532,
+              "t": 1775152108096,
+              "pressure": 0.5,
+              "velocity": 887
+            },
+            {
+              "x": 290,
+              "y": 519,
+              "t": 1775152108113,
+              "pressure": 0.5,
+              "velocity": 783
+            },
+            {
+              "x": 289,
+              "y": 506,
+              "t": 1775152108130,
+              "pressure": 0.5,
+              "velocity": 774
+            },
+            {
+              "x": 288,
+              "y": 492,
+              "t": 1775152108146,
+              "pressure": 0.5,
+              "velocity": 896
+            },
+            {
+              "x": 287,
+              "y": 476,
+              "t": 1775152108163,
+              "pressure": 0.5,
+              "velocity": 913
+            },
+            {
+              "x": 287,
+              "y": 463,
+              "t": 1775152108180,
+              "pressure": 0.5,
+              "velocity": 770
+            },
+            {
+              "x": 286,
+              "y": 450,
+              "t": 1775152108196,
+              "pressure": 0.5,
+              "velocity": 822
+            },
+            {
+              "x": 286,
+              "y": 438,
+              "t": 1775152108213,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 286,
+              "y": 426,
+              "t": 1775152108230,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 284,
+              "y": 416,
+              "t": 1775152108246,
+              "pressure": 0.5,
+              "velocity": 674
+            },
+            {
+              "x": 284,
+              "y": 404,
+              "t": 1775152108263,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 284,
+              "y": 392,
+              "t": 1775152108280,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 284,
+              "y": 379,
+              "t": 1775152108296,
+              "pressure": 0.5,
+              "velocity": 818
+            },
+            {
+              "x": 284,
+              "y": 368,
+              "t": 1775152108314,
+              "pressure": 0.5,
+              "velocity": 595
+            },
+            {
+              "x": 284,
+              "y": 356,
+              "t": 1775152108329,
+              "pressure": 0.5,
+              "velocity": 794
+            },
+            {
+              "x": 284,
+              "y": 345,
+              "t": 1775152108346,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 286,
+              "y": 333,
+              "t": 1775152108363,
+              "pressure": 0.5,
+              "velocity": 704
+            },
+            {
+              "x": 287,
+              "y": 321,
+              "t": 1775152108379,
+              "pressure": 0.5,
+              "velocity": 748
+            },
+            {
+              "x": 288,
+              "y": 310,
+              "t": 1775152108396,
+              "pressure": 0.5,
+              "velocity": 704
+            },
+            {
+              "x": 288,
+              "y": 296,
+              "t": 1775152108412,
+              "pressure": 0.5,
+              "velocity": 818
+            },
+            {
+              "x": 289,
+              "y": 286,
+              "t": 1775152108429,
+              "pressure": 0.5,
+              "velocity": 634
+            },
+            {
+              "x": 290,
+              "y": 276,
+              "t": 1775152108446,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 292,
+              "y": 267,
+              "t": 1775152108463,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 293,
+              "y": 258,
+              "t": 1775152108479,
+              "pressure": 0.5,
+              "velocity": 526
+            },
+            {
+              "x": 294,
+              "y": 251,
+              "t": 1775152108496,
+              "pressure": 0.5,
+              "velocity": 426
+            },
+            {
+              "x": 296,
+              "y": 244,
+              "t": 1775152108513,
+              "pressure": 0.5,
+              "velocity": 443
+            },
+            {
+              "x": 298,
+              "y": 237,
+              "t": 1775152108529,
+              "pressure": 0.5,
+              "velocity": 453
+            },
+            {
+              "x": 300,
+              "y": 230,
+              "t": 1775152108546,
+              "pressure": 0.5,
+              "velocity": 443
+            },
+            {
+              "x": 301,
+              "y": 224,
+              "t": 1775152108563,
+              "pressure": 0.5,
+              "velocity": 357
+            },
+            {
+              "x": 303,
+              "y": 217,
+              "t": 1775152108579,
+              "pressure": 0.5,
+              "velocity": 471
+            },
+            {
+              "x": 305,
+              "y": 211,
+              "t": 1775152108596,
+              "pressure": 0.5,
+              "velocity": 357
+            },
+            {
+              "x": 305,
+              "y": 205,
+              "t": 1775152108613,
+              "pressure": 0.5,
+              "velocity": 350
+            },
+            {
+              "x": 306,
+              "y": 200,
+              "t": 1775152108629,
+              "pressure": 0.5,
+              "velocity": 307
+            },
+            {
+              "x": 307,
+              "y": 195,
+              "t": 1775152108646,
+              "pressure": 0.5,
+              "velocity": 289
+            },
+            {
+              "x": 307,
+              "y": 192,
+              "t": 1775152108663,
+              "pressure": 0.5,
+              "velocity": 210
+            },
+            {
+              "x": 308,
+              "y": 189,
+              "t": 1775152108679,
+              "pressure": 0.5,
+              "velocity": 166
+            },
+            {
+              "x": 309,
+              "y": 187,
+              "t": 1775152108696,
+              "pressure": 0.5,
+              "velocity": 157
+            },
+            {
+              "x": 309,
+              "y": 186,
+              "t": 1775152108713,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 311,
+              "y": 185,
+              "t": 1775152108730,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 311,
+              "y": 185,
+              "t": 1775152108746,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 312,
+              "y": 185,
+              "t": 1775152108763,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 312,
+              "y": 186,
+              "t": 1775152108780,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 312,
+              "y": 189,
+              "t": 1775152108796,
+              "pressure": 0.5,
+              "velocity": 223
+            },
+            {
+              "x": 312,
+              "y": 198,
+              "t": 1775152108813,
+              "pressure": 0.5,
+              "velocity": 490
+            },
+            {
+              "x": 312,
+              "y": 208,
+              "t": 1775152108830,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 312,
+              "y": 220,
+              "t": 1775152108846,
+              "pressure": 0.5,
+              "velocity": 744
+            },
+            {
+              "x": 312,
+              "y": 232,
+              "t": 1775152108863,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 311,
+              "y": 242,
+              "t": 1775152108880,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 311,
+              "y": 252,
+              "t": 1775152108896,
+              "pressure": 0.5,
+              "velocity": 670
+            },
+            {
+              "x": 309,
+              "y": 264,
+              "t": 1775152108913,
+              "pressure": 0.5,
+              "velocity": 704
+            },
+            {
+              "x": 309,
+              "y": 273,
+              "t": 1775152108930,
+              "pressure": 0.5,
+              "velocity": 490
+            },
+            {
+              "x": 309,
+              "y": 282,
+              "t": 1775152108946,
+              "pressure": 0.5,
+              "velocity": 595
+            },
+            {
+              "x": 308,
+              "y": 292,
+              "t": 1775152108963,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 308,
+              "y": 302,
+              "t": 1775152108980,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 307,
+              "y": 312,
+              "t": 1775152108996,
+              "pressure": 0.5,
+              "velocity": 600
+            },
+            {
+              "x": 307,
+              "y": 321,
+              "t": 1775152109013,
+              "pressure": 0.5,
+              "velocity": 560
+            },
+            {
+              "x": 307,
+              "y": 331,
+              "t": 1775152109029,
+              "pressure": 0.5,
+              "velocity": 595
+            },
+            {
+              "x": 306,
+              "y": 341,
+              "t": 1775152109046,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 306,
+              "y": 351,
+              "t": 1775152109063,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 306,
+              "y": 363,
+              "t": 1775152109080,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 306,
+              "y": 376,
+              "t": 1775152109097,
+              "pressure": 0.5,
+              "velocity": 770
+            },
+            {
+              "x": 306,
+              "y": 389,
+              "t": 1775152109113,
+              "pressure": 0.5,
+              "velocity": 818
+            },
+            {
+              "x": 306,
+              "y": 402,
+              "t": 1775152109130,
+              "pressure": 0.5,
+              "velocity": 770
+            },
+            {
+              "x": 306,
+              "y": 417,
+              "t": 1775152109146,
+              "pressure": 0.5,
+              "velocity": 893
+            },
+            {
+              "x": 306,
+              "y": 431,
+              "t": 1775152109163,
+              "pressure": 0.5,
+              "velocity": 840
+            },
+            {
+              "x": 306,
+              "y": 444,
+              "t": 1775152109180,
+              "pressure": 0.5,
+              "velocity": 770
+            },
+            {
+              "x": 306,
+              "y": 456,
+              "t": 1775152109196,
+              "pressure": 0.5,
+              "velocity": 744
+            },
+            {
+              "x": 306,
+              "y": 468,
+              "t": 1775152109213,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 306,
+              "y": 480,
+              "t": 1775152109230,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 308,
+              "y": 494,
+              "t": 1775152109246,
+              "pressure": 0.5,
+              "velocity": 905
+            },
+            {
+              "x": 311,
+              "y": 507,
+              "t": 1775152109263,
+              "pressure": 0.5,
+              "velocity": 783
+            },
+            {
+              "x": 313,
+              "y": 518,
+              "t": 1775152109279,
+              "pressure": 0.5,
+              "velocity": 686
+            },
+            {
+              "x": 315,
+              "y": 527,
+              "t": 1775152109296,
+              "pressure": 0.5,
+              "velocity": 578
+            },
+            {
+              "x": 318,
+              "y": 537,
+              "t": 1775152109313,
+              "pressure": 0.5,
+              "velocity": 578
+            },
+            {
+              "x": 320,
+              "y": 545,
+              "t": 1775152109330,
+              "pressure": 0.5,
+              "velocity": 510
+            },
+            {
+              "x": 323,
+              "y": 554,
+              "t": 1775152109346,
+              "pressure": 0.5,
+              "velocity": 542
+            },
+            {
+              "x": 324,
+              "y": 561,
+              "t": 1775152109363,
+              "pressure": 0.5,
+              "velocity": 426
+            },
+            {
+              "x": 325,
+              "y": 569,
+              "t": 1775152109380,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 326,
+              "y": 576,
+              "t": 1775152109396,
+              "pressure": 0.5,
+              "velocity": 453
+            },
+            {
+              "x": 327,
+              "y": 582,
+              "t": 1775152109413,
+              "pressure": 0.5,
+              "velocity": 357
+            },
+            {
+              "x": 327,
+              "y": 588,
+              "t": 1775152109429,
+              "pressure": 0.5,
+              "velocity": 372
+            },
+            {
+              "x": 327,
+              "y": 592,
+              "t": 1775152109446,
+              "pressure": 0.5,
+              "velocity": 210
+            },
+            {
+              "x": 327,
+              "y": 595,
+              "t": 1775152109463,
+              "pressure": 0.5,
+              "velocity": 210
+            },
+            {
+              "x": 327,
+              "y": 599,
+              "t": 1775152109480,
+              "pressure": 0.5,
+              "velocity": 210
+            },
+            {
+              "x": 327,
+              "y": 602,
+              "t": 1775152109497,
+              "pressure": 0.5,
+              "velocity": 210
+            },
+            {
+              "x": 327,
+              "y": 606,
+              "t": 1775152109513,
+              "pressure": 0.5,
+              "velocity": 223
+            },
+            {
+              "x": 327,
+              "y": 608,
+              "t": 1775152109530,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 327,
+              "y": 611,
+              "t": 1775152109546,
+              "pressure": 0.5,
+              "velocity": 149
+            },
+            {
+              "x": 327,
+              "y": 611,
+              "t": 1775152109563,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 327,
+              "y": 612,
+              "t": 1775152109580,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 327,
+              "y": 612,
+              "t": 1775152109613,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 327,
+              "y": 612,
+              "t": 1775152109630,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 326,
+              "y": 612,
+              "t": 1775152109646,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 325,
+              "y": 612,
+              "t": 1775152109663,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 324,
+              "y": 612,
+              "t": 1775152109679,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 323,
+              "y": 611,
+              "t": 1775152109696,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 321,
+              "y": 610,
+              "t": 1775152109713,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 321,
+              "y": 610,
+              "t": 1775152109730,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 320,
+              "y": 608,
+              "t": 1775152109746,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 320,
+              "y": 608,
+              "t": 1775152109763,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 320,
+              "y": 607,
+              "t": 1775152109780,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 319,
+              "y": 607,
+              "t": 1775152109796,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 318,
+              "y": 607,
+              "t": 1775152109813,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 318,
+              "y": 606,
+              "t": 1775152109830,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 315,
+              "y": 605,
+              "t": 1775152109846,
+              "pressure": 0.5,
+              "velocity": 167
+            },
+            {
+              "x": 314,
+              "y": 605,
+              "t": 1775152109863,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 313,
+              "y": 604,
+              "t": 1775152109880,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 312,
+              "y": 604,
+              "t": 1775152109896,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 312,
+              "y": 604,
+              "t": 1775152109913,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 311,
+              "y": 602,
+              "t": 1775152109930,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 309,
+              "y": 601,
+              "t": 1775152109946,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 308,
+              "y": 601,
+              "t": 1775152109963,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 308,
+              "y": 600,
+              "t": 1775152109979,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 307,
+              "y": 600,
+              "t": 1775152109996,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 307,
+              "y": 599,
+              "t": 1775152110013,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 307,
+              "y": 599,
+              "t": 1775152110030,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 307,
+              "y": 598,
+              "t": 1775152110046,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 306,
+              "y": 596,
+              "t": 1775152110063,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 306,
+              "y": 594,
+              "t": 1775152110080,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 305,
+              "y": 593,
+              "t": 1775152110096,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 303,
+              "y": 591,
+              "t": 1775152110113,
+              "pressure": 0.5,
+              "velocity": 157
+            },
+            {
+              "x": 303,
+              "y": 588,
+              "t": 1775152110130,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 302,
+              "y": 587,
+              "t": 1775152110146,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 302,
+              "y": 586,
+              "t": 1775152110163,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 302,
+              "y": 585,
+              "t": 1775152110180,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 302,
+              "y": 585,
+              "t": 1775152110213,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 302,
+              "y": 583,
+              "t": 1775152110230,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 302,
+              "y": 583,
+              "t": 1775152110246,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 302,
+              "y": 582,
+              "t": 1775152110263,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 302,
+              "y": 582,
+              "t": 1775152110280,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 303,
+              "y": 581,
+              "t": 1775152110296,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 303,
+              "y": 581,
+              "t": 1775152110313,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 303,
+              "y": 580,
+              "t": 1775152110330,
+              "pressure": 0.5,
+              "velocity": 70
+            }
+          ]
+        },
+        {
+          "color": "#0D0D0D",
+          "size": 7,
+          "pts": [
+            {
+              "x": 767,
+              "y": 592,
+              "t": 1775152111714,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 767,
+              "y": 592,
+              "t": 1775152111880,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 767,
+              "y": 591,
+              "t": 1775152111896,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 769,
+              "y": 587,
+              "t": 1775152111914,
+              "pressure": 0.5,
+              "velocity": 209
+            },
+            {
+              "x": 770,
+              "y": 582,
+              "t": 1775152111932,
+              "pressure": 0.5,
+              "velocity": 273
+            },
+            {
+              "x": 771,
+              "y": 574,
+              "t": 1775152111946,
+              "pressure": 0.5,
+              "velocity": 601
+            },
+            {
+              "x": 775,
+              "y": 561,
+              "t": 1775152111963,
+              "pressure": 0.5,
+              "velocity": 799
+            },
+            {
+              "x": 777,
+              "y": 548,
+              "t": 1775152111979,
+              "pressure": 0.5,
+              "velocity": 832
+            },
+            {
+              "x": 781,
+              "y": 533,
+              "t": 1775152111996,
+              "pressure": 0.5,
+              "velocity": 866
+            },
+            {
+              "x": 783,
+              "y": 518,
+              "t": 1775152112013,
+              "pressure": 0.5,
+              "velocity": 921
+            },
+            {
+              "x": 785,
+              "y": 504,
+              "t": 1775152112030,
+              "pressure": 0.5,
+              "velocity": 852
+            },
+            {
+              "x": 788,
+              "y": 489,
+              "t": 1775152112046,
+              "pressure": 0.5,
+              "velocity": 905
+            },
+            {
+              "x": 790,
+              "y": 476,
+              "t": 1775152112063,
+              "pressure": 0.5,
+              "velocity": 783
+            },
+            {
+              "x": 791,
+              "y": 463,
+              "t": 1775152112079,
+              "pressure": 0.5,
+              "velocity": 822
+            },
+            {
+              "x": 793,
+              "y": 450,
+              "t": 1775152112096,
+              "pressure": 0.5,
+              "velocity": 774
+            },
+            {
+              "x": 794,
+              "y": 437,
+              "t": 1775152112113,
+              "pressure": 0.5,
+              "velocity": 774
+            },
+            {
+              "x": 795,
+              "y": 423,
+              "t": 1775152112129,
+              "pressure": 0.5,
+              "velocity": 896
+            },
+            {
+              "x": 796,
+              "y": 408,
+              "t": 1775152112146,
+              "pressure": 0.5,
+              "velocity": 843
+            },
+            {
+              "x": 797,
+              "y": 393,
+              "t": 1775152112163,
+              "pressure": 0.5,
+              "velocity": 913
+            },
+            {
+              "x": 797,
+              "y": 377,
+              "t": 1775152112180,
+              "pressure": 0.5,
+              "velocity": 910
+            },
+            {
+              "x": 799,
+              "y": 363,
+              "t": 1775152112196,
+              "pressure": 0.5,
+              "velocity": 896
+            },
+            {
+              "x": 799,
+              "y": 349,
+              "t": 1775152112213,
+              "pressure": 0.5,
+              "velocity": 840
+            },
+            {
+              "x": 799,
+              "y": 337,
+              "t": 1775152112230,
+              "pressure": 0.5,
+              "velocity": 700
+            },
+            {
+              "x": 799,
+              "y": 324,
+              "t": 1775152112247,
+              "pressure": 0.5,
+              "velocity": 770
+            },
+            {
+              "x": 799,
+              "y": 312,
+              "t": 1775152112263,
+              "pressure": 0.5,
+              "velocity": 744
+            },
+            {
+              "x": 799,
+              "y": 298,
+              "t": 1775152112279,
+              "pressure": 0.5,
+              "velocity": 893
+            },
+            {
+              "x": 799,
+              "y": 281,
+              "t": 1775152112296,
+              "pressure": 0.5,
+              "velocity": 980
+            },
+            {
+              "x": 799,
+              "y": 263,
+              "t": 1775152112313,
+              "pressure": 0.5,
+              "velocity": 1050
+            },
+            {
+              "x": 799,
+              "y": 246,
+              "t": 1775152112329,
+              "pressure": 0.5,
+              "velocity": 1042
+            },
+            {
+              "x": 799,
+              "y": 231,
+              "t": 1775152112346,
+              "pressure": 0.5,
+              "velocity": 910
+            },
+            {
+              "x": 799,
+              "y": 217,
+              "t": 1775152112363,
+              "pressure": 0.5,
+              "velocity": 840
+            },
+            {
+              "x": 799,
+              "y": 205,
+              "t": 1775152112379,
+              "pressure": 0.5,
+              "velocity": 744
+            },
+            {
+              "x": 799,
+              "y": 194,
+              "t": 1775152112396,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 799,
+              "y": 183,
+              "t": 1775152112413,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 799,
+              "y": 174,
+              "t": 1775152112429,
+              "pressure": 0.5,
+              "velocity": 595
+            },
+            {
+              "x": 799,
+              "y": 165,
+              "t": 1775152112446,
+              "pressure": 0.5,
+              "velocity": 490
+            },
+            {
+              "x": 799,
+              "y": 158,
+              "t": 1775152112462,
+              "pressure": 0.5,
+              "velocity": 446
+            },
+            {
+              "x": 799,
+              "y": 150,
+              "t": 1775152112479,
+              "pressure": 0.5,
+              "velocity": 490
+            },
+            {
+              "x": 799,
+              "y": 144,
+              "t": 1775152112496,
+              "pressure": 0.5,
+              "velocity": 350
+            },
+            {
+              "x": 799,
+              "y": 137,
+              "t": 1775152112513,
+              "pressure": 0.5,
+              "velocity": 420
+            },
+            {
+              "x": 799,
+              "y": 131,
+              "t": 1775152112529,
+              "pressure": 0.5,
+              "velocity": 372
+            },
+            {
+              "x": 799,
+              "y": 125,
+              "t": 1775152112546,
+              "pressure": 0.5,
+              "velocity": 350
+            },
+            {
+              "x": 800,
+              "y": 120,
+              "t": 1775152112563,
+              "pressure": 0.5,
+              "velocity": 289
+            },
+            {
+              "x": 800,
+              "y": 117,
+              "t": 1775152112579,
+              "pressure": 0.5,
+              "velocity": 223
+            },
+            {
+              "x": 800,
+              "y": 115,
+              "t": 1775152112596,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 800,
+              "y": 114,
+              "t": 1775152112612,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 800,
+              "y": 114,
+              "t": 1775152112663,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 800,
+              "y": 117,
+              "t": 1775152112679,
+              "pressure": 0.5,
+              "velocity": 149
+            },
+            {
+              "x": 800,
+              "y": 120,
+              "t": 1775152112696,
+              "pressure": 0.5,
+              "velocity": 210
+            },
+            {
+              "x": 801,
+              "y": 126,
+              "t": 1775152112713,
+              "pressure": 0.5,
+              "velocity": 357
+            },
+            {
+              "x": 802,
+              "y": 136,
+              "t": 1775152112730,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 803,
+              "y": 144,
+              "t": 1775152112746,
+              "pressure": 0.5,
+              "velocity": 526
+            },
+            {
+              "x": 804,
+              "y": 154,
+              "t": 1775152112763,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 807,
+              "y": 163,
+              "t": 1775152112780,
+              "pressure": 0.5,
+              "velocity": 578
+            },
+            {
+              "x": 809,
+              "y": 174,
+              "t": 1775152112796,
+              "pressure": 0.5,
+              "velocity": 686
+            },
+            {
+              "x": 812,
+              "y": 182,
+              "t": 1775152112813,
+              "pressure": 0.5,
+              "velocity": 510
+            },
+            {
+              "x": 815,
+              "y": 190,
+              "t": 1775152112830,
+              "pressure": 0.5,
+              "velocity": 533
+            },
+            {
+              "x": 818,
+              "y": 199,
+              "t": 1775152112846,
+              "pressure": 0.5,
+              "velocity": 542
+            },
+            {
+              "x": 819,
+              "y": 207,
+              "t": 1775152112863,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 820,
+              "y": 215,
+              "t": 1775152112880,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 822,
+              "y": 224,
+              "t": 1775152112896,
+              "pressure": 0.5,
+              "velocity": 542
+            },
+            {
+              "x": 824,
+              "y": 232,
+              "t": 1775152112913,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 825,
+              "y": 241,
+              "t": 1775152112930,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 826,
+              "y": 250,
+              "t": 1775152112946,
+              "pressure": 0.5,
+              "velocity": 600
+            },
+            {
+              "x": 827,
+              "y": 260,
+              "t": 1775152112963,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 830,
+              "y": 269,
+              "t": 1775152112980,
+              "pressure": 0.5,
+              "velocity": 578
+            },
+            {
+              "x": 831,
+              "y": 279,
+              "t": 1775152112996,
+              "pressure": 0.5,
+              "velocity": 600
+            },
+            {
+              "x": 832,
+              "y": 288,
+              "t": 1775152113013,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 833,
+              "y": 299,
+              "t": 1775152113029,
+              "pressure": 0.5,
+              "velocity": 674
+            },
+            {
+              "x": 834,
+              "y": 308,
+              "t": 1775152113046,
+              "pressure": 0.5,
+              "velocity": 565
+            },
+            {
+              "x": 835,
+              "y": 320,
+              "t": 1775152113063,
+              "pressure": 0.5,
+              "velocity": 704
+            },
+            {
+              "x": 835,
+              "y": 331,
+              "t": 1775152113080,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 837,
+              "y": 343,
+              "t": 1775152113096,
+              "pressure": 0.5,
+              "velocity": 748
+            },
+            {
+              "x": 837,
+              "y": 354,
+              "t": 1775152113113,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 837,
+              "y": 364,
+              "t": 1775152113130,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 837,
+              "y": 375,
+              "t": 1775152113146,
+              "pressure": 0.5,
+              "velocity": 670
+            },
+            {
+              "x": 837,
+              "y": 386,
+              "t": 1775152113163,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 837,
+              "y": 396,
+              "t": 1775152113180,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 838,
+              "y": 406,
+              "t": 1775152113196,
+              "pressure": 0.5,
+              "velocity": 600
+            },
+            {
+              "x": 838,
+              "y": 417,
+              "t": 1775152113213,
+              "pressure": 0.5,
+              "velocity": 630
+            },
+            {
+              "x": 838,
+              "y": 426,
+              "t": 1775152113230,
+              "pressure": 0.5,
+              "velocity": 560
+            },
+            {
+              "x": 838,
+              "y": 436,
+              "t": 1775152113247,
+              "pressure": 0.5,
+              "velocity": 560
+            },
+            {
+              "x": 835,
+              "y": 445,
+              "t": 1775152113263,
+              "pressure": 0.5,
+              "velocity": 614
+            },
+            {
+              "x": 834,
+              "y": 454,
+              "t": 1775152113280,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 832,
+              "y": 463,
+              "t": 1775152113296,
+              "pressure": 0.5,
+              "velocity": 614
+            },
+            {
+              "x": 830,
+              "y": 471,
+              "t": 1775152113313,
+              "pressure": 0.5,
+              "velocity": 510
+            },
+            {
+              "x": 827,
+              "y": 479,
+              "t": 1775152113329,
+              "pressure": 0.5,
+              "velocity": 471
+            },
+            {
+              "x": 826,
+              "y": 486,
+              "t": 1775152113346,
+              "pressure": 0.5,
+              "velocity": 426
+            },
+            {
+              "x": 824,
+              "y": 494,
+              "t": 1775152113363,
+              "pressure": 0.5,
+              "velocity": 510
+            },
+            {
+              "x": 822,
+              "y": 502,
+              "t": 1775152113380,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 820,
+              "y": 510,
+              "t": 1775152113396,
+              "pressure": 0.5,
+              "velocity": 471
+            },
+            {
+              "x": 819,
+              "y": 518,
+              "t": 1775152113413,
+              "pressure": 0.5,
+              "velocity": 495
+            },
+            {
+              "x": 816,
+              "y": 524,
+              "t": 1775152113430,
+              "pressure": 0.5,
+              "velocity": 377
+            },
+            {
+              "x": 815,
+              "y": 531,
+              "t": 1775152113446,
+              "pressure": 0.5,
+              "velocity": 453
+            },
+            {
+              "x": 813,
+              "y": 537,
+              "t": 1775152113463,
+              "pressure": 0.5,
+              "velocity": 377
+            },
+            {
+              "x": 810,
+              "y": 542,
+              "t": 1775152113480,
+              "pressure": 0.5,
+              "velocity": 313
+            },
+            {
+              "x": 809,
+              "y": 546,
+              "t": 1775152113496,
+              "pressure": 0.5,
+              "velocity": 307
+            },
+            {
+              "x": 807,
+              "y": 551,
+              "t": 1775152113513,
+              "pressure": 0.5,
+              "velocity": 313
+            },
+            {
+              "x": 806,
+              "y": 556,
+              "t": 1775152113530,
+              "pressure": 0.5,
+              "velocity": 289
+            },
+            {
+              "x": 804,
+              "y": 561,
+              "t": 1775152113546,
+              "pressure": 0.5,
+              "velocity": 307
+            },
+            {
+              "x": 803,
+              "y": 564,
+              "t": 1775152113563,
+              "pressure": 0.5,
+              "velocity": 221
+            },
+            {
+              "x": 803,
+              "y": 569,
+              "t": 1775152113580,
+              "pressure": 0.5,
+              "velocity": 280
+            },
+            {
+              "x": 802,
+              "y": 573,
+              "t": 1775152113596,
+              "pressure": 0.5,
+              "velocity": 235
+            },
+            {
+              "x": 801,
+              "y": 576,
+              "t": 1775152113613,
+              "pressure": 0.5,
+              "velocity": 221
+            },
+            {
+              "x": 801,
+              "y": 579,
+              "t": 1775152113630,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 800,
+              "y": 582,
+              "t": 1775152113646,
+              "pressure": 0.5,
+              "velocity": 235
+            },
+            {
+              "x": 799,
+              "y": 586,
+              "t": 1775152113663,
+              "pressure": 0.5,
+              "velocity": 221
+            },
+            {
+              "x": 799,
+              "y": 588,
+              "t": 1775152113680,
+              "pressure": 0.5,
+              "velocity": 140
+            },
+            {
+              "x": 797,
+              "y": 591,
+              "t": 1775152113696,
+              "pressure": 0.5,
+              "velocity": 166
+            },
+            {
+              "x": 796,
+              "y": 594,
+              "t": 1775152113713,
+              "pressure": 0.5,
+              "velocity": 221
+            },
+            {
+              "x": 795,
+              "y": 596,
+              "t": 1775152113730,
+              "pressure": 0.5,
+              "velocity": 157
+            },
+            {
+              "x": 794,
+              "y": 599,
+              "t": 1775152113746,
+              "pressure": 0.5,
+              "velocity": 166
+            },
+            {
+              "x": 793,
+              "y": 600,
+              "t": 1775152113763,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 791,
+              "y": 601,
+              "t": 1775152113780,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 791,
+              "y": 601,
+              "t": 1775152113796,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 790,
+              "y": 602,
+              "t": 1775152113813,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 789,
+              "y": 602,
+              "t": 1775152113830,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 788,
+              "y": 604,
+              "t": 1775152113846,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 788,
+              "y": 604,
+              "t": 1775152113863,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 787,
+              "y": 604,
+              "t": 1775152113880,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 787,
+              "y": 604,
+              "t": 1775152113896,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 785,
+              "y": 604,
+              "t": 1775152113913,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 784,
+              "y": 604,
+              "t": 1775152113930,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 783,
+              "y": 604,
+              "t": 1775152113946,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 782,
+              "y": 604,
+              "t": 1775152113963,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 781,
+              "y": 604,
+              "t": 1775152113980,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 779,
+              "y": 604,
+              "t": 1775152113996,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 779,
+              "y": 604,
+              "t": 1775152114013,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 778,
+              "y": 604,
+              "t": 1775152114030,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 777,
+              "y": 604,
+              "t": 1775152114046,
+              "pressure": 0.5,
+              "velocity": 75
+            },
+            {
+              "x": 777,
+              "y": 604,
+              "t": 1775152114063,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 776,
+              "y": 602,
+              "t": 1775152114080,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 776,
+              "y": 602,
+              "t": 1775152114113,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 776,
+              "y": 602,
+              "t": 1775152114130,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 775,
+              "y": 601,
+              "t": 1775152114146,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 775,
+              "y": 601,
+              "t": 1775152114163,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 775,
+              "y": 601,
+              "t": 1775152114180,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 773,
+              "y": 600,
+              "t": 1775152114196,
+              "pressure": 0.5,
+              "velocity": 105
+            },
+            {
+              "x": 773,
+              "y": 600,
+              "t": 1775152114213,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 773,
+              "y": 600,
+              "t": 1775152114230,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 773,
+              "y": 599,
+              "t": 1775152114246,
+              "pressure": 0.5,
+              "velocity": 74
+            },
+            {
+              "x": 772,
+              "y": 599,
+              "t": 1775152114263,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 772,
+              "y": 598,
+              "t": 1775152114280,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 772,
+              "y": 598,
+              "t": 1775152114296,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 771,
+              "y": 596,
+              "t": 1775152114313,
+              "pressure": 0.5,
+              "velocity": 99
+            },
+            {
+              "x": 771,
+              "y": 596,
+              "t": 1775152114329,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 771,
+              "y": 595,
+              "t": 1775152114346,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 771,
+              "y": 595,
+              "t": 1775152114363,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 771,
+              "y": 595,
+              "t": 1775152114396,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 770,
+              "y": 595,
+              "t": 1775152114413,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 770,
+              "y": 594,
+              "t": 1775152114430,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 770,
+              "y": 594,
+              "t": 1775152114446,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 770,
+              "y": 593,
+              "t": 1775152114463,
+              "pressure": 0.5,
+              "velocity": 70
+            },
+            {
+              "x": 770,
+              "y": 593,
+              "t": 1775152114481,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 770,
+              "y": 593,
+              "t": 1775152114496,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 770,
+              "y": 592,
+              "t": 1775152114513,
+              "pressure": 0.5,
+              "velocity": 70
+            }
+          ]
+        }
+      ]
+    },
+    "total_strokes": 3,
+    "total_points": 385,
+    "stroke_annotations": [
+      {
+        "id": "ann_1775152137632",
+        "indices": [
+          1
+        ],
+        "codes": [
+          "K-D-05"
+        ],
+        "note": "",
+        "color": "#e8b84b"
+      },
+      {
+        "id": "ann_1775152148488",
+        "indices": [
+          0
+        ],
+        "codes": [
+          "K-A-01"
+        ],
+        "note": "",
+        "color": "#6dba8a"
+      },
+      {
+        "id": "ann_1775152199840",
+        "indices": [
+          2
+        ],
+        "codes": [
+          "K-D-05"
+        ],
+        "note": "",
+        "color": "#7a9ed4"
+      }
+    ]
   }
 ]
