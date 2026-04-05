@@ -3820,7 +3820,7 @@ const ANN_DEPRECATED_CODES = {
 
 function taxEntries(prefix) {
   return Object.entries(ANN_TAXONOMY[prefix] || {})
-    .filter(([code, name]) => name !== code) // exclude placeholders (no real name yet)
+    .filter(([code, name]) => name !== code && !ANN_DEPRECATED_CODES[code])
     .sort((a, b) => a[0].localeCompare(b[0]));
 }
 
@@ -4409,26 +4409,26 @@ function annBuildPanel(item, ann) {
     return `<span class="ann-tag${sel}" data-code="${m.code}" data-name="${m.name}" data-desc="${m.desc}">${m.code}</span>`;
   }).join('');
 
-  // Prefill info row — with deprecation notice for retired compound categories
+  // Prefill info row — deprecated compound codes shown as parent group + notice
   const depCodes = (item.prefill_labels || []).filter(c => ANN_DEPRECATED_CODES[c]);
-  const depNotice = depCodes.length
-    ? `<div class="ann-deprecated-notice">
-         <strong>Note:</strong> This image was originally classified under
-         ${depCodes.map(c => `<em>${c}: ${(ANN_TAXONOMY[c.substring(0,3)] || {})[c] || c}</em>`).join(', ')}.
-         These sub-categories have been removed from the annotation system: each drawing is already
-         annotated with a Placement Pattern (K-B) separately, making compound
-         "X in Placement Patterns" categories redundant.
-         The prefill has been remapped to the parent group.
-       </div>` : '';
+  const depNotice = depCodes.map(c => {
+    const originalName = (ANN_TAXONOMY[c.substring(0,3)] || {})[c] || c;
+    const parentCode = ANN_DEPRECATED_CODES[c];
+    const parentGroup = ANN_GROUP_NAMES[parentCode.slice(2)] || parentCode;
+    return `<div class="ann-deprecated-notice">
+      This image was originally pre-classified in the Kellogg archive as
+      <strong>${c}: ${originalName}</strong>.
+      In this annotator, that label has been automatically removed: since every image
+      already carries a Placement Pattern annotation (K-B), compound
+      "X in Placement Patterns" sub-categories are redundant.
+      The prefill has been remapped to the parent group: <strong>${parentCode} (${parentGroup})</strong>.
+    </div>`;
+  }).join('');
   const prefillChips = (item.prefill_labels || []).map(c => {
     const dep = ANN_DEPRECATED_CODES[c];
     const displayCode = dep || c;
-    const displayName = (ANN_INDEX_DATA.label_names || {})[displayCode] || (ANN_TAXONOMY[displayCode.substring(0,3)] || {})[displayCode] || '';
-    const style = dep ? 'opacity:0.55;cursor:default;text-decoration:line-through;' : 'opacity:0.7;cursor:default;';
-    const title = dep
-      ? `Originally: ${c} (${(ANN_TAXONOMY[c.substring(0,3)]||{})[c]||c}) — remapped to ${displayCode}`
-      : displayName;
-    return `<span class="ann-tag" style="${style}" title="${title}">${displayCode}</span>`;
+    const displayName = (ANN_INDEX_DATA.label_names || {})[displayCode] || '';
+    return `<span class="ann-tag" style="opacity:0.7;cursor:default;" title="${displayName}">${displayCode}</span>`;
   }).join('');
   const prefillRow = (item.prefill_labels || []).length
     ? `<div class="ann-section" style="background:var(--c-bg-warm);">
