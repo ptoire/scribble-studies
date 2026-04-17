@@ -647,6 +647,17 @@ body {
 .cite-link { color: var(--c-accent); text-decoration: none; }
 .cite-link:hover { text-decoration: underline; }
 
+/* Align all section titles with the narrow text columns */
+.taxonomy-section-header,
+.annotator-section > h2, .annotator-section > .section-subtitle,
+.archive-section > h2, .archive-section > .section-subtitle,
+.is-studio-section > h2, .is-studio-section > .section-subtitle,
+#map-section > h2,
+.maurer-section > h2 {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
 #bibliography { font-family: var(--font-body); margin: 4rem auto 0; padding: 2rem 0; border-top: 1px solid var(--c-border-light); max-width: 720px; }
 #bibliography h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--c-text); }
 #bibliography { scroll-margin-top: 3.5rem; }
