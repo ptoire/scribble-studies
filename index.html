@@ -8934,7 +8934,15 @@ function isGetSessions() {
   try { return JSON.parse(localStorage.getItem(IS_SESSIONS_KEY) || '[]'); } catch { return []; }
 }
 function isSaveSessions(arr) {
-  try { localStorage.setItem(IS_SESSIONS_KEY, JSON.stringify(arr)); } catch {}
+  const attempts = [
+    arr,
+    arr.map(({ anim, ...r }) => r),
+    arr.map(({ anim, thumb_dataurl, ...r }) => r),
+  ];
+  for (const a of attempts) {
+    try { localStorage.setItem(IS_SESSIONS_KEY, JSON.stringify(a)); return; } catch {}
+  }
+  console.warn('isSaveSessions: localStorage quota exceeded even after stripping large fields');
 }
 // Merge server sessions into localStorage (called on init and on "Refresh")
 async function isLoadFromServer() {
