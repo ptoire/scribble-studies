@@ -1,0 +1,26 @@
+{
+  "image_shape": [
+    300,
+    400
+  ],
+  "ink_pixels": 4262,
+  "ink_ratio": 0.035517,
+  "skeleton_pixels": 1775,
+  "skeleton_ratio": 0.014792,
+  "skeleton_per_ink": 0.416471,
+  "endpoint_count": 52,
+  "junction_count": 148,
+  "num_components": 8,
+  "bbox": {
+    "x": 18,
+    "y": 0,
+    "w": 337,
+    "h": 282
+  },
+  "centroid": {
+    "x": 165.8559361801971,
+    "y": 115.61356170811825
+  },
+  "complexity_score": 0.082479,
+  "is_blank": false
+}

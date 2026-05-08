@@ -647,6 +647,91 @@ body {
 .cite-link { color: var(--c-accent); text-decoration: none; }
 .cite-link:hover { text-decoration: underline; }
 
+/* ═══════════════════════════════════════════════════════════
+   COMPUTER VISION SECTION
+   ═══════════════════════════════════════════════════════════ */
+.cv-section { margin-top:4rem; padding-top:2rem; border-top:2px solid var(--c-text); }
+.cv-section h2 { font-family:var(--font-display); font-size:2rem; font-weight:500; margin-bottom:0.4rem; max-width:720px; margin-left:auto; margin-right:auto; }
+.cv-section .section-subtitle { font-family:var(--font-display); font-style:italic; color:var(--c-text-secondary); font-size:1.1rem; margin-bottom:0.5rem; max-width:720px; margin-left:auto; margin-right:auto; }
+.cv-subnav { display:flex; gap:0.4rem; margin:1.5rem 0 1rem; padding-bottom:1rem; border-bottom:1px solid var(--c-border-light); flex-wrap:wrap; }
+.cv-tab-btn { font-family:var(--font-mono); font-size:0.7rem; font-weight:500; padding:0.35rem 0.85rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:all 0.15s; letter-spacing:0.03em; text-transform:uppercase; }
+.cv-tab-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.cv-tab-btn.active { background:var(--c-text); color:#fff; border-color:var(--c-text); }
+.cv-loading { display:flex; align-items:center; gap:0.7rem; padding:2rem; font-family:var(--font-mono); font-size:0.75rem; color:var(--c-text-tertiary); }
+.cv-loading-dot { width:6px; height:6px; border-radius:50%; background:var(--c-text-tertiary); animation:cv-pulse 1.2s ease-in-out infinite; }
+.cv-loading-dot:nth-child(2){animation-delay:0.2s} .cv-loading-dot:nth-child(3){animation-delay:0.4s}
+@keyframes cv-pulse { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
+
+/* Single Image */
+.cv-single-layout { display:grid; grid-template-columns:1fr 280px; gap:1.5rem; align-items:start; }
+@media(max-width:900px){ .cv-single-layout{grid-template-columns:1fr} }
+.cv-image-area { display:flex; flex-direction:column; align-items:center; }
+.cv-image-frame { position:relative; width:100%; max-width:700px; aspect-ratio:1; background:#fff; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+.cv-image-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
+.cv-caption { font-family:var(--font-display); font-style:italic; font-size:0.95rem; color:var(--c-text-secondary); margin-top:0.75rem; text-align:center; min-height:1.4em; transition:opacity 0.35s; }
+.cv-controls { display:flex; gap:0.4rem; align-items:center; margin-top:0.6rem; flex-wrap:wrap; justify-content:center; }
+.cv-ctrl-btn { font-family:var(--font-mono); font-size:0.68rem; padding:0.3rem 0.7rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:all 0.12s; }
+.cv-ctrl-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.cv-ctrl-btn.active { background:var(--c-text); color:#fff; border-color:var(--c-text); }
+.cv-similar-strip { display:flex; gap:0.3rem; margin-top:0.8rem; flex-wrap:wrap; justify-content:center; }
+.cv-similar-thumb { width:60px; height:60px; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; cursor:pointer; transition:border-color 0.12s,transform 0.12s; flex-shrink:0; position:relative; }
+.cv-similar-thumb:hover { border-color:var(--c-accent); transform:scale(1.06); }
+.cv-similar-thumb img { width:100%; height:100%; object-fit:contain; background:#fff; }
+.cv-similar-score { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); color:#fff; font-family:var(--font-mono); font-size:0.5rem; text-align:center; padding:0.1rem 0; opacity:0; transition:opacity 0.12s; }
+.cv-similar-thumb:hover .cv-similar-score { opacity:1; }
+.cv-right-panel { display:flex; flex-direction:column; gap:0.8rem; }
+.cv-panel-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.8rem 0.9rem; }
+.cv-panel-title { font-family:var(--font-mono); font-size:0.58rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--c-text-tertiary); margin-bottom:0.5rem; }
+.cv-layer-group { margin-bottom:0.45rem; }
+.cv-layer-group-label { font-family:var(--font-mono); font-size:0.57rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:var(--c-text-secondary); margin-bottom:0.2rem; }
+.cv-layer-toggle { display:flex; align-items:center; gap:0.3rem; font-family:var(--font-mono); font-size:0.6rem; color:var(--c-text-secondary); cursor:pointer; padding:0.05rem 0; }
+.cv-layer-toggle input[type=checkbox] { cursor:pointer; accent-color:var(--c-accent); }
+.cv-details-sha { font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); word-break:break-all; margin-bottom:0.35rem; }
+.cv-label-pills { display:flex; flex-wrap:wrap; gap:0.22rem; margin-bottom:0.4rem; }
+.cv-label-pill { font-family:var(--font-mono); font-size:0.63rem; padding:0.12rem 0.4rem; background:var(--c-tag-bg); border:1px solid var(--c-border-light); border-radius:3px; color:var(--c-tag-text); }
+.cv-metrics-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.25rem 0.4rem; }
+.cv-metric-item { font-size:0.7rem; }
+.cv-metric-label { font-family:var(--font-mono); font-size:0.55rem; color:var(--c-text-tertiary); display:block; }
+.cv-metric-value { font-family:var(--font-mono); font-weight:500; color:var(--c-text); }
+
+/* Archive Map */
+.cv-map-layout { display:grid; grid-template-columns:180px 1fr; gap:1.5rem; align-items:start; }
+@media(max-width:768px){ .cv-map-layout{grid-template-columns:1fr} }
+.cv-map-side { display:flex; flex-direction:column; gap:0.6rem; }
+.cv-map-side-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.75rem 0.85rem; }
+.cv-map-canvas-wrap { position:relative; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; background:#fff; cursor:grab; }
+.cv-map-canvas-wrap:active { cursor:grabbing; }
+.cv-map-canvas-wrap canvas { display:block; width:100%; }
+.cv-map-tooltip { position:fixed; pointer-events:none; background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:4px; box-shadow:var(--shadow-md); padding:0.4rem 0.5rem; display:none; z-index:300; }
+.cv-map-tooltip img { width:80px; height:80px; object-fit:contain; display:block; background:#fff; }
+.cv-map-tooltip-meta { font-family:var(--font-mono); font-size:0.6rem; color:var(--c-text-secondary); margin-top:0.2rem; text-align:center; }
+.cv-radio-group { display:flex; flex-direction:column; gap:0.22rem; }
+.cv-radio-item { display:flex; align-items:center; gap:0.32rem; font-family:var(--font-mono); font-size:0.63rem; color:var(--c-text-secondary); cursor:pointer; }
+.cv-radio-item input { cursor:pointer; accent-color:var(--c-accent); }
+.cv-map-caption { font-family:var(--font-display); font-style:italic; font-size:0.82rem; color:var(--c-text-secondary); line-height:1.5; margin-top:0.4rem; }
+
+/* Comparative Grid */
+.cv-grid-layout { display:grid; grid-template-columns:180px 1fr; gap:1.5rem; align-items:start; }
+@media(max-width:768px){ .cv-grid-layout{grid-template-columns:1fr} }
+.cv-grid-side { display:flex; flex-direction:column; gap:0.6rem; position:sticky; top:3.5rem; }
+.cv-grid-side-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.75rem 0.85rem; }
+.cv-slider-item { margin-bottom:0.55rem; }
+.cv-slider-label { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); display:flex; justify-content:space-between; margin-bottom:0.15rem; }
+.cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
+.cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
+.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; }
+.cv-grid-spacer-top,.cv-grid-spacer-bottom { width:100%; pointer-events:none; }
+.cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.6rem; }
+.cv-grid-thumb { position:relative; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.12s,box-shadow 0.12s; }
+.cv-grid-thumb:hover { border-color:var(--c-accent); box-shadow:var(--shadow-sm); }
+.cv-grid-thumb img { display:block; width:100%; aspect-ratio:1; object-fit:contain; }
+.cv-grid-thumb-overlay { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); color:#fff; font-family:var(--font-mono); font-size:0.53rem; padding:0.12rem 0.3rem; opacity:0; transition:opacity 0.12s; }
+.cv-grid-thumb:hover .cv-grid-thumb-overlay { opacity:1; }
+.cv-cat-checks { display:flex; flex-wrap:wrap; gap:0.22rem; }
+.cv-cat-check { display:flex; align-items:center; gap:0.18rem; font-family:var(--font-mono); font-size:0.6rem; color:var(--c-text-secondary); cursor:pointer; }
+.cv-cat-check input { cursor:pointer; accent-color:var(--c-accent); }
+.cv-select { font-family:var(--font-mono); font-size:0.65rem; padding:0.25rem 0.4rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text); width:100%; }
+
 /* Align all section titles with the narrow text columns */
 .taxonomy-section-header,
 .annotator-section > h2, .annotator-section > .section-subtitle,
@@ -2920,6 +3005,7 @@ async function init() {
   buildISStudioSection();
   buildAssociativeMapSection();
   gmBuildCorrespondenceTable();
+  buildCVSection();
   buildMaurerAnnotationSection();
   // buildBand3Section();  /* commented out: Band 3 Complete Descriptive Catalogue */
   buildBibliography();
@@ -2991,14 +3077,22 @@ function buildNav() {
     { label: '\u229e K Archive',             id: 'archive-section' },
     { label: '\u25c8 IS Studio',             id: 'is-studio-section' },
     { label: '\u2726 IS\u2194Kellogg Map',   id: 'map-section' },
+    { label: '\u25a6 Computer Vision',       id: 'cv-section',         cv: true },
     { label: '\u25c9 Maurer',                id: 'maurer-section' },
     { label: '\u00a7 References',            id: 'bibliography' },
   ];
-  sections.forEach(({ label, id }) => {
+  sections.forEach(({ label, id, cv }) => {
     const btn = document.createElement('button');
     btn.className = 'nav-btn';
     btn.textContent = label;
-    btn.onclick = () => document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    if (cv) {
+      btn.onclick = () => {
+        document.getElementById(id).scrollIntoView({behavior:'smooth'});
+        cvSwitchView(cvCurrentView, cvCurrentSha, true);
+      };
+    } else {
+      btn.onclick = () => document.getElementById(id).scrollIntoView({behavior:'smooth'});
+    }
     nav.appendChild(btn);
   });
 }
@@ -11838,6 +11932,879 @@ function gmBuildCorrespondenceTable() {
       const tr=document.createElement('tr');
       tr.innerHTML='<td class="k-code" onclick="window.gmNavTo(&apos;'+code+'&apos;)">'+code+'</td><td class="k-name">'+name+'</td><td class="is-list">'+isHtml+'</td>';
       tbody.appendChild(tr);
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   COMPUTER VISION SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+// On localhost the server (SimpleHTTPRequestHandler) serves all local files;
+// CV data and image folders only exist locally so we must not use BASE_URL there.
+const CV_BASE = READONLY ? BASE_URL : '/';
+
+function cvAssetUrl(sha, layerName) {
+  if (layerName === 'original.jpg') return CV_BASE + 'img/segmented/' + sha + '.jpg';
+  const det = ['field.jpg','skeleton.png','endpoints.png','junctions.png'];
+  if (det.includes(layerName)) return CV_BASE + 'img_cv/' + sha + '/' + layerName;
+  return CV_BASE + 'img_cv_dino/' + sha + '/' + layerName;
+}
+
+const CV_LAYERS = [
+  { key:'original.jpg',             label:'Original mark',         family:0 },
+  { key:'field.jpg',                label:'Gradient field',         family:1 },
+  { key:'skeleton.png',             label:'Skeleton',               family:1 },
+  { key:'endpoints.png',            label:'Endpoints',              family:1 },
+  { key:'junctions.png',            label:'Junctions',              family:1 },
+  { key:'attention_mean.jpg',       label:'Attention (mean)',        family:2 },
+  { key:'attention_h0.jpg',         label:'Attention h0',           family:2 },
+  { key:'attention_h1.jpg',         label:'Attention h1',           family:2 },
+  { key:'attention_h3.jpg',         label:'Attention h3',           family:2 },
+  { key:'attention_h5.jpg',         label:'Attention h5',           family:2 },
+  { key:'attention_h7.jpg',         label:'Attention h7',           family:2 },
+  { key:'attention_h11.jpg',        label:'Attention h11',          family:2 },
+  { key:'attention_hq_mean.jpg',    label:'Attention HQ (mean)',    family:2 },
+  { key:'attention_hq_h0.jpg',      label:'Attention HQ h0',        family:2 },
+  { key:'attention_hq_h1.jpg',      label:'Attention HQ h1',        family:2 },
+  { key:'attention_hq_h3.jpg',      label:'Attention HQ h3',        family:2 },
+  { key:'attention_hq_h5.jpg',      label:'Attention HQ h5',        family:2 },
+  { key:'attention_hq_h7.jpg',      label:'Attention HQ h7',        family:2 },
+  { key:'attention_hq_h11.jpg',     label:'Attention HQ h11',       family:2 },
+  { key:'attention_hq_rollout.jpg', label:'Attention rollout',       family:2 },
+  { key:'fusion_consensus.jpg',     label:'Fusion consensus',        family:3 },
+  { key:'fusion_disagreement.jpg',  label:'Fusion disagreement',     family:3 },
+];
+const CV_LAYER_GROUPS = [
+  { label:'Original',    indices:[0] },
+  { label:'Geometric',   indices:[1,2,3,4] },
+  { label:'Neural fast', indices:[5,6,7,8,9,10,11] },
+  { label:'Neural HQ',   indices:[12,13,14,15,16,17,18,19] },
+  { label:'Fusion',      indices:[20,21] },
+];
+const CV_FAMILY_CAPTIONS = [
+  'Lorem ipsum: original mark',
+  'Lorem ipsum: geometric reading',
+  'Lorem ipsum: neural attention',
+  'Lorem ipsum: combined reading',
+];
+const CV_K_COLORS = {
+  'K-A':'#e15759','K-B':'#4e79a7','K-C':'#f28e2c','K-D':'#76b7b2',
+  'K-E':'#59a14f','K-F':'#edc949','K-G':'#af7aa1','K-H':'#ff9da7','K-I':'#9c755f',
+};
+const CV_METRIC_KEYS = ['ink_ratio','skeleton_ratio','skeleton_per_ink','endpoint_count','junction_count','num_components','complexity_score'];
+const CV_METRIC_LABELS = { ink_ratio:'ink ratio', skeleton_ratio:'skel. ratio', skeleton_per_ink:'skel/ink', endpoint_count:'endpoints', junction_count:'junctions', num_components:'components', complexity_score:'complexity' };
+const CV_METRIC_IDX = { ink_ratio:0, skeleton_ratio:1, skeleton_per_ink:2, endpoint_count:3, junction_count:4, num_components:5, complexity_score:6 };
+const CV_CYCLE_DURATION = 5000;
+
+/* -- state -- */
+let cvNeuralIndex = null;
+let cvUmapData = { fused:null, embeddings:null, metrics:null };
+let cvDataLoaded = false;
+let cvDataLoading = false;
+let cvCurrentSha = null;
+let cvCurrentView = 'single';
+let cvLayerEnabled = CV_LAYERS.map(() => true);
+
+/* -- breathing -- */
+let cvBreathRaf = null;
+let cvBreathPaused = false;
+
+/* -- map -- */
+let cvMapCanvas = null;
+let cvMapCtx = null;
+let cvMapData = null;
+let cvMapUmapKey = 'fused';
+let cvMapColorMode = 'kellogg';
+let cvMapTransform = { x:0, y:0, scale:200 };
+let cvMapSpatialHash = null;
+let cvMapHoverSha = null;
+let cvMapNeedsRedraw = false;
+let cvMapRenderRaf = null;
+let cvMapDragging = false;
+let cvMapDragStart = null;
+let cvMapTransformStart = null;
+let cvMapTooltipEl = null;
+
+/* -- grid -- */
+let cvGridItems = [];
+let cvGridColCount = 6;
+let cvGridSortKey = 'complexity_score';
+let cvGridDisplayLayer = 'original.jpg';
+let cvGridCatFilter = new Set(['K-A','K-B','K-C','K-D','K-E','K-F','K-G','K-H','K-I']);
+let cvGridMetricFilters = {};
+let cvGridScrollEl = null;
+let cvGridItemsEl = null;
+let cvGridTopSpacerEl = null;
+let cvGridBotSpacerEl = null;
+let cvGridRenderRaf = null;
+const CV_GRID_CELL = 140;
+const CV_GRID_GAP = 8;
+const CV_GRID_BUFFER = 2;
+
+/* -- preload cache -- */
+let cvPreloadCache = {};
+
+/* ─── section builder ─────────────────────────────────── */
+function buildCVSection() {
+  const main = document.getElementById('main');
+  const sect = document.createElement('section');
+  sect.id = 'cv-section';
+  sect.className = 'cv-section';
+  sect.innerHTML = `
+    <h2>Computer Vision</h2>
+    <p class="section-subtitle">Machine readings of 3866 scribbles: geometric, neural, fused</p>
+    <div class="section-intro" style="max-width:720px;margin:1.2rem auto 0;">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. This section presents the results of a computer vision pipeline applied to all 3866 scribbles in the archive. The machine sees the marks through three perspectives: geometric (deterministic), neural (a pretrained DINOv2 model), and a fusion of the two. None of these is truth — they are readings.</p>
+    </div>
+    <div class="cv-subnav" id="cv-subnav">
+      <button class="cv-tab-btn" data-view="single">Single Image</button>
+      <button class="cv-tab-btn" data-view="map">Archive Map</button>
+      <button class="cv-tab-btn" data-view="grid">Comparative Grid</button>
+    </div>
+    <div id="cv-views">
+      <div id="cv-loading-indicator" class="cv-loading" style="display:none">
+        <div class="cv-loading-dot"></div><div class="cv-loading-dot"></div><div class="cv-loading-dot"></div>
+        <span>Loading neural index...</span>
+      </div>
+      <div id="cv-view-single" style="display:none"></div>
+      <div id="cv-view-map" style="display:none"></div>
+      <div id="cv-view-grid" style="display:none"></div>
+    </div>
+  `;
+  main.appendChild(sect);
+
+  sect.querySelectorAll('.cv-tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => cvSwitchView(btn.dataset.view, null, true));
+  });
+
+  // Defer initial hash handling so page layout is settled before any scroll/load
+  const _initHash = window.location.hash.slice(1);
+  if (_initHash.startsWith('cv')) {
+    window.addEventListener('load', () => cvHandleHash(), { once: true });
+    setTimeout(() => cvHandleHash(), 900);
+  }
+  window.addEventListener('hashchange', cvHandleHash);
+}
+
+function cvHandleHash() {
+  const hash = window.location.hash.slice(1);
+  if (!hash.startsWith('cv')) return;
+  if (hash === 'cv' || hash === 'cv-single') {
+    cvSwitchView('single', null, false);
+  } else if (hash.startsWith('cv-single/')) {
+    cvSwitchView('single', hash.slice('cv-single/'.length), false);
+  } else if (hash === 'cv-map') {
+    cvSwitchView('map', null, false);
+  } else if (hash === 'cv-grid') {
+    cvSwitchView('grid', null, false);
+  }
+}
+
+function cvPushHash(hash) {
+  if (window.location.hash !== '#' + hash) history.pushState(null, '', '#' + hash);
+}
+
+async function cvSwitchView(view, sha, noScroll) {
+  cvCurrentView = view;
+
+  document.querySelectorAll('.cv-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+
+  if (!noScroll) {
+    const sect = document.getElementById('cv-section');
+    if (sect) {
+      const navH = document.getElementById('nav')?.offsetHeight || 48;
+      sect.style.scrollMarginTop = (navH + 8) + 'px';
+      sect.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  if (view !== 'single' && cvBreathRaf) {
+    cancelAnimationFrame(cvBreathRaf);
+    cvBreathRaf = null;
+  }
+
+  document.getElementById('cv-view-single').style.display = view === 'single' ? '' : 'none';
+  document.getElementById('cv-view-map').style.display    = view === 'map'    ? '' : 'none';
+  document.getElementById('cv-view-grid').style.display   = view === 'grid'   ? '' : 'none';
+
+  if (!cvDataLoaded) await cvLoadData();
+  if (!cvDataLoaded) return;
+
+  if (view === 'single') {
+    const target = sha || cvCurrentSha || cvRandomSha();
+    cvPushHash('cv-single/' + target);
+    cvShowSingle(target);
+  } else if (view === 'map') {
+    cvPushHash('cv-map');
+    cvShowMap();
+  } else if (view === 'grid') {
+    cvPushHash('cv-grid');
+    cvShowGrid();
+  }
+}
+
+function cvRandomSha() {
+  const items = cvNeuralIndex.items;
+  return items[Math.floor(Math.random() * items.length)].sha;
+}
+
+async function cvLoadData() {
+  if (cvDataLoaded || cvDataLoading) return;
+  cvDataLoading = true;
+  const loading = document.getElementById('cv-loading-indicator');
+  if (loading) loading.style.display = 'flex';
+  try {
+    const r = await fetch(CV_BASE + 'data/neural_index.json');
+    cvNeuralIndex = await r.json();
+    cvNeuralIndex._bySha = {};
+    cvNeuralIndex.items.forEach(it => { cvNeuralIndex._bySha[it.sha] = it; });
+    cvDataLoaded = true;
+  } catch(e) {
+    if (loading) loading.innerHTML = '<span style="color:#c00">Failed to load data.</span>';
+    cvDataLoading = false;
+    return;
+  }
+  if (loading) loading.style.display = 'none';
+  cvDataLoading = false;
+}
+
+async function cvLoadUmapData(key) {
+  if (cvUmapData[key]) return cvUmapData[key];
+  const files = { fused:'umap_fused.json', embeddings:'umap_embeddings.json', metrics:'umap_metrics.json' };
+  const r = await fetch(CV_BASE + 'data/' + files[key]);
+  cvUmapData[key] = await r.json();
+  return cvUmapData[key];
+}
+
+/* ─── Single Image view ───────────────────────────────── */
+async function cvPreloadImages(sha) {
+  if (cvPreloadCache[sha]) return cvPreloadCache[sha];
+  const imgs = CV_LAYERS.map(layer => {
+    const img = new Image();
+    img.src = cvAssetUrl(sha, layer.key);
+    return img;
+  });
+  cvPreloadCache[sha] = imgs;
+  await Promise.all(imgs.map(img => new Promise(resolve => {
+    if (img.complete) { resolve(); return; }
+    img.onload = resolve; img.onerror = resolve;
+    setTimeout(resolve, 4000);
+  })));
+  return imgs;
+}
+
+function cvShowSingle(sha) {
+  const container = document.getElementById('cv-view-single');
+  cvCurrentSha = sha;
+
+  if (!container.dataset.built) {
+    container.dataset.built = '1';
+    container.innerHTML = cvBuildSingleHTML();
+    cvInitSingleEvents(container);
+  }
+
+  if (cvBreathRaf) { cancelAnimationFrame(cvBreathRaf); cvBreathRaf = null; }
+
+  cvUpdateSingleDetails(sha);
+  cvPreloadImages(sha).then(imgs => {
+    if (cvCurrentSha === sha) cvStartBreathing(sha, imgs);
+  });
+}
+
+function cvBuildSingleHTML() {
+  const groupsHTML = CV_LAYER_GROUPS.map(grp => `
+    <div class="cv-layer-group">
+      <div class="cv-layer-group-label">${grp.label}</div>
+      ${grp.indices.map(i => `
+        <label class="cv-layer-toggle">
+          <input type="checkbox" data-layer="${i}" checked>
+          ${CV_LAYERS[i].label}
+        </label>`).join('')}
+    </div>`).join('');
+
+  return `
+    <div class="cv-single-layout">
+      <div class="cv-image-area">
+        <div class="cv-image-frame" id="cv-img-frame">
+          <img id="cv-img-back" alt="">
+          <img id="cv-img-front" alt="" style="opacity:0">
+        </div>
+        <div class="cv-caption" id="cv-caption"></div>
+        <div class="cv-controls">
+          <button class="cv-ctrl-btn" id="cv-btn-playpause">Pause</button>
+          <button class="cv-ctrl-btn" id="cv-btn-random">Random</button>
+        </div>
+        <div class="cv-similar-strip" id="cv-similar-strip"></div>
+      </div>
+      <div class="cv-right-panel">
+        <div class="cv-panel-section" id="cv-details-panel">
+          <div class="cv-panel-title">Details</div>
+          <div class="cv-details-sha" id="cv-details-sha"></div>
+          <div class="cv-label-pills" id="cv-details-labels"></div>
+          <div class="cv-panel-title" style="margin-top:0.4rem">Metrics</div>
+          <div class="cv-metrics-grid" id="cv-details-metrics"></div>
+        </div>
+        <div class="cv-panel-section">
+          <div class="cv-panel-title">Layers</div>
+          ${groupsHTML}
+        </div>
+      </div>
+    </div>`;
+}
+
+function cvInitSingleEvents(container) {
+  let effectiveTime = 0;
+  let lastFrameTime = null;
+
+  container.querySelector('#cv-btn-playpause').addEventListener('click', () => {
+    cvBreathPaused = !cvBreathPaused;
+    container.querySelector('#cv-btn-playpause').textContent = cvBreathPaused ? 'Play' : 'Pause';
+  });
+
+  container.querySelector('#cv-btn-random').addEventListener('click', () => {
+    const sha = cvRandomSha();
+    cvPushHash('cv-single/' + sha);
+    cvShowSingle(sha);
+  });
+
+  container.querySelectorAll('.cv-layer-toggle input').forEach(cb => {
+    cb.addEventListener('change', () => { cvLayerEnabled[parseInt(cb.dataset.layer)] = cb.checked; });
+  });
+}
+
+function cvUpdateSingleDetails(sha) {
+  const item = cvNeuralIndex._bySha[sha];
+  if (!item) return;
+
+  document.getElementById('cv-details-sha').textContent = sha.slice(0,12) + '...';
+
+  document.getElementById('cv-details-labels').innerHTML =
+    (item.prefill_labels || []).map(l => `<span class="cv-label-pill">${l}</span>`).join('');
+
+  const metricsEl = document.getElementById('cv-details-metrics');
+  if (item.metrics_norm) {
+    metricsEl.innerHTML = CV_METRIC_KEYS.map((k,i) => {
+      const v = item.metrics_norm[i];
+      return `<div class="cv-metric-item">
+        <span class="cv-metric-label">${CV_METRIC_LABELS[k]}</span>
+        <span class="cv-metric-value">${v !== undefined ? v.toFixed(3) : '–'}</span>
+      </div>`;
+    }).join('');
+  }
+
+  const strip = document.getElementById('cv-similar-strip');
+  if (item.neighbors && item.neighbors.length) {
+    strip.innerHTML = item.neighbors.slice(0,10).map(n =>
+      `<div class="cv-similar-thumb" data-sha="${n.sha}">
+        <img src="${cvAssetUrl(n.sha,'original.jpg')}" alt="">
+        <div class="cv-similar-score">${n.score.toFixed(2)}</div>
+      </div>`).join('');
+    strip.querySelectorAll('.cv-similar-thumb').forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        const nSha = thumb.dataset.sha;
+        cvPushHash('cv-single/' + nSha);
+        cvShowSingle(nSha);
+      });
+    });
+  } else {
+    strip.innerHTML = '';
+  }
+}
+
+function cvStartBreathing(sha, preloadedImgs) {
+  const imgBack  = document.getElementById('cv-img-back');
+  const imgFront = document.getElementById('cv-img-front');
+  const captionEl = document.getElementById('cv-caption');
+  if (!imgBack || !imgFront || !captionEl) return;
+
+  cvBreathPaused = false;
+  let effectiveTime = 0;
+  let lastTime = null;
+  let lastFamily = -1;
+
+  function frame(now) {
+    if (sha !== cvCurrentSha) return;
+    cvBreathRaf = requestAnimationFrame(frame);
+
+    const dt = lastTime !== null ? now - lastTime : 0;
+    lastTime = now;
+    if (!cvBreathPaused) effectiveTime += dt;
+
+    const activeLayers = CV_LAYERS.map((l,i) => ({...l, idx:i})).filter((_,i) => cvLayerEnabled[i]);
+    if (!activeLayers.length) return;
+
+    const t = effectiveTime % CV_CYCLE_DURATION;
+    const timePerLayer = CV_CYCLE_DURATION / activeLayers.length;
+    const layerFloat = t / timePerLayer;
+    const layerIdx = Math.floor(layerFloat) % activeLayers.length;
+    const frac = layerFloat - Math.floor(layerFloat);
+
+    const layerA = activeLayers[layerIdx];
+    const layerB = activeLayers[(layerIdx + 1) % activeLayers.length];
+
+    const srcA = preloadedImgs[layerA.idx].src;
+    const srcB = preloadedImgs[layerB.idx].src;
+
+    if (imgBack.src !== srcA) imgBack.src = srcA;
+    if (imgFront.src !== srcB) imgFront.src = srcB;
+    imgFront.style.opacity = frac;
+
+    if (layerA.family !== lastFamily) {
+      lastFamily = layerA.family;
+      captionEl.style.opacity = '0';
+      const txt = CV_FAMILY_CAPTIONS[layerA.family] || '';
+      setTimeout(() => { captionEl.textContent = txt; captionEl.style.opacity = '1'; }, 200);
+    }
+  }
+
+  cvBreathRaf = requestAnimationFrame(frame);
+}
+
+/* ─── Archive Map view ────────────────────────────────── */
+function cvShowMap() {
+  const container = document.getElementById('cv-view-map');
+  if (container.dataset.built) { cvMapRefresh(); return; }
+  container.dataset.built = '1';
+
+  container.innerHTML = `
+    <div class="cv-map-layout">
+      <div class="cv-map-side">
+        <div class="cv-map-side-section">
+          <div class="cv-panel-title">Projection</div>
+          <div class="cv-radio-group" id="cv-map-lens">
+            <label class="cv-radio-item"><input type="radio" name="cv-lens" value="fused" checked> Fused</label>
+            <label class="cv-radio-item"><input type="radio" name="cv-lens" value="embeddings"> DINOv2 only</label>
+            <label class="cv-radio-item"><input type="radio" name="cv-lens" value="metrics"> Metrics only</label>
+          </div>
+        </div>
+        <div class="cv-map-side-section">
+          <div class="cv-panel-title">Color</div>
+          <div class="cv-radio-group" id="cv-map-color">
+            <label class="cv-radio-item"><input type="radio" name="cv-color" value="kellogg" checked> By Kellogg category</label>
+            <label class="cv-radio-item"><input type="radio" name="cv-color" value="mono"> Monochrome</label>
+            <label class="cv-radio-item"><input type="radio" name="cv-color" value="complexity"> By complexity</label>
+          </div>
+        </div>
+        <p class="cv-map-caption">Each dot represents one of the 3866 scribbles, positioned by structural similarity. Drag to pan, scroll to zoom, click to open.</p>
+      </div>
+      <div>
+        <div class="cv-map-canvas-wrap" id="cv-map-wrap">
+          <canvas id="cv-map-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="cv-map-tooltip" id="cv-map-tooltip">
+      <img id="cv-map-tt-img" alt="">
+      <div class="cv-map-tooltip-meta" id="cv-map-tt-meta"></div>
+    </div>`;
+
+  cvMapTooltipEl = container.querySelector('#cv-map-tooltip');
+  cvMapCanvas = container.querySelector('#cv-map-canvas');
+  cvMapCtx = cvMapCanvas.getContext('2d');
+
+  container.querySelectorAll('input[name="cv-lens"]').forEach(r => {
+    r.addEventListener('change', () => { cvMapUmapKey = r.value; cvMapRefresh(); });
+  });
+  container.querySelectorAll('input[name="cv-color"]').forEach(r => {
+    r.addEventListener('change', () => { cvMapColorMode = r.value; cvMapNeedsRedraw = true; });
+  });
+
+  const wrap = container.querySelector('#cv-map-wrap');
+  wrap.addEventListener('mousedown', cvMapMouseDown);
+  wrap.addEventListener('mousemove', cvMapMouseMove);
+  wrap.addEventListener('mouseup', cvMapMouseUp);
+  wrap.addEventListener('mouseleave', cvMapMouseLeave);
+  wrap.addEventListener('wheel', cvMapWheel, { passive: false });
+
+  cvMapStartRenderLoop();
+  cvMapRefresh();
+
+  window.addEventListener('resize', () => {
+    if (cvCurrentView === 'map') { cvMapResizeCanvas(); cvMapNeedsRedraw = true; }
+  });
+}
+
+function cvMapResizeCanvas() {
+  if (!cvMapCanvas) return;
+  const wrap = cvMapCanvas.parentElement;
+  const W = wrap.clientWidth || 800;
+  const H = Math.max(480, Math.min(680, Math.round(window.innerHeight * 0.68)));
+  cvMapCanvas.width = W;
+  cvMapCanvas.height = H;
+  wrap.style.height = H + 'px';
+  cvMapResetTransform();
+  cvMapNeedsRedraw = true;
+}
+
+function cvMapResetTransform() {
+  if (!cvMapCanvas) return;
+  const W = cvMapCanvas.width, H = cvMapCanvas.height;
+  const pad = 36;
+  const scale = Math.min(W - pad*2, H - pad*2) / 2;
+  cvMapTransform = { x: W/2, y: H/2, scale };
+}
+
+async function cvMapRefresh() {
+  const data = await cvLoadUmapData(cvMapUmapKey);
+  cvMapData = data;
+  cvMapResizeCanvas();
+  cvMapBuildSpatialHash(data.items);
+  cvMapNeedsRedraw = true;
+}
+
+function cvMapBuildSpatialHash(items) {
+  const CELLS = 64;
+  const map = {};
+  items.forEach((item, i) => {
+    const cx = Math.max(0, Math.min(CELLS-1, Math.floor((item.x + 1) / 2 * CELLS)));
+    const cy = Math.max(0, Math.min(CELLS-1, Math.floor((item.y + 1) / 2 * CELLS)));
+    const key = cx + ',' + cy;
+    if (!map[key]) map[key] = [];
+    map[key].push(i);
+  });
+  cvMapSpatialHash = { cells: CELLS, map };
+}
+
+function cvMapStartRenderLoop() {
+  if (cvMapRenderRaf) cancelAnimationFrame(cvMapRenderRaf);
+  function loop() {
+    cvMapRenderRaf = requestAnimationFrame(loop);
+    if (!cvMapNeedsRedraw || !cvMapData || !cvMapCanvas) return;
+    cvMapNeedsRedraw = false;
+    cvMapDraw();
+  }
+  cvMapRenderRaf = requestAnimationFrame(loop);
+}
+
+function cvMapDraw() {
+  const ctx = cvMapCtx, { x:ox, y:oy, scale } = cvMapTransform;
+  const W = cvMapCanvas.width, H = cvMapCanvas.height;
+  const items = cvMapData.items;
+  ctx.clearRect(0, 0, W, H);
+  ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
+
+  const r = Math.max(1.5, Math.min(4.5, scale * 0.0055));
+
+  let maxCmplx = 1;
+  if (cvMapColorMode === 'complexity') {
+    cvNeuralIndex.items.forEach(it => {
+      if (it.metrics_norm && it.metrics_norm[6] > maxCmplx) maxCmplx = it.metrics_norm[6];
+    });
+  }
+
+  items.forEach(item => {
+    const sx = item.x * scale + ox;
+    const sy = -item.y * scale + oy;
+    if (sx < -r || sx > W+r || sy < -r || sy > H+r) return;
+
+    let color = '#aaa';
+    if (cvMapColorMode === 'kellogg') {
+      color = CV_K_COLORS[item.label] || '#aaa';
+    } else if (cvMapColorMode === 'mono') {
+      color = 'rgba(90,90,100,0.55)';
+    } else {
+      const ni = cvNeuralIndex._bySha[item.sha];
+      const v = ni && ni.metrics_norm ? ni.metrics_norm[6] : 0;
+      const g = Math.round(220 - (v / maxCmplx) * 180);
+      color = `rgb(${g},${g},${g})`;
+    }
+
+    ctx.beginPath();
+    ctx.arc(sx, sy, r, 0, Math.PI*2);
+    ctx.fillStyle = color;
+    ctx.fill();
+  });
+
+  if (cvMapHoverSha) {
+    const hi = items.find(it => it.sha === cvMapHoverSha);
+    if (hi) {
+      ctx.beginPath();
+      ctx.arc(hi.x * scale + ox, -hi.y * scale + oy, r + 2.5, 0, Math.PI*2);
+      ctx.strokeStyle = '#222'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+  }
+}
+
+function cvMapScreenToData(sx, sy) {
+  const { x:ox, y:oy, scale } = cvMapTransform;
+  return { dx: (sx - ox) / scale, dy: -(sy - oy) / scale };
+}
+
+function cvMapFindHover(mx, my) {
+  if (!cvMapData || !cvMapSpatialHash) return null;
+  const { dx, dy } = cvMapScreenToData(mx, my);
+  const CELLS = cvMapSpatialHash.cells;
+  const cx0 = Math.floor((dx + 1) / 2 * CELLS);
+  const cy0 = Math.floor((dy + 1) / 2 * CELLS);
+  const { scale } = cvMapTransform;
+  const r = Math.max(1.5, Math.min(4.5, scale * 0.0055));
+  const hitR2 = ((r + 4) / scale) ** 2;
+  let bestD2 = hitR2, bestIdx = -1;
+  const items = cvMapData.items;
+  for (let ddx = -2; ddx <= 2; ddx++) {
+    for (let ddy = -2; ddy <= 2; ddy++) {
+      const cx = Math.max(0, Math.min(CELLS-1, cx0+ddx));
+      const cy = Math.max(0, Math.min(CELLS-1, cy0+ddy));
+      const indices = cvMapSpatialHash.map[cx+','+cy];
+      if (!indices) continue;
+      for (const i of indices) {
+        const it = items[i];
+        const d2 = (it.x - dx)**2 + (it.y - dy)**2;
+        if (d2 < bestD2) { bestD2 = d2; bestIdx = i; }
+      }
+    }
+  }
+  return bestIdx >= 0 ? items[bestIdx] : null;
+}
+
+function cvMapMouseDown(e) {
+  cvMapDragging = true;
+  cvMapDragStart = { x: e.clientX, y: e.clientY };
+  cvMapTransformStart = { ...cvMapTransform };
+}
+function cvMapMouseUp(e) {
+  if (!cvMapDragging) return;
+  const moved = Math.abs(e.clientX - cvMapDragStart.x) + Math.abs(e.clientY - cvMapDragStart.y) < 5;
+  cvMapDragging = false;
+  if (moved) {
+    const rect = cvMapCanvas.getBoundingClientRect();
+    const scX = cvMapCanvas.width / rect.width;
+    const scY = cvMapCanvas.height / rect.height;
+    const item = cvMapFindHover((e.clientX - rect.left)*scX, (e.clientY - rect.top)*scY);
+    if (item) { cvPushHash('cv-single/'+item.sha); cvSwitchView('single', item.sha, true); }
+  }
+}
+function cvMapMouseLeave() {
+  cvMapDragging = false; cvMapHoverSha = null;
+  if (cvMapTooltipEl) cvMapTooltipEl.style.display = 'none';
+  cvMapNeedsRedraw = true;
+}
+function cvMapMouseMove(e) {
+  const rect = cvMapCanvas.getBoundingClientRect();
+  const scX = cvMapCanvas.width / rect.width, scY = cvMapCanvas.height / rect.height;
+  const mx = (e.clientX - rect.left)*scX, my = (e.clientY - rect.top)*scY;
+
+  if (cvMapDragging) {
+    cvMapTransform.x = cvMapTransformStart.x + (e.clientX - cvMapDragStart.x);
+    cvMapTransform.y = cvMapTransformStart.y + (e.clientY - cvMapDragStart.y);
+    cvMapNeedsRedraw = true;
+    return;
+  }
+
+  const item = cvMapFindHover(mx, my);
+  const newSha = item ? item.sha : null;
+  if (newSha !== cvMapHoverSha) { cvMapHoverSha = newSha; cvMapNeedsRedraw = true; }
+
+  const tt = cvMapTooltipEl;
+  if (item && tt) {
+    tt.style.display = 'block';
+    tt.style.left = (e.clientX + 14) + 'px';
+    tt.style.top  = (e.clientY - 14) + 'px';
+    const img = tt.querySelector('#cv-map-tt-img');
+    const meta = tt.querySelector('#cv-map-tt-meta');
+    if (img.dataset.sha !== item.sha) {
+      img.dataset.sha = item.sha;
+      img.src = cvAssetUrl(item.sha, 'original.jpg');
+      meta.textContent = item.sha.slice(0,8) + ' · ' + (item.label || '');
+    }
+  } else if (tt) {
+    tt.style.display = 'none';
+  }
+}
+function cvMapWheel(e) {
+  e.preventDefault();
+  const rect = cvMapCanvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (cvMapCanvas.width / rect.width);
+  const my = (e.clientY - rect.top)  * (cvMapCanvas.height / rect.height);
+  const factor = e.deltaY < 0 ? 1.13 : 1/1.13;
+  const newScale = Math.max(40, Math.min(12000, cvMapTransform.scale * factor));
+  const ratio = newScale / cvMapTransform.scale;
+  cvMapTransform.x = mx + (cvMapTransform.x - mx) * ratio;
+  cvMapTransform.y = my + (cvMapTransform.y - my) * ratio;
+  cvMapTransform.scale = newScale;
+  cvMapNeedsRedraw = true;
+}
+
+/* ─── Comparative Grid view ───────────────────────────── */
+function cvShowGrid() {
+  const container = document.getElementById('cv-view-grid');
+  if (!container.dataset.built) {
+    container.dataset.built = '1';
+    cvBuildGridHTML(container);
+  }
+  cvGridApplyFilters();
+}
+
+function cvBuildGridHTML(container) {
+  const dist = cvNeuralIndex.distribution || {};
+  const sliderKeys = ['ink_ratio','complexity_score','num_components','junction_count'];
+  const sliderLbls  = { ink_ratio:'Ink ratio', complexity_score:'Complexity', num_components:'Components', junction_count:'Junctions' };
+
+  cvGridMetricFilters = {};
+  sliderKeys.forEach(k => {
+    const d = dist[k] || {};
+    cvGridMetricFilters[k] = [d.p5 !== undefined ? d.p5 : 0, d.p95 !== undefined ? d.p95 : 1];
+  });
+
+  const slidersHTML = sliderKeys.map(k => {
+    const d = dist[k] || {};
+    const lo = d.p5 !== undefined ? d.p5 : 0;
+    const hi = d.p95 !== undefined ? d.p95 : 1;
+    const step = ((hi - lo) / 100) || 0.01;
+    return `<div class="cv-slider-item">
+      <div class="cv-slider-label">
+        <span>${sliderLbls[k]}</span>
+        <span id="cv-sl-val-${k}">${lo.toFixed(2)} – ${hi.toFixed(2)}</span>
+      </div>
+      <input type="range" id="cv-sl-lo-${k}" min="${lo}" max="${hi}" step="${step}" value="${lo}" data-k="${k}" data-b="lo">
+      <input type="range" id="cv-sl-hi-${k}" min="${lo}" max="${hi}" step="${step}" value="${hi}" data-k="${k}" data-b="hi">
+    </div>`;
+  }).join('');
+
+  const cats = ['K-A','K-B','K-C','K-D','K-E','K-F','K-G','K-H','K-I'];
+
+  container.innerHTML = `
+    <div class="cv-grid-layout">
+      <div class="cv-grid-side">
+        <div class="cv-grid-side-section">
+          <div class="cv-panel-title">Filters</div>
+          ${slidersHTML}
+          <div class="cv-panel-title" style="margin-top:0.6rem">Categories</div>
+          <div class="cv-cat-checks" id="cv-grid-cats">
+            ${cats.map(k => `<label class="cv-cat-check"><input type="checkbox" data-cat="${k}" checked><span>${k}</span></label>`).join('')}
+          </div>
+        </div>
+        <div class="cv-grid-side-section">
+          <div class="cv-panel-title">Sort</div>
+          <select id="cv-grid-sort" class="cv-select">
+            <option value="complexity_score">By complexity</option>
+            <option value="ink_ratio">By density</option>
+            <option value="junction_count">By junction count</option>
+            <option value="sha">By SHA (stable)</option>
+          </select>
+          <div class="cv-panel-title" style="margin-top:0.6rem">Display</div>
+          <select id="cv-grid-display" class="cv-select" style="margin-top:0.2rem">
+            <option value="original.jpg">Original</option>
+            <option value="field.jpg">Field</option>
+            <option value="skeleton.png">Skeleton</option>
+            <option value="attention_hq_mean.jpg">Attention HQ mean</option>
+            <option value="fusion_consensus.jpg">Fusion consensus</option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <div class="cv-grid-count" id="cv-grid-count">Showing 0 of ${cvNeuralIndex.items.length}</div>
+        <p style="font-family:var(--font-display);font-style:italic;font-size:0.85rem;color:var(--c-text-secondary);margin-bottom:0.7rem">Filter by category or metric, sort by any property. Click a thumbnail to open the single image view.</p>
+        <div class="cv-grid-viewport" id="cv-grid-viewport">
+          <div class="cv-grid-spacer-top" id="cv-grid-spacer-top"></div>
+          <div class="cv-grid-items" id="cv-grid-items"></div>
+          <div class="cv-grid-spacer-bottom" id="cv-grid-spacer-bot"></div>
+        </div>
+      </div>
+    </div>`;
+
+  container.querySelectorAll('#cv-grid-sliders input[type=range], .cv-slider-item input[type=range]').forEach(sl => {
+    sl.addEventListener('input', () => {
+      const k = sl.dataset.k;
+      const lo = parseFloat(container.querySelector(`#cv-sl-lo-${k}`).value);
+      const hi = parseFloat(container.querySelector(`#cv-sl-hi-${k}`).value);
+      cvGridMetricFilters[k] = [Math.min(lo,hi), Math.max(lo,hi)];
+      container.querySelector(`#cv-sl-val-${k}`).textContent = Math.min(lo,hi).toFixed(2) + ' – ' + Math.max(lo,hi).toFixed(2);
+      cvGridApplyFilters();
+    });
+  });
+
+  container.querySelectorAll('#cv-grid-cats input').forEach(cb => {
+    cb.addEventListener('change', () => {
+      cvGridCatFilter = new Set([...container.querySelectorAll('#cv-grid-cats input:checked')].map(c => c.dataset.cat));
+      cvGridApplyFilters();
+    });
+  });
+
+  container.querySelector('#cv-grid-sort').addEventListener('change', e => {
+    cvGridSortKey = e.target.value; cvGridApplyFilters();
+  });
+  container.querySelector('#cv-grid-display').addEventListener('change', e => {
+    cvGridDisplayLayer = e.target.value; cvGridRefreshVisible();
+  });
+
+  cvGridScrollEl      = container.querySelector('#cv-grid-viewport');
+  cvGridItemsEl       = container.querySelector('#cv-grid-items');
+  cvGridTopSpacerEl   = container.querySelector('#cv-grid-spacer-top');
+  cvGridBotSpacerEl   = container.querySelector('#cv-grid-spacer-bot');
+  cvGridScrollEl.addEventListener('scroll', cvGridOnScroll, { passive: true });
+}
+
+function cvGridApplyFilters() {
+  let filtered = cvNeuralIndex.items.filter(item => {
+    const cats = item.prefill_labels || [];
+    if (!cats.some(c => cvGridCatFilter.has(c))) return false;
+    for (const [k, [lo, hi]] of Object.entries(cvGridMetricFilters)) {
+      const idx = CV_METRIC_IDX[k];
+      if (idx === undefined) continue;
+      const v = item.metrics_norm ? item.metrics_norm[idx] : 0;
+      if (v < lo || v > hi) return false;
+    }
+    return true;
+  });
+
+  if (cvGridSortKey === 'sha') {
+    filtered.sort((a,b) => a.sha.localeCompare(b.sha));
+  } else {
+    const idx = CV_METRIC_IDX[cvGridSortKey];
+    if (idx !== undefined) filtered.sort((a,b) => {
+      return (b.metrics_norm ? b.metrics_norm[idx] : 0) - (a.metrics_norm ? a.metrics_norm[idx] : 0);
+    });
+  }
+
+  cvGridItems = filtered;
+  const countEl = document.getElementById('cv-grid-count');
+  if (countEl) countEl.textContent = `Showing ${filtered.length} of ${cvNeuralIndex.items.length}`;
+  cvGridScrollEl.scrollTop = 0;
+  cvGridRefreshVisible();
+}
+
+function cvGridOnScroll() {
+  if (cvGridRenderRaf) return;
+  cvGridRenderRaf = requestAnimationFrame(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); });
+}
+
+function cvGridRefreshVisible() {
+  if (!cvGridScrollEl || !cvGridItemsEl) return;
+  const vpW = cvGridScrollEl.clientWidth || 700;
+  const cols = Math.max(3, Math.floor((vpW + CV_GRID_GAP) / (CV_GRID_CELL + CV_GRID_GAP)));
+  cvGridColCount = cols;
+
+  const items = cvGridItems;
+  const rowH = CV_GRID_CELL + CV_GRID_GAP;
+  const totalRows = Math.ceil(items.length / cols);
+  const totalH = totalRows * rowH;
+  const vpH = cvGridScrollEl.clientHeight || 600;
+  const scrollTop = cvGridScrollEl.scrollTop;
+
+  const firstRow = Math.max(0, Math.floor(scrollTop / rowH) - CV_GRID_BUFFER);
+  const lastRow  = Math.min(totalRows - 1, Math.ceil((scrollTop + vpH) / rowH) + CV_GRID_BUFFER);
+
+  cvGridTopSpacerEl.style.height = (firstRow * rowH) + 'px';
+  cvGridBotSpacerEl.style.height = Math.max(0, totalH - (lastRow + 1) * rowH) + 'px';
+
+  const visItems = items.slice(firstRow * cols, (lastRow + 1) * cols);
+
+  cvGridItemsEl.innerHTML = visItems.map(item => {
+    const url = cvAssetUrl(item.sha, cvGridDisplayLayer);
+    const label = (item.prefill_labels || []).join(', ');
+    return `<div class="cv-grid-thumb" data-sha="${item.sha}">
+      <img src="${url}" alt="" loading="lazy">
+      <div class="cv-grid-thumb-overlay">${item.sha.slice(0,8)} · ${label}</div>
+    </div>`;
+  }).join('');
+
+  cvGridItemsEl.querySelectorAll('.cv-grid-thumb').forEach(thumb => {
+    thumb.addEventListener('click', () => {
+      const s = thumb.dataset.sha;
+      cvPushHash('cv-single/' + s);
+      cvSwitchView('single', s, true);
     });
   });
 }
