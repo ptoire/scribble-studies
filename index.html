@@ -12235,6 +12235,7 @@ function cvBuildSingleHTML() {
           <button class="cv-ctrl-btn" id="cv-btn-playpause">Pause</button>
           <button class="cv-ctrl-btn" id="cv-btn-random">Random</button>
         </div>
+        <div class="cv-panel-title" id="cv-similar-label" style="margin-top:0.5rem;display:none">Similar marks</div>
         <div class="cv-similar-strip" id="cv-similar-strip"></div>
       </div>
       <div class="cv-right-panel">
@@ -12294,7 +12295,9 @@ function cvUpdateSingleDetails(sha) {
   }
 
   const strip = document.getElementById('cv-similar-strip');
+  const simLabel = document.getElementById('cv-similar-label');
   if (item.neighbors && item.neighbors.length) {
+    if (simLabel) simLabel.style.display = '';
     strip.innerHTML = item.neighbors.slice(0,10).map(n =>
       `<div class="cv-similar-thumb" data-sha="${n.sha}">
         <img src="${cvAssetUrl(n.sha,'original.jpg')}" alt="">
@@ -12308,6 +12311,7 @@ function cvUpdateSingleDetails(sha) {
       });
     });
   } else {
+    if (simLabel) simLabel.style.display = 'none';
     strip.innerHTML = '';
   }
 }
@@ -12644,21 +12648,21 @@ function cvBuildGridHTML(container) {
   cvGridMetricFilters = {};
   sliderKeys.forEach(k => {
     const d = dist[k] || {};
-    cvGridMetricFilters[k] = [d.p5 !== undefined ? d.p5 : 0, d.p95 !== undefined ? d.p95 : 1];
+    const span = (d.max - d.min) || 1;
+    const norm_p5  = d.min !== undefined ? Math.max(0, (d.p5  - d.min) / span) : 0;
+    const norm_p95 = d.min !== undefined ? Math.min(1, (d.p95 - d.min) / span) : 1;
+    cvGridMetricFilters[k] = [norm_p5, norm_p95];
   });
 
   const slidersHTML = sliderKeys.map(k => {
-    const d = dist[k] || {};
-    const lo = d.p5 !== undefined ? d.p5 : 0;
-    const hi = d.p95 !== undefined ? d.p95 : 1;
-    const step = ((hi - lo) / 100) || 0.01;
+    const [lo, hi] = cvGridMetricFilters[k];
     return `<div class="cv-slider-item">
       <div class="cv-slider-label">
         <span>${sliderLbls[k]}</span>
         <span id="cv-sl-val-${k}">${lo.toFixed(2)} – ${hi.toFixed(2)}</span>
       </div>
-      <input type="range" id="cv-sl-lo-${k}" min="${lo}" max="${hi}" step="${step}" value="${lo}" data-k="${k}" data-b="lo">
-      <input type="range" id="cv-sl-hi-${k}" min="${lo}" max="${hi}" step="${step}" value="${hi}" data-k="${k}" data-b="hi">
+      <input type="range" id="cv-sl-lo-${k}" min="0" max="1" step="0.01" value="${lo}" data-k="${k}" data-b="lo">
+      <input type="range" id="cv-sl-hi-${k}" min="0" max="1" step="0.01" value="${hi}" data-k="${k}" data-b="hi">
     </div>`;
   }).join('');
 
@@ -12737,9 +12741,11 @@ function cvBuildGridHTML(container) {
 }
 
 function cvGridApplyFilters() {
+  const _stdCats = new Set(['K-A','K-B','K-C','K-D','K-E','K-F','K-G','K-H','K-I']);
   let filtered = cvNeuralIndex.items.filter(item => {
     const cats = item.prefill_labels || [];
-    if (!cats.some(c => cvGridCatFilter.has(c))) return false;
+    const hasRecognized = cats.some(c => _stdCats.has(c));
+    if (hasRecognized && !cats.some(c => cvGridCatFilter.has(c))) return false;
     for (const [k, [lo, hi]] of Object.entries(cvGridMetricFilters)) {
       const idx = CV_METRIC_IDX[k];
       if (idx === undefined) continue;
