@@ -12297,7 +12297,13 @@ function cvBuildSingleHTML() {
           <div class="cv-metrics-grid" id="cv-details-metrics"></div>
         </div>
         <div class="cv-panel-section">
-          <div class="cv-panel-title">Layers</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+            <div class="cv-panel-title" style="margin-bottom:0">Layers</div>
+            <div style="display:flex;gap:0.3rem">
+              <button class="cv-ctrl-btn" id="cv-layers-all" style="font-size:0.58rem;padding:0.15em 0.5em">Select all</button>
+              <button class="cv-ctrl-btn" id="cv-layers-none" style="font-size:0.58rem;padding:0.15em 0.5em">Deselect all</button>
+            </div>
+          </div>
           ${groupsHTML}
         </div>
       </div>
@@ -12317,6 +12323,13 @@ function cvInitSingleEvents(container) {
     const sha = cvRandomSha();
     cvPushHash('cv-single/' + sha);
     cvShowSingle(sha);
+  });
+
+  container.querySelector('#cv-layers-all').addEventListener('click', () => {
+    container.querySelectorAll('.cv-layer-toggle input').forEach(cb => { cb.checked = true; cvLayerEnabled[parseInt(cb.dataset.layer)] = true; });
+  });
+  container.querySelector('#cv-layers-none').addEventListener('click', () => {
+    container.querySelectorAll('.cv-layer-toggle input').forEach(cb => { cb.checked = false; cvLayerEnabled[parseInt(cb.dataset.layer)] = false; });
   });
 
   container.querySelectorAll('.cv-layer-toggle input').forEach(cb => {
