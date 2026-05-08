@@ -668,7 +668,12 @@ body {
 .cv-image-area { display:flex; flex-direction:column; align-items:center; }
 .cv-image-frame { position:relative; width:100%; max-width:700px; aspect-ratio:1; background:#fff; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
 .cv-image-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
-.cv-caption { font-family:var(--font-display); font-style:italic; font-size:0.95rem; color:var(--c-text-secondary); margin-top:0.75rem; text-align:center; min-height:1.4em; transition:opacity 0.35s; }
+.cv-caption { margin-top:0.75rem; text-align:center; min-height:2.6em; }
+.cv-caption-k { display:block; font-family:var(--font-display); font-style:italic; font-size:0.88rem; color:var(--c-text); }
+.cv-caption-layer { display:block; font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); margin-top:0.18rem; letter-spacing:0.03em; }
+.cv-has-tip { position:relative; cursor:help; }
+.cv-has-tip::after { content:attr(data-tip); position:absolute; left:0; bottom:calc(100% + 5px); background:var(--c-text); color:var(--c-bg); font-family:var(--font-body); font-style:normal; font-size:0.68rem; line-height:1.45; padding:0.35em 0.55em; border-radius:3px; width:max-content; max-width:210px; white-space:normal; pointer-events:none; opacity:0; transition:opacity 0.15s; z-index:200; }
+.cv-has-tip:hover::after { opacity:1; }
 .cv-controls { display:flex; gap:0.4rem; align-items:center; margin-top:0.6rem; flex-wrap:wrap; justify-content:center; }
 .cv-ctrl-btn { font-family:var(--font-mono); font-size:0.68rem; padding:0.3rem 0.7rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:all 0.12s; }
 .cv-ctrl-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
@@ -11993,6 +11998,42 @@ const CV_K_COLORS = {
   'K-A':'#e15759','K-B':'#4e79a7','K-C':'#f28e2c','K-D':'#76b7b2',
   'K-E':'#59a14f','K-F':'#edc949','K-G':'#af7aa1','K-H':'#ff9da7','K-I':'#9c755f',
 };
+const CV_K_NAMES = {
+  'K-A':'Basic Scribbles','K-B':'Placement Patterns','K-C':'Emergent Diagrams',
+  'K-D':'Diagrams','K-E':'Combines','K-F':'Aggregates',
+  'K-G':'Mandalas','K-H':'Suns','K-I':'Radials',
+};
+const CV_GROUP_TIPS = {
+  'Original':'The original scribble as segmented from the archive scan.',
+  'Geometric':'Deterministic structural decompositions: density field, one-pixel skeleton, stroke endpoints, and junction points.',
+  'Neural fast':'DINOv2 ViT-S/14 attention maps (fast, lighter model). Each of the 6 heads has developed distinct spatial specializations during pretraining on 142M natural images.',
+  'Neural HQ':'DINOv2 ViT-B/14 attention maps (larger, higher quality). Same principle as fast, deeper model.',
+  'Fusion':'Maps derived by combining geometric and neural readings: consensus (where both agree) and disagreement (where they diverge).',
+};
+const CV_LAYER_TIPS = {
+  'original.jpg':'The segmented scribble. Background removed, only the mark remains.',
+  'field.jpg':'Continuous ink density gradient. Brightness indicates ink concentration.',
+  'skeleton.png':'One-pixel-wide topology trace of all strokes (Zhang-Suen thinning).',
+  'endpoints.png':'Stroke endpoints: skeleton nodes with exactly one neighbor.',
+  'junctions.png':'Junction points: skeleton nodes with three or more neighbors.',
+  'attention_mean.jpg':'Average of all 6 selected heads from ViT-S. General structural attention.',
+  'attention_h0.jpg':'Attention head 0, ViT-S fast model.',
+  'attention_h1.jpg':'Attention head 1, ViT-S fast model.',
+  'attention_h3.jpg':'Attention head 3, ViT-S fast model.',
+  'attention_h5.jpg':'Attention head 5, ViT-S fast model.',
+  'attention_h7.jpg':'Attention head 7, ViT-S fast model.',
+  'attention_h11.jpg':'Attention head 11, ViT-S fast model.',
+  'attention_hq_mean.jpg':'Average of all 6 selected heads from ViT-B (HQ model).',
+  'attention_hq_h0.jpg':'Attention head 0, ViT-B HQ model.',
+  'attention_hq_h1.jpg':'Attention head 1, ViT-B HQ model.',
+  'attention_hq_h3.jpg':'Attention head 3, ViT-B HQ model.',
+  'attention_hq_h5.jpg':'Attention head 5, ViT-B HQ model.',
+  'attention_hq_h7.jpg':'Attention head 7, ViT-B HQ model.',
+  'attention_hq_h11.jpg':'Attention head 11, ViT-B HQ model.',
+  'attention_hq_rollout.jpg':'Attention rollout: attention is recursively composed across all transformer layers, tracing where information flows through the full network.',
+  'fusion_consensus.jpg':'Regions where geometric and neural readings agree on the presence of structure.',
+  'fusion_disagreement.jpg':'Regions where geometric and neural readings diverge.',
+};
 const CV_METRIC_KEYS = ['ink_ratio','skeleton_ratio','skeleton_per_ink','endpoint_count','junction_count','num_components','complexity_score'];
 const CV_METRIC_LABELS = { ink_ratio:'ink ratio', skeleton_ratio:'skel. ratio', skeleton_per_ink:'skel/ink', endpoint_count:'endpoints', junction_count:'junctions', num_components:'components', complexity_score:'complexity' };
 const CV_METRIC_IDX = { ink_ratio:0, skeleton_ratio:1, skeleton_per_ink:2, endpoint_count:3, junction_count:4, num_components:5, complexity_score:6 };
@@ -12221,9 +12262,9 @@ function cvShowSingle(sha) {
 function cvBuildSingleHTML() {
   const groupsHTML = CV_LAYER_GROUPS.map(grp => `
     <div class="cv-layer-group">
-      <div class="cv-layer-group-label">${grp.label}</div>
+      <div class="cv-layer-group-label cv-has-tip" data-tip="${(CV_GROUP_TIPS[grp.label]||'').replace(/"/g,'&quot;')}">${grp.label}</div>
       ${grp.indices.map(i => `
-        <label class="cv-layer-toggle">
+        <label class="cv-layer-toggle" title="${(CV_LAYER_TIPS[CV_LAYERS[i].key]||'').replace(/"/g,'&quot;')}">
           <input type="checkbox" data-layer="${i}" checked>
           ${CV_LAYERS[i].label}
         </label>`).join('')}
@@ -12236,7 +12277,10 @@ function cvBuildSingleHTML() {
           <img id="cv-img-back" alt="">
           <img id="cv-img-front" alt="" style="opacity:0">
         </div>
-        <div class="cv-caption" id="cv-caption"></div>
+        <div class="cv-caption" id="cv-caption">
+          <span class="cv-caption-k" id="cv-caption-k"></span>
+          <span class="cv-caption-layer" id="cv-caption-layer"></span>
+        </div>
         <div class="cv-controls">
           <button class="cv-ctrl-btn" id="cv-btn-playpause">Pause</button>
           <button class="cv-ctrl-btn" id="cv-btn-random">Random</button>
@@ -12289,6 +12333,17 @@ function cvUpdateSingleDetails(sha) {
   document.getElementById('cv-details-labels').innerHTML =
     (item.prefill_labels || []).map(l => `<span class="cv-label-pill">${l}</span>`).join('');
 
+  const captionKEl = document.getElementById('cv-caption-k');
+  if (captionKEl) {
+    const stdLabels = (item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l));
+    if (stdLabels.length) {
+      const parts = stdLabels.map(l => `${l}: ${CV_K_NAMES[l] || l}`).join(', ');
+      captionKEl.textContent = parts + ' (Kellogg)';
+    } else {
+      captionKEl.textContent = '';
+    }
+  }
+
   const metricsEl = document.getElementById('cv-details-metrics');
   if (item.metrics_norm) {
     metricsEl.innerHTML = CV_METRIC_KEYS.map((k,i) => {
@@ -12325,16 +12380,13 @@ function cvUpdateSingleDetails(sha) {
 function cvStartBreathing(sha, preloadedImgs) {
   const imgBack  = document.getElementById('cv-img-back');
   const imgFront = document.getElementById('cv-img-front');
-  const captionEl = document.getElementById('cv-caption');
-  if (!imgBack || !imgFront || !captionEl) return;
-
-  const _item = cvNeuralIndex && cvNeuralIndex._bySha ? cvNeuralIndex._bySha[sha] : null;
-  const _kLabel = _item ? ((_item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ')) : '';
+  if (!imgBack || !imgFront) return;
 
   cvBreathPaused = false;
   let effectiveTime = 0;
   let lastTime = null;
-  let lastFamily = -1;
+  let lastLayerIdx = -1;
+  const layerEl = document.getElementById('cv-caption-layer');
 
   function frame(now) {
     if (sha !== cvCurrentSha) return;
@@ -12363,12 +12415,9 @@ function cvStartBreathing(sha, preloadedImgs) {
     if (imgFront.src !== srcB) imgFront.src = srcB;
     imgFront.style.opacity = frac;
 
-    if (layerA.family !== lastFamily) {
-      lastFamily = layerA.family;
-      captionEl.style.opacity = '0';
-      const familyTxt = CV_FAMILY_CAPTIONS[layerA.family] || '';
-      const txt = _kLabel ? _kLabel + ' · ' + familyTxt : familyTxt;
-      setTimeout(() => { captionEl.textContent = txt; captionEl.style.opacity = '1'; }, 200);
+    if (layerIdx !== lastLayerIdx) {
+      lastLayerIdx = layerIdx;
+      if (layerEl) layerEl.textContent = layerA.label;
     }
   }
 
