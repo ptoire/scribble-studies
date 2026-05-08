@@ -11984,10 +11984,10 @@ const CV_LAYER_GROUPS = [
   { label:'Fusion',      indices:[20,21] },
 ];
 const CV_FAMILY_CAPTIONS = [
-  'Lorem ipsum: original mark',
-  'Lorem ipsum: geometric reading',
-  'Lorem ipsum: neural attention',
-  'Lorem ipsum: combined reading',
+  'Original mark',
+  'Geometric decomposition',
+  'Neural attention',
+  'Fusion',
 ];
 const CV_K_COLORS = {
   'K-A':'#e15759','K-B':'#4e79a7','K-C':'#f28e2c','K-D':'#76b7b2',
@@ -12328,6 +12328,9 @@ function cvStartBreathing(sha, preloadedImgs) {
   const captionEl = document.getElementById('cv-caption');
   if (!imgBack || !imgFront || !captionEl) return;
 
+  const _item = cvNeuralIndex && cvNeuralIndex._bySha ? cvNeuralIndex._bySha[sha] : null;
+  const _kLabel = _item ? ((_item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ')) : '';
+
   cvBreathPaused = false;
   let effectiveTime = 0;
   let lastTime = null;
@@ -12363,7 +12366,8 @@ function cvStartBreathing(sha, preloadedImgs) {
     if (layerA.family !== lastFamily) {
       lastFamily = layerA.family;
       captionEl.style.opacity = '0';
-      const txt = CV_FAMILY_CAPTIONS[layerA.family] || '';
+      const familyTxt = CV_FAMILY_CAPTIONS[layerA.family] || '';
+      const txt = _kLabel ? _kLabel + ' · ' + familyTxt : familyTxt;
       setTimeout(() => { captionEl.textContent = txt; captionEl.style.opacity = '1'; }, 200);
     }
   }
