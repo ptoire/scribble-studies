@@ -157750,7 +157750,11 @@
     },
     "total_strokes": 7,
     "total_points": 880,
-    "stroke_annotations": []
+    "stroke_annotations": [],
+    "maurer_tc": [
+      "T-CBA"
+    ],
+    "modified_at": "2026-05-09T18:34:40.393Z"
   },
   {
     "session_id": "IS_BLOCKAGE_1778351615770",
