@@ -149231,5 +149231,2301 @@
     "total_strokes": 2,
     "total_points": 159,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_DOWN_1778351252615",
+    "schema_code": "DOWN",
+    "schema_name": "Down (Verticality axis)",
+    "schema_group": "Spatial Primitive",
+    "timestamp": "2026-05-09T18:27:35.523Z",
+    "author": {
+      "username": "ciociorp",
+      "created_at": "2026-05-09T18:27:35.523Z"
+    },
+    "location": "Genoa, Italy",
+    "thumb_dataurl": "data:image/png;base64,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",
+    "anim": {
+      "w": 1200,
+      "h": 800,
+      "strokes": [
+        {
+          "color": "#B0E040",
+          "size": 16,
+          "pts": [
+            {
+              "x": 499,
+              "y": 171,
+              "t": 1778351245778,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 497,
+              "y": 179,
+              "t": 1778351245924,
+              "pressure": 0.5,
+              "velocity": 61
+            },
+            {
+              "x": 497,
+              "y": 179,
+              "t": 1778351245927,
+              "pressure": 0.5,
+              "velocity": 0
+            },
+            {
+              "x": 497,
+              "y": 209,
+              "t": 1778351245940,
+              "pressure": 0.5,
+              "velocity": 2279
+            },
+            {
+              "x": 492,
+              "y": 256,
+              "t": 1778351245957,
+              "pressure": 0.5,
+              "velocity": 2766
+            },
+            {
+              "x": 482,
+              "y": 315,
+              "t": 1778351245974,
+              "pressure": 0.5,
+              "velocity": 3540
+            },
+            {
+              "x": 473,
+              "y": 384,
+              "t": 1778351245990,
+              "pressure": 0.5,
+              "velocity": 4328
+            },
+            {
+              "x": 468,
+              "y": 448,
+              "t": 1778351246007,
+              "pressure": 0.5,
+              "velocity": 3817
+            },
+            {
+              "x": 467,
+              "y": 502,
+              "t": 1778351246024,
+              "pressure": 0.5,
+              "velocity": 3166
+            },
+            {
+              "x": 467,
+              "y": 543,
+              "t": 1778351246040,
+              "pressure": 0.5,
+              "velocity": 2583
+            },
+            {
+              "x": 467,
+              "y": 572,
+              "t": 1778351246057,
+              "pressure": 0.5,
+              "velocity": 1651
+            },
+            {
+              "x": 469,
+              "y": 593,
+              "t": 1778351246074,
+              "pressure": 0.5,
+              "velocity": 1292
+            },
+            {
+              "x": 470,
+              "y": 612,
+              "t": 1778351246090,
+              "pressure": 0.5,
+              "velocity": 1172
+            },
+            {
+              "x": 471,
+              "y": 624,
+              "t": 1778351246107,
+              "pressure": 0.5,
+              "velocity": 691
+            },
+            {
+              "x": 473,
+              "y": 627,
+              "t": 1778351246124,
+              "pressure": 0.5,
+              "velocity": 196
+            },
+            {
+              "x": 474,
+              "y": 611,
+              "t": 1778351246157,
+              "pressure": 0.5,
+              "velocity": 497
+            },
+            {
+              "x": 474,
+              "y": 572,
+              "t": 1778351246174,
+              "pressure": 0.5,
+              "velocity": 2247
+            },
+            {
+              "x": 474,
+              "y": 524,
+              "t": 1778351246190,
+              "pressure": 0.5,
+              "velocity": 3021
+            },
+            {
+              "x": 474,
+              "y": 473,
+              "t": 1778351246207,
+              "pressure": 0.5,
+              "velocity": 2981
+            },
+            {
+              "x": 474,
+              "y": 418,
+              "t": 1778351246224,
+              "pressure": 0.5,
+              "velocity": 3257
+            },
+            {
+              "x": 474,
+              "y": 356,
+              "t": 1778351246240,
+              "pressure": 0.5,
+              "velocity": 3850
+            },
+            {
+              "x": 476,
+              "y": 293,
+              "t": 1778351246257,
+              "pressure": 0.5,
+              "velocity": 3718
+            },
+            {
+              "x": 487,
+              "y": 234,
+              "t": 1778351246274,
+              "pressure": 0.5,
+              "velocity": 3540
+            },
+            {
+              "x": 498,
+              "y": 186,
+              "t": 1778351246290,
+              "pressure": 0.5,
+              "velocity": 3061
+            },
+            {
+              "x": 506,
+              "y": 154,
+              "t": 1778351246307,
+              "pressure": 0.5,
+              "velocity": 1986
+            },
+            {
+              "x": 510,
+              "y": 139,
+              "t": 1778351246324,
+              "pressure": 0.5,
+              "velocity": 896
+            },
+            {
+              "x": 511,
+              "y": 136,
+              "t": 1778351246340,
+              "pressure": 0.5,
+              "velocity": 163
+            },
+            {
+              "x": 511,
+              "y": 142,
+              "t": 1778351246374,
+              "pressure": 0.5,
+              "velocity": 161
+            },
+            {
+              "x": 511,
+              "y": 159,
+              "t": 1778351246390,
+              "pressure": 0.5,
+              "velocity": 1072
+            },
+            {
+              "x": 510,
+              "y": 199,
+              "t": 1778351246407,
+              "pressure": 0.5,
+              "velocity": 2340
+            },
+            {
+              "x": 502,
+              "y": 254,
+              "t": 1778351246424,
+              "pressure": 0.5,
+              "velocity": 3292
+            },
+            {
+              "x": 497,
+              "y": 320,
+              "t": 1778351246440,
+              "pressure": 0.5,
+              "velocity": 4104
+            },
+            {
+              "x": 492,
+              "y": 393,
+              "t": 1778351246457,
+              "pressure": 0.5,
+              "velocity": 4320
+            },
+            {
+              "x": 489,
+              "y": 467,
+              "t": 1778351246474,
+              "pressure": 0.5,
+              "velocity": 4362
+            },
+            {
+              "x": 488,
+              "y": 533,
+              "t": 1778351246490,
+              "pressure": 0.5,
+              "velocity": 4094
+            },
+            {
+              "x": 488,
+              "y": 583,
+              "t": 1778351246507,
+              "pressure": 0.5,
+              "velocity": 2981
+            },
+            {
+              "x": 489,
+              "y": 619,
+              "t": 1778351246524,
+              "pressure": 0.5,
+              "velocity": 2111
+            },
+            {
+              "x": 495,
+              "y": 645,
+              "t": 1778351246540,
+              "pressure": 0.5,
+              "velocity": 1649
+            },
+            {
+              "x": 498,
+              "y": 660,
+              "t": 1778351246557,
+              "pressure": 0.5,
+              "velocity": 940
+            },
+            {
+              "x": 499,
+              "y": 665,
+              "t": 1778351246574,
+              "pressure": 0.5,
+              "velocity": 284
+            },
+            {
+              "x": 501,
+              "y": 665,
+              "t": 1778351246590,
+              "pressure": 0.5,
+              "velocity": 73
+            },
+            {
+              "x": 502,
+              "y": 662,
+              "t": 1778351246607,
+              "pressure": 0.5,
+              "velocity": 196
+            },
+            {
+              "x": 505,
+              "y": 637,
+              "t": 1778351246624,
+              "pressure": 0.5,
+              "velocity": 1482
+            },
+            {
+              "x": 505,
+              "y": 586,
+              "t": 1778351246640,
+              "pressure": 0.5,
+              "velocity": 3168
+            },
+            {
+              "x": 505,
+              "y": 518,
+              "t": 1778351246657,
+              "pressure": 0.5,
+              "velocity": 4036
+            },
+            {
+              "x": 505,
+              "y": 441,
+              "t": 1778351246674,
+              "pressure": 0.5,
+              "velocity": 4495
+            },
+            {
+              "x": 505,
+              "y": 370,
+              "t": 1778351246690,
+              "pressure": 0.5,
+              "velocity": 4483
+            },
+            {
+              "x": 509,
+              "y": 306,
+              "t": 1778351246707,
+              "pressure": 0.5,
+              "velocity": 3767
+            },
+            {
+              "x": 522,
+              "y": 250,
+              "t": 1778351246724,
+              "pressure": 0.5,
+              "velocity": 3343
+            },
+            {
+              "x": 531,
+              "y": 207,
+              "t": 1778351246740,
+              "pressure": 0.5,
+              "velocity": 2743
+            },
+            {
+              "x": 538,
+              "y": 183,
+              "t": 1778351246757,
+              "pressure": 0.5,
+              "velocity": 1481
+            },
+            {
+              "x": 542,
+              "y": 169,
+              "t": 1778351246773,
+              "pressure": 0.5,
+              "velocity": 904
+            },
+            {
+              "x": 544,
+              "y": 160,
+              "t": 1778351246790,
+              "pressure": 0.5,
+              "velocity": 567
+            },
+            {
+              "x": 547,
+              "y": 152,
+              "t": 1778351246807,
+              "pressure": 0.5,
+              "velocity": 503
+            },
+            {
+              "x": 550,
+              "y": 149,
+              "t": 1778351246823,
+              "pressure": 0.5,
+              "velocity": 244
+            },
+            {
+              "x": 550,
+              "y": 150,
+              "t": 1778351246858,
+              "pressure": 0.5,
+              "velocity": 22
+            },
+            {
+              "x": 550,
+              "y": 177,
+              "t": 1778351246874,
+              "pressure": 0.5,
+              "velocity": 1706
+            },
+            {
+              "x": 546,
+              "y": 228,
+              "t": 1778351246892,
+              "pressure": 0.5,
+              "velocity": 2822
+            },
+            {
+              "x": 539,
+              "y": 297,
+              "t": 1778351246907,
+              "pressure": 0.5,
+              "velocity": 4650
+            },
+            {
+              "x": 535,
+              "y": 384,
+              "t": 1778351246923,
+              "pressure": 0.5,
+              "velocity": 5417
+            },
+            {
+              "x": 535,
+              "y": 478,
+              "t": 1778351246940,
+              "pressure": 0.5,
+              "velocity": 5550
+            },
+            {
+              "x": 539,
+              "y": 568,
+              "t": 1778351246957,
+              "pressure": 0.5,
+              "velocity": 5282
+            },
+            {
+              "x": 558,
+              "y": 638,
+              "t": 1778351246974,
+              "pressure": 0.5,
+              "velocity": 4272
+            },
+            {
+              "x": 578,
+              "y": 668,
+              "t": 1778351246990,
+              "pressure": 0.5,
+              "velocity": 2271
+            },
+            {
+              "x": 582,
+              "y": 671,
+              "t": 1778351247007,
+              "pressure": 0.5,
+              "velocity": 308
+            },
+            {
+              "x": 582,
+              "y": 669,
+              "t": 1778351247024,
+              "pressure": 0.5,
+              "velocity": 92
+            },
+            {
+              "x": 582,
+              "y": 658,
+              "t": 1778351247040,
+              "pressure": 0.5,
+              "velocity": 682
+            },
+            {
+              "x": 582,
+              "y": 626,
+              "t": 1778351247057,
+              "pressure": 0.5,
+              "velocity": 1881
+            },
+            {
+              "x": 572,
+              "y": 570,
+              "t": 1778351247074,
+              "pressure": 0.5,
+              "velocity": 3360
+            },
+            {
+              "x": 557,
+              "y": 497,
+              "t": 1778351247090,
+              "pressure": 0.5,
+              "velocity": 4678
+            },
+            {
+              "x": 550,
+              "y": 417,
+              "t": 1778351247107,
+              "pressure": 0.5,
+              "velocity": 4697
+            },
+            {
+              "x": 549,
+              "y": 335,
+              "t": 1778351247124,
+              "pressure": 0.5,
+              "velocity": 4816
+            },
+            {
+              "x": 549,
+              "y": 257,
+              "t": 1778351247141,
+              "pressure": 0.5,
+              "velocity": 4632
+            },
+            {
+              "x": 564,
+              "y": 188,
+              "t": 1778351247157,
+              "pressure": 0.5,
+              "velocity": 4393
+            },
+            {
+              "x": 582,
+              "y": 142,
+              "t": 1778351247174,
+              "pressure": 0.5,
+              "velocity": 2921
+            },
+            {
+              "x": 593,
+              "y": 126,
+              "t": 1778351247190,
+              "pressure": 0.5,
+              "velocity": 1176
+            },
+            {
+              "x": 594,
+              "y": 126,
+              "t": 1778351247207,
+              "pressure": 0.5,
+              "velocity": 69
+            },
+            {
+              "x": 594,
+              "y": 133,
+              "t": 1778351247224,
+              "pressure": 0.5,
+              "velocity": 367
+            },
+            {
+              "x": 594,
+              "y": 149,
+              "t": 1778351247240,
+              "pressure": 0.5,
+              "velocity": 1023
+            },
+            {
+              "x": 594,
+              "y": 184,
+              "t": 1778351247258,
+              "pressure": 0.5,
+              "velocity": 1949
+            },
+            {
+              "x": 580,
+              "y": 246,
+              "t": 1778351247274,
+              "pressure": 0.5,
+              "velocity": 3996
+            },
+            {
+              "x": 565,
+              "y": 331,
+              "t": 1778351247290,
+              "pressure": 0.5,
+              "velocity": 5396
+            },
+            {
+              "x": 553,
+              "y": 431,
+              "t": 1778351247307,
+              "pressure": 0.5,
+              "velocity": 5911
+            },
+            {
+              "x": 549,
+              "y": 533,
+              "t": 1778351247324,
+              "pressure": 0.5,
+              "velocity": 5969
+            },
+            {
+              "x": 549,
+              "y": 614,
+              "t": 1778351247340,
+              "pressure": 0.5,
+              "velocity": 5117
+            },
+            {
+              "x": 549,
+              "y": 654,
+              "t": 1778351247357,
+              "pressure": 0.5,
+              "velocity": 2339
+            },
+            {
+              "x": 552,
+              "y": 658,
+              "t": 1778351247374,
+              "pressure": 0.5,
+              "velocity": 309
+            },
+            {
+              "x": 553,
+              "y": 657,
+              "t": 1778351247390,
+              "pressure": 0.5,
+              "velocity": 88
+            },
+            {
+              "x": 553,
+              "y": 652,
+              "t": 1778351247407,
+              "pressure": 0.5,
+              "velocity": 321
+            },
+            {
+              "x": 554,
+              "y": 632,
+              "t": 1778351247424,
+              "pressure": 0.5,
+              "velocity": 1149
+            },
+            {
+              "x": 557,
+              "y": 583,
+              "t": 1778351247440,
+              "pressure": 0.5,
+              "velocity": 3074
+            },
+            {
+              "x": 557,
+              "y": 501,
+              "t": 1778351247457,
+              "pressure": 0.5,
+              "velocity": 4816
+            },
+            {
+              "x": 560,
+              "y": 398,
+              "t": 1778351247474,
+              "pressure": 0.5,
+              "velocity": 6104
+            },
+            {
+              "x": 571,
+              "y": 293,
+              "t": 1778351247490,
+              "pressure": 0.5,
+              "velocity": 6563
+            },
+            {
+              "x": 584,
+              "y": 206,
+              "t": 1778351247507,
+              "pressure": 0.5,
+              "velocity": 5192
+            },
+            {
+              "x": 594,
+              "y": 151,
+              "t": 1778351247524,
+              "pressure": 0.5,
+              "velocity": 3315
+            },
+            {
+              "x": 599,
+              "y": 127,
+              "t": 1778351247540,
+              "pressure": 0.5,
+              "velocity": 1491
+            },
+            {
+              "x": 599,
+              "y": 125,
+              "t": 1778351247557,
+              "pressure": 0.5,
+              "velocity": 138
+            },
+            {
+              "x": 599,
+              "y": 127,
+              "t": 1778351247574,
+              "pressure": 0.5,
+              "velocity": 138
+            },
+            {
+              "x": 599,
+              "y": 144,
+              "t": 1778351247590,
+              "pressure": 0.5,
+              "velocity": 1072
+            },
+            {
+              "x": 599,
+              "y": 184,
+              "t": 1778351247607,
+              "pressure": 0.5,
+              "velocity": 2339
+            },
+            {
+              "x": 599,
+              "y": 253,
+              "t": 1778351247624,
+              "pressure": 0.5,
+              "velocity": 4082
+            },
+            {
+              "x": 588,
+              "y": 346,
+              "t": 1778351247640,
+              "pressure": 0.5,
+              "velocity": 5836
+            },
+            {
+              "x": 587,
+              "y": 447,
+              "t": 1778351247657,
+              "pressure": 0.5,
+              "velocity": 5917
+            },
+            {
+              "x": 587,
+              "y": 532,
+              "t": 1778351247674,
+              "pressure": 0.5,
+              "velocity": 4999
+            },
+            {
+              "x": 602,
+              "y": 584,
+              "t": 1778351247690,
+              "pressure": 0.5,
+              "velocity": 3401
+            },
+            {
+              "x": 614,
+              "y": 606,
+              "t": 1778351247707,
+              "pressure": 0.5,
+              "velocity": 1457
+            },
+            {
+              "x": 621,
+              "y": 611,
+              "t": 1778351247724,
+              "pressure": 0.5,
+              "velocity": 523
+            },
+            {
+              "x": 622,
+              "y": 611,
+              "t": 1778351247740,
+              "pressure": 0.5,
+              "velocity": 73
+            },
+            {
+              "x": 623,
+              "y": 586,
+              "t": 1778351247774,
+              "pressure": 0.5,
+              "velocity": 758
+            },
+            {
+              "x": 626,
+              "y": 523,
+              "t": 1778351247790,
+              "pressure": 0.5,
+              "velocity": 3901
+            },
+            {
+              "x": 626,
+              "y": 430,
+              "t": 1778351247807,
+              "pressure": 0.5,
+              "velocity": 5504
+            },
+            {
+              "x": 626,
+              "y": 326,
+              "t": 1778351247824,
+              "pressure": 0.5,
+              "velocity": 6100
+            },
+            {
+              "x": 634,
+              "y": 231,
+              "t": 1778351247840,
+              "pressure": 0.5,
+              "velocity": 5967
+            },
+            {
+              "x": 644,
+              "y": 164,
+              "t": 1778351247857,
+              "pressure": 0.5,
+              "velocity": 3993
+            },
+            {
+              "x": 651,
+              "y": 132,
+              "t": 1778351247876,
+              "pressure": 0.5,
+              "velocity": 1723
+            },
+            {
+              "x": 653,
+              "y": 126,
+              "t": 1778351247890,
+              "pressure": 0.5,
+              "velocity": 453
+            },
+            {
+              "x": 653,
+              "y": 133,
+              "t": 1778351247924,
+              "pressure": 0.5,
+              "velocity": 206
+            },
+            {
+              "x": 653,
+              "y": 161,
+              "t": 1778351247940,
+              "pressure": 0.5,
+              "velocity": 1803
+            },
+            {
+              "x": 653,
+              "y": 220,
+              "t": 1778351247957,
+              "pressure": 0.5,
+              "velocity": 3440
+            },
+            {
+              "x": 642,
+              "y": 303,
+              "t": 1778351247974,
+              "pressure": 0.5,
+              "velocity": 4901
+            },
+            {
+              "x": 628,
+              "y": 395,
+              "t": 1778351247990,
+              "pressure": 0.5,
+              "velocity": 5865
+            },
+            {
+              "x": 619,
+              "y": 486,
+              "t": 1778351248007,
+              "pressure": 0.5,
+              "velocity": 5349
+            },
+            {
+              "x": 614,
+              "y": 556,
+              "t": 1778351248024,
+              "pressure": 0.5,
+              "velocity": 4137
+            },
+            {
+              "x": 614,
+              "y": 592,
+              "t": 1778351248040,
+              "pressure": 0.5,
+              "velocity": 2242
+            },
+            {
+              "x": 614,
+              "y": 599,
+              "t": 1778351248057,
+              "pressure": 0.5,
+              "velocity": 413
+            },
+            {
+              "x": 614,
+              "y": 596,
+              "t": 1778351248090,
+              "pressure": 0.5,
+              "velocity": 95
+            },
+            {
+              "x": 614,
+              "y": 579,
+              "t": 1778351248107,
+              "pressure": 0.5,
+              "velocity": 1009
+            },
+            {
+              "x": 618,
+              "y": 528,
+              "t": 1778351248124,
+              "pressure": 0.5,
+              "velocity": 2988
+            },
+            {
+              "x": 625,
+              "y": 441,
+              "t": 1778351248140,
+              "pressure": 0.5,
+              "velocity": 5427
+            },
+            {
+              "x": 636,
+              "y": 334,
+              "t": 1778351248157,
+              "pressure": 0.5,
+              "velocity": 6367
+            },
+            {
+              "x": 656,
+              "y": 228,
+              "t": 1778351248174,
+              "pressure": 0.5,
+              "velocity": 6301
+            },
+            {
+              "x": 674,
+              "y": 153,
+              "t": 1778351248190,
+              "pressure": 0.5,
+              "velocity": 4853
+            },
+            {
+              "x": 682,
+              "y": 120,
+              "t": 1778351248207,
+              "pressure": 0.5,
+              "velocity": 1986
+            },
+            {
+              "x": 683,
+              "y": 115,
+              "t": 1778351248224,
+              "pressure": 0.5,
+              "velocity": 284
+            },
+            {
+              "x": 683,
+              "y": 116,
+              "t": 1778351248240,
+              "pressure": 0.5,
+              "velocity": 49
+            },
+            {
+              "x": 683,
+              "y": 134,
+              "t": 1778351248257,
+              "pressure": 0.5,
+              "velocity": 1055
+            },
+            {
+              "x": 678,
+              "y": 179,
+              "t": 1778351248274,
+              "pressure": 0.5,
+              "velocity": 2629
+            },
+            {
+              "x": 660,
+              "y": 253,
+              "t": 1778351248290,
+              "pressure": 0.5,
+              "velocity": 4822
+            },
+            {
+              "x": 640,
+              "y": 347,
+              "t": 1778351248307,
+              "pressure": 0.5,
+              "velocity": 5627
+            },
+            {
+              "x": 627,
+              "y": 445,
+              "t": 1778351248324,
+              "pressure": 0.5,
+              "velocity": 5828
+            },
+            {
+              "x": 622,
+              "y": 528,
+              "t": 1778351248340,
+              "pressure": 0.5,
+              "velocity": 5174
+            },
+            {
+              "x": 622,
+              "y": 577,
+              "t": 1778351248357,
+              "pressure": 0.5,
+              "velocity": 2890
+            },
+            {
+              "x": 622,
+              "y": 593,
+              "t": 1778351248374,
+              "pressure": 0.5,
+              "velocity": 963
+            },
+            {
+              "x": 623,
+              "y": 595,
+              "t": 1778351248390,
+              "pressure": 0.5,
+              "velocity": 122
+            },
+            {
+              "x": 625,
+              "y": 595,
+              "t": 1778351248407,
+              "pressure": 0.5,
+              "velocity": 69
+            },
+            {
+              "x": 628,
+              "y": 587,
+              "t": 1778351248424,
+              "pressure": 0.5,
+              "velocity": 503
+            },
+            {
+              "x": 636,
+              "y": 551,
+              "t": 1778351248440,
+              "pressure": 0.5,
+              "velocity": 2347
+            },
+            {
+              "x": 648,
+              "y": 473,
+              "t": 1778351248457,
+              "pressure": 0.5,
+              "velocity": 4593
+            },
+            {
+              "x": 661,
+              "y": 374,
+              "t": 1778351248474,
+              "pressure": 0.5,
+              "velocity": 5874
+            },
+            {
+              "x": 677,
+              "y": 282,
+              "t": 1778351248490,
+              "pressure": 0.5,
+              "velocity": 5889
+            },
+            {
+              "x": 692,
+              "y": 215,
+              "t": 1778351248507,
+              "pressure": 0.5,
+              "velocity": 4000
+            },
+            {
+              "x": 703,
+              "y": 184,
+              "t": 1778351248524,
+              "pressure": 0.5,
+              "velocity": 1936
+            },
+            {
+              "x": 706,
+              "y": 177,
+              "t": 1778351248540,
+              "pressure": 0.5,
+              "velocity": 490
+            },
+            {
+              "x": 706,
+              "y": 183,
+              "t": 1778351248574,
+              "pressure": 0.5,
+              "velocity": 183
+            },
+            {
+              "x": 706,
+              "y": 204,
+              "t": 1778351248590,
+              "pressure": 0.5,
+              "velocity": 1267
+            },
+            {
+              "x": 706,
+              "y": 257,
+              "t": 1778351248607,
+              "pressure": 0.5,
+              "velocity": 3119
+            },
+            {
+              "x": 690,
+              "y": 337,
+              "t": 1778351248624,
+              "pressure": 0.5,
+              "velocity": 4821
+            },
+            {
+              "x": 677,
+              "y": 428,
+              "t": 1778351248641,
+              "pressure": 0.5,
+              "velocity": 5419
+            },
+            {
+              "x": 668,
+              "y": 515,
+              "t": 1778351248657,
+              "pressure": 0.5,
+              "velocity": 5489
+            },
+            {
+              "x": 664,
+              "y": 587,
+              "t": 1778351248674,
+              "pressure": 0.5,
+              "velocity": 4225
+            },
+            {
+              "x": 664,
+              "y": 630,
+              "t": 1778351248690,
+              "pressure": 0.5,
+              "velocity": 2680
+            },
+            {
+              "x": 664,
+              "y": 646,
+              "t": 1778351248707,
+              "pressure": 0.5,
+              "velocity": 917
+            },
+            {
+              "x": 664,
+              "y": 647,
+              "t": 1778351248724,
+              "pressure": 0.5,
+              "velocity": 92
+            },
+            {
+              "x": 664,
+              "y": 646,
+              "t": 1778351248757,
+              "pressure": 0.5,
+              "velocity": 24
+            },
+            {
+              "x": 664,
+              "y": 622,
+              "t": 1778351248774,
+              "pressure": 0.5,
+              "velocity": 1422
+            },
+            {
+              "x": 665,
+              "y": 552,
+              "t": 1778351248790,
+              "pressure": 0.5,
+              "velocity": 4387
+            },
+            {
+              "x": 671,
+              "y": 453,
+              "t": 1778351248807,
+              "pressure": 0.5,
+              "velocity": 5835
+            },
+            {
+              "x": 678,
+              "y": 349,
+              "t": 1778351248824,
+              "pressure": 0.5,
+              "velocity": 6114
+            },
+            {
+              "x": 687,
+              "y": 257,
+              "t": 1778351248840,
+              "pressure": 0.5,
+              "velocity": 5773
+            },
+            {
+              "x": 694,
+              "y": 186,
+              "t": 1778351248857,
+              "pressure": 0.5,
+              "velocity": 4194
+            },
+            {
+              "x": 695,
+              "y": 151,
+              "t": 1778351248874,
+              "pressure": 0.5,
+              "velocity": 2111
+            },
+            {
+              "x": 695,
+              "y": 145,
+              "t": 1778351248890,
+              "pressure": 0.5,
+              "velocity": 341
+            },
+            {
+              "x": 695,
+              "y": 151,
+              "t": 1778351248924,
+              "pressure": 0.5,
+              "velocity": 161
+            },
+            {
+              "x": 691,
+              "y": 168,
+              "t": 1778351248941,
+              "pressure": 0.5,
+              "velocity": 1075
+            },
+            {
+              "x": 677,
+              "y": 216,
+              "t": 1778351248957,
+              "pressure": 0.5,
+              "velocity": 3099
+            },
+            {
+              "x": 661,
+              "y": 289,
+              "t": 1778351248974,
+              "pressure": 0.5,
+              "velocity": 4418
+            },
+            {
+              "x": 648,
+              "y": 374,
+              "t": 1778351248990,
+              "pressure": 0.5,
+              "velocity": 5324
+            },
+            {
+              "x": 640,
+              "y": 457,
+              "t": 1778351249007,
+              "pressure": 0.5,
+              "velocity": 4931
+            },
+            {
+              "x": 637,
+              "y": 533,
+              "t": 1778351249024,
+              "pressure": 0.5,
+              "velocity": 4497
+            },
+            {
+              "x": 637,
+              "y": 588,
+              "t": 1778351249040,
+              "pressure": 0.5,
+              "velocity": 3411
+            },
+            {
+              "x": 637,
+              "y": 612,
+              "t": 1778351249057,
+              "pressure": 0.5,
+              "velocity": 1422
+            },
+            {
+              "x": 637,
+              "y": 614,
+              "t": 1778351249074,
+              "pressure": 0.5,
+              "velocity": 138
+            },
+            {
+              "x": 637,
+              "y": 614,
+              "t": 1778351249090,
+              "pressure": 0.5,
+              "velocity": 49
+            },
+            {
+              "x": 637,
+              "y": 601,
+              "t": 1778351249107,
+              "pressure": 0.5,
+              "velocity": 734
+            },
+            {
+              "x": 636,
+              "y": 563,
+              "t": 1778351249124,
+              "pressure": 0.5,
+              "velocity": 2249
+            },
+            {
+              "x": 629,
+              "y": 490,
+              "t": 1778351249140,
+              "pressure": 0.5,
+              "velocity": 4602
+            },
+            {
+              "x": 623,
+              "y": 397,
+              "t": 1778351249157,
+              "pressure": 0.5,
+              "velocity": 5469
+            },
+            {
+              "x": 621,
+              "y": 306,
+              "t": 1778351249174,
+              "pressure": 0.5,
+              "velocity": 5368
+            },
+            {
+              "x": 621,
+              "y": 233,
+              "t": 1778351249190,
+              "pressure": 0.5,
+              "velocity": 4532
+            },
+            {
+              "x": 623,
+              "y": 188,
+              "t": 1778351249207,
+              "pressure": 0.5,
+              "velocity": 2664
+            },
+            {
+              "x": 628,
+              "y": 169,
+              "t": 1778351249224,
+              "pressure": 0.5,
+              "velocity": 1135
+            },
+            {
+              "x": 629,
+              "y": 168,
+              "t": 1778351249240,
+              "pressure": 0.5,
+              "velocity": 88
+            },
+            {
+              "x": 629,
+              "y": 169,
+              "t": 1778351249257,
+              "pressure": 0.5,
+              "velocity": 46
+            },
+            {
+              "x": 632,
+              "y": 183,
+              "t": 1778351249274,
+              "pressure": 0.5,
+              "velocity": 837
+            },
+            {
+              "x": 632,
+              "y": 218,
+              "t": 1778351249292,
+              "pressure": 0.5,
+              "velocity": 1906
+            },
+            {
+              "x": 632,
+              "y": 281,
+              "t": 1778351249307,
+              "pressure": 0.5,
+              "velocity": 4211
+            },
+            {
+              "x": 620,
+              "y": 363,
+              "t": 1778351249324,
+              "pressure": 0.5,
+              "velocity": 4865
+            },
+            {
+              "x": 607,
+              "y": 446,
+              "t": 1778351249340,
+              "pressure": 0.5,
+              "velocity": 5276
+            },
+            {
+              "x": 599,
+              "y": 519,
+              "t": 1778351249357,
+              "pressure": 0.5,
+              "velocity": 4338
+            },
+            {
+              "x": 596,
+              "y": 571,
+              "t": 1778351249374,
+              "pressure": 0.5,
+              "velocity": 3030
+            },
+            {
+              "x": 596,
+              "y": 597,
+              "t": 1778351249390,
+              "pressure": 0.5,
+              "velocity": 1608
+            },
+            {
+              "x": 596,
+              "y": 606,
+              "t": 1778351249407,
+              "pressure": 0.5,
+              "velocity": 550
+            },
+            {
+              "x": 596,
+              "y": 607,
+              "t": 1778351249424,
+              "pressure": 0.5,
+              "velocity": 92
+            },
+            {
+              "x": 596,
+              "y": 600,
+              "t": 1778351249457,
+              "pressure": 0.5,
+              "velocity": 236
+            },
+            {
+              "x": 596,
+              "y": 555,
+              "t": 1778351249474,
+              "pressure": 0.5,
+              "velocity": 2614
+            },
+            {
+              "x": 596,
+              "y": 474,
+              "t": 1778351249490,
+              "pressure": 0.5,
+              "velocity": 5068
+            },
+            {
+              "x": 596,
+              "y": 380,
+              "t": 1778351249507,
+              "pressure": 0.5,
+              "velocity": 5550
+            },
+            {
+              "x": 596,
+              "y": 290,
+              "t": 1778351249524,
+              "pressure": 0.5,
+              "velocity": 5275
+            },
+            {
+              "x": 599,
+              "y": 218,
+              "t": 1778351249540,
+              "pressure": 0.5,
+              "velocity": 4535
+            },
+            {
+              "x": 605,
+              "y": 168,
+              "t": 1778351249557,
+              "pressure": 0.5,
+              "velocity": 2910
+            },
+            {
+              "x": 606,
+              "y": 148,
+              "t": 1778351249574,
+              "pressure": 0.5,
+              "velocity": 1195
+            },
+            {
+              "x": 606,
+              "y": 147,
+              "t": 1778351249590,
+              "pressure": 0.5,
+              "velocity": 97
+            },
+            {
+              "x": 606,
+              "y": 148,
+              "t": 1778351249607,
+              "pressure": 0.5,
+              "velocity": 92
+            },
+            {
+              "x": 605,
+              "y": 165,
+              "t": 1778351249624,
+              "pressure": 0.5,
+              "velocity": 1011
+            },
+            {
+              "x": 586,
+              "y": 212,
+              "t": 1778351249640,
+              "pressure": 0.5,
+              "velocity": 3149
+            },
+            {
+              "x": 561,
+              "y": 285,
+              "t": 1778351249658,
+              "pressure": 0.5,
+              "velocity": 4253
+            },
+            {
+              "x": 538,
+              "y": 373,
+              "t": 1778351249674,
+              "pressure": 0.5,
+              "velocity": 5698
+            },
+            {
+              "x": 522,
+              "y": 458,
+              "t": 1778351249690,
+              "pressure": 0.5,
+              "velocity": 5410
+            },
+            {
+              "x": 515,
+              "y": 525,
+              "t": 1778351249707,
+              "pressure": 0.5,
+              "velocity": 3966
+            },
+            {
+              "x": 513,
+              "y": 561,
+              "t": 1778351249724,
+              "pressure": 0.5,
+              "velocity": 2157
+            },
+            {
+              "x": 513,
+              "y": 572,
+              "t": 1778351249740,
+              "pressure": 0.5,
+              "velocity": 682
+            },
+            {
+              "x": 513,
+              "y": 573,
+              "t": 1778351249757,
+              "pressure": 0.5,
+              "velocity": 46
+            },
+            {
+              "x": 513,
+              "y": 569,
+              "t": 1778351249790,
+              "pressure": 0.5,
+              "velocity": 118
+            },
+            {
+              "x": 513,
+              "y": 541,
+              "t": 1778351249807,
+              "pressure": 0.5,
+              "velocity": 1651
+            },
+            {
+              "x": 513,
+              "y": 475,
+              "t": 1778351249824,
+              "pressure": 0.5,
+              "velocity": 3899
+            },
+            {
+              "x": 513,
+              "y": 383,
+              "t": 1778351249841,
+              "pressure": 0.5,
+              "velocity": 5412
+            },
+            {
+              "x": 513,
+              "y": 296,
+              "t": 1778351249857,
+              "pressure": 0.5,
+              "velocity": 5458
+            },
+            {
+              "x": 513,
+              "y": 235,
+              "t": 1778351249874,
+              "pressure": 0.5,
+              "velocity": 3578
+            },
+            {
+              "x": 513,
+              "y": 200,
+              "t": 1778351249890,
+              "pressure": 0.5,
+              "velocity": 2144
+            },
+            {
+              "x": 513,
+              "y": 190,
+              "t": 1778351249907,
+              "pressure": 0.5,
+              "velocity": 596
+            },
+            {
+              "x": 513,
+              "y": 197,
+              "t": 1778351249941,
+              "pressure": 0.5,
+              "velocity": 183
+            },
+            {
+              "x": 513,
+              "y": 219,
+              "t": 1778351249957,
+              "pressure": 0.5,
+              "velocity": 1413
+            },
+            {
+              "x": 513,
+              "y": 270,
+              "t": 1778351249974,
+              "pressure": 0.5,
+              "velocity": 2981
+            },
+            {
+              "x": 504,
+              "y": 348,
+              "t": 1778351249990,
+              "pressure": 0.5,
+              "velocity": 4908
+            },
+            {
+              "x": 495,
+              "y": 439,
+              "t": 1778351250007,
+              "pressure": 0.5,
+              "velocity": 5395
+            },
+            {
+              "x": 489,
+              "y": 525,
+              "t": 1778351250027,
+              "pressure": 0.5,
+              "velocity": 4298
+            },
+            {
+              "x": 485,
+              "y": 589,
+              "t": 1778351250041,
+              "pressure": 0.5,
+              "velocity": 4574
+            },
+            {
+              "x": 484,
+              "y": 619,
+              "t": 1778351250057,
+              "pressure": 0.5,
+              "velocity": 1902
+            },
+            {
+              "x": 483,
+              "y": 624,
+              "t": 1778351250074,
+              "pressure": 0.5,
+              "velocity": 284
+            },
+            {
+              "x": 482,
+              "y": 624,
+              "t": 1778351250090,
+              "pressure": 0.5,
+              "velocity": 73
+            },
+            {
+              "x": 482,
+              "y": 622,
+              "t": 1778351250107,
+              "pressure": 0.5,
+              "velocity": 92
+            },
+            {
+              "x": 481,
+              "y": 618,
+              "t": 1778351250124,
+              "pressure": 0.5,
+              "velocity": 284
+            },
+            {
+              "x": 481,
+              "y": 589,
+              "t": 1778351250140,
+              "pressure": 0.5,
+              "velocity": 1754
+            },
+            {
+              "x": 481,
+              "y": 520,
+              "t": 1778351250157,
+              "pressure": 0.5,
+              "velocity": 4082
+            },
+            {
+              "x": 481,
+              "y": 429,
+              "t": 1778351250174,
+              "pressure": 0.5,
+              "velocity": 5366
+            },
+            {
+              "x": 483,
+              "y": 336,
+              "t": 1778351250190,
+              "pressure": 0.5,
+              "velocity": 5801
+            },
+            {
+              "x": 497,
+              "y": 258,
+              "t": 1778351250207,
+              "pressure": 0.5,
+              "velocity": 4660
+            },
+            {
+              "x": 505,
+              "y": 209,
+              "t": 1778351250224,
+              "pressure": 0.5,
+              "velocity": 2929
+            },
+            {
+              "x": 510,
+              "y": 184,
+              "t": 1778351250240,
+              "pressure": 0.5,
+              "velocity": 1587
+            },
+            {
+              "x": 511,
+              "y": 172,
+              "t": 1778351250257,
+              "pressure": 0.5,
+              "velocity": 737
+            },
+            {
+              "x": 511,
+              "y": 171,
+              "t": 1778351250274,
+              "pressure": 0.5,
+              "velocity": 46
+            },
+            {
+              "x": 511,
+              "y": 172,
+              "t": 1778351250290,
+              "pressure": 0.5,
+              "velocity": 97
+            },
+            {
+              "x": 512,
+              "y": 196,
+              "t": 1778351250307,
+              "pressure": 0.5,
+              "velocity": 1378
+            },
+            {
+              "x": 512,
+              "y": 246,
+              "t": 1778351250324,
+              "pressure": 0.5,
+              "velocity": 2935
+            },
+            {
+              "x": 512,
+              "y": 322,
+              "t": 1778351250341,
+              "pressure": 0.5,
+              "velocity": 4495
+            },
+            {
+              "x": 512,
+              "y": 416,
+              "t": 1778351250357,
+              "pressure": 0.5,
+              "velocity": 5897
+            },
+            {
+              "x": 512,
+              "y": 513,
+              "t": 1778351250374,
+              "pressure": 0.5,
+              "velocity": 5687
+            },
+            {
+              "x": 512,
+              "y": 593,
+              "t": 1778351250390,
+              "pressure": 0.5,
+              "velocity": 5019
+            },
+            {
+              "x": 524,
+              "y": 633,
+              "t": 1778351250407,
+              "pressure": 0.5,
+              "velocity": 2438
+            },
+            {
+              "x": 530,
+              "y": 638,
+              "t": 1778351250424,
+              "pressure": 0.5,
+              "velocity": 441
+            },
+            {
+              "x": 531,
+              "y": 637,
+              "t": 1778351250440,
+              "pressure": 0.5,
+              "velocity": 88
+            },
+            {
+              "x": 531,
+              "y": 631,
+              "t": 1778351250457,
+              "pressure": 0.5,
+              "velocity": 367
+            },
+            {
+              "x": 532,
+              "y": 616,
+              "t": 1778351250474,
+              "pressure": 0.5,
+              "velocity": 874
+            },
+            {
+              "x": 533,
+              "y": 572,
+              "t": 1778351250491,
+              "pressure": 0.5,
+              "velocity": 2615
+            },
+            {
+              "x": 537,
+              "y": 490,
+              "t": 1778351250507,
+              "pressure": 0.5,
+              "velocity": 5122
+            },
+            {
+              "x": 547,
+              "y": 387,
+              "t": 1778351250524,
+              "pressure": 0.5,
+              "velocity": 6086
+            },
+            {
+              "x": 566,
+              "y": 295,
+              "t": 1778351250540,
+              "pressure": 0.5,
+              "velocity": 5868
+            },
+            {
+              "x": 587,
+              "y": 234,
+              "t": 1778351250557,
+              "pressure": 0.5,
+              "velocity": 3786
+            },
+            {
+              "x": 601,
+              "y": 207,
+              "t": 1778351250574,
+              "pressure": 0.5,
+              "velocity": 1805
+            },
+            {
+              "x": 606,
+              "y": 204,
+              "t": 1778351250590,
+              "pressure": 0.5,
+              "velocity": 327
+            },
+            {
+              "x": 606,
+              "y": 205,
+              "t": 1778351250607,
+              "pressure": 0.5,
+              "velocity": 46
+            },
+            {
+              "x": 606,
+              "y": 215,
+              "t": 1778351250624,
+              "pressure": 0.5,
+              "velocity": 596
+            },
+            {
+              "x": 606,
+              "y": 244,
+              "t": 1778351250640,
+              "pressure": 0.5,
+              "velocity": 1803
+            },
+            {
+              "x": 593,
+              "y": 306,
+              "t": 1778351250657,
+              "pressure": 0.5,
+              "velocity": 3702
+            },
+            {
+              "x": 577,
+              "y": 393,
+              "t": 1778351250677,
+              "pressure": 0.5,
+              "velocity": 4443
+            },
+            {
+              "x": 567,
+              "y": 492,
+              "t": 1778351250691,
+              "pressure": 0.5,
+              "velocity": 7105
+            },
+            {
+              "x": 565,
+              "y": 582,
+              "t": 1778351250707,
+              "pressure": 0.5,
+              "velocity": 5655
+            },
+            {
+              "x": 565,
+              "y": 645,
+              "t": 1778351250724,
+              "pressure": 0.5,
+              "velocity": 3669
+            },
+            {
+              "x": 565,
+              "y": 667,
+              "t": 1778351250740,
+              "pressure": 0.5,
+              "velocity": 1365
+            },
+            {
+              "x": 565,
+              "y": 667,
+              "t": 1778351250757,
+              "pressure": 0.5,
+              "velocity": 46
+            },
+            {
+              "x": 565,
+              "y": 667,
+              "t": 1778351250774,
+              "pressure": 0.5,
+              "velocity": 46
+            },
+            {
+              "x": 566,
+              "y": 659,
+              "t": 1778351250790,
+              "pressure": 0.5,
+              "velocity": 493
+            },
+            {
+              "x": 571,
+              "y": 632,
+              "t": 1778351250807,
+              "pressure": 0.5,
+              "velocity": 1584
+            },
+            {
+              "x": 574,
+              "y": 575,
+              "t": 1778351250824,
+              "pressure": 0.5,
+              "velocity": 3400
+            },
+            {
+              "x": 579,
+              "y": 487,
+              "t": 1778351250840,
+              "pressure": 0.5,
+              "velocity": 5515
+            },
+            {
+              "x": 587,
+              "y": 388,
+              "t": 1778351250857,
+              "pressure": 0.5,
+              "velocity": 5845
+            },
+            {
+              "x": 606,
+              "y": 301,
+              "t": 1778351250874,
+              "pressure": 0.5,
+              "velocity": 5209
+            },
+            {
+              "x": 626,
+              "y": 241,
+              "t": 1778351250891,
+              "pressure": 0.5,
+              "velocity": 3720
+            },
+            {
+              "x": 640,
+              "y": 207,
+              "t": 1778351250907,
+              "pressure": 0.5,
+              "velocity": 2272
+            },
+            {
+              "x": 648,
+              "y": 195,
+              "t": 1778351250924,
+              "pressure": 0.5,
+              "velocity": 878
+            },
+            {
+              "x": 649,
+              "y": 195,
+              "t": 1778351250943,
+              "pressure": 0.5,
+              "velocity": 62
+            },
+            {
+              "x": 649,
+              "y": 198,
+              "t": 1778351250957,
+              "pressure": 0.5,
+              "velocity": 223
+            },
+            {
+              "x": 649,
+              "y": 216,
+              "t": 1778351250974,
+              "pressure": 0.5,
+              "velocity": 1055
+            },
+            {
+              "x": 649,
+              "y": 267,
+              "t": 1778351250990,
+              "pressure": 0.5,
+              "velocity": 3168
+            },
+            {
+              "x": 639,
+              "y": 345,
+              "t": 1778351251007,
+              "pressure": 0.5,
+              "velocity": 4674
+            },
+            {
+              "x": 627,
+              "y": 442,
+              "t": 1778351251024,
+              "pressure": 0.5,
+              "velocity": 5729
+            },
+            {
+              "x": 618,
+              "y": 546,
+              "t": 1778351251040,
+              "pressure": 0.5,
+              "velocity": 6508
+            },
+            {
+              "x": 613,
+              "y": 635,
+              "t": 1778351251057,
+              "pressure": 0.5,
+              "velocity": 5236
+            },
+            {
+              "x": 611,
+              "y": 685,
+              "t": 1778351251074,
+              "pressure": 0.5,
+              "velocity": 2939
+            },
+            {
+              "x": 609,
+              "y": 691,
+              "t": 1778351251090,
+              "pressure": 0.5,
+              "velocity": 397
+            },
+            {
+              "x": 609,
+              "y": 687,
+              "t": 1778351251107,
+              "pressure": 0.5,
+              "velocity": 229
+            },
+            {
+              "x": 608,
+              "y": 678,
+              "t": 1778351251124,
+              "pressure": 0.5,
+              "velocity": 509
+            },
+            {
+              "x": 608,
+              "y": 657,
+              "t": 1778351251140,
+              "pressure": 0.5,
+              "velocity": 1365
+            },
+            {
+              "x": 608,
+              "y": 615,
+              "t": 1778351251157,
+              "pressure": 0.5,
+              "velocity": 2431
+            },
+            {
+              "x": 608,
+              "y": 549,
+              "t": 1778351251174,
+              "pressure": 0.5,
+              "velocity": 3899
+            },
+            {
+              "x": 608,
+              "y": 468,
+              "t": 1778351251190,
+              "pressure": 0.5,
+              "velocity": 5068
+            },
+            {
+              "x": 621,
+              "y": 391,
+              "t": 1778351251207,
+              "pressure": 0.5,
+              "velocity": 4558
+            },
+            {
+              "x": 634,
+              "y": 337,
+              "t": 1778351251224,
+              "pressure": 0.5,
+              "velocity": 3299
+            },
+            {
+              "x": 644,
+              "y": 303,
+              "t": 1778351251240,
+              "pressure": 0.5,
+              "velocity": 2196
+            },
+            {
+              "x": 649,
+              "y": 282,
+              "t": 1778351251257,
+              "pressure": 0.5,
+              "velocity": 1269
+            },
+            {
+              "x": 651,
+              "y": 265,
+              "t": 1778351251274,
+              "pressure": 0.5,
+              "velocity": 1018
+            },
+            {
+              "x": 651,
+              "y": 256,
+              "t": 1778351251291,
+              "pressure": 0.5,
+              "velocity": 550
+            },
+            {
+              "x": 651,
+              "y": 254,
+              "t": 1778351251307,
+              "pressure": 0.5,
+              "velocity": 97
+            },
+            {
+              "x": 651,
+              "y": 257,
+              "t": 1778351251341,
+              "pressure": 0.5,
+              "velocity": 92
+            },
+            {
+              "x": 651,
+              "y": 278,
+              "t": 1778351251357,
+              "pressure": 0.5,
+              "velocity": 1267
+            },
+            {
+              "x": 651,
+              "y": 320,
+              "t": 1778351251374,
+              "pressure": 0.5,
+              "velocity": 2477
+            },
+            {
+              "x": 654,
+              "y": 377,
+              "t": 1778351251391,
+              "pressure": 0.5,
+              "velocity": 3351
+            },
+            {
+              "x": 656,
+              "y": 441,
+              "t": 1778351251407,
+              "pressure": 0.5,
+              "velocity": 4047
+            },
+            {
+              "x": 661,
+              "y": 511,
+              "t": 1778351251424,
+              "pressure": 0.5,
+              "velocity": 4091
+            },
+            {
+              "x": 668,
+              "y": 579,
+              "t": 1778351251441,
+              "pressure": 0.5,
+              "velocity": 4057
+            },
+            {
+              "x": 675,
+              "y": 637,
+              "t": 1778351251457,
+              "pressure": 0.5,
+              "velocity": 3633
+            },
+            {
+              "x": 680,
+              "y": 669,
+              "t": 1778351251474,
+              "pressure": 0.5,
+              "velocity": 1901
+            },
+            {
+              "x": 684,
+              "y": 674,
+              "t": 1778351251491,
+              "pressure": 0.5,
+              "velocity": 423
+            }
+          ]
+        }
+      ]
+    },
+    "total_strokes": 1,
+    "total_points": 324,
+    "stroke_annotations": []
   }
 ]
