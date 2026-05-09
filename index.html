@@ -12086,9 +12086,7 @@ function buildCVSection() {
   sect.className = 'cv-section';
   sect.innerHTML = `
     <h2>Computer Vision</h2>
-    <p class="section-subtitle">Three perspectives on the same mark</p>
-    <p class="section-subtitle" style="margin-top:0.25rem;font-size:0.92em;opacity:0.75">Geometric, neural, and fused readings of the scribble archive</p>
-    <div class="section-intro" data-intro-key="cv" style="max-width:720px;margin:1.2rem auto 0;">
+    <div class="section-intro" data-intro-key="cv">
       <p>The 3866 segmented scribbles in this archive can be looked at, but they can also be read -- passed through different lenses, each of which makes visible something the others cannot. This section presents the results of a computer vision pipeline applied to the entire dataset, producing for every drawing a set of complementary visualisations.</p>
       <p>The first lens is geometric. A series of deterministic algorithms decomposes each scribble into structural components: a continuous density field, a one-pixel skeleton tracing the topology of the strokes, and the notable points where lines terminate (endpoints) or intersect (junctions). These readings are purely formal. They follow fixed mathematical rules. They make no claim about what the drawing represents.</p>
       <p>The second lens is neural. A pretrained Vision Transformer, DINOv2 <a href="#ref-10" class="cite-link">[Oquab et al., 2023]</a>, trained on a corpus of 142 million natural images, is applied to each scribble in zero-shot inference, without any fine-tuning on the archive. The model has never been shown a child's scribble during training. Yet for every drawing it produces a set of attention maps, indicating the spatial regions to which the network is most strongly attending. Different attention heads, which during pretraining have developed distinct specialisations, offer divergent readings of the same mark. The model does not know what a scribble is. It nevertheless finds, in each one, regions of structural coherence.</p>
@@ -12106,8 +12104,32 @@ function buildCVSection() {
         <span>Loading neural index...</span>
       </div>
       <div id="cv-view-single" style="display:none"></div>
+      <div id="cv-caption-single" class="section-intro" data-intro-key="cv_single" style="display:none;margin-top:2rem">
+        <h3>Single Image</h3>
+        <p>A single drawing is shown, cycling continuously through the twenty-two visualisations available for it. The cycle is uninterrupted: each reading dissolves into the next without pause, with no two adjacent images visible as discrete states. The full cycle lasts approximately five seconds.</p>
+        <p>The first image is the original mark, isolated from its sheet. The next four are produced by deterministic procedures applied to the binary segmentation: a continuous density field, a one-pixel skeleton, the set of stroke endpoints, and the set of junctions. None of these readings involves learning. They are computed by fixed algorithms drawn from classical image analysis.</p>
+        <p>The following fifteen are derived from DINOv2, a vision transformer pretrained by Meta AI on a corpus of 142 million images. The model has not been fine-tuned on this archive: it is applied in zero-shot inference, with frozen weights. What is shown for each scribble is a set of attention maps. A vision transformer divides an image into patches and processes them through twelve successive blocks, in each of which an attention mechanism distributes weight across the patches according to twelve parallel heads. The maps shown here visualise the distribution of attention from the classification token toward the image patches in the final block, rendered head by head, then averaged. Different heads emphasise different aspects of the input. The model has never been told what a scribble is, but the heads developed during pretraining apply themselves to it nonetheless, with results that are sometimes coherent with the visible structure of the mark and sometimes orthogonal to it.</p>
+        <p>The final two images are fusions. The first is a geometric mean of the neural attention and the deterministic field, isolating regions where both readings indicate the presence of structure. The second is the absolute difference between them, where the two perspectives disagree.</p>
+        <p>A control panel allows the breathing to be paused, a different drawing to be loaded, or specific readings to be excluded from the cycle. Below the image, a row of ten thumbnails shows the nearest neighbours of the current drawing in the fused feature space described under Archive Map.</p>
+      </div>
       <div id="cv-view-map" style="display:none"></div>
+      <div id="cv-caption-map" class="section-intro" data-intro-key="cv_map" style="display:none;margin-top:2rem">
+        <h3>Archive Map</h3>
+        <p>This view displays all 3866 drawings of the archive simultaneously, as points on a plane. The position of each point is determined by the formal properties of the corresponding drawing: scribbles whose readings are similar are placed near each other; scribbles whose readings differ are placed apart. The map is not a layout in any geographical or representational sense. It is a projection of the archive into two dimensions according to a chosen criterion of resemblance.</p>
+        <p>The criterion is constructed as follows. For each drawing, two vectors are derived. The first contains seven measurements produced by the deterministic pipeline, including ink density, skeleton length per ink unit, junction count, number of connected components, and a composite complexity score, each normalised against the distribution of values across the archive. The second contains 768 values produced by DINOv2 as the output of its classification token, that is, the model's compressed internal representation of the entire image. The two are concatenated, the neural component weighted at 70% and the geometric at 30%, yielding a single vector of 775 values per drawing. These vectors are not interpretable individually, but distances between them encode an aggregated notion of similarity that combines visual and structural criteria.</p>
+        <p>To produce the map, these high-dimensional vectors are passed through UMAP, a dimensionality reduction algorithm that constructs a graph of local neighbourhood relations in the original space and seeks a two-dimensional layout in which the graph structure is preserved as faithfully as possible. The result preserves clusters and local proximities reliably; global distances are distorted in a controlled fashion, prioritising local over global structure.</p>
+        <p>Three lenses are available. The default uses the fused vector. A second uses only the neural component, showing the organisation of the archive when restricted to the model's internal representation. A third uses only the geometric component, showing the structure that emerges from quantitative measurements alone. Differences between the three layouts indicate where the neural and geometric readings converge or diverge in their organisation of the archive.</p>
+        <p>Points may be coloured by Kellogg primary category, by complexity score, or left uncoloured. The first colouring exposes the relation between the Kellogg taxonomy and the formal organisation produced by the system: where Kellogg classes coincide with visible clusters in the projection, the categories track properties also detectable by the pipeline; where they do not, the categories track something else.</p>
+        <p>Hovering on a point shows a thumbnail and identifier. Clicking opens the drawing in Single Image. The map can be panned and zoomed.</p>
+      </div>
       <div id="cv-view-grid" style="display:none"></div>
+      <div id="cv-caption-grid" class="section-intro" data-intro-key="cv_grid" style="display:none;margin-top:2rem">
+        <h3>Comparative Grid</h3>
+        <p>This view presents the archive as a filterable grid of thumbnails ordered by the deterministic metrics. Where the Archive Map projects similarity in aggregate, the Comparative Grid isolates individual quantitative axes and allows the dataset to be interrogated along them.</p>
+        <p>The metrics are those computed by the geometric pipeline: ink ratio (proportion of pixels covered by mark), skeleton ratio (length of the topological skeleton divided by image area), junction count (number of intersection points), endpoint count (number of stroke terminations), connected component count (degree of fragmentation), and complexity score (a derived measure combining several of the above). Each is available as a range filter, with bounds set to the 5th and 95th percentiles of the archive distribution to exclude outliers from the slider extents. Multiple filters apply simultaneously. A category filter restricts the visible set to specified Kellogg classes.</p>
+        <p>A sort selector reorders the visible set by any of the metrics, ascending or descending. A display selector switches the visualisation rendered as thumbnail: original mark, geometric field, skeleton, neural attention, or fusion consensus. The chosen display applies to the entire visible set, so that the filtered archive can be inspected through a single chosen reading at once.</p>
+        <p>Hovering on a thumbnail shows the identifier and Kellogg label. Clicking opens the drawing in Single Image. The grid is rendered with viewport-windowed virtualisation: only the thumbnails currently visible are loaded.</p>
+      </div>
     </div>
   `;
   main.appendChild(sect);
@@ -12121,6 +12143,9 @@ function buildCVSection() {
   if (_initHash.startsWith('cv')) {
     window.addEventListener('load', () => cvHandleHash(), { once: true });
     setTimeout(() => cvHandleHash(), 900);
+  } else {
+    // Always pre-activate Single Image so the animation starts on page load
+    window.addEventListener('load', () => cvSwitchView('single', null, true), { once: true });
   }
   window.addEventListener('hashchange', cvHandleHash);
 }
@@ -12162,9 +12187,12 @@ async function cvSwitchView(view, sha, noScroll) {
     cvBreathRaf = null;
   }
 
-  document.getElementById('cv-view-single').style.display = view === 'single' ? '' : 'none';
-  document.getElementById('cv-view-map').style.display    = view === 'map'    ? '' : 'none';
-  document.getElementById('cv-view-grid').style.display   = view === 'grid'   ? '' : 'none';
+  document.getElementById('cv-view-single').style.display    = view === 'single' ? '' : 'none';
+  document.getElementById('cv-caption-single').style.display = view === 'single' ? '' : 'none';
+  document.getElementById('cv-view-map').style.display       = view === 'map'    ? '' : 'none';
+  document.getElementById('cv-caption-map').style.display    = view === 'map'    ? '' : 'none';
+  document.getElementById('cv-view-grid').style.display      = view === 'grid'   ? '' : 'none';
+  document.getElementById('cv-caption-grid').style.display   = view === 'grid'   ? '' : 'none';
 
   if (!cvDataLoaded) await cvLoadData();
   if (!cvDataLoaded) return;
