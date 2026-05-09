@@ -725,18 +725,18 @@ body {
 .cv-slider-label { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); display:flex; justify-content:space-between; margin-bottom:0.15rem; }
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
-.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; }
+.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; will-change:scroll-position; }
 #cv-popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:5000; align-items:center; justify-content:center; }
 #cv-popup-overlay.open { display:flex; }
-#cv-popup-box { background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:1rem; max-width:340px; width:92%; position:relative; display:flex; flex-direction:column; gap:0.55rem; }
-#cv-popup-close { position:absolute; top:0.4rem; right:0.6rem; background:none; border:none; font-size:1.3rem; line-height:1; cursor:pointer; color:var(--c-text-secondary); padding:0.1rem 0.3rem; }
-#cv-popup-close:hover { color:var(--c-text); }
+#cv-popup-box { background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:0.8rem; max-width:320px; width:92%; display:flex; flex-direction:column; gap:0.5rem; }
+#cv-popup-top { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; min-height:1.6rem; }
+#cv-popup-label { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-text); }
+#cv-popup-close { background:none; border:1px solid var(--c-border); border-radius:3px; font-size:0.9rem; line-height:1; cursor:pointer; color:var(--c-text-secondary); padding:0.2rem 0.5rem; flex-shrink:0; }
+#cv-popup-close:hover { background:var(--c-bg-warm); color:var(--c-text); }
 #cv-popup-img-frame { position:relative; width:100%; aspect-ratio:1; background:#fff; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
 #cv-popup-img-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; transition:none; }
-#cv-popup-meta { display:flex; align-items:baseline; justify-content:space-between; gap:0.5rem; }
-#cv-popup-label { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-text); }
-#cv-popup-layer { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-secondary); }
-#cv-popup-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.35em 0.9em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:flex-end; }
+#cv-popup-layer { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-secondary); min-height:1em; }
+#cv-popup-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.4em 1em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:stretch; text-align:center; }
 #cv-popup-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 .cv-grid-spacer-top,.cv-grid-spacer-bottom { width:100%; pointer-events:none; }
 .cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.6rem; }
@@ -745,15 +745,12 @@ body {
 .cv-grid-thumb img { display:block; width:100%; aspect-ratio:1; object-fit:contain; }
 .cv-grid-thumb-overlay { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); color:#fff; font-family:var(--font-mono); font-size:0.53rem; padding:0.12rem 0.3rem; opacity:0; transition:opacity 0.12s; }
 .cv-grid-thumb:hover .cv-grid-thumb-overlay { opacity:1; }
-.cv-browse-section { margin-top:1.2rem; }
-.cv-browse-header { display:flex; align-items:center; gap:0.8rem; margin-bottom:0.5rem; }
-.cv-browse-header .cv-panel-title { margin-bottom:0; }
-.cv-browse-filters { display:flex; flex-wrap:wrap; gap:0.25rem; }
-.cv-browse-filter-btn { font-family:var(--font-mono); font-size:0.58rem; padding:0.18em 0.55em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:background 0.1s,color 0.1s; }
+.cv-browse-filters { display:flex; flex-wrap:wrap; gap:0.2rem; margin-bottom:0.45rem; }
+.cv-browse-filter-btn { font-family:var(--font-mono); font-size:0.55rem; padding:0.15em 0.45em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:background 0.1s,color 0.1s; }
 .cv-browse-filter-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 .cv-browse-filter-btn.active { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
-.cv-browse-grid { display:flex; flex-wrap:wrap; gap:0.2rem; max-height:280px; overflow-y:auto; margin-top:0.5rem; padding:0.4rem; background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; }
-.cv-browse-item { width:52px; height:52px; flex-shrink:0; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.1s; }
+.cv-browse-grid { display:flex; flex-wrap:wrap; gap:0.18rem; max-height:240px; overflow-y:auto; overscroll-behavior:contain; }
+.cv-browse-item { width:44px; height:44px; flex-shrink:0; cursor:pointer; border:1px solid var(--c-border-light); border-radius:2px; overflow:hidden; background:#fff; transition:border-color 0.1s; }
 .cv-browse-item img { width:100%; height:100%; object-fit:contain; display:block; }
 .cv-browse-item:hover { border-color:var(--c-accent); }
 .cv-browse-item.active { border-color:var(--c-accent); box-shadow:0 0 0 1px var(--c-accent); }
@@ -12165,15 +12162,15 @@ function buildCVSection() {
     pop.id = 'cv-popup-overlay';
     pop.innerHTML = `
       <div id="cv-popup-box">
-        <button id="cv-popup-close" title="Close">&#x2715;</button>
+        <div id="cv-popup-top">
+          <span id="cv-popup-label"></span>
+          <button id="cv-popup-close">&#x2715; close</button>
+        </div>
         <div id="cv-popup-img-frame">
           <img id="cv-popup-img-back" alt="">
           <img id="cv-popup-img-front" alt="" style="opacity:0">
         </div>
-        <div id="cv-popup-meta">
-          <span id="cv-popup-label"></span>
-          <span id="cv-popup-layer"></span>
-        </div>
+        <span id="cv-popup-layer"></span>
         <button id="cv-popup-open-btn">Open in Single Image &#x2192;</button>
       </div>`;
     document.body.appendChild(pop);
@@ -12340,13 +12337,6 @@ function cvBuildSingleHTML() {
     </div>`).join('');
 
   return `
-    <div class="cv-browse-section">
-      <div class="cv-browse-header">
-        <div class="cv-panel-title">Browse</div>
-        <div class="cv-browse-filters" id="cv-browse-filters"></div>
-      </div>
-      <div class="cv-browse-grid" id="cv-browse-grid"></div>
-    </div>
     <div class="cv-single-layout">
       <div class="cv-image-area">
         <div class="cv-image-frame" id="cv-img-frame">
@@ -12381,6 +12371,11 @@ function cvBuildSingleHTML() {
             </div>
           </div>
           ${groupsHTML}
+        </div>
+        <div class="cv-panel-section" id="cv-browse-panel">
+          <div class="cv-panel-title" style="margin-bottom:0.4rem">Browse</div>
+          <div class="cv-browse-filters" id="cv-browse-filters"></div>
+          <div class="cv-browse-grid" id="cv-browse-grid"></div>
         </div>
       </div>
     </div>`;
@@ -12426,18 +12421,40 @@ function cvBuildBrowsePanel(container) {
     `<button class="cv-browse-filter-btn${c===_cvBrowseCat?' active':''}" data-cat="${c}">${c==='All'?'All':'K-'+c}</button>`
   ).join('');
 
+  let _observer = null;
+
   function render() {
+    if (_observer) { _observer.disconnect(); _observer = null; }
     const items = cvNeuralIndex.items;
     const filtered = _cvBrowseCat === 'All' ? items :
       items.filter(it => (it.prefill_labels||[]).some(l => l === 'K-'+_cvBrowseCat));
-    grid.innerHTML = filtered.map(it =>
-      `<div class="cv-browse-item${it.sha===cvCurrentSha?' active':''}" data-sha="${it.sha}" title="${(it.prefill_labels||[]).join(', ')}">
-        <img src="${cvAssetUrl(it.sha,'original.jpg')}" loading="lazy" alt="">
-      </div>`
-    ).join('');
-    grid.querySelectorAll('.cv-browse-item').forEach(el => {
-      el.addEventListener('click', () => { cvPushHash('cv-single/'+el.dataset.sha); cvShowSingle(el.dataset.sha); });
+
+    const frag = document.createDocumentFragment();
+    filtered.forEach(it => {
+      const el = document.createElement('div');
+      el.className = 'cv-browse-item' + (it.sha === cvCurrentSha ? ' active' : '');
+      el.dataset.sha = it.sha;
+      el.title = (it.prefill_labels||[]).join(', ');
+      const img = document.createElement('img');
+      img.dataset.src = cvAssetUrl(it.sha, 'original.jpg');
+      img.alt = '';
+      el.appendChild(img);
+      el.addEventListener('click', () => { cvPushHash('cv-single/'+it.sha); cvShowSingle(it.sha); });
+      frag.appendChild(el);
     });
+    grid.innerHTML = '';
+    grid.appendChild(frag);
+
+    _observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const img = e.target.querySelector('img[data-src]');
+        if (img) { img.src = img.dataset.src; delete img.dataset.src; }
+        _observer.unobserve(e.target);
+      });
+    }, { root: grid, rootMargin: '120px' });
+
+    grid.querySelectorAll('.cv-browse-item').forEach(el => _observer.observe(el));
   }
 
   filters.querySelectorAll('.cv-browse-filter-btn').forEach(btn => {
@@ -12584,7 +12601,11 @@ function cvPopupShow(sha) {
   overlay.querySelector('#cv-popup-open-btn').onclick = () => {
     cvPopupHide();
     cvPushHash('cv-single/' + sha);
-    cvSwitchView('single', sha, false);
+    cvSwitchView('single', sha, true);
+    setTimeout(() => {
+      const frame = document.getElementById('cv-img-frame');
+      if (frame) { const navH = document.getElementById('nav')?.offsetHeight||48; frame.style.scrollMarginTop=(navH+24)+'px'; frame.scrollIntoView({behavior:'smooth',block:'center'}); }
+    }, 80);
   };
   cvPreloadImages(sha).then(imgs => {
     if (cvPopupSha !== sha) return;
@@ -13026,7 +13047,7 @@ function cvGridApplyFilters() {
 
 function cvGridOnScroll() {
   if (cvGridRenderRaf) clearTimeout(cvGridRenderRaf);
-  cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 60);
+  cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 100);
 }
 
 function cvGridRefreshVisible() {
