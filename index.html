@@ -725,7 +725,19 @@ body {
 .cv-slider-label { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); display:flex; justify-content:space-between; margin-bottom:0.15rem; }
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
-.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; }
+.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; }
+#cv-popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:5000; align-items:center; justify-content:center; }
+#cv-popup-overlay.open { display:flex; }
+#cv-popup-box { background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:1rem; max-width:340px; width:92%; position:relative; display:flex; flex-direction:column; gap:0.55rem; }
+#cv-popup-close { position:absolute; top:0.4rem; right:0.6rem; background:none; border:none; font-size:1.3rem; line-height:1; cursor:pointer; color:var(--c-text-secondary); padding:0.1rem 0.3rem; }
+#cv-popup-close:hover { color:var(--c-text); }
+#cv-popup-img-frame { position:relative; width:100%; aspect-ratio:1; background:#fff; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+#cv-popup-img-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; transition:none; }
+#cv-popup-meta { display:flex; align-items:baseline; justify-content:space-between; gap:0.5rem; }
+#cv-popup-label { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-text); }
+#cv-popup-layer { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-secondary); }
+#cv-popup-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.35em 0.9em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:flex-end; }
+#cv-popup-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 .cv-grid-spacer-top,.cv-grid-spacer-bottom { width:100%; pointer-events:none; }
 .cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.6rem; }
 .cv-grid-thumb { position:relative; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.12s,box-shadow 0.12s; }
@@ -12147,6 +12159,29 @@ function buildCVSection() {
   `;
   main.appendChild(sect);
 
+  // Popup overlay (shared across map + grid)
+  if (!document.getElementById('cv-popup-overlay')) {
+    const pop = document.createElement('div');
+    pop.id = 'cv-popup-overlay';
+    pop.innerHTML = `
+      <div id="cv-popup-box">
+        <button id="cv-popup-close" title="Close">&#x2715;</button>
+        <div id="cv-popup-img-frame">
+          <img id="cv-popup-img-back" alt="">
+          <img id="cv-popup-img-front" alt="" style="opacity:0">
+        </div>
+        <div id="cv-popup-meta">
+          <span id="cv-popup-label"></span>
+          <span id="cv-popup-layer"></span>
+        </div>
+        <button id="cv-popup-open-btn">Open in Single Image &#x2192;</button>
+      </div>`;
+    document.body.appendChild(pop);
+    pop.addEventListener('click', e => { if (e.target === pop) cvPopupHide(); });
+    pop.querySelector('#cv-popup-close').addEventListener('click', cvPopupHide);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') cvPopupHide(); });
+  }
+
   sect.querySelectorAll('.cv-tab-btn').forEach(btn => {
     btn.addEventListener('click', () => cvSwitchView(btn.dataset.view, null, true));
   });
@@ -12528,6 +12563,61 @@ function cvStartBreathing(sha, preloadedImgs) {
   cvBreathRaf = requestAnimationFrame(frame);
 }
 
+/* ─── Popup preview overlay ───────────────────────────── */
+let cvPopupRaf  = null;
+let cvPopupSha  = null;
+
+function cvPopupShow(sha) {
+  cvPopupSha = sha;
+  const overlay = document.getElementById('cv-popup-overlay');
+  if (!overlay) return;
+  const item    = cvNeuralIndex._bySha[sha];
+  const labels  = item ? (item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ') || sha.slice(0,8) : sha.slice(0,8);
+  overlay.querySelector('#cv-popup-label').textContent = labels;
+  overlay.querySelector('#cv-popup-layer').textContent = '';
+  overlay.classList.add('open');
+  if (cvPopupRaf) { cancelAnimationFrame(cvPopupRaf); cvPopupRaf = null; }
+  const back  = overlay.querySelector('#cv-popup-img-back');
+  const front = overlay.querySelector('#cv-popup-img-front');
+  const layEl = overlay.querySelector('#cv-popup-layer');
+  back.src = ''; front.src = ''; front.style.opacity = '0';
+  overlay.querySelector('#cv-popup-open-btn').onclick = () => {
+    cvPopupHide();
+    cvPushHash('cv-single/' + sha);
+    cvSwitchView('single', sha, false);
+  };
+  cvPreloadImages(sha).then(imgs => {
+    if (cvPopupSha !== sha) return;
+    let eff = 0, last = null, lastIdx = -1;
+    function frame(now) {
+      if (cvPopupSha !== sha) return;
+      cvPopupRaf = requestAnimationFrame(frame);
+      const dt = last !== null ? now - last : 0; last = now; eff += dt;
+      const active = CV_LAYERS.map((l,i)=>({...l,idx:i})).filter((_,i)=>cvLayerEnabled[i]);
+      if (!active.length) return;
+      const t = eff % CV_CYCLE_DURATION;
+      const tpl = CV_CYCLE_DURATION / active.length;
+      const lf  = t / tpl;
+      const li  = Math.floor(lf) % active.length;
+      const fr  = lf - Math.floor(lf);
+      const lA  = active[li], lB = active[(li+1)%active.length];
+      const sA  = imgs[lA.idx].src, sB = imgs[lB.idx].src;
+      if (back.src  !== sA) back.src  = sA;
+      if (front.src !== sB) front.src = sB;
+      front.style.opacity = fr;
+      if (li !== lastIdx) { lastIdx = li; if (layEl) layEl.textContent = lA.label; }
+    }
+    cvPopupRaf = requestAnimationFrame(frame);
+  });
+}
+
+function cvPopupHide() {
+  if (cvPopupRaf) { cancelAnimationFrame(cvPopupRaf); cvPopupRaf = null; }
+  cvPopupSha = null;
+  const overlay = document.getElementById('cv-popup-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
 /* ─── Archive Map view ────────────────────────────────── */
 function cvShowMap() {
   const container = document.getElementById('cv-view-map');
@@ -12739,7 +12829,7 @@ function cvMapMouseUp(e) {
     const scX = cvMapCanvas.width / rect.width;
     const scY = cvMapCanvas.height / rect.height;
     const item = cvMapFindHover((e.clientX - rect.left)*scX, (e.clientY - rect.top)*scY);
-    if (item) { cvPushHash('cv-single/'+item.sha); cvSwitchView('single', item.sha, true); }
+    if (item) { if (!cvDataLoaded) { cvPushHash('cv-single/'+item.sha); cvSwitchView('single', item.sha, true); } else cvPopupShow(item.sha); }
   }
 }
 function cvMapMouseLeave() {
@@ -12862,7 +12952,7 @@ function cvBuildGridHTML(container) {
       </div>
       <div>
         <div class="cv-grid-count" id="cv-grid-count">Showing 0 of ${cvNeuralIndex.items.length}</div>
-        <p style="font-family:var(--font-display);font-style:italic;font-size:0.85rem;color:var(--c-text-secondary);margin-bottom:0.7rem">Filter by category or metric, sort by any property. Click a thumbnail to open the single image view.</p>
+        <p style="font-family:var(--font-display);font-style:italic;font-size:0.85rem;color:var(--c-text-secondary);margin-bottom:0.7rem">Filter by category or metric, sort by any property. Click a thumbnail to preview it; open in Single Image from the preview.</p>
         <div class="cv-grid-viewport" id="cv-grid-viewport">
           <div class="cv-grid-spacer-top" id="cv-grid-spacer-top"></div>
           <div class="cv-grid-items" id="cv-grid-items"></div>
@@ -12935,8 +13025,8 @@ function cvGridApplyFilters() {
 }
 
 function cvGridOnScroll() {
-  if (cvGridRenderRaf) return;
-  cvGridRenderRaf = requestAnimationFrame(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); });
+  if (cvGridRenderRaf) clearTimeout(cvGridRenderRaf);
+  cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 60);
 }
 
 function cvGridRefreshVisible() {
@@ -12970,11 +13060,7 @@ function cvGridRefreshVisible() {
   }).join('');
 
   cvGridItemsEl.querySelectorAll('.cv-grid-thumb').forEach(thumb => {
-    thumb.addEventListener('click', () => {
-      const s = thumb.dataset.sha;
-      cvPushHash('cv-single/' + s);
-      cvSwitchView('single', s, true);
-    });
+    thumb.addEventListener('click', () => cvPopupShow(thumb.dataset.sha));
   });
 }
 
