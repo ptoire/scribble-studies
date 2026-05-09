@@ -733,6 +733,18 @@ body {
 .cv-grid-thumb img { display:block; width:100%; aspect-ratio:1; object-fit:contain; }
 .cv-grid-thumb-overlay { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); color:#fff; font-family:var(--font-mono); font-size:0.53rem; padding:0.12rem 0.3rem; opacity:0; transition:opacity 0.12s; }
 .cv-grid-thumb:hover .cv-grid-thumb-overlay { opacity:1; }
+.cv-browse-section { margin-top:1.2rem; }
+.cv-browse-header { display:flex; align-items:center; gap:0.8rem; margin-bottom:0.5rem; }
+.cv-browse-header .cv-panel-title { margin-bottom:0; }
+.cv-browse-filters { display:flex; flex-wrap:wrap; gap:0.25rem; }
+.cv-browse-filter-btn { font-family:var(--font-mono); font-size:0.58rem; padding:0.18em 0.55em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:background 0.1s,color 0.1s; }
+.cv-browse-filter-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
+.cv-browse-filter-btn.active { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.cv-browse-grid { display:flex; flex-wrap:wrap; gap:0.2rem; max-height:280px; overflow-y:auto; margin-top:0.5rem; padding:0.4rem; background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; }
+.cv-browse-item { width:52px; height:52px; flex-shrink:0; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.1s; }
+.cv-browse-item img { width:100%; height:100%; object-fit:contain; display:block; }
+.cv-browse-item:hover { border-color:var(--c-accent); }
+.cv-browse-item.active { border-color:var(--c-accent); box-shadow:0 0 0 1px var(--c-accent); }
 .cv-cat-checks { display:flex; flex-wrap:wrap; gap:0.22rem; }
 .cv-cat-check { display:flex; align-items:center; gap:0.18rem; font-family:var(--font-mono); font-size:0.6rem; color:var(--c-text-secondary); cursor:pointer; }
 .cv-cat-check input { cursor:pointer; accent-color:var(--c-accent); }
@@ -12273,6 +12285,8 @@ function cvShowSingle(sha) {
 
   if (cvBreathRaf) { cancelAnimationFrame(cvBreathRaf); cvBreathRaf = null; }
 
+  cvBuildBrowsePanel(container);
+  cvUpdateBrowseActive(sha);
   cvUpdateSingleDetails(sha);
   cvPreloadImages(sha).then(imgs => {
     if (cvCurrentSha === sha) cvStartBreathing(sha, imgs);
@@ -12291,6 +12305,13 @@ function cvBuildSingleHTML() {
     </div>`).join('');
 
   return `
+    <div class="cv-browse-section">
+      <div class="cv-browse-header">
+        <div class="cv-panel-title">Browse</div>
+        <div class="cv-browse-filters" id="cv-browse-filters"></div>
+      </div>
+      <div class="cv-browse-grid" id="cv-browse-grid"></div>
+    </div>
     <div class="cv-single-layout">
       <div class="cv-image-area">
         <div class="cv-image-frame" id="cv-img-frame">
@@ -12355,6 +12376,56 @@ function cvInitSingleEvents(container) {
   container.querySelectorAll('.cv-layer-toggle input').forEach(cb => {
     cb.addEventListener('change', () => { cvLayerEnabled[parseInt(cb.dataset.layer)] = cb.checked; });
   });
+}
+
+let _cvBrowseCat = 'All';
+
+function cvBuildBrowsePanel(container) {
+  const grid = container.querySelector('#cv-browse-grid');
+  const filters = container.querySelector('#cv-browse-filters');
+  if (!grid || !filters || grid.dataset.built) return;
+  grid.dataset.built = '1';
+
+  const cats = ['All','A','B','C','D','E','F','G','H','I'];
+  filters.innerHTML = cats.map(c =>
+    `<button class="cv-browse-filter-btn${c===_cvBrowseCat?' active':''}" data-cat="${c}">${c==='All'?'All':'K-'+c}</button>`
+  ).join('');
+
+  function render() {
+    const items = cvNeuralIndex.items;
+    const filtered = _cvBrowseCat === 'All' ? items :
+      items.filter(it => (it.prefill_labels||[]).some(l => l === 'K-'+_cvBrowseCat));
+    grid.innerHTML = filtered.map(it =>
+      `<div class="cv-browse-item${it.sha===cvCurrentSha?' active':''}" data-sha="${it.sha}" title="${(it.prefill_labels||[]).join(', ')}">
+        <img src="${cvAssetUrl(it.sha,'original.jpg')}" loading="lazy" alt="">
+      </div>`
+    ).join('');
+    grid.querySelectorAll('.cv-browse-item').forEach(el => {
+      el.addEventListener('click', () => { cvPushHash('cv-single/'+el.dataset.sha); cvShowSingle(el.dataset.sha); });
+    });
+  }
+
+  filters.querySelectorAll('.cv-browse-filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      _cvBrowseCat = btn.dataset.cat;
+      filters.querySelectorAll('.cv-browse-filter-btn').forEach(b => b.classList.toggle('active', b===btn));
+      render();
+    });
+  });
+
+  render();
+}
+
+function cvUpdateBrowseActive(sha) {
+  const grid = document.getElementById('cv-browse-grid');
+  if (!grid || !grid.dataset.built) return;
+  const prev = grid.querySelector('.cv-browse-item.active');
+  if (prev) prev.classList.remove('active');
+  const next = grid.querySelector(`.cv-browse-item[data-sha="${sha}"]`);
+  if (next) {
+    next.classList.add('active');
+    next.scrollIntoView({ block: 'nearest' });
+  }
 }
 
 function cvUpdateSingleDetails(sha) {
