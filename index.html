@@ -627,14 +627,15 @@ body {
 .section-intro {
   font-family: var(--font-body);
   color: var(--c-text);
-  margin: 2.5rem auto 1.5rem;
-  line-height: 1.5;
+  margin: 2.5rem 0 1.5rem;
+  line-height: 1.6;
   font-size: 0.875rem;
   position: relative;
-  max-width: 720px;
+  columns: 2;
+  column-gap: 3rem;
 }
-.section-intro h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.75rem; color: var(--c-text); }
-.section-intro p { margin-bottom: 0.5rem; }
+.section-intro h3 { font-family: var(--font-display); font-size: 1.3rem; font-weight: 500; margin-bottom: 0.75rem; color: var(--c-text); column-span: all; }
+.section-intro p { margin-bottom: 0.6rem; break-inside: avoid; orphans: 3; widows: 3; }
 .intro-edit-btn {
   position: absolute; top: 0; right: 0;
   font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.05em;
@@ -651,8 +652,8 @@ body {
    COMPUTER VISION SECTION
    ═══════════════════════════════════════════════════════════ */
 .cv-section { margin-top:4rem; padding-top:2rem; border-top:2px solid var(--c-text); }
-.cv-section h2 { font-family:var(--font-display); font-size:2rem; font-weight:500; margin-bottom:0.4rem; max-width:720px; margin-left:auto; margin-right:auto; }
-.cv-section .section-subtitle { font-family:var(--font-display); font-style:italic; color:var(--c-text-secondary); font-size:1.1rem; margin-bottom:0.5rem; max-width:720px; margin-left:auto; margin-right:auto; }
+.cv-section h2 { font-family:var(--font-display); font-size:2rem; font-weight:500; margin-bottom:0.4rem; }
+.cv-section .section-subtitle { font-family:var(--font-display); font-style:italic; color:var(--c-text-secondary); font-size:1.1rem; margin-bottom:0.5rem; }
 .cv-subnav { display:flex; gap:0.4rem; margin:1.5rem 0 1rem; padding-bottom:1rem; border-bottom:1px solid var(--c-border-light); flex-wrap:wrap; }
 .cv-tab-btn { font-family:var(--font-mono); font-size:0.7rem; font-weight:500; padding:0.35rem 0.85rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:all 0.15s; letter-spacing:0.03em; text-transform:uppercase; }
 .cv-tab-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
@@ -737,18 +738,7 @@ body {
 .cv-cat-check input { cursor:pointer; accent-color:var(--c-accent); }
 .cv-select { font-family:var(--font-mono); font-size:0.65rem; padding:0.25rem 0.4rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text); width:100%; }
 
-/* Align all section titles with the narrow text columns */
-.taxonomy-section-header,
-.annotator-section > h2, .annotator-section > .section-subtitle,
-.archive-section > h2, .archive-section > .section-subtitle,
-.is-studio-section > h2, .is-studio-section > .section-subtitle,
-#map-section > h2,
-.maurer-section > h2 {
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-}
-#bibliography { font-family: var(--font-body); margin: 4rem auto 0; padding: 2rem 0; border-top: 1px solid var(--c-border-light); max-width: 720px; }
+#bibliography { font-family: var(--font-body); margin: 4rem 0 0; padding: 2rem 0; border-top: 1px solid var(--c-border-light); }
 #bibliography h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--c-text); }
 #bibliography { scroll-margin-top: 3.5rem; }
 #bibliography p { font-size: 0.85rem; color: var(--c-text-secondary); margin-bottom: 0.6rem; line-height: 1.6; scroll-margin-top: 3.5rem; }
@@ -1417,6 +1407,7 @@ body {
   margin-left: auto;
 }
 @media (max-width: 900px) {
+  .section-intro { columns: 1; }
   .annotator-body { grid-template-columns: 1fr; }
   .annotator-image-panel { position: static; max-width: 100%; }
   .ann-img-viewport { max-width: 100% !important; }
