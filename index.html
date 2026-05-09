@@ -664,32 +664,33 @@ body {
 @keyframes cv-pulse { 0%,80%,100%{opacity:0.2} 40%{opacity:1} }
 
 /* Single Image */
-.cv-single-layout { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; align-items:start; }
+.cv-single-layout { display:grid; grid-template-columns:1fr 1fr; column-gap:1.5rem; align-items:start; }
+.cv-single-left { display:flex; flex-direction:column; gap:0.5rem; }
+.cv-single-right { display:flex; flex-direction:column; gap:0.5rem; }
 @media(max-width:900px){ .cv-single-layout{grid-template-columns:1fr} .cv-info-row{grid-template-columns:1fr!important} }
-.cv-left-col { display:flex; flex-direction:column; gap:0.8rem; }
-.cv-image-area { display:flex; flex-direction:column; align-items:flex-start; }
 .cv-info-row { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; align-items:start; }
-.cv-image-frame { position:relative; width:100%; max-width:700px; aspect-ratio:1; background:#fff; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+.cv-image-frame { position:relative; width:100%; max-width:700px; aspect-ratio:1; background:transparent; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
 .cv-image-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
-.cv-caption { margin-top:0.75rem; text-align:center; min-height:2.6em; }
+.cv-caption { margin-top:0.4rem; text-align:left; }
 .cv-caption-k { display:block; font-family:var(--font-display); font-style:italic; font-size:0.88rem; color:var(--c-text); }
-.cv-caption-layer { display:block; font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); margin-top:0.18rem; letter-spacing:0.03em; }
+.cv-caption-layer { display:block; font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); margin-top:0.18rem; margin-bottom:0.4rem; letter-spacing:0.03em; }
 .cv-has-tip { position:relative; cursor:help; }
 .cv-has-tip::after { content:attr(data-tip); position:absolute; left:0; bottom:calc(100% + 5px); background:var(--c-text); color:var(--c-bg); font-family:var(--font-body); font-style:normal; font-size:0.68rem; line-height:1.45; padding:0.35em 0.55em; border-radius:3px; width:max-content; max-width:210px; white-space:normal; pointer-events:none; opacity:0; transition:opacity 0.15s; z-index:200; }
 .cv-has-tip:hover::after { opacity:1; }
-.cv-controls { display:flex; gap:0.4rem; align-items:center; margin-top:0.6rem; flex-wrap:wrap; justify-content:center; }
+.cv-controls { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; justify-content:flex-start; }
 .cv-ctrl-btn { font-family:var(--font-mono); font-size:0.68rem; padding:0.3rem 0.7rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:all 0.12s; }
 .cv-ctrl-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
 .cv-ctrl-btn.active { background:var(--c-text); color:#fff; border-color:var(--c-text); }
 .cv-similar-strip { display:flex; flex-wrap:wrap; gap:0.2rem; margin-top:0.5rem; }
 .cv-similar-thumb { width:38px; height:38px; flex-shrink:0; border:1px solid var(--c-border-light); border-radius:2px; overflow:hidden; cursor:pointer; transition:border-color 0.12s; position:relative; }
-#cv-details-panel { grid-column:2; }
 .cv-similar-thumb:hover { border-color:var(--c-accent); transform:scale(1.06); }
 .cv-similar-thumb img { width:100%; height:100%; object-fit:contain; background:#fff; }
 .cv-similar-score { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); color:#fff; font-family:var(--font-mono); font-size:0.5rem; text-align:center; padding:0.1rem 0; opacity:0; transition:opacity 0.12s; }
 .cv-similar-thumb:hover .cv-similar-score { opacity:1; }
 .cv-right-panel { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; align-items:start; }
-#cv-details-panel { grid-column:2; padding:0.5rem 0.7rem; }
+.cv-browse-details-col { display:flex; flex-direction:column; gap:0.4rem; }
+.cv-browse-details-col > #cv-browse-panel .cv-browse-grid { max-height:185px; overflow-y:auto; }
+#cv-details-panel { padding:0.5rem 0.7rem; }
 #cv-details-panel .cv-panel-title { display:none; }
 #cv-details-panel .cv-metrics-grid { gap:0.15rem 0.4rem; }
 .cv-panel-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.8rem 0.9rem; }
@@ -1534,7 +1535,6 @@ body {
   /* Kellogg mapping strength colours */
   --c-km-direct:      #0d5e3a;
   --c-km-partial:     #b85000;
-  --c-km-combinatory: #1a4e8b;
   --c-km-none:        #666;
 }
 .is-studio-section {
@@ -1714,10 +1714,9 @@ body {
   font-family:var(--font-mono); font-size:0.56rem; font-weight:700;
   padding:0.08em 0.32em; border-radius:2px; letter-spacing:0.06em; text-transform:uppercase;
 }
-.is-km-badge.direct      { background:rgba(13,94,58,0.12);   color:var(--c-km-direct); }
-.is-km-badge.partial     { background:rgba(184,80,0,0.12);   color:var(--c-km-partial); }
-.is-km-badge.combinatory { background:rgba(26,78,139,0.12);  color:var(--c-km-combinatory); }
-.is-km-badge.none        { background:rgba(100,100,100,0.1); color:var(--c-km-none); }
+.is-km-badge.direct  { background:rgba(13,94,58,0.12);   color:var(--c-km-direct); }
+.is-km-badge.partial { background:rgba(184,80,0,0.12);   color:var(--c-km-partial); }
+.is-km-badge.none    { background:rgba(100,100,100,0.1); color:var(--c-km-none); }
 .is-disl-class { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); padding:0.1rem 0.3rem; border:1px solid var(--c-border-light); border-radius:2px; }
 .is-definition {
   font-family:var(--font-display); font-size:0.95rem; font-style:italic;
@@ -2223,9 +2222,8 @@ body {
   font-family:var(--font-mono); font-size:0.56rem; padding:0.1rem 0.3rem;
   border-radius:2px; border:1px solid rgba(255,255,255,0.1); color:var(--gm-dim);
 }
-#gm-map-container .tt-tag.direct     { border-color:rgba(109,186,138,0.35); color:#6dba8a; }
-#gm-map-container .tt-tag.partial    { border-color:rgba(212,180,90,0.35);  color:#d4b45a; }
-#gm-map-container .tt-tag.comb       { border-color:rgba(122,154,212,0.35); color:#7a9ed4; }
+#gm-map-container .tt-tag.direct  { border-color:rgba(109,186,138,0.35); color:#6dba8a; }
+#gm-map-container .tt-tag.partial { border-color:rgba(212,180,90,0.35);  color:#d4b45a; }
 #gm-tt .tt-imgs { display:flex; gap:0.3rem; margin-top:0.5rem; }
 #gm-map-container .tt-img { width:64px; height:48px; object-fit:contain; border-radius:2px; border:1px solid var(--gm-border); background:rgba(255,255,255,0.03); }
 
@@ -2305,10 +2303,8 @@ body {
   font-family:var(--font-mono); font-size:0.52rem; padding:0.15rem 0.35rem;
   border-radius:2px; white-space:nowrap; align-self:start; margin-top:0.05rem;
 }
-#gm-map-container .map-str.direct      { background:rgba(109,186,138,0.12); color:#6dba8a; border:1px solid rgba(109,186,138,0.25); }
-#gm-map-container .map-str.partial     { background:rgba(212,180,90,0.12);  color:#d4b45a; border:1px solid rgba(212,180,90,0.25); }
-#gm-map-container .map-str.combinatory,
-#gm-map-container .map-str.secondary   { background:rgba(122,154,212,0.12); color:#7a9ed4; border:1px solid rgba(122,154,212,0.25); }
+#gm-map-container .map-str.direct  { background:rgba(109,186,138,0.12); color:#6dba8a; border:1px solid rgba(109,186,138,0.25); }
+#gm-map-container .map-str.partial { background:rgba(212,180,90,0.12);  color:#d4b45a; border:1px solid rgba(212,180,90,0.25); }
 #gm-map-container .map-rationale {
   font-family:var(--font-sans); font-size:0.76rem; font-weight:300;
   line-height:1.55; color:rgba(232,230,224,0.62);
@@ -2391,37 +2387,35 @@ body {
   color:var(--c-text); margin-bottom:0.4rem;
 }
 #gm-table-section .gm-tbl-subtitle {
-  font-family:var(--font-mono); font-size:0.62rem; color:var(--c-dim);
-  margin-bottom:1.2rem; opacity:0.7;
+  font-family:var(--font-mono); font-size:0.62rem; color:var(--c-text-secondary);
+  margin-bottom:1.2rem; opacity:0.85;
 }
 #gm-table-wrap { overflow-x:auto; }
 #gm-table { width:100%; border-collapse:collapse; font-family:var(--font-mono); font-size:0.62rem; }
 #gm-table th {
   text-align:left; padding:0.4rem 0.7rem;
-  border-bottom:2px solid rgba(255,255,255,0.1);
-  color:var(--c-dim); font-weight:400; letter-spacing:0.06em;
+  border-bottom:2px solid var(--c-border);
+  color:var(--c-text-secondary); font-weight:400; letter-spacing:0.06em;
   text-transform:uppercase; white-space:nowrap;
 }
-#gm-table td { padding:0.35rem 0.7rem; border-bottom:1px solid rgba(255,255,255,0.04); vertical-align:top; color:var(--c-text); }
+#gm-table td { padding:0.35rem 0.7rem; border-bottom:1px solid var(--c-border-light); vertical-align:top; color:var(--c-text); }
 #gm-table td.k-code { color:var(--c-accent); cursor:pointer; }
 #gm-table td.k-code:hover { color:var(--c-text); }
 #gm-table td.k-name { opacity:0.82; }
-#gm-table td.is-list { color:rgba(232,230,224,0.5); }
-#gm-table td.is-list span.direct      { color:#6dba8a; }
-#gm-table td.is-list span.partial     { color:#d4b45a; }
-#gm-table td.is-list span.combinatory,
-#gm-table td.is-list span.secondary   { color:#7a9ed4; }
-#gm-table tr:hover td { background:rgba(255,255,255,0.02); }
-.gm-tbl-chip { display:inline-flex; align-items:center; gap:0.2rem; padding:0.1rem 0.35rem 0.1rem 0.4rem; border-radius:3px; margin:0.1rem 0.15rem 0.1rem 0; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); font-family:var(--font-mono); font-size:0.6rem; }
-.gm-tbl-chip.direct      { color:#6dba8a; border-color:rgba(109,186,138,0.25); }
-.gm-tbl-chip.partial     { color:#d4b45a; border-color:rgba(212,180,90,0.25); }
-.gm-tbl-chip.combinatory,
-.gm-tbl-chip.secondary   { color:#7a9ed4; border-color:rgba(122,158,212,0.25); }
+#gm-table td.is-list { color:var(--c-text-secondary); }
+#gm-table td.is-list span.direct  { color:#2a7a4a; }
+#gm-table td.is-list span.partial { color:#8b6a00; }
+#gm-table tr:hover td { background:var(--c-bg-warm); }
+.gm-tbl-chip { display:inline-flex; align-items:center; gap:0.2rem; padding:0.1rem 0.35rem 0.1rem 0.4rem; border-radius:3px; margin:0.1rem 0.15rem 0.1rem 0; background:var(--c-bg-warm); border:1px solid var(--c-border-light); font-family:var(--font-mono); font-size:0.6rem; }
+.gm-tbl-chip.direct  { color:#2a7a4a; border-color:rgba(42,122,74,0.3); background:rgba(42,122,74,0.06); }
+.gm-tbl-chip.partial { color:#8b6a00; border-color:rgba(139,106,0,0.3); background:rgba(139,106,0,0.06); }
 .gm-tbl-chip-del { background:none; border:none; color:inherit; opacity:0.5; cursor:pointer; padding:0 0.1rem; font-size:0.7rem; line-height:1; }
 .gm-tbl-chip-del:hover { opacity:1; }
 .gm-tbl-add-wrap { display:inline-flex; align-items:center; gap:0.2rem; margin-left:0.3rem; vertical-align:middle; }
-.gm-tbl-add-inp { font-family:var(--font-mono); font-size:0.6rem; padding:0.12rem 0.35rem; border:1px solid var(--gm-border); border-radius:3px; background:rgba(255,255,255,0.04); color:var(--gm-text); outline:none; width:70px; }
-.gm-tbl-add-inp:focus { border-color:var(--gm-border-hi); }
+.gm-tbl-add-inp { font-family:var(--font-mono); font-size:0.6rem; padding:0.12rem 0.35rem; border:1px solid rgba(255,255,255,0.25); border-radius:3px; background:rgba(255,255,255,0.88); color:#111; outline:none; }
+.gm-tbl-add-inp:focus { border-color:rgba(255,255,255,0.6); background:#fff; }
+.gm-tbl-add-inp::placeholder { color:#888; }
+.gm-tbl-add-inp.rat { width:160px; }
 
 /* ── DISL Strip (Task B) ─────────────────────────────────────────────── */
 .disl-strip { margin:0.5rem 0; }
@@ -3026,13 +3020,13 @@ async function init() {
   buildAnnotatorSection();
   buildArchiveSection();
   buildISStudioSection();
-  buildAssociativeMapSection();
-  gmBuildCorrespondenceTable();
-  buildCVSection();
-  buildMaurerAnnotationSection();
+  try { buildAssociativeMapSection(); } catch(e) { console.error('[init] buildAssociativeMapSection:', e); }
+  try { gmBuildCorrespondenceTable(); } catch(e) { console.error('[init] gmBuildCorrespondenceTable:', e); }
+  try { buildCVSection(); } catch(e) { console.error('[init] buildCVSection:', e); }
+  try { buildMaurerAnnotationSection(); } catch(e) { console.error('[init] buildMaurerAnnotationSection:', e); }
   // buildBand3Section();  /* commented out: Band 3 Complete Descriptive Catalogue */
-  buildBibliography();
-  buildFooter();
+  try { buildBibliography(); } catch(e) { console.error('[init] buildBibliography:', e); }
+  try { buildFooter(); } catch(e) { console.error('[init] buildFooter:', e); }
 
   await initSectionIntros();
   initMobileToggles();
@@ -3693,7 +3687,7 @@ function buildFooter() {
 async function initSectionIntros() {
   // Load saved intros from JSON (served as static file on both localhost and GitHub)
   try {
-    const r = await fetch('data/section_intros.json');
+    const r = await fetch('data/section_intros.json?t=' + Date.now());
     if (r.ok) {
       const saved = await r.json();
       document.querySelectorAll('.section-intro[data-intro-key]').forEach(div => {
@@ -3731,11 +3725,12 @@ function toggleIntroEdit(div, btn) {
     div.style.borderRadius = '';
     btn.textContent = 'edit';
     btn.classList.remove('active');
-    saveAllIntros();
+    saveAllIntros(btn);
   }
 }
 
-async function saveAllIntros() {
+async function saveAllIntros(btn) {
+  if (btn) { btn.textContent = 'saving...'; btn.disabled = true; }
   const intros = {};
   document.querySelectorAll('.section-intro[data-intro-key]').forEach(div => {
     const clone = div.cloneNode(true);
@@ -3748,9 +3743,17 @@ async function saveAllIntros() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(intros)
     });
-    if (r.ok) console.log('Section intros saved.');
-    else console.warn('Section intros save failed:', r.status);
-  } catch(e) { console.error('Section intros save error:', e); }
+    if (r.ok) {
+      console.log('Section intros saved.');
+      if (btn) { btn.textContent = 'saved'; setTimeout(() => { btn.textContent = 'edit'; btn.disabled = false; }, 1500); }
+    } else {
+      console.warn('Section intros save failed:', r.status);
+      if (btn) { btn.textContent = 'error ' + r.status; btn.disabled = false; }
+    }
+  } catch(e) {
+    console.error('Section intros save error:', e);
+    if (btn) { btn.textContent = 'error'; btn.disabled = false; }
+  }
 }
 
 function initMobileToggles() {
@@ -6230,7 +6233,7 @@ const IMAGE_SCHEMATA = [
     "note": "PATH with End_Path defined and an object in motion toward it. No Start_Path: the origin is not relevant to this schema."
   },
   "kellogg_mapping": {
-    "strength": "combinatory",
+    "strength": "partial",
     "codes_primary": [],
     "codes_secondary": ["K-A-02","K-A-03","K-A-04","K-D-01","K-D-02","K-D-03"],
     "note": "No single Kellogg category encodes PATH_GOAL directly: the schema requires a relational reading of two elements: a directed line and a destination. As combination: any directional line (K-A-02/03/04) pointing toward a pre-existing form (any K-D). The goal must be drawn first: otherwise the directionality is not legible as goal-oriented."
@@ -6353,7 +6356,7 @@ const IMAGE_SCHEMATA = [
     "note": "Both source and goal defined from the start. Two motion scenes show the trajectory, third scene shows arrival."
   },
   "kellogg_mapping": {
-    "strength": "combinatory",
+    "strength": "partial",
     "codes_primary": [],
     "codes_secondary": ["K-A-02","K-A-03","K-A-04","K-B-16"],
     "note": "No single Kellogg category encodes SOURCE_PATH_GOAL directly. As combination: any directional line (K-A) with marked endpoints (dots or small forms at start and end). K-B-16 (Across the Page) comes closest as a placement pattern: a line traverses the entire field from one edge to the other, implying both source and goal at the page margins."
@@ -6604,7 +6607,7 @@ const IMAGE_SCHEMATA = [
     "note": "Direct from paper Fig. 14c. Region r is the threshold inside the container boundary. Open(b) is required for entry. Three scenes: approach, boundary crossing, containment."
   },
   "kellogg_mapping": {
-    "strength": "combinatory",
+    "strength": "partial",
     "codes_primary": [],
     "codes_secondary": ["K-A-11","K-A-13","K-D-02","K-D-03","K-A-01"],
     "note": "No single Kellogg category encodes OBJECT_INTO_CONTAINER directly: the schema requires at minimum two elements and a spatial relationship. As combination: a closed form (any K-D or K-A-13) with a gap in its boundary + a dot or small mark (K-A-01) placed inside. The gap in the boundary is crucial: without it, the schema collapses to static CONTAINMENT."
@@ -6721,7 +6724,7 @@ const IMAGE_SCHEMATA = [
     "note": "Inverse of OBJECT_INTO_CONTAINER. Starts from Contained and Occupied, crosses the boundary outward, ends with Empty."
   },
   "kellogg_mapping": {
-    "strength": "combinatory",
+    "strength": "partial",
     "codes_primary": [],
     "codes_secondary": ["K-D-02","K-D-03","K-A-10","K-A-01"],
     "note": "Same combinatory logic as OBJECT_INTO_CONTAINER, but reversed sequence. A closed form (K-D) + a mark inside + a line exiting through a gap. The roving open line (K-A-10) starting inside a closed shape could evoke GOING_OUT if the trajectory clearly exits the boundary."
@@ -6973,7 +6976,7 @@ const IMAGE_SCHEMATA = [
     "note": "GLUE_LINK adds dynamic propagation: force applied to one transfers motion to the other. Scene 3 shows co-motion, distinguishing it from static LINK."
   },
   "kellogg_mapping": {
-    "strength": "combinatory",
+    "strength": "partial",
     "codes_primary": [],
     "codes_secondary": ["K-E-01","K-E-03","K-E-04"],
     "note": "Kellogg Combines (K-E) come close to GLUE_LINK when two diagram forms share a boundary rather than merely touching. K-E-03 (Divided Square) is particularly close: the dividing line creates two parts that are both in contact and structurally fused into a single whole."
@@ -8926,13 +8929,50 @@ async function ghFetchSessions() {
 async function ghSyncSessions(incoming, deleted = []) {
   if (!GH_WORKER_URL) return false;
   try {
+    const stripped = incoming.map(({ thumb_dataurl, full_dataurl, anim, ...r }) => r);
     const resp = await fetch(GH_WORKER_URL + '/sessions', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessions: incoming, deleted })
+      body: JSON.stringify({ sessions: stripped, deleted })
     });
     return resp.ok;
   } catch { return false; }
+}
+
+async function ghSyncThumbnail(session_id, thumb_dataurl) {
+  if (!GH_WORKER_URL || !session_id || !thumb_dataurl) return false;
+  try {
+    const resp = await fetch(GH_WORKER_URL + '/thumb/' + session_id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'text/plain' },
+      body: thumb_dataurl
+    });
+    return resp.ok;
+  } catch { return false; }
+}
+
+async function ghFetchMissingThumbs() {
+  if (!GH_WORKER_URL) return;
+  const sessions = isGetSessions();
+  const missing = sessions.filter(s => s.session_id && !s.thumb_dataurl);
+  if (!missing.length) return;
+  const results = await Promise.all(missing.map(async s => {
+    try {
+      const r = await fetch(GH_WORKER_URL + '/thumb/' + s.session_id);
+      if (!r.ok) return null;
+      const thumb = await r.text();
+      return thumb ? { session_id: s.session_id, thumb_dataurl: thumb } : null;
+    } catch { return null; }
+  }));
+  const valid = results.filter(Boolean);
+  if (!valid.length) return;
+  const all = isGetSessions();
+  const byId = Object.fromEntries(all.map(s => [s.session_id, s]));
+  let changed = false;
+  for (const { session_id, thumb_dataurl } of valid) {
+    if (byId[session_id]) { byId[session_id].thumb_dataurl = thumb_dataurl; changed = true; }
+  }
+  if (changed) { isSaveSessions(Object.values(byId)); isRenderArchive(); isUpdateChipCounts(); }
 }
 
 function isGetSessions() {
@@ -8975,6 +9015,7 @@ async function isLoadFromServer() {
             return {
               ...ss,
               full_dataurl: cached.full_dataurl || ss.full_dataurl,
+              thumb_dataurl: cached.thumb_dataurl || ss.thumb_dataurl,
             };
           });
         changed = true;
@@ -8997,6 +9038,7 @@ async function isLoadFromServer() {
       isSaveSynced(serverIds);
     }
     if (changed) { isSaveSessions(local); isRenderArchive(); isUpdateChipCounts(); }
+    ghFetchMissingThumbs().catch(() => {});
   } catch {}
   finally {
     if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
@@ -9129,11 +9171,11 @@ function buildISStudioSection() {
   if (!READONLY) {
     const local = isGetSessions();
     if (local.length) {
-      const withThumbs = local.map(({ full_dataurl, ...r }) => r);
+      const noImages = local.map(({ full_dataurl, thumb_dataurl, anim, ...r }) => r);
       fetch('/api/is_sessions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessions: withThumbs })
+        body: JSON.stringify({ sessions: noImages })
       }).catch(() => {});
     }
   }
@@ -9938,6 +9980,9 @@ async function isSaveSession() {
       const fb2 = document.getElementById('is-save-fb');
       if (fb2) { fb2.textContent = '✓ Synced to GitHub'; setTimeout(() => { fb2.textContent = ''; }, 4000); }
     }).catch(() => {});
+    // Also push thumbnail directly to Worker KV so other devices can see it
+    if (GH_WORKER_URL && session.thumb_dataurl)
+      ghSyncThumbnail(session.session_id, session.thumb_dataurl);
   } else if (GH_WORKER_URL) {
     // GitHub Pages: HTTPS → Worker, no CORS issue
     const fb2 = document.getElementById('is-save-fb');
@@ -9947,6 +9992,8 @@ async function isSaveSession() {
       // After pushing own session, pull any concurrent new sessions from others
       isAutoSync();
     });
+    if (session.thumb_dataurl)
+      ghSyncThumbnail(session.session_id, session.thumb_dataurl);
   } else {
     // Localhost: after the server forwards to Worker, also pull any new sessions
     isAutoSync();
@@ -10914,7 +10961,7 @@ function buildAssociativeMapSection() {
   mapIntroDiv.className = 'section-intro';
   mapIntroDiv.dataset.introKey = 'map';
   mapIntroDiv.innerHTML = `
-    <p>The association map connects the visual taxonomy reconstructed in this project, covering the non-referential portion of Kellogg's classification, to an inventory of image schemata. It is presented as an interactive network graph. Each node represents either a Kellogg graphic category or an image schema. Edges connect them according to proposed structural correspondences, weighted to distinguish primary from secondary associations.</p>
+    <p>The association map connects the visual taxonomy reconstructed in this project, covering the non-referential portion of Kellogg's classification, to an inventory of image schemata. It is presented as an interactive network graph. Each node represents either a Kellogg graphic category or an image schema. Edges connect them according to proposed structural correspondences, weighted to distinguish direct from partial correspondences.</p>
     <p>The map is speculative. It is not derived from empirical data about what children think or intend when they draw, which is not directly accessible. It is derived from the structural properties of the graphic forms themselves, read against the definitions of image schemata in the cognitive linguistics literature. A closed circle produces an inside and an outside: this corresponds structurally to the CONTAINER schema. A cross connects two axes at a point: this corresponds structurally to LINK and CONTACT. The map proposes that these correspondences are consistent enough to be worth making explicit, and uses them as the basis for the drawing instructions in the IS Studio. It is a working document and will be revised as the annotation dataset grows and as IS Studio sessions accumulate.</p>
   `;
   sect.appendChild(tmpl.content.cloneNode(true));
@@ -11012,6 +11059,7 @@ function initGMSection() {
 
   const gmIkEdges = [];
   Object.entries(K_TO_IS).forEach(([kcode, entries]) => {
+    if (!Array.isArray(entries)) return;
     entries.forEach(e => {
       if (gmKelByCode[kcode] && gmIsNodeByCode[e.is])
         gmIkEdges.push({ is:e.is, k:kcode, strength:e.strength });
@@ -11048,6 +11096,7 @@ function initGMSection() {
 
   // STATE
   const gmCanvas = document.getElementById('gm-c');
+  if (!gmCanvas) throw new Error('gm-c canvas not found');
   const gmCtx    = gmCanvas.getContext('2d');
   let gmMode = '3d', gmShowKellogg = false, gmActiveFilter = null;
   let gmSelectedCodes = new Set(), gmHighlightedCodes = new Set();
@@ -11118,7 +11167,7 @@ function initGMSection() {
   function gmProj(x, y, z) { return gmMode==='3d' ? gmProj3d(x,y,z) : gmProj2d(x,y,z); }
 
   // Render
-  const GM_SCOL = { direct:[109,186,138], secondary:[200,184,154], partial:[212,180,90], combinatory:[122,154,212], none:[100,100,120] };
+  const GM_SCOL = { direct:[109,186,138], partial:[212,180,90], none:[100,100,120] };
 
   function gmRender() {
     const W = gmCanvas.width, H = gmCanvas.height;
@@ -11446,7 +11495,7 @@ function initGMSection() {
   }
 
   function gmStrOpts(sel) {
-    return ['direct','partial','combinatory','secondary'].map(v =>
+    return ['direct','partial'].map(v =>
       '<option value="'+v+'"'+(v===sel?' selected':'')+'>'+v+'</option>'
     ).join('');
   }
@@ -11461,7 +11510,7 @@ function initGMSection() {
     const ancestorChips = [...isActivated(s.code)].filter(c=>c!==s.code).map(c=>'<span class="p-chip rel" onclick="window.gmNavTo(&apos;'+c+'&apos;)">'+c+'</span>').join('');
     const rows = [];
     Object.entries(K_TO_IS).forEach(([kc,ents])=>{ (ents||[]).forEach(e=>{ if(e.is===s.code) rows.push({kcode:kc,strength:e.strength,rationale:e.rationale}); }); });
-    const so = {direct:0,partial:1,combinatory:2,secondary:3};
+    const so = {direct:0,partial:1};
     rows.sort((a,b)=>(so[a.strength]||9)-(so[b.strength]||9));
 
     const editBtn = gmIsLocalhost
@@ -11523,7 +11572,7 @@ function initGMSection() {
     gmPanelCurrentCode = node.code;
     const col = KELLOGG_GROUP_COLORS[node.group]||[180,180,180];
     const ents = K_TO_IS[node.code]||[];
-    const so = {direct:0,partial:1,combinatory:2,secondary:3};
+    const so = {direct:0,partial:1};
     const sorted = [...ents].sort((a,b)=>(so[a.strength]||9)-(so[b.strength]||9));
 
     const editBtn = gmIsLocalhost
@@ -11657,6 +11706,7 @@ function initGMSection() {
   // Expose for use outside closure (table editing, async load)
   window._gmRefreshEdges  = gmRefreshEdges;
   window._gmScheduleSave  = gmScheduleSave;
+  window._gmReopenPanel   = gmReopenPanel;
   window._gmApplyDescs    = function(d) { Object.assign(gmDescs, d); };
 
   window.gmDeleteMapping = function(kcode, isCode) {
@@ -11770,6 +11820,7 @@ function initGMSection() {
   }
 
   (function gmLoop(t) {
+    requestAnimationFrame(gmLoop);
     const dt=Math.min(50,t-gmLastT)/16; gmLastT=t;
     if (gmAutoRotate && gmMode==='3d') gmCamYaw+=0.004*dt;
     if (gmTweenTarget && gmMode==='3d') {
@@ -11780,8 +11831,7 @@ function initGMSection() {
       gmCamZ+=(gmTweenTarget.z-gmCamZ)*ease*0.08;
       if (gmTweenProgress>=1) gmTweenTarget=null;
     }
-    gmRender();
-    requestAnimationFrame(gmLoop);
+    try { gmRender(); } catch(e) {}
   })(0);
 }  // end initGMSection
 
@@ -11902,22 +11952,32 @@ window.gmTableDeleteIS = function(kcode, isCode) {
   if (K_TO_IS[kcode]) K_TO_IS[kcode] = K_TO_IS[kcode].filter(e => e.is !== isCode);
   if (window._gmRefreshEdges) window._gmRefreshEdges();
   if (window._gmScheduleSave) window._gmScheduleSave();
+  if (window._gmReopenPanel)  window._gmReopenPanel();
   const tbody = document.getElementById('gm-table-body');
   if (tbody) { tbody.innerHTML = ''; gmBuildCorrespondenceTable(); }
 };
 
 window.gmTableAddIS = function(kcode) {
-  const inp = document.getElementById('gm-tadd-' + kcode.replace(/-/g,'_'));
-  const sel = document.getElementById('gm-tstr-' + kcode.replace(/-/g,'_'));
+  const safeId = kcode.replace(/-/g,'_');
+  const inp = document.getElementById('gm-tadd-' + safeId);
+  const sel = document.getElementById('gm-tstr-' + safeId);
+  const rat = document.getElementById('gm-trat-' + safeId);
   if (!inp) return;
   const isCode = inp.value.trim().toUpperCase();
   const str = sel ? sel.value : 'partial';
-  if (!isCode) return;
+  const rationale = rat ? rat.value.trim() : '';
+  if (!isCode) {
+    inp.focus();
+    inp.style.outline = '2px solid var(--c-accent)';
+    setTimeout(() => { inp.style.outline = ''; }, 900);
+    return;
+  }
   if (!K_TO_IS[kcode]) K_TO_IS[kcode] = [];
   if (!K_TO_IS[kcode].find(e => e.is === isCode)) {
-    K_TO_IS[kcode].push({ is: isCode, strength: str, rationale: '' });
+    K_TO_IS[kcode].push({ is: isCode, strength: str, rationale });
     if (window._gmRefreshEdges) window._gmRefreshEdges();
     if (window._gmScheduleSave) window._gmScheduleSave();
+    if (window._gmReopenPanel)  window._gmReopenPanel();
     const tbody = document.getElementById('gm-table-body');
     if (tbody) { tbody.innerHTML = ''; gmBuildCorrespondenceTable(); }
   }
@@ -11935,17 +11995,18 @@ function gmBuildCorrespondenceTable() {
       let isHtml;
       if (editMode) {
         const chips = entries.map(e =>
-          '<span class="gm-tbl-chip '+e.strength+'" title="'+e.strength+'">'
+          '<span class="gm-tbl-chip '+e.strength+'" title="'+(e.rationale||e.strength)+'">'
           +e.is
           +'<button class="gm-tbl-chip-del" onclick="window.gmTableDeleteIS(&apos;'+code+'&apos;,&apos;'+e.is+'&apos;)" title="Remove">\u00d7</button>'
           +'</span>'
         ).join('');
         isHtml = chips
           + '<span class="gm-tbl-add-wrap">'
-          + '<input id="gm-tadd-'+safeId+'" class="gm-tbl-add-inp" placeholder="IS code" size="8">'
+          + '<input id="gm-tadd-'+safeId+'" class="gm-tbl-add-inp" placeholder="IS code" style="width:64px" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.gmTableAddIS(\''+code+'\');}">'
           + '<select id="gm-tstr-'+safeId+'" class="gm-str-sel" style="font-size:.56rem;padding:0.1rem 0.2rem">'
-          + ['direct','partial','combinatory','secondary'].map(v=>'<option value="'+v+'"'+(v==='partial'?' selected':'')+'>'+v+'</option>').join('')
+          + ['direct','partial'].map(v=>'<option value="'+v+'"'+(v==='partial'?' selected':'')+'>'+v+'</option>').join('')
           + '</select>'
+          + '<input id="gm-trat-'+safeId+'" class="gm-tbl-add-inp rat" placeholder="why? (rationale)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();window.gmTableAddIS(\''+code+'\');}">'
           + '<button class="gm-add-btn" onclick="window.gmTableAddIS(&apos;'+code+'&apos;)">+</button>'
           + '</span>';
       } else {
@@ -11996,8 +12057,8 @@ const CV_LAYERS = [
   { key:'attention_hq_h7.jpg',      label:'Attention HQ h7',        family:2 },
   { key:'attention_hq_h11.jpg',     label:'Attention HQ h11',       family:2 },
   { key:'attention_hq_rollout.jpg', label:'Attention rollout',       family:2 },
-  { key:'fusion_consensus.jpg',     label:'Fusion consensus',        family:3 },
-  { key:'fusion_disagreement.jpg',  label:'Fusion disagreement',     family:3 },
+  { key:'fusion_machine_imagines.jpg', label:'Machine imagines',     family:3 },
+  { key:'fusion_machine_ignores.jpg',  label:'Machine ignores',      family:3 },
 ];
 const CV_LAYER_GROUPS = [
   { label:'Original',    indices:[0] },
@@ -12049,8 +12110,8 @@ const CV_LAYER_TIPS = {
   'attention_hq_h7.jpg':'Attention head 7, ViT-B HQ model.',
   'attention_hq_h11.jpg':'Attention head 11, ViT-B HQ model.',
   'attention_hq_rollout.jpg':'Attention rollout: attention is recursively composed across all transformer layers, tracing where information flows through the full network.',
-  'fusion_consensus.jpg':'Regions where geometric and neural readings agree on the presence of structure.',
-  'fusion_disagreement.jpg':'Regions where geometric and neural readings diverge.',
+  'fusion_machine_imagines.jpg':'Where DINOv2 attention is high but no inked stroke is present: regions the model perceives as structure that the mark does not contain.',
+  'fusion_machine_ignores.jpg':'Where inked stroke is present but DINOv2 attention is low: regions of the mark the model overlooks.',
 };
 const CV_METRIC_KEYS = ['ink_ratio','skeleton_ratio','skeleton_per_ink','endpoint_count','junction_count','num_components','complexity_score'];
 const CV_METRIC_LABELS = { ink_ratio:'ink ratio', skeleton_ratio:'skel. ratio', skeleton_per_ink:'skel/ink', endpoint_count:'endpoints', junction_count:'junctions', num_components:'components', complexity_score:'complexity' };
@@ -12344,45 +12405,48 @@ function cvBuildSingleHTML() {
 
   return `
     <div class="cv-single-layout">
-      <div class="cv-left-col">
-        <div class="cv-image-area">
-          <div class="cv-image-frame" id="cv-img-frame">
-            <img id="cv-img-back" alt="">
-            <img id="cv-img-front" alt="" style="opacity:0">
-          </div>
-          <div class="cv-caption" id="cv-caption">
-            <span class="cv-caption-k" id="cv-caption-k"></span>
-            <span class="cv-caption-layer" id="cv-caption-layer"></span>
-          </div>
-          <div class="cv-controls">
-            <button class="cv-ctrl-btn" id="cv-btn-playpause">Pause</button>
-            <button class="cv-ctrl-btn" id="cv-btn-random">Random</button>
-          </div>
-          <div id="cv-similar-panel" style="display:none;width:100%">
-            <div class="cv-similar-strip" id="cv-similar-strip"></div>
-          </div>
+      <div class="cv-single-left">
+        <div class="cv-image-frame" id="cv-img-frame">
+          <img id="cv-img-back" alt="">
+          <img id="cv-img-front" alt="" style="opacity:0">
+        </div>
+        <div class="cv-controls">
+          <button class="cv-ctrl-btn" id="cv-btn-playpause">Pause</button>
+          <button class="cv-ctrl-btn" id="cv-btn-random">Random</button>
         </div>
       </div>
-      <div class="cv-right-panel">
-        <div class="cv-panel-section">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
-            <div class="cv-panel-title" style="margin-bottom:0">Layers</div>
-            <div style="display:flex;gap:0.3rem">
-              <button class="cv-ctrl-btn" id="cv-layers-all" style="font-size:0.58rem;padding:0.15em 0.5em">All</button>
-              <button class="cv-ctrl-btn" id="cv-layers-none" style="font-size:0.58rem;padding:0.15em 0.5em">None</button>
+      <div class="cv-single-right">
+        <div class="cv-right-panel">
+          <div class="cv-panel-section">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+              <div class="cv-panel-title" style="margin-bottom:0">Layers</div>
+              <div style="display:flex;gap:0.3rem">
+                <button class="cv-ctrl-btn" id="cv-layers-all" style="font-size:0.58rem;padding:0.15em 0.5em">All</button>
+                <button class="cv-ctrl-btn" id="cv-layers-none" style="font-size:0.58rem;padding:0.15em 0.5em">None</button>
+              </div>
+            </div>
+            ${groupsHTML}
+          </div>
+          <div class="cv-browse-details-col">
+            <div class="cv-panel-section" id="cv-browse-panel">
+              <div class="cv-panel-title" style="margin-bottom:0.4rem">Browse</div>
+              <div class="cv-browse-filters" id="cv-browse-filters"></div>
+              <div class="cv-browse-grid" id="cv-browse-grid"></div>
+            </div>
+            <div class="cv-panel-section" id="cv-details-panel">
+              <div class="cv-details-sha" id="cv-details-sha"></div>
+              <div class="cv-label-pills" id="cv-details-labels"></div>
+              <div class="cv-metrics-grid" id="cv-details-metrics"></div>
             </div>
           </div>
-          ${groupsHTML}
         </div>
-        <div class="cv-panel-section" id="cv-browse-panel">
-          <div class="cv-panel-title" style="margin-bottom:0.4rem">Browse</div>
-          <div class="cv-browse-filters" id="cv-browse-filters"></div>
-          <div class="cv-browse-grid" id="cv-browse-grid"></div>
+        <div class="cv-caption" id="cv-caption">
+          <span class="cv-caption-k" id="cv-caption-k"></span>
+          <span class="cv-caption-layer" id="cv-caption-layer"></span>
         </div>
-        <div class="cv-panel-section" id="cv-details-panel">
-          <div class="cv-details-sha" id="cv-details-sha"></div>
-          <div class="cv-label-pills" id="cv-details-labels"></div>
-          <div class="cv-metrics-grid" id="cv-details-metrics"></div>
+        <div class="cv-panel-title" id="cv-similar-label" style="display:none;margin-top:0.5rem;margin-bottom:0.3rem">Similar images</div>
+        <div id="cv-similar-panel" style="display:none;width:100%">
+          <div class="cv-similar-strip" id="cv-similar-strip"></div>
         </div>
       </div>
     </div>`;
@@ -12977,7 +13041,7 @@ function cvBuildGridHTML(container) {
             <option value="field.jpg">Field</option>
             <option value="skeleton.png">Skeleton</option>
             <option value="attention_hq_mean.jpg">Attention HQ mean</option>
-            <option value="fusion_consensus.jpg">Fusion consensus</option>
+            <option value="fusion_machine_imagines.jpg">Machine imagines</option>
           </select>
         </div>
       </div>
@@ -13150,8 +13214,7 @@ function cvGridRefreshVisible() {
       <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(200,184,154,0.5)"></div><span class="leg-edge-lbl">IS hierarchy (parent&rarr;child)</span></div>
       <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(160,160,180,0.3);border-top:1px dashed rgba(160,160,180,0.4)"></div><span class="leg-edge-lbl">IS related</span></div>
       <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(109,186,138,0.6)"></div><span class="leg-edge-lbl">Direct Kellogg match</span></div>
-      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(212,180,90,0.5)"></div><span class="leg-edge-lbl">Partial match</span></div>
-      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(122,154,212,0.5)"></div><span class="leg-edge-lbl">Combinatory match</span></div>
+      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(212,180,90,0.5)"></div><span class="leg-edge-lbl">Partial Kellogg match</span></div>
     </div>
   </div>
 
@@ -13181,12 +13244,13 @@ function cvGridRefreshVisible() {
     <button id="gm-tbl-edit-btn" class="gm-edit-toggle" onclick="window.gmToggleTableEdit()" style="display:none">&#9998; Edit</button>
   </div>
   <div class="gm-tbl-subtitle">All Kellogg categories with their Image Schema correspondences. Sorted by Kellogg group.</div>
+  <div class="gm-tbl-subtitle" style="margin-top:-0.7rem;margin-bottom:1.2rem"><span style="color:#6dba8a;font-weight:600">Direct</span>: the form enacts this schema as its primary structural logic. <span style="color:#d4b45a;font-weight:600">Partial</span>: the form shares some but not all features of the schema.</div>
   <div id="gm-table-wrap">
     <table id="gm-table">
       <thead><tr>
         <th>K-code</th>
         <th>Name</th>
-        <th>Image Schemata (direct / partial / combinatory)</th>
+        <th>Image Schemata (direct / partial)</th>
       </tr></thead>
       <tbody id="gm-table-body"></tbody>
     </table>

@@ -262,8 +262,10 @@ class Handler(SimpleHTTPRequestHandler):
                 self._send_json({"ok": True})
                 print(f"✓  IS sessions updated ({len(incoming)} submitted, {len(deleted)} deleted)")
                 schedule_push()
-                # Forward to Worker in background (no CORS issues server-to-server)
-                t = threading.Thread(target=_forward_to_worker, args=(incoming, deleted), daemon=True)
+                # Forward to Worker in background — strip image blobs to stay under CPU time limit
+                _BLOB_KEYS = ("full_dataurl", "thumb_dataurl", "anim")
+                slim = [{k: v for k, v in s.items() if k not in _BLOB_KEYS} for s in incoming]
+                t = threading.Thread(target=_forward_to_worker, args=(slim, deleted), daemon=True)
                 t.start()
             except Exception as e:
                 self._send_json({"error": str(e)}, 500)
