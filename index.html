@@ -10155,13 +10155,29 @@ function isUpdateChipCounts() {
 }
 
 // ── Archive card hover animation ─────────────────────────────────────────────
-function isCardHoverStart(card, sess) {
+const IS_ANIM_CACHE = {};
+async function isLoadAnim(session_id) {
+  if (IS_ANIM_CACHE[session_id]) return IS_ANIM_CACHE[session_id];
+  const url = READONLY
+    ? (GH_WORKER_URL ? GH_WORKER_URL + '/anim/' + session_id : null)
+    : '/data/drawings/' + session_id + '_anim.json';
+  if (!url) return null;
+  try {
+    const r = await fetch(url);
+    if (!r.ok) return null;
+    IS_ANIM_CACHE[session_id] = await r.json();
+    return IS_ANIM_CACHE[session_id];
+  } catch { return null; }
+}
+
+async function isCardHoverStart(card, sess) {
   const cvs = card.querySelector('.is-archive-card-anim');
-  if (!cvs || !sess.anim) return;
+  if (!cvs) return;
+  const anim = sess.anim || await isLoadAnim(sess.session_id);
+  if (!anim) return;
   card.classList.add('is-anim-active');
   const ctx = cvs.getContext('2d');
   const W = cvs.width, H = cvs.height; // 300×200
-  const anim = sess.anim;
   const scaleX = W / anim.w, scaleY = H / anim.h;
   const sc = Math.min(scaleX, scaleY);
   // Support both old format (array of pts) and new format ({color,size,pts})
@@ -10710,12 +10726,10 @@ async function isOpenDetail(sess) {
   const overlay = document.getElementById('overlay');
   const panel   = document.getElementById('detail-panel');
   if (!overlay || !panel) return;
-  // Load anim from disk if not inline (stripped from localStorage to save quota)
+  // Load anim lazily: from local disk (localhost) or Worker KV (GitHub Pages)
   if (!sess.anim) {
-    try {
-      const r = await fetch(BASE_URL + `data/drawings/${sess.session_id}_anim.json`);
-      if (r.ok) sess = { ...sess, anim: await r.json() };
-    } catch {}
+    const loaded = await isLoadAnim(sess.session_id);
+    if (loaded) sess = { ...sess, anim: loaded };
   }
   _isDetailSess    = sess;
   _isDetailPlaying = false;
