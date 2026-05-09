@@ -8951,6 +8951,53 @@ async function ghSyncThumbnail(session_id, thumb_dataurl) {
   } catch { return false; }
 }
 
+async function ghSyncDrawing(session_id, full_dataurl) {
+  if (!GH_WORKER_URL || !session_id || !full_dataurl) return false;
+  try {
+    const resp = await fetch(GH_WORKER_URL + '/drawing/' + session_id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'text/plain' },
+      body: full_dataurl
+    });
+    return resp.ok;
+  } catch { return false; }
+}
+
+async function ghSyncAnim(session_id, anim) {
+  if (!GH_WORKER_URL || !session_id || !anim) return false;
+  try {
+    const resp = await fetch(GH_WORKER_URL + '/anim/' + session_id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(anim)
+    });
+    return resp.ok;
+  } catch { return false; }
+}
+
+// Fetch full drawing + anim from Worker KV for sessions that came from other devices,
+// then POST them to the local server so they get saved to data/drawings/ on disk.
+async function ghArchiveNewDrawings(newSessions) {
+  if (!GH_WORKER_URL || READONLY || !newSessions.length) return;
+  const enriched = await Promise.all(newSessions.map(async s => {
+    const copy = { ...s };
+    try {
+      const r = await fetch(GH_WORKER_URL + '/drawing/' + s.session_id);
+      if (r.ok) copy.full_dataurl = await r.text();
+    } catch {}
+    try {
+      const r = await fetch(GH_WORKER_URL + '/anim/' + s.session_id);
+      if (r.ok) copy.anim = await r.json();
+    } catch {}
+    return copy;
+  }));
+  fetch('/api/is_sessions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sessions: enriched })
+  }).catch(() => {});
+}
+
 async function ghFetchMissingThumbs() {
   if (!GH_WORKER_URL) return;
   const sessions = isGetSessions();
@@ -9200,14 +9247,8 @@ async function isAutoSync() {
     isSaveSessions([...local, ...newSessions]);
     isRenderArchive();
     isUpdateChipCounts();
-    // On localhost: forward new sessions to local server so they persist to disk
-    if (!READONLY) {
-      fetch('/api/is_sessions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ sessions: newSessions.map(({ full_dataurl, ...r }) => r) })
-      }).catch(() => {});
-    }
+    // On localhost: fetch full drawings + anim from Worker KV and save to disk
+    if (!READONLY) ghArchiveNewDrawings(newSessions);
   } catch {}
 }
 
@@ -9979,9 +10020,12 @@ async function isSaveSession() {
       const fb2 = document.getElementById('is-save-fb');
       if (fb2) { fb2.textContent = '✓ Synced to GitHub'; setTimeout(() => { fb2.textContent = ''; }, 4000); }
     }).catch(() => {});
-    // Also push thumbnail directly to Worker KV so other devices can see it
-    if (GH_WORKER_URL && session.thumb_dataurl)
-      ghSyncThumbnail(session.session_id, session.thumb_dataurl);
+    // Push thumbnail, full drawing and anim to Worker KV for cross-device archiving
+    if (GH_WORKER_URL) {
+      if (session.thumb_dataurl) ghSyncThumbnail(session.session_id, session.thumb_dataurl);
+      if (session.full_dataurl)  ghSyncDrawing(session.session_id, session.full_dataurl);
+      if (session.anim)          ghSyncAnim(session.session_id, session.anim);
+    }
   } else if (GH_WORKER_URL) {
     // GitHub Pages: HTTPS → Worker, no CORS issue
     const fb2 = document.getElementById('is-save-fb');
@@ -9991,8 +10035,9 @@ async function isSaveSession() {
       // After pushing own session, pull any concurrent new sessions from others
       isAutoSync();
     });
-    if (session.thumb_dataurl)
-      ghSyncThumbnail(session.session_id, session.thumb_dataurl);
+    if (session.thumb_dataurl) ghSyncThumbnail(session.session_id, session.thumb_dataurl);
+    if (session.full_dataurl)  ghSyncDrawing(session.session_id, session.full_dataurl);
+    if (session.anim)          ghSyncAnim(session.session_id, session.anim);
   } else {
     // Localhost: after the server forwards to Worker, also pull any new sessions
     isAutoSync();

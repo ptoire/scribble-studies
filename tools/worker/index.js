@@ -54,25 +54,26 @@ export default {
       'Content-Type': 'application/json',
     };
 
-    // ── Thumbnail endpoints: /thumb/:session_id ───────────────────────────────
-    // Thumbnails are stored in KV (not GitHub) to keep sessions.json small.
-    const thumbMatch = path.match(/^\/thumb\/([a-zA-Z0-9_-]+)$/);
-    if (thumbMatch) {
-      const sid = thumbMatch[1];
+    // ── Binary asset endpoints: /thumb/:id  /drawing/:id  /anim/:id ─────────
+    // All stored in THUMBS KV with type-prefixed keys (thumb: / drawing: / anim:)
+    const assetMatch = path.match(/^\/(thumb|drawing|anim)\/([a-zA-Z0-9_-]+)$/);
+    if (assetMatch) {
+      const [, type, sid] = assetMatch;
       if (!env.THUMBS) return json({ error: 'THUMBS KV namespace not bound' }, 500);
+      const key = type + ':' + sid;
 
       if (request.method === 'GET') {
-        const thumb = await env.THUMBS.get(sid);
-        if (!thumb) return new Response('', { status: 404, headers: CORS });
-        return new Response(thumb, {
-          headers: { ...CORS, 'Content-Type': 'text/plain', 'Cache-Control': 'public, max-age=86400' }
-        });
+        const val = await env.THUMBS.get(key);
+        if (!val) return new Response('', { status: 404, headers: CORS });
+        const ct = type === 'anim' ? 'application/json' : 'text/plain';
+        const cc = type === 'thumb' ? 'public, max-age=86400' : 'public, max-age=604800';
+        return new Response(val, { headers: { ...CORS, 'Content-Type': ct, 'Cache-Control': cc } });
       }
 
       if (request.method === 'PUT') {
         const body = await request.text();
         if (!body) return json({ error: 'empty body' }, 400);
-        await env.THUMBS.put(sid, body);
+        await env.THUMBS.put(key, body);
         return json({ ok: true });
       }
 
@@ -91,7 +92,7 @@ export default {
           const toMigrate = sessions.filter(s => s.session_id && s.thumb_dataurl);
           if (toMigrate.length) {
             ctx.waitUntil(
-              Promise.all(toMigrate.map(s => env.THUMBS.put(s.session_id, s.thumb_dataurl)))
+              Promise.all(toMigrate.map(s => env.THUMBS.put('thumb:' + s.session_id, s.thumb_dataurl)))
             );
           }
         }
@@ -110,7 +111,7 @@ export default {
         if (env.THUMBS) {
           const toMigrate = existing.filter(s => s.session_id && s.thumb_dataurl);
           if (toMigrate.length) {
-            await Promise.all(toMigrate.map(s => env.THUMBS.put(s.session_id, s.thumb_dataurl)));
+            await Promise.all(toMigrate.map(s => env.THUMBS.put('thumb:' + s.session_id, s.thumb_dataurl)));
           }
         }
 
@@ -122,7 +123,11 @@ export default {
         });
         deletedIds.forEach(id => {
           delete byId[id];
-          if (env.THUMBS) ctx.waitUntil(env.THUMBS.delete(id));
+          if (env.THUMBS) ctx.waitUntil(Promise.all([
+            env.THUMBS.delete('thumb:' + id),
+            env.THUMBS.delete('drawing:' + id),
+            env.THUMBS.delete('anim:' + id),
+          ]));
         });
 
         const upload = Object.values(byId);
