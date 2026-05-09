@@ -9038,7 +9038,6 @@ async function isLoadFromServer() {
       isSaveSynced(serverIds);
     }
     if (changed) { isSaveSessions(local); isRenderArchive(); isUpdateChipCounts(); }
-    ghFetchMissingThumbs().catch(() => {});
   } catch {}
   finally {
     if (btn) { btn.disabled = false; btn.textContent = '⟳ Refresh'; }
@@ -10023,9 +10022,12 @@ function isRenderArchive() {
     const modLine = sess.modified_at
       ? `<div class="is-archive-card-mod">modified by author ${new Date(sess.modified_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>`
       : '';
-    // Sessions with thumb show static image; without show canvas stroke preview
-    const imgHtml = sess.thumb_dataurl
-      ? `<img src="${sess.thumb_dataurl}" alt="${sess.schema_name}">`
+    // Sessions with thumb show static image; without show canvas stroke preview.
+    // Fallback to Worker KV URL so other-device thumbnails load without bloating localStorage.
+    const thumbSrc = sess.thumb_dataurl
+      || (GH_WORKER_URL ? GH_WORKER_URL + '/thumb/' + sess.session_id : null);
+    const imgHtml = thumbSrc
+      ? `<img src="${thumbSrc}" alt="${sess.schema_name}">`
       : `<canvas class="is-archive-card-placeholder" width="300" height="200"></canvas>`;
     card.innerHTML = `
       <div class="is-archive-card-img-wrap">
