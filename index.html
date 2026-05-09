@@ -688,7 +688,10 @@ body {
 .cv-similar-thumb img { width:100%; height:100%; object-fit:contain; background:#fff; }
 .cv-similar-score { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.55); color:#fff; font-family:var(--font-mono); font-size:0.5rem; text-align:center; padding:0.1rem 0; opacity:0; transition:opacity 0.12s; }
 .cv-similar-thumb:hover .cv-similar-score { opacity:1; }
-.cv-right-panel { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; align-items:start; }
+.cv-right-panel { display:flex; flex-direction:column; gap:0.8rem; }
+.cv-layers-browse { display:grid; grid-template-columns:1fr 1fr; gap:0; background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+.cv-layers-browse > div { padding:0.8rem 0.9rem; }
+.cv-layers-browse > div + div { border-left:1px solid var(--c-border-light); }
 .cv-panel-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.8rem 0.9rem; }
 .cv-panel-title { font-family:var(--font-mono); font-size:0.58rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--c-text-tertiary); margin-bottom:0.5rem; }
 .cv-layer-group { margin-bottom:0.45rem; }
@@ -12361,20 +12364,22 @@ function cvBuildSingleHTML() {
         </div>
       </div>
       <div class="cv-right-panel">
-        <div class="cv-panel-section">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
-            <div class="cv-panel-title" style="margin-bottom:0">Layers</div>
-            <div style="display:flex;gap:0.3rem">
-              <button class="cv-ctrl-btn" id="cv-layers-all" style="font-size:0.58rem;padding:0.15em 0.5em">Select all</button>
-              <button class="cv-ctrl-btn" id="cv-layers-none" style="font-size:0.58rem;padding:0.15em 0.5em">Deselect all</button>
+        <div class="cv-layers-browse">
+          <div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.5rem">
+              <div class="cv-panel-title" style="margin-bottom:0">Layers</div>
+              <div style="display:flex;gap:0.3rem">
+                <button class="cv-ctrl-btn" id="cv-layers-all" style="font-size:0.58rem;padding:0.15em 0.5em">All</button>
+                <button class="cv-ctrl-btn" id="cv-layers-none" style="font-size:0.58rem;padding:0.15em 0.5em">None</button>
+              </div>
             </div>
+            ${groupsHTML}
           </div>
-          ${groupsHTML}
-        </div>
-        <div class="cv-panel-section" id="cv-browse-panel">
-          <div class="cv-panel-title" style="margin-bottom:0.4rem">Browse</div>
-          <div class="cv-browse-filters" id="cv-browse-filters"></div>
-          <div class="cv-browse-grid" id="cv-browse-grid"></div>
+          <div id="cv-browse-panel">
+            <div class="cv-panel-title" style="margin-bottom:0.4rem">Browse</div>
+            <div class="cv-browse-filters" id="cv-browse-filters"></div>
+            <div class="cv-browse-grid" id="cv-browse-grid"></div>
+          </div>
         </div>
         <div class="cv-panel-section" id="cv-details-panel">
           <div class="cv-panel-title">Details</div>
