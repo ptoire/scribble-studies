@@ -12469,8 +12469,9 @@ async function cvPreloadImages(sha) {
   });
   cvPreloadCache[sha] = imgs;
   await Promise.all(imgs.map(img => new Promise(resolve => {
-    if (img.complete) { resolve(); return; }
-    img.onload = resolve; img.onerror = resolve;
+    if (img.complete) { if (img.naturalWidth === 0) img._failed = true; resolve(); return; }
+    img.onload = resolve;
+    img.onerror = () => { img._failed = true; resolve(); };
     setTimeout(resolve, 4000);
   })));
   return imgs;
@@ -12730,7 +12731,7 @@ function cvStartBreathing(sha, preloadedImgs) {
     lastTime = now;
     if (!cvBreathPaused) effectiveTime += dt;
 
-    const activeLayers = CV_LAYERS.map((l,i) => ({...l, idx:i})).filter((_,i) => cvLayerEnabled[i]);
+    const activeLayers = CV_LAYERS.map((l,i) => ({...l, idx:i})).filter((_,i) => cvLayerEnabled[i] && !preloadedImgs[i]?._failed);
     if (!activeLayers.length) return;
 
     const t = effectiveTime % CV_CYCLE_DURATION;
@@ -12792,7 +12793,7 @@ function cvPopupShow(sha) {
       if (cvPopupSha !== sha) return;
       cvPopupRaf = requestAnimationFrame(frame);
       const dt = last !== null ? now - last : 0; last = now; eff += dt;
-      const active = CV_LAYERS.map((l,i)=>({...l,idx:i})).filter((_,i)=>cvLayerEnabled[i]);
+      const active = CV_LAYERS.map((l,i)=>({...l,idx:i})).filter((_,i)=>cvLayerEnabled[i] && !imgs[i]?._failed);
       if (!active.length) return;
       const t = eff % CV_CYCLE_DURATION;
       const tpl = CV_CYCLE_DURATION / active.length;
