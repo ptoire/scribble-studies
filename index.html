@@ -12379,7 +12379,7 @@ async function cvSwitchView(view, sha, noScroll) {
 
   document.querySelectorAll('.cv-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
 
-  if (!noScroll) {
+  if (!noScroll && !sha) {
     const sect = document.getElementById('cv-section');
     if (sect) {
       const navH = document.getElementById('nav')?.offsetHeight || 48;
@@ -12407,6 +12407,16 @@ async function cvSwitchView(view, sha, noScroll) {
     const target = sha || cvCurrentSha || cvRandomSha();
     cvPushHash('cv-single/' + target);
     cvShowSingle(target);
+    if (!noScroll && sha) {
+      requestAnimationFrame(() => {
+        const frame = document.getElementById('cv-img-frame');
+        if (frame) {
+          const navH = document.getElementById('nav')?.offsetHeight || 48;
+          frame.style.scrollMarginTop = (navH + 8) + 'px';
+          frame.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    }
   } else if (view === 'map') {
     cvPushHash('cv-map');
     cvShowMap();
