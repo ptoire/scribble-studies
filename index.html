@@ -738,7 +738,7 @@ body {
 #cv-map-detail-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 .cv-map-side { display:flex; flex-direction:column; gap:0.6rem; }
 .cv-map-side-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.75rem 0.85rem; }
-.cv-map-canvas-wrap { position:relative; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; background:#fff; cursor:grab; }
+.cv-map-canvas-wrap { position:relative; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; background:#fff; cursor:grab; touch-action:none; user-select:none; }
 .cv-map-canvas-wrap:active { cursor:grabbing; }
 .cv-map-canvas-wrap canvas { display:block; width:100%; }
 .cv-map-tooltip { position:fixed; pointer-events:none; background:var(--c-bg-card); border:1px solid var(--c-border); border-radius:4px; box-shadow:var(--shadow-md); padding:0.4rem 0.5rem; display:none; z-index:300; }
@@ -12280,6 +12280,7 @@ let cvMapRenderRaf = null;
 let cvMapDragging = false;
 let cvMapDragStart = null;
 let cvMapTransformStart = null;
+let cvMapTouchState = null;
 let cvMapTooltipEl = null;
 
 /* -- grid -- */
@@ -13182,6 +13183,9 @@ function cvShowMap() {
   wrap.addEventListener('mouseup', cvMapMouseUp);
   wrap.addEventListener('mouseleave', cvMapMouseLeave);
   wrap.addEventListener('wheel', cvMapWheel, { passive: false });
+  wrap.addEventListener('touchstart', cvMapTouchStart, { passive: false });
+  wrap.addEventListener('touchmove',  cvMapTouchMove,  { passive: false });
+  wrap.addEventListener('touchend',   cvMapTouchEnd,   { passive: false });
 
   cvMapStartRenderLoop();
   cvMapRefresh();
@@ -13209,7 +13213,8 @@ function cvMapResizeCanvas() {
   if (!cvMapCanvas) return;
   const wrap = cvMapCanvas.parentElement;
   const W = wrap.clientWidth || 800;
-  const H = Math.max(480, Math.min(680, Math.round(window.innerHeight * 0.68)));
+  const isMobile = window.innerWidth <= 900;
+  const H = isMobile ? W : Math.max(480, Math.min(680, Math.round(window.innerHeight * 0.68)));
   cvMapCanvas.width = W;
   cvMapCanvas.height = H;
   wrap.style.height = H + 'px';
@@ -13433,6 +13438,64 @@ function cvMapWheel(e) {
   cvMapTransform.y = my + (cvMapTransform.y - my) * ratio;
   cvMapTransform.scale = newScale;
   cvMapNeedsRedraw = true;
+}
+function cvMapTouchStart(e) {
+  e.preventDefault();
+  if (e.touches.length === 1) {
+    cvMapTouchState = {
+      type: 'drag',
+      start: { x: e.touches[0].clientX, y: e.touches[0].clientY },
+      txStart: { ...cvMapTransform }
+    };
+  } else if (e.touches.length === 2) {
+    const t0 = e.touches[0], t1 = e.touches[1];
+    const dx = t1.clientX - t0.clientX, dy = t1.clientY - t0.clientY;
+    cvMapTouchState = {
+      type: 'pinch',
+      midStart: { x: (t0.clientX + t1.clientX) / 2, y: (t0.clientY + t1.clientY) / 2 },
+      distStart: Math.sqrt(dx*dx + dy*dy),
+      txStart: { ...cvMapTransform }
+    };
+  }
+}
+function cvMapTouchMove(e) {
+  e.preventDefault();
+  if (!cvMapTouchState) return;
+  const rect = cvMapCanvas.getBoundingClientRect();
+  const scX = cvMapCanvas.width / rect.width, scY = cvMapCanvas.height / rect.height;
+  if (cvMapTouchState.type === 'drag' && e.touches.length === 1) {
+    cvMapTransform.x = cvMapTouchState.txStart.x + (e.touches[0].clientX - cvMapTouchState.start.x);
+    cvMapTransform.y = cvMapTouchState.txStart.y + (e.touches[0].clientY - cvMapTouchState.start.y);
+    cvMapNeedsRedraw = true;
+  } else if (cvMapTouchState.type === 'pinch' && e.touches.length === 2) {
+    const t0 = e.touches[0], t1 = e.touches[1];
+    const dx = t1.clientX - t0.clientX, dy = t1.clientY - t0.clientY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    const mid = { x: (t0.clientX + t1.clientX) / 2, y: (t0.clientY + t1.clientY) / 2 };
+    const factor = dist / cvMapTouchState.distStart;
+    const newScale = Math.max(40, Math.min(12000, cvMapTouchState.txStart.scale * factor));
+    const ratio = newScale / cvMapTouchState.txStart.scale;
+    const midX = (cvMapTouchState.midStart.x - rect.left) * scX;
+    const midY = (cvMapTouchState.midStart.y - rect.top) * scY;
+    cvMapTransform.x = midX + (cvMapTouchState.txStart.x - midX) * ratio + (mid.x - cvMapTouchState.midStart.x);
+    cvMapTransform.y = midY + (cvMapTouchState.txStart.y - midY) * ratio + (mid.y - cvMapTouchState.midStart.y);
+    cvMapTransform.scale = newScale;
+    cvMapNeedsRedraw = true;
+  }
+}
+function cvMapTouchEnd(e) {
+  if (!cvMapTouchState) return;
+  if (cvMapTouchState.type === 'drag' && e.changedTouches.length > 0 && e.touches.length === 0) {
+    const t = e.changedTouches[0];
+    const moved = Math.abs(t.clientX - cvMapTouchState.start.x) + Math.abs(t.clientY - cvMapTouchState.start.y) < 8;
+    if (moved) {
+      const rect = cvMapCanvas.getBoundingClientRect();
+      const scX = cvMapCanvas.width / rect.width, scY = cvMapCanvas.height / rect.height;
+      const item = cvMapFindHover((t.clientX - rect.left)*scX, (t.clientY - rect.top)*scY);
+      if (item) { if (!cvDataLoaded) { cvPushHash('cv-single/'+item.sha); cvSwitchView('single', item.sha, true); } else cvMapDetailShow(item.sha); }
+    }
+  }
+  if (e.touches.length === 0) cvMapTouchState = null;
 }
 
 /* ─── Comparative Grid view ───────────────────────────── */
