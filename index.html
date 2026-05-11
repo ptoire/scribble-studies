@@ -748,6 +748,11 @@ body {
 #cv-popup-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.4em 1em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:stretch; text-align:center; }
 #cv-popup-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 #cv-popup-controls { display:flex; align-items:center; gap:0.3rem; flex-wrap:wrap; }
+#cv-popup-similar-grid { display:none; grid-template-columns:repeat(4,1fr); gap:0.3rem; }
+#cv-popup-similar-grid.open { display:grid; }
+.cv-popup-sim-thumb { cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; aspect-ratio:1; background:#f5f5f5; transition:border-color 0.1s; }
+.cv-popup-sim-thumb:hover { border-color:var(--c-accent); }
+.cv-popup-sim-thumb img { display:block; width:100%; height:100%; object-fit:contain; }
 .cv-grid-spacer-top,.cv-grid-spacer-bottom { width:100%; pointer-events:none; }
 .cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.6rem; }
 .cv-grid-thumb { position:relative; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.12s,box-shadow 0.12s; }
@@ -12336,6 +12341,7 @@ function buildCVSection() {
           <img id="cv-popup-img-front" alt="" style="opacity:0">
         </div>
         <span id="cv-popup-layer"></span>
+        <div id="cv-popup-similar-grid"></div>
         <div id="cv-popup-controls">
           <button class="cv-ctrl-btn" id="cv-popup-random-btn">Random</button>
           <button class="cv-ctrl-btn" id="cv-popup-similar-btn">Similar</button>
@@ -12358,8 +12364,15 @@ function buildCVSection() {
     });
     pop.querySelector('#cv-popup-similar-btn').addEventListener('click', async () => {
       if (!cvPopupSha) return;
-      const sha = await cvPopupFindSimilar(cvPopupSha);
-      cvPopupShow(sha);
+      const grid = pop.querySelector('#cv-popup-similar-grid');
+      const shas = await cvPopupFindSimilar(cvPopupSha, 8);
+      grid.innerHTML = shas.map(s =>
+        `<div class="cv-popup-sim-thumb" data-sha="${s}"><img src="${cvAssetUrl(s,'original.jpg')}" alt=""></div>`
+      ).join('');
+      grid.classList.add('open');
+      grid.querySelectorAll('.cv-popup-sim-thumb').forEach(el => {
+        el.addEventListener('click', () => { grid.classList.remove('open'); cvPopupShow(el.dataset.sha); });
+      });
     });
     pop.querySelectorAll('.cv-popup-speed-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -12808,17 +12821,17 @@ function cvStartBreathing(sha, preloadedImgs) {
 let cvPopupRaf  = null;
 let cvPopupSha  = null;
 
-async function cvPopupFindSimilar(sha) {
+async function cvPopupFindSimilar(sha, n = 8) {
   const data = await cvLoadUmapData('fused');
   const items = data.items;
   const curr = items.find(it => it.sha === sha);
-  if (!curr) return cvRandomSha();
-  const sorted = items
+  if (!curr) return Array.from({ length: n }, cvRandomSha);
+  return items
     .filter(it => it.sha !== sha)
     .map(it => ({ sha: it.sha, d: (it.x - curr.x) ** 2 + (it.y - curr.y) ** 2 }))
-    .sort((a, b) => a.d - b.d);
-  const top = sorted.slice(0, 8);
-  return top[Math.floor(Math.random() * top.length)].sha;
+    .sort((a, b) => a.d - b.d)
+    .slice(0, n)
+    .map(it => it.sha);
 }
 
 function cvPopupShow(sha) {
@@ -12829,6 +12842,7 @@ function cvPopupShow(sha) {
   const labels  = item ? (item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ') || sha.slice(0,8) : sha.slice(0,8);
   overlay.querySelector('#cv-popup-label').textContent = labels;
   overlay.querySelector('#cv-popup-layer').textContent = '';
+  overlay.querySelector('#cv-popup-similar-grid').classList.remove('open');
   overlay.querySelectorAll('.cv-popup-speed-btn').forEach(b => b.classList.toggle('active', parseFloat(b.dataset.speed) === cvBreathSpeed));
   overlay.classList.add('open');
   if (cvPopupRaf) { cancelAnimationFrame(cvPopupRaf); cvPopupRaf = null; }
