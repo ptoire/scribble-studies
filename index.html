@@ -735,10 +735,11 @@ body {
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
 .cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; will-change:scroll-position; }
-#cv-popup-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:5000; align-items:center; justify-content:center; }
-#cv-popup-overlay.open { display:flex; }
-#cv-popup-box { background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:0.8rem; max-width:320px; width:92%; display:flex; flex-direction:column; gap:0.5rem; }
-#cv-popup-top { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; min-height:1.6rem; }
+#cv-popup-overlay { display:none; position:fixed; inset:0; background:transparent; z-index:5000; pointer-events:none; }
+#cv-popup-overlay.open { display:block; }
+#cv-popup-box { pointer-events:auto; position:absolute; right:24px; top:72px; background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:0.8rem; width:300px; display:flex; flex-direction:column; gap:0.5rem; }
+#cv-popup-top { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; min-height:1.6rem; cursor:grab; user-select:none; }
+#cv-popup-top.dragging { cursor:grabbing; }
 #cv-popup-label { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-text); }
 #cv-popup-close { background:none; border:1px solid var(--c-border); border-radius:3px; font-size:0.9rem; line-height:1; cursor:pointer; color:var(--c-text-secondary); padding:0.2rem 0.5rem; flex-shrink:0; }
 #cv-popup-close:hover { background:var(--c-bg-warm); color:var(--c-text); }
@@ -12356,9 +12357,28 @@ function buildCVSection() {
         <button id="cv-popup-open-btn">Open in Single Image &#x2192;</button>
       </div>`;
     document.body.appendChild(pop);
-    pop.addEventListener('click', e => { if (e.target === pop) cvPopupHide(); });
     pop.querySelector('#cv-popup-close').addEventListener('click', cvPopupHide);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') cvPopupHide(); });
+
+    // Draggable
+    const box = pop.querySelector('#cv-popup-box');
+    const topBar = pop.querySelector('#cv-popup-top');
+    let _drag = false, _dx = 0, _dy = 0;
+    topBar.addEventListener('mousedown', e => {
+      if (e.target.closest('button')) return;
+      _drag = true;
+      const r = box.getBoundingClientRect();
+      _dx = e.clientX - r.left; _dy = e.clientY - r.top;
+      topBar.classList.add('dragging');
+      e.preventDefault();
+    });
+    document.addEventListener('mousemove', e => {
+      if (!_drag) return;
+      box.style.left = (e.clientX - _dx) + 'px';
+      box.style.top  = (e.clientY - _dy) + 'px';
+      box.style.right = 'auto';
+    });
+    document.addEventListener('mouseup', () => { _drag = false; topBar.classList.remove('dragging'); });
     pop.querySelector('#cv-popup-random-btn').addEventListener('click', () => {
       cvPopupShow(cvRandomSha());
     });
