@@ -759,6 +759,7 @@ body {
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
 .cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; will-change:scroll-position; }
+@media(max-width:900px){ .cv-grid-viewport { overflow-y:visible; max-height:none; overscroll-behavior:auto; } }
 #cv-popup-overlay { display:none; position:fixed; inset:0; background:transparent; z-index:5000; pointer-events:none; }
 #cv-popup-overlay.open { display:block; }
 #cv-popup-box { pointer-events:auto; position:absolute; right:24px; top:72px; background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:0.8rem; width:300px; display:flex; flex-direction:column; gap:0.5rem; }
@@ -13651,6 +13652,10 @@ function cvBuildGridHTML(container) {
   cvGridTopSpacerEl   = container.querySelector('#cv-grid-spacer-top');
   cvGridBotSpacerEl   = container.querySelector('#cv-grid-spacer-bot');
   cvGridScrollEl.addEventListener('scroll', cvGridOnScroll, { passive: true });
+  window.addEventListener('scroll', () => {
+    if (cvCurrentView !== 'grid' || window.innerWidth > 900) return;
+    cvGridOnScroll();
+  }, { passive: true });
 }
 
 function cvGridApplyFilters() {
@@ -13681,7 +13686,7 @@ function cvGridApplyFilters() {
   const countEl = document.getElementById('cv-grid-count');
   if (countEl) countEl.textContent = `Showing ${filtered.length} of ${cvNeuralIndex.items.length}`;
 
-  cvGridScrollEl.scrollTop = 0;
+  if (window.innerWidth > 900) cvGridScrollEl.scrollTop = 0;
   cvGridRefreshVisible();
 
   if (cvCurrentSha) {
@@ -13690,8 +13695,15 @@ function cvGridApplyFilters() {
       requestAnimationFrame(() => requestAnimationFrame(() => {
         const cols = Math.max(3, Math.floor((cvGridScrollEl.clientWidth + CV_GRID_GAP) / (CV_GRID_CELL + CV_GRID_GAP)));
         const rowH = CV_GRID_CELL + CV_GRID_GAP;
-        const vpH = cvGridScrollEl.clientHeight || 600;
-        cvGridScrollEl.scrollTop = Math.max(0, Math.floor(idx / cols) * rowH - vpH / 2 + rowH / 2);
+        if (window.innerWidth <= 900) {
+          const navH = document.getElementById('nav')?.offsetHeight || 48;
+          const gridTop = cvGridScrollEl.getBoundingClientRect().top + window.pageYOffset;
+          const offset = Math.max(0, Math.floor(idx/cols)*rowH - window.innerHeight/2 + rowH/2);
+          window.scrollTo({ top: gridTop + offset - navH, behavior: 'smooth' });
+        } else {
+          const vpH = cvGridScrollEl.clientHeight || 600;
+          cvGridScrollEl.scrollTop = Math.max(0, Math.floor(idx / cols) * rowH - vpH / 2 + rowH / 2);
+        }
         cvGridRefreshVisible();
       }));
     }
@@ -13713,8 +13725,14 @@ function cvGridRefreshVisible() {
   const rowH = CV_GRID_CELL + CV_GRID_GAP;
   const totalRows = Math.ceil(items.length / cols);
   const totalH = totalRows * rowH;
-  const vpH = cvGridScrollEl.clientHeight || 600;
-  const scrollTop = cvGridScrollEl.scrollTop;
+  let scrollTop, vpH;
+  if (window.innerWidth <= 900) {
+    scrollTop = Math.max(0, -(cvGridScrollEl.getBoundingClientRect().top));
+    vpH = window.innerHeight;
+  } else {
+    scrollTop = cvGridScrollEl.scrollTop;
+    vpH = cvGridScrollEl.clientHeight || 600;
+  }
 
   const firstRow = Math.max(0, Math.floor(scrollTop / rowH) - CV_GRID_BUFFER);
   const lastRow  = Math.min(totalRows - 1, Math.ceil((scrollTop + vpH) / rowH) + CV_GRID_BUFFER);
