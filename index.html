@@ -714,7 +714,24 @@ body {
 
 /* Archive Map */
 .cv-map-layout { display:grid; grid-template-columns:180px 1fr; gap:1.5rem; align-items:start; }
-@media(max-width:768px){ .cv-map-layout{grid-template-columns:1fr} }
+.cv-map-layout.has-detail { grid-template-columns:180px 1fr 280px; }
+@media(max-width:768px){ .cv-map-layout{grid-template-columns:1fr} .cv-map-layout.has-detail{grid-template-columns:1fr} }
+#cv-map-detail { display:none; flex-direction:column; gap:0.5rem; background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,0.12); padding:0.8rem; align-self:start; }
+#cv-map-detail.open { display:flex; }
+#cv-map-detail-top { display:flex; align-items:center; justify-content:space-between; gap:0.5rem; min-height:1.6rem; cursor:default; }
+#cv-map-detail-label { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-text); }
+#cv-map-detail-close { background:none; border:1px solid var(--c-border); border-radius:3px; font-size:0.9rem; line-height:1; cursor:pointer; color:var(--c-text-secondary); padding:0.2rem 0.5rem; flex-shrink:0; }
+#cv-map-detail-close:hover { background:var(--c-bg-warm); color:var(--c-text); }
+#cv-map-detail-img-frame { position:relative; width:100%; aspect-ratio:1; background:#fff; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+#cv-map-detail-img-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
+#cv-map-detail-layer { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-secondary); min-height:1em; }
+#cv-map-detail-sim-grid { display:none; grid-template-columns:repeat(4,1fr); gap:0.3rem; }
+#cv-map-detail-sim-grid.open { display:grid; }
+#cv-map-detail-sim-caption { display:none; font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); text-align:right; }
+#cv-map-detail-sim-grid.open + #cv-map-detail-sim-caption { display:block; }
+#cv-map-detail-controls { display:flex; align-items:center; gap:0.3rem; flex-wrap:wrap; }
+#cv-map-detail-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.4em 1em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:stretch; text-align:center; }
+#cv-map-detail-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 .cv-map-side { display:flex; flex-direction:column; gap:0.6rem; }
 .cv-map-side-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.75rem 0.85rem; }
 .cv-map-canvas-wrap { position:relative; border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; background:#fff; cursor:grab; }
@@ -12452,6 +12469,10 @@ async function cvSwitchView(view, sha, noScroll) {
     cancelAnimationFrame(cvBreathRaf);
     cvBreathRaf = null;
   }
+  if (view !== 'map' && cvMapDetailRaf) {
+    cancelAnimationFrame(cvMapDetailRaf);
+    cvMapDetailRaf = null;
+  }
 
   document.getElementById('cv-view-single').style.display    = view === 'single' ? '' : 'none';
   document.getElementById('cv-caption-single').style.display = view === 'single' ? '' : 'none';
@@ -12952,10 +12973,107 @@ function cvPopupHide() {
   if (overlay) overlay.classList.remove('open');
 }
 
+/* ─── Map detail panel ───────────────────────────── */
+let cvMapDetailRaf = null;
+let cvMapDetailSha = null;
+
+function cvMapDetailShow(sha) {
+  const container = document.getElementById('cv-view-map');
+  if (!container) return;
+  const detail = container.querySelector('#cv-map-detail');
+  if (!detail) return;
+
+  cvCurrentSha = sha;
+  cvMapDetailSha = sha;
+  cvMapNeedsRedraw = true;
+
+  const item = cvNeuralIndex._bySha[sha];
+  const labels = item ? (item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ') || sha.slice(0,8) : sha.slice(0,8);
+  detail.querySelector('#cv-map-detail-label').textContent = labels;
+  detail.querySelector('#cv-map-detail-layer').textContent = '';
+  detail.querySelectorAll('.cv-map-detail-speed-btn').forEach(b => b.classList.toggle('active', parseFloat(b.dataset.speed) === cvBreathSpeed));
+
+  if (!detail.classList.contains('open')) {
+    detail.classList.add('open');
+    container.querySelector('.cv-map-layout').classList.add('has-detail');
+    requestAnimationFrame(() => { cvMapResizeCanvas(); cvMapNeedsRedraw = true; });
+  }
+
+  if (cvMapDetailRaf) { cancelAnimationFrame(cvMapDetailRaf); cvMapDetailRaf = null; }
+
+  const back  = detail.querySelector('#cv-map-detail-back');
+  const front = detail.querySelector('#cv-map-detail-front');
+  back.src = ''; front.src = ''; front.style.opacity = '0';
+
+  detail.querySelector('#cv-map-detail-open-btn').onclick = () => {
+    cvMapDetailHide();
+    cvPushHash('cv-single/' + sha);
+    cvSwitchView('single', sha, true);
+    setTimeout(() => {
+      const frame = document.getElementById('cv-img-frame');
+      if (frame) { const navH = document.getElementById('nav')?.offsetHeight||48; frame.style.scrollMarginTop=(navH+24)+'px'; frame.scrollIntoView({behavior:'smooth',block:'center'}); }
+    }, 80);
+  };
+
+  cvPreloadImages(sha).then(imgs => {
+    if (cvMapDetailSha !== sha) return;
+    let eff = 0, last = null, lastIdx = -1;
+    const layEl = detail.querySelector('#cv-map-detail-layer');
+    function frame(now) {
+      if (cvMapDetailSha !== sha) return;
+      cvMapDetailRaf = requestAnimationFrame(frame);
+      const dt = last !== null ? now - last : 0; last = now; eff += dt * cvBreathSpeed;
+      const active = CV_LAYERS.map((l,i)=>({...l,idx:i})).filter((_,i)=>cvLayerEnabled[i] && !imgs[i]?._failed);
+      if (!active.length) return;
+      const t = eff % CV_CYCLE_DURATION;
+      const tpl = CV_CYCLE_DURATION / active.length;
+      const lf = t / tpl;
+      const li = Math.floor(lf) % active.length;
+      const fr = lf - Math.floor(lf);
+      const lA = active[li], lB = active[(li+1)%active.length];
+      if (back.src !== imgs[lA.idx].src) back.src = imgs[lA.idx].src;
+      if (front.src !== imgs[lB.idx].src) front.src = imgs[lB.idx].src;
+      front.style.opacity = fr;
+      if (li !== lastIdx) { lastIdx = li; if (layEl) layEl.textContent = lA.label; }
+    }
+    cvMapDetailRaf = requestAnimationFrame(frame);
+  });
+
+  cvMapDetailLoadSimilar(sha);
+}
+
+async function cvMapDetailLoadSimilar(sha) {
+  const container = document.getElementById('cv-view-map');
+  if (!container) return;
+  const grid = container.querySelector('#cv-map-detail-sim-grid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  grid.classList.add('open');
+  const shas = await cvPopupFindSimilar(sha, 8);
+  if (cvMapDetailSha !== sha) return;
+  grid.innerHTML = shas.map(s =>
+    `<div class="cv-popup-sim-thumb" data-sha="${s}"><img src="${cvAssetUrl(s,'original.jpg')}" alt=""></div>`
+  ).join('');
+  grid.querySelectorAll('.cv-popup-sim-thumb').forEach(el => {
+    el.addEventListener('click', () => cvMapDetailShow(el.dataset.sha));
+  });
+}
+
+function cvMapDetailHide() {
+  if (cvMapDetailRaf) { cancelAnimationFrame(cvMapDetailRaf); cvMapDetailRaf = null; }
+  cvMapDetailSha = null;
+  const container = document.getElementById('cv-view-map');
+  if (!container) return;
+  const detail = container.querySelector('#cv-map-detail');
+  if (detail) detail.classList.remove('open');
+  container.querySelector('.cv-map-layout')?.classList.remove('has-detail');
+  requestAnimationFrame(() => { cvMapResizeCanvas(); cvMapNeedsRedraw = true; });
+}
+
 /* ─── Archive Map view ────────────────────────────────── */
 function cvShowMap() {
   const container = document.getElementById('cv-view-map');
-  if (container.dataset.built) { cvMapRefresh(); return; }
+  if (container.dataset.built) { cvMapRefresh(); if (cvCurrentSha) cvMapDetailShow(cvCurrentSha); return; }
   container.dataset.built = '1';
 
   container.innerHTML = `
@@ -12984,6 +13102,30 @@ function cvShowMap() {
           <canvas id="cv-map-canvas"></canvas>
         </div>
       </div>
+      <div id="cv-map-detail">
+        <div id="cv-map-detail-top">
+          <span id="cv-map-detail-label"></span>
+          <button id="cv-map-detail-close">&#x2715; close</button>
+        </div>
+        <div id="cv-map-detail-img-frame">
+          <img id="cv-map-detail-back" alt="">
+          <img id="cv-map-detail-front" alt="" style="opacity:0">
+        </div>
+        <span id="cv-map-detail-layer"></span>
+        <div id="cv-map-detail-sim-grid"></div>
+        <div id="cv-map-detail-sim-caption">Similar images</div>
+        <div id="cv-map-detail-controls">
+          <button class="cv-ctrl-btn" id="cv-map-detail-random">Random</button>
+          <span class="cv-speed-bar">
+            <span class="cv-speed-label">Speed</span>
+            <button class="cv-ctrl-btn cv-map-detail-speed-btn" data-speed="0.5">&#xD7;0.5</button>
+            <button class="cv-ctrl-btn cv-map-detail-speed-btn" data-speed="1">&#xD7;1</button>
+            <button class="cv-ctrl-btn cv-map-detail-speed-btn" data-speed="2">&#xD7;2</button>
+            <button class="cv-ctrl-btn cv-map-detail-speed-btn" data-speed="3">&#xD7;3</button>
+          </span>
+        </div>
+        <button id="cv-map-detail-open-btn">Open in Single Image &#x2192;</button>
+      </div>
     </div>
     <div class="cv-map-tooltip" id="cv-map-tooltip">
       <img id="cv-map-tt-img" alt="">
@@ -13010,6 +13152,20 @@ function cvShowMap() {
 
   cvMapStartRenderLoop();
   cvMapRefresh();
+
+  container.querySelector('#cv-map-detail-close').addEventListener('click', cvMapDetailHide);
+  container.querySelector('#cv-map-detail-random').addEventListener('click', () => {
+    cvMapDetailShow(cvRandomSha());
+  });
+  container.querySelectorAll('.cv-map-detail-speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cvBreathSpeed = parseFloat(btn.dataset.speed);
+      container.querySelectorAll('.cv-map-detail-speed-btn').forEach(b => b.classList.toggle('active', b === btn));
+      const si = document.getElementById('cv-view-single');
+      if (si) si.querySelectorAll('.cv-speed-btn').forEach(b => b.classList.toggle('active', b.dataset.speed === btn.dataset.speed));
+    });
+  });
+  if (cvCurrentSha) cvMapDetailShow(cvCurrentSha);
 
   window.addEventListener('resize', () => {
     if (cvCurrentView === 'map') { cvMapResizeCanvas(); cvMapNeedsRedraw = true; }
@@ -13192,7 +13348,7 @@ function cvMapMouseUp(e) {
     const scX = cvMapCanvas.width / rect.width;
     const scY = cvMapCanvas.height / rect.height;
     const item = cvMapFindHover((e.clientX - rect.left)*scX, (e.clientY - rect.top)*scY);
-    if (item) { if (!cvDataLoaded) { cvPushHash('cv-single/'+item.sha); cvSwitchView('single', item.sha, true); } else cvPopupShow(item.sha); }
+    if (item) { if (!cvDataLoaded) { cvPushHash('cv-single/'+item.sha); cvSwitchView('single', item.sha, true); } else cvMapDetailShow(item.sha); }
   }
 }
 function cvMapMouseLeave() {
