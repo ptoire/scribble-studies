@@ -673,7 +673,7 @@ body {
 .cv-image-frame img { position:absolute; top:0; left:0; width:100%; height:100%; object-fit:contain; }
 .cv-caption { margin-top:0.4rem; text-align:left; }
 .cv-caption-k { display:block; font-family:var(--font-display); font-style:italic; font-size:0.88rem; color:var(--c-text); }
-.cv-caption-layer { font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); letter-spacing:0.03em; }
+.cv-caption-layer { font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); letter-spacing:0.03em; min-width:20ch; text-align:center; }
 .cv-caption-layer-row { display:flex; align-items:center; gap:0.3rem; margin-top:0.18rem; margin-bottom:0.4rem; }
 .cv-layer-arrow { background:none; border:1px solid var(--c-border); border-radius:3px; cursor:pointer; color:var(--c-text-secondary); font-size:0.65rem; padding:0.1rem 0.35rem; line-height:1.4; flex-shrink:0; }
 .cv-layer-arrow:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
@@ -704,6 +704,10 @@ body {
 .cv-layer-group-label { font-family:var(--font-mono); font-size:0.57rem; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:var(--c-text-secondary); margin-bottom:0.2rem; }
 .cv-layer-toggle { display:flex; align-items:center; gap:0.3rem; font-family:var(--font-mono); font-size:0.6rem; color:var(--c-text-secondary); cursor:pointer; padding:0.05rem 0; }
 .cv-layer-toggle input[type=checkbox] { cursor:pointer; accent-color:var(--c-accent); }
+.cv-layer-toggle-row { display:flex; align-items:center; gap:0.2rem; padding:0.03rem 0; }
+.cv-layer-solo-btn { background:none; border:none; cursor:pointer; font-family:var(--font-mono); font-size:0.6rem; color:var(--c-text-secondary); padding:0.05rem 0.3rem; border-radius:3px; text-align:left; flex:1; line-height:1.4; }
+.cv-layer-solo-btn:hover { background:var(--c-accent); color:#fff; }
+.cv-layer-solo-btn.active { color:var(--c-accent); font-weight:600; }
 .cv-details-sha { font-family:var(--font-mono); font-size:0.68rem; color:var(--c-text-secondary); word-break:break-all; margin-bottom:0.35rem; }
 .cv-label-pills { display:flex; flex-wrap:wrap; gap:0.22rem; margin-bottom:0.4rem; }
 .cv-label-pill { font-family:var(--font-mono); font-size:0.63rem; padding:0.12rem 0.4rem; background:var(--c-tag-bg); border:1px solid var(--c-border-light); border-radius:3px; color:var(--c-tag-text); }
@@ -12259,6 +12263,7 @@ let cvBreathPaused = false;
 let cvBreathSpeed = 1;
 let cvBreathLayerIdx = 0;
 let cvManualLayerIdx = 0;
+let cvManualAbsLayer = 0;
 
 /* -- map -- */
 let cvMapCanvas = null;
@@ -12583,10 +12588,12 @@ function cvBuildSingleHTML() {
     <div class="cv-layer-group">
       <div class="cv-layer-group-label cv-has-tip" data-tip="${(CV_GROUP_TIPS[grp.label]||'').replace(/"/g,'&quot;')}">${grp.label}</div>
       ${grp.indices.map(i => `
-        <label class="cv-layer-toggle" title="${(CV_LAYER_TIPS[CV_LAYERS[i].key]||'').replace(/"/g,'&quot;')}">
-          <input type="checkbox" data-layer="${i}" checked>
-          ${CV_LAYERS[i].label}
-        </label>`).join('')}
+        <div class="cv-layer-toggle-row">
+          <label class="cv-layer-toggle" title="${(CV_LAYER_TIPS[CV_LAYERS[i].key]||'').replace(/"/g,'&quot;')}">
+            <input type="checkbox" data-layer="${i}" checked>
+          </label>
+          <button class="cv-layer-solo-btn" data-layer="${i}">${CV_LAYERS[i].label}</button>
+        </div>`).join('')}
     </div>`).join('');
 
   return `
@@ -12675,28 +12682,49 @@ function cvInitSingleEvents(container) {
     cb.addEventListener('change', () => { cvLayerEnabled[parseInt(cb.dataset.layer)] = cb.checked; });
   });
 
+  function soloLayer(absIdx) {
+    CV_LAYERS.forEach((_, i) => { cvLayerEnabled[i] = (i === absIdx); });
+    container.querySelectorAll('.cv-layer-toggle input').forEach(cb => {
+      cb.checked = (parseInt(cb.dataset.layer) === absIdx);
+    });
+    container.querySelectorAll('.cv-layer-solo-btn').forEach(b => {
+      b.classList.toggle('active', parseInt(b.dataset.layer) === absIdx);
+    });
+    const layerEl = document.getElementById('cv-caption-layer');
+    if (layerEl) layerEl.textContent = CV_LAYERS[absIdx]?.label || '';
+  }
+
   function stepLayer(dir) {
     const imgs = cvPreloadCache[cvCurrentSha];
     if (!imgs) return;
-    const active = CV_LAYERS.map((l,i) => ({...l,idx:i}))
-      .filter((_,i) => cvLayerEnabled[i] && !imgs[i]?._failed);
-    if (!active.length) return;
+    const all = CV_LAYERS.map((l,i) => ({...l,idx:i})).filter((_,i) => !imgs[i]?._failed);
+    if (!all.length) return;
     if (!cvBreathPaused) {
+      const active = all.filter(l => cvLayerEnabled[l.idx]);
+      const cur = active[cvBreathLayerIdx % Math.max(active.length, 1)];
+      cvManualAbsLayer = cur ? cur.idx : all[0].idx;
       cvBreathPaused = true;
       container.querySelector('#cv-btn-playpause').textContent = 'Play';
-      cvManualLayerIdx = cvBreathLayerIdx;
     }
-    cvManualLayerIdx = ((cvManualLayerIdx + dir + active.length) % active.length);
-    const layer = active[cvManualLayerIdx];
-    const imgBack = document.getElementById('cv-img-back');
-    const imgFront = document.getElementById('cv-img-front');
-    if (imgBack) imgBack.src = imgs[layer.idx].src;
-    if (imgFront) imgFront.style.opacity = '0';
-    const layerEl = document.getElementById('cv-caption-layer');
-    if (layerEl) layerEl.textContent = layer.label;
+    const curPos = all.findIndex(l => l.idx === cvManualAbsLayer);
+    const nextPos = ((curPos < 0 ? 0 : curPos) + dir + all.length) % all.length;
+    cvManualAbsLayer = all[nextPos].idx;
+    soloLayer(cvManualAbsLayer);
   }
   container.querySelector('#cv-btn-layer-prev').addEventListener('click', () => stepLayer(-1));
   container.querySelector('#cv-btn-layer-next').addEventListener('click', () => stepLayer(+1));
+
+  container.querySelectorAll('.cv-layer-solo-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const absIdx = parseInt(btn.dataset.layer);
+      cvManualAbsLayer = absIdx;
+      if (!cvBreathPaused) {
+        cvBreathPaused = true;
+        container.querySelector('#cv-btn-playpause').textContent = 'Play';
+      }
+      soloLayer(absIdx);
+    });
+  });
 
   container.querySelectorAll('.cv-speed-btn').forEach(btn => {
     btn.addEventListener('click', () => {
