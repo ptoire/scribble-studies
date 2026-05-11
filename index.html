@@ -12990,6 +12990,24 @@ function cvMapDraw() {
     ctx.fill();
   });
 
+  if (cvCurrentSha) {
+    const ci = items.find(it => it.sha === cvCurrentSha);
+    if (ci) {
+      const cx = ci.x * scale + ox, cy = -ci.y * scale + oy;
+      ctx.save();
+      ctx.shadowColor = 'rgba(255,255,255,0.9)';
+      ctx.shadowBlur = 12;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 3.5, 0, Math.PI*2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.restore();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 3.5, 0, Math.PI*2);
+      ctx.strokeStyle = '#111'; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+  }
+
   if (cvMapHoverSha) {
     const hi = items.find(it => it.sha === cvMapHoverSha);
     if (hi) {
