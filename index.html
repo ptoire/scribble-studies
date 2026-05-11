@@ -13651,6 +13651,13 @@ function cvBuildGridHTML(container) {
   cvGridItemsEl       = container.querySelector('#cv-grid-items');
   cvGridTopSpacerEl   = container.querySelector('#cv-grid-spacer-top');
   cvGridBotSpacerEl   = container.querySelector('#cv-grid-spacer-bot');
+  // Force bounded scroll container on mobile via inline style (overrides all CSS cascade)
+  if (window.innerWidth <= 900) {
+    cvGridScrollEl.style.height = Math.round(window.innerHeight * 0.65) + 'px';
+    cvGridScrollEl.style.overflowY = 'scroll';
+    cvGridScrollEl.style.webkitOverflowScrolling = 'touch';
+    cvGridScrollEl.style.overscrollBehavior = 'contain';
+  }
   cvGridScrollEl.addEventListener('scroll', cvGridOnScroll, { passive: true });
 }
 
@@ -13700,6 +13707,7 @@ function cvGridApplyFilters() {
 }
 
 function cvGridOnScroll() {
+  if (window.innerWidth <= 900) return;
   if (cvGridRenderRaf) clearTimeout(cvGridRenderRaf);
   cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 100);
 }
