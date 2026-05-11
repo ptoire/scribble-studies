@@ -747,6 +747,7 @@ body {
 #cv-popup-layer { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-secondary); min-height:1em; }
 #cv-popup-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.4em 1em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:stretch; text-align:center; }
 #cv-popup-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
+#cv-popup-controls { display:flex; align-items:center; gap:0.3rem; flex-wrap:wrap; }
 .cv-grid-spacer-top,.cv-grid-spacer-bottom { width:100%; pointer-events:none; }
 .cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.6rem; }
 .cv-grid-thumb { position:relative; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.12s,box-shadow 0.12s; }
@@ -12335,12 +12336,39 @@ function buildCVSection() {
           <img id="cv-popup-img-front" alt="" style="opacity:0">
         </div>
         <span id="cv-popup-layer"></span>
+        <div id="cv-popup-controls">
+          <button class="cv-ctrl-btn" id="cv-popup-random-btn">Random</button>
+          <button class="cv-ctrl-btn" id="cv-popup-similar-btn">Similar</button>
+          <span class="cv-speed-bar">
+            <span class="cv-speed-label">Speed</span>
+            <button class="cv-ctrl-btn cv-popup-speed-btn" data-speed="0.5">×0.5</button>
+            <button class="cv-ctrl-btn cv-popup-speed-btn" data-speed="1">×1</button>
+            <button class="cv-ctrl-btn cv-popup-speed-btn" data-speed="2">×2</button>
+            <button class="cv-ctrl-btn cv-popup-speed-btn" data-speed="3">×3</button>
+          </span>
+        </div>
         <button id="cv-popup-open-btn">Open in Single Image &#x2192;</button>
       </div>`;
     document.body.appendChild(pop);
     pop.addEventListener('click', e => { if (e.target === pop) cvPopupHide(); });
     pop.querySelector('#cv-popup-close').addEventListener('click', cvPopupHide);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') cvPopupHide(); });
+    pop.querySelector('#cv-popup-random-btn').addEventListener('click', () => {
+      cvPopupShow(cvRandomSha());
+    });
+    pop.querySelector('#cv-popup-similar-btn').addEventListener('click', async () => {
+      if (!cvPopupSha) return;
+      const sha = await cvPopupFindSimilar(cvPopupSha);
+      cvPopupShow(sha);
+    });
+    pop.querySelectorAll('.cv-popup-speed-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        cvBreathSpeed = parseFloat(btn.dataset.speed);
+        pop.querySelectorAll('.cv-popup-speed-btn').forEach(b => b.classList.toggle('active', b === btn));
+        const main = document.getElementById('cv-view-single');
+        if (main) main.querySelectorAll('.cv-speed-btn').forEach(b => b.classList.toggle('active', b.dataset.speed === btn.dataset.speed));
+      });
+    });
   }
 
   sect.querySelectorAll('.cv-tab-btn').forEach(btn => {
@@ -12780,6 +12808,19 @@ function cvStartBreathing(sha, preloadedImgs) {
 let cvPopupRaf  = null;
 let cvPopupSha  = null;
 
+async function cvPopupFindSimilar(sha) {
+  const data = await cvLoadUmapData('fused');
+  const items = data.items;
+  const curr = items.find(it => it.sha === sha);
+  if (!curr) return cvRandomSha();
+  const sorted = items
+    .filter(it => it.sha !== sha)
+    .map(it => ({ sha: it.sha, d: (it.x - curr.x) ** 2 + (it.y - curr.y) ** 2 }))
+    .sort((a, b) => a.d - b.d);
+  const top = sorted.slice(0, 8);
+  return top[Math.floor(Math.random() * top.length)].sha;
+}
+
 function cvPopupShow(sha) {
   cvPopupSha = sha;
   const overlay = document.getElementById('cv-popup-overlay');
@@ -12788,6 +12829,7 @@ function cvPopupShow(sha) {
   const labels  = item ? (item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ') || sha.slice(0,8) : sha.slice(0,8);
   overlay.querySelector('#cv-popup-label').textContent = labels;
   overlay.querySelector('#cv-popup-layer').textContent = '';
+  overlay.querySelectorAll('.cv-popup-speed-btn').forEach(b => b.classList.toggle('active', parseFloat(b.dataset.speed) === cvBreathSpeed));
   overlay.classList.add('open');
   if (cvPopupRaf) { cancelAnimationFrame(cvPopupRaf); cvPopupRaf = null; }
   const back  = overlay.querySelector('#cv-popup-img-back');
@@ -12809,7 +12851,7 @@ function cvPopupShow(sha) {
     function frame(now) {
       if (cvPopupSha !== sha) return;
       cvPopupRaf = requestAnimationFrame(frame);
-      const dt = last !== null ? now - last : 0; last = now; eff += dt;
+      const dt = last !== null ? now - last : 0; last = now; eff += dt * cvBreathSpeed;
       const active = CV_LAYERS.map((l,i)=>({...l,idx:i})).filter((_,i)=>cvLayerEnabled[i] && !imgs[i]?._failed);
       if (!active.length) return;
       const t = eff % CV_CYCLE_DURATION;
