@@ -758,7 +758,7 @@ body {
 .cv-slider-label { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); display:flex; justify-content:space-between; margin-bottom:0.15rem; }
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
-.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; will-change:scroll-position; }
+.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; }
 @media(max-width:900px){ .cv-grid-viewport { overflow-y:visible; max-height:none; overscroll-behavior:auto; } }
 #cv-popup-overlay { display:none; position:fixed; inset:0; background:transparent; z-index:5000; pointer-events:none; }
 #cv-popup-overlay.open { display:block; }
@@ -13722,17 +13722,31 @@ function cvGridRefreshVisible() {
   cvGridColCount = cols;
 
   const items = cvGridItems;
+
+  if (window.innerWidth <= 900) {
+    // Mobile: no virtual rendering — render all items (with lazy loading, browser handles it)
+    cvGridTopSpacerEl.style.height = '0';
+    cvGridBotSpacerEl.style.height = '0';
+    cvGridItemsEl.innerHTML = items.map(item => {
+      const url = cvAssetUrl(item.sha, cvGridDisplayLayer);
+      const label = (item.prefill_labels || []).join(', ');
+      return `<div class="cv-grid-thumb" data-sha="${item.sha}">
+        <img src="${url}" alt="" loading="lazy">
+        <div class="cv-grid-thumb-overlay">${item.sha.slice(0,8)} · ${label}</div>
+      </div>`;
+    }).join('');
+    cvGridItemsEl.querySelectorAll('.cv-grid-thumb').forEach(thumb => {
+      if (thumb.dataset.sha === cvCurrentSha) thumb.classList.add('current');
+      thumb.addEventListener('click', () => cvPopupShow(thumb.dataset.sha));
+    });
+    return;
+  }
+
   const rowH = CV_GRID_CELL + CV_GRID_GAP;
   const totalRows = Math.ceil(items.length / cols);
   const totalH = totalRows * rowH;
-  let scrollTop, vpH;
-  if (window.innerWidth <= 900) {
-    scrollTop = Math.max(0, -(cvGridScrollEl.getBoundingClientRect().top));
-    vpH = window.innerHeight;
-  } else {
-    scrollTop = cvGridScrollEl.scrollTop;
-    vpH = cvGridScrollEl.clientHeight || 600;
-  }
+  const vpH = cvGridScrollEl.clientHeight || 600;
+  const scrollTop = cvGridScrollEl.scrollTop;
 
   const firstRow = Math.max(0, Math.floor(scrollTop / rowH) - CV_GRID_BUFFER);
   const lastRow  = Math.min(totalRows - 1, Math.ceil((scrollTop + vpH) / rowH) + CV_GRID_BUFFER);
