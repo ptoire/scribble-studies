@@ -12297,7 +12297,9 @@ let cvGridTopSpacerEl = null;
 let cvGridBotSpacerEl = null;
 let cvGridRenderRaf = null;
 let cvGridRefreshing = false;
-let cvGridRefreshingTimer = null;
+let cvGridLastFirstRow = -1;
+let cvGridLastLastRow = -1;
+let cvGridLastCols = 0;
 const CV_GRID_CELL = 140;
 const CV_GRID_GAP = 8;
 const CV_GRID_BUFFER = 2;
@@ -13685,7 +13687,7 @@ function cvBuildGridHTML(container) {
     cvGridSortKey = e.target.value; cvGridApplyFilters();
   });
   container.querySelector('#cv-grid-display').addEventListener('change', e => {
-    cvGridDisplayLayer = e.target.value; cvGridRefreshVisible();
+    cvGridDisplayLayer = e.target.value; cvGridLastFirstRow = -1; cvGridRefreshVisible();
   });
 
   cvGridScrollEl      = container.querySelector('#cv-grid-viewport');
@@ -13724,6 +13726,7 @@ function cvGridApplyFilters() {
   if (countEl) countEl.textContent = `Showing ${filtered.length} of ${cvNeuralIndex.items.length}`;
 
   cvGridScrollEl.scrollTop = 0;
+  cvGridLastFirstRow = -1;
   cvGridRefreshVisible();
 
   if (cvCurrentSha && window.innerWidth > 900) {
@@ -13742,7 +13745,6 @@ function cvGridApplyFilters() {
 
 function cvGridOnScroll() {
   if (window.innerWidth <= 900) return;
-  if (cvGridRefreshing) return;
   if (cvGridRenderRaf) cancelAnimationFrame(cvGridRenderRaf);
   cvGridRenderRaf = requestAnimationFrame(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); });
 }
@@ -13775,8 +13777,6 @@ function cvGridRefreshVisible() {
   }
 
   if (cvGridRenderRaf) { cancelAnimationFrame(cvGridRenderRaf); cvGridRenderRaf = null; }
-  cvGridRefreshing = true;
-  requestAnimationFrame(() => { cvGridRefreshing = false; });
 
   const rowH = CV_GRID_CELL + CV_GRID_GAP;
   const totalRows = Math.ceil(items.length / cols);
@@ -13789,6 +13789,11 @@ function cvGridRefreshVisible() {
 
   cvGridTopSpacerEl.style.height = (firstRow * rowH) + 'px';
   cvGridBotSpacerEl.style.height = Math.max(0, totalH - (lastRow + 1) * rowH) + 'px';
+
+  if (firstRow === cvGridLastFirstRow && lastRow === cvGridLastLastRow && cols === cvGridLastCols) return;
+  cvGridLastFirstRow = firstRow;
+  cvGridLastLastRow  = lastRow;
+  cvGridLastCols     = cols;
 
   const visItems = items.slice(firstRow * cols, (lastRow + 1) * cols);
 
