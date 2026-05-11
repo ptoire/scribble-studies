@@ -12994,12 +12994,23 @@ function cvMapDraw() {
     const ci = items.find(it => it.sha === cvCurrentSha);
     if (ci) {
       const cx = ci.x * scale + ox, cy = -ci.y * scale + oy;
+      let ciColor = '#aaa';
+      if (cvMapColorMode === 'kellogg') {
+        ciColor = CV_K_COLORS[ci.label] || '#aaa';
+      } else if (cvMapColorMode === 'mono') {
+        ciColor = 'rgba(90,90,100,0.85)';
+      } else {
+        const ni = cvNeuralIndex._bySha[ci.sha];
+        const v = ni && ni.metrics_norm ? ni.metrics_norm[6] : 0;
+        const g = Math.round(220 - (v / maxCmplx) * 180);
+        ciColor = `rgb(${g},${g},${g})`;
+      }
       ctx.save();
       ctx.shadowColor = 'rgba(255,255,255,0.9)';
       ctx.shadowBlur = 12;
       ctx.beginPath();
       ctx.arc(cx, cy, r + 3.5, 0, Math.PI*2);
-      ctx.fillStyle = '#fff';
+      ctx.fillStyle = ciColor;
       ctx.fill();
       ctx.restore();
       ctx.beginPath();
