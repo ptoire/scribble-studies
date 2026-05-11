@@ -12382,17 +12382,8 @@ function buildCVSection() {
     pop.querySelector('#cv-popup-random-btn').addEventListener('click', () => {
       cvPopupShow(cvRandomSha());
     });
-    pop.querySelector('#cv-popup-similar-btn').addEventListener('click', async () => {
-      if (!cvPopupSha) return;
-      const grid = pop.querySelector('#cv-popup-similar-grid');
-      const shas = await cvPopupFindSimilar(cvPopupSha, 8);
-      grid.innerHTML = shas.map(s =>
-        `<div class="cv-popup-sim-thumb" data-sha="${s}"><img src="${cvAssetUrl(s,'original.jpg')}" alt=""></div>`
-      ).join('');
-      grid.classList.add('open');
-      grid.querySelectorAll('.cv-popup-sim-thumb').forEach(el => {
-        el.addEventListener('click', () => { grid.classList.remove('open'); cvPopupShow(el.dataset.sha); });
-      });
+    pop.querySelector('#cv-popup-similar-btn').addEventListener('click', () => {
+      if (cvPopupSha) cvPopupLoadSimilar(cvPopupSha);
     });
     pop.querySelectorAll('.cv-popup-speed-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -12841,6 +12832,21 @@ function cvStartBreathing(sha, preloadedImgs) {
 let cvPopupRaf  = null;
 let cvPopupSha  = null;
 
+async function cvPopupLoadSimilar(sha) {
+  const overlay = document.getElementById('cv-popup-overlay');
+  if (!overlay) return;
+  const grid = overlay.querySelector('#cv-popup-similar-grid');
+  grid.classList.add('open');
+  const shas = await cvPopupFindSimilar(sha, 8);
+  if (cvPopupSha !== sha) return;
+  grid.innerHTML = shas.map(s =>
+    `<div class="cv-popup-sim-thumb" data-sha="${s}"><img src="${cvAssetUrl(s,'original.jpg')}" alt=""></div>`
+  ).join('');
+  grid.querySelectorAll('.cv-popup-sim-thumb').forEach(el => {
+    el.addEventListener('click', () => cvPopupShow(el.dataset.sha));
+  });
+}
+
 async function cvPopupFindSimilar(sha, n = 8) {
   const data = await cvLoadUmapData('fused');
   const items = data.items;
@@ -12864,9 +12870,9 @@ function cvPopupShow(sha) {
   const labels  = item ? (item.prefill_labels || []).filter(l => /^K-[A-I]$/.test(l)).join(', ') || sha.slice(0,8) : sha.slice(0,8);
   overlay.querySelector('#cv-popup-label').textContent = labels;
   overlay.querySelector('#cv-popup-layer').textContent = '';
-  overlay.querySelector('#cv-popup-similar-grid').classList.remove('open');
   overlay.querySelectorAll('.cv-popup-speed-btn').forEach(b => b.classList.toggle('active', parseFloat(b.dataset.speed) === cvBreathSpeed));
   overlay.classList.add('open');
+  cvPopupLoadSimilar(sha);
   if (cvPopupRaf) { cancelAnimationFrame(cvPopupRaf); cvPopupRaf = null; }
   const back  = overlay.querySelector('#cv-popup-img-back');
   const front = overlay.querySelector('#cv-popup-img-front');
