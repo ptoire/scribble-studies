@@ -759,7 +759,7 @@ body {
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
 .cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; }
-@media(max-width:900px){ .cv-grid-viewport { overflow-y:visible; max-height:none; overscroll-behavior:auto; } }
+@media(max-width:900px){ .cv-grid-viewport { overflow-y:scroll; max-height:65vh; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; } }
 #cv-popup-overlay { display:none; position:fixed; inset:0; background:transparent; z-index:5000; pointer-events:none; }
 #cv-popup-overlay.open { display:block; }
 #cv-popup-box { pointer-events:auto; position:absolute; right:24px; top:72px; background:var(--c-bg-card); border:1px solid var(--c-border-light); border-radius:8px; box-shadow:0 8px 32px rgba(0,0,0,0.22); padding:0.8rem; width:300px; display:flex; flex-direction:column; gap:0.5rem; }
@@ -13682,7 +13682,7 @@ function cvGridApplyFilters() {
   const countEl = document.getElementById('cv-grid-count');
   if (countEl) countEl.textContent = `Showing ${filtered.length} of ${cvNeuralIndex.items.length}`;
 
-  if (window.innerWidth > 900) cvGridScrollEl.scrollTop = 0;
+  cvGridScrollEl.scrollTop = 0;
   cvGridRefreshVisible();
 
   if (cvCurrentSha && window.innerWidth > 900) {
