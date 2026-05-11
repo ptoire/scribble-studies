@@ -3800,6 +3800,7 @@ function initMobileToggles() {
     const btn = document.createElement('button');
     btn.className = 'mob-toggle-btn';
     btn.textContent = '\u25bc Show full text';
+    if (intro.style.display === 'none') btn.style.display = 'none';
     btn.addEventListener('click', () => {
       const open = intro.classList.toggle('mob-open');
       btn.textContent = open ? '\u25b2 Hide text' : '\u25bc Show full text';
@@ -12479,12 +12480,16 @@ async function cvSwitchView(view, sha, noScroll) {
     cvMapDetailRaf = null;
   }
 
-  document.getElementById('cv-view-single').style.display    = view === 'single' ? '' : 'none';
-  document.getElementById('cv-caption-single').style.display = view === 'single' ? '' : 'none';
-  document.getElementById('cv-view-map').style.display       = view === 'map'    ? '' : 'none';
-  document.getElementById('cv-caption-map').style.display    = view === 'map'    ? '' : 'none';
-  document.getElementById('cv-view-grid').style.display      = view === 'grid'   ? '' : 'none';
-  document.getElementById('cv-caption-grid').style.display   = view === 'grid'   ? '' : 'none';
+  document.getElementById('cv-view-single').style.display = view === 'single' ? '' : 'none';
+  document.getElementById('cv-view-map').style.display    = view === 'map'    ? '' : 'none';
+  document.getElementById('cv-view-grid').style.display   = view === 'grid'   ? '' : 'none';
+  ['single','map','grid'].forEach(v => {
+    const cap = document.getElementById('cv-caption-' + v);
+    const vis = view === v;
+    cap.style.display = vis ? '' : 'none';
+    const nb = cap.nextElementSibling;
+    if (nb && nb.classList.contains('mob-toggle-btn')) nb.style.display = vis ? '' : 'none';
+  });
 
   if (!cvDataLoaded) await cvLoadData();
   if (!cvDataLoaded) return;
