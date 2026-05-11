@@ -13220,7 +13220,7 @@ function cvShowGrid() {
     container.dataset.built = '1';
     cvBuildGridHTML(container);
   }
-  if (cvCurrentSha) cvGridResetMetricFilters();
+  if (cvCurrentSha) cvGridFocusOnSha(cvCurrentSha);
   cvGridApplyFilters();
 }
 
@@ -13233,6 +13233,38 @@ function cvGridResetMetricFilters() {
     if (lo) lo.value = '0';
     if (hi) hi.value = '1';
     if (lbl) lbl.textContent = '0.00 – 1.00';
+  });
+}
+
+function cvGridFocusOnSha(sha) {
+  const item = cvNeuralIndex._bySha[sha];
+  if (!item || !item.metrics_norm) { cvGridResetMetricFilters(); return; }
+
+  const sliderKeys = ['ink_ratio', 'complexity_score', 'num_components', 'junction_count'];
+
+  // Find the metric furthest from the centre (most distinctive for this image)
+  let bestKey = null, bestDist = -1;
+  sliderKeys.forEach(k => {
+    const v = item.metrics_norm[CV_METRIC_IDX[k]] || 0;
+    const d = Math.abs(v - 0.5);
+    if (d > bestDist) { bestDist = d; bestKey = k; }
+  });
+
+  // Reset all filters to [0,1], then narrow only the most distinctive one
+  sliderKeys.forEach(k => {
+    let lo = 0, hi = 1;
+    if (k === bestKey) {
+      const v = item.metrics_norm[CV_METRIC_IDX[k]] || 0;
+      lo = Math.max(0, parseFloat((v - 0.10).toFixed(2)));
+      hi = Math.min(1, parseFloat((v + 0.10).toFixed(2)));
+    }
+    cvGridMetricFilters[k] = [lo, hi];
+    const loEl = document.getElementById('cv-sl-lo-' + k);
+    const hiEl = document.getElementById('cv-sl-hi-' + k);
+    const lblEl = document.getElementById('cv-sl-val-' + k);
+    if (loEl) loEl.value = lo;
+    if (hiEl) hiEl.value = hi;
+    if (lblEl) lblEl.textContent = lo.toFixed(2) + ' – ' + hi.toFixed(2);
   });
 }
 
