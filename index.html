@@ -758,7 +758,7 @@ body {
 .cv-slider-label { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); display:flex; justify-content:space-between; margin-bottom:0.15rem; }
 .cv-slider-item input[type=range] { width:100%; accent-color:var(--c-accent); height:3px; }
 .cv-grid-count { font-family:var(--font-mono); font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
-.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; }
+.cv-grid-viewport { overflow-y:auto; position:relative; max-height:80vh; overscroll-behavior:contain; overflow-anchor:none; }
 @media(max-width:900px){ .cv-grid-viewport { overflow-y:scroll; max-height:65vh; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; } }
 #cv-popup-overlay { display:none; position:fixed; inset:0; background:transparent; z-index:5000; pointer-events:none; }
 #cv-popup-overlay.open { display:block; }
