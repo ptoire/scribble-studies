@@ -782,7 +782,7 @@ body {
 .cv-popup-sim-thumb:hover { border-color:var(--c-accent); }
 .cv-popup-sim-thumb img { display:block; width:100%; height:100%; object-fit:contain; }
 .cv-grid-spacer-top,.cv-grid-spacer-bottom { width:100%; pointer-events:none; }
-.cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:0.6rem; }
+.cv-grid-items { display:grid; grid-template-columns:repeat(auto-fill,140px); gap:8px; justify-content:start; }
 .cv-grid-thumb { position:relative; cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; background:#fff; transition:border-color 0.12s,box-shadow 0.12s; }
 .cv-grid-thumb:hover { border-color:var(--c-accent); box-shadow:var(--shadow-sm); }
 .cv-grid-thumb.current { border-color:var(--c-accent); box-shadow:0 0 0 2px var(--c-accent); }
@@ -12296,6 +12296,7 @@ let cvGridItemsEl = null;
 let cvGridTopSpacerEl = null;
 let cvGridBotSpacerEl = null;
 let cvGridRenderRaf = null;
+let cvGridRefreshing = false;
 const CV_GRID_CELL = 140;
 const CV_GRID_GAP = 8;
 const CV_GRID_BUFFER = 2;
@@ -13738,8 +13739,9 @@ function cvGridApplyFilters() {
 
 function cvGridOnScroll() {
   if (window.innerWidth <= 900) return;
+  if (cvGridRefreshing) return;
   if (cvGridRenderRaf) clearTimeout(cvGridRenderRaf);
-  cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 100);
+  cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 60);
 }
 
 function cvGridRefreshVisible() {
@@ -13768,6 +13770,9 @@ function cvGridRefreshVisible() {
     });
     return;
   }
+
+  cvGridRefreshing = true;
+  requestAnimationFrame(() => { cvGridRefreshing = false; });
 
   const rowH = CV_GRID_CELL + CV_GRID_GAP;
   const totalRows = Math.ceil(items.length / cols);
