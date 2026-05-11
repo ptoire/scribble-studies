@@ -12297,6 +12297,7 @@ let cvGridTopSpacerEl = null;
 let cvGridBotSpacerEl = null;
 let cvGridRenderRaf = null;
 let cvGridRefreshing = false;
+let cvGridRefreshingTimer = null;
 const CV_GRID_CELL = 140;
 const CV_GRID_GAP = 8;
 const CV_GRID_BUFFER = 2;
@@ -13740,8 +13741,8 @@ function cvGridApplyFilters() {
 function cvGridOnScroll() {
   if (window.innerWidth <= 900) return;
   if (cvGridRefreshing) return;
-  if (cvGridRenderRaf) clearTimeout(cvGridRenderRaf);
-  cvGridRenderRaf = setTimeout(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); }, 60);
+  if (cvGridRenderRaf) cancelAnimationFrame(cvGridRenderRaf);
+  cvGridRenderRaf = requestAnimationFrame(() => { cvGridRenderRaf = null; cvGridRefreshVisible(); });
 }
 
 function cvGridRefreshVisible() {
@@ -13771,8 +13772,10 @@ function cvGridRefreshVisible() {
     return;
   }
 
+  if (cvGridRenderRaf) { cancelAnimationFrame(cvGridRenderRaf); cvGridRenderRaf = null; }
   cvGridRefreshing = true;
-  requestAnimationFrame(() => { cvGridRefreshing = false; });
+  clearTimeout(cvGridRefreshingTimer);
+  cvGridRefreshingTimer = setTimeout(() => { cvGridRefreshing = false; }, 200);
 
   const rowH = CV_GRID_CELL + CV_GRID_GAP;
   const totalRows = Math.ceil(items.length / cols);
