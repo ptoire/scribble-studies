@@ -13220,7 +13220,20 @@ function cvShowGrid() {
     container.dataset.built = '1';
     cvBuildGridHTML(container);
   }
+  if (cvCurrentSha) cvGridResetMetricFilters();
   cvGridApplyFilters();
+}
+
+function cvGridResetMetricFilters() {
+  Object.keys(cvGridMetricFilters).forEach(k => {
+    cvGridMetricFilters[k] = [0, 1];
+    const lo = document.getElementById('cv-sl-lo-' + k);
+    const hi = document.getElementById('cv-sl-hi-' + k);
+    const lbl = document.getElementById('cv-sl-val-' + k);
+    if (lo) lo.value = '0';
+    if (hi) hi.value = '1';
+    if (lbl) lbl.textContent = '0.00 – 1.00';
+  });
 }
 
 function cvBuildGridHTML(container) {
@@ -13357,13 +13370,13 @@ function cvGridApplyFilters() {
   if (cvCurrentSha) {
     const idx = filtered.findIndex(it => it.sha === cvCurrentSha);
     if (idx >= 0) {
-      requestAnimationFrame(() => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
         const cols = Math.max(3, Math.floor((cvGridScrollEl.clientWidth + CV_GRID_GAP) / (CV_GRID_CELL + CV_GRID_GAP)));
         const rowH = CV_GRID_CELL + CV_GRID_GAP;
         const vpH = cvGridScrollEl.clientHeight || 600;
         cvGridScrollEl.scrollTop = Math.max(0, Math.floor(idx / cols) * rowH - vpH / 2 + rowH / 2);
         cvGridRefreshVisible();
-      });
+      }));
     }
   }
 }
