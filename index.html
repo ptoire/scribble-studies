@@ -12856,6 +12856,8 @@ async function cvPopupFindSimilar(sha, n = 8) {
 
 function cvPopupShow(sha) {
   cvPopupSha = sha;
+  cvCurrentSha = sha;
+  cvMapNeedsRedraw = true;
   const overlay = document.getElementById('cv-popup-overlay');
   if (!overlay) return;
   const item    = cvNeuralIndex._bySha[sha];
