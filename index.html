@@ -749,6 +749,8 @@ body {
 #cv-popup-open-btn { font-family:var(--font-mono); font-size:0.65rem; padding:0.4em 1em; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm); color:var(--c-text); cursor:pointer; align-self:stretch; text-align:center; }
 #cv-popup-open-btn:hover { border-color:var(--c-accent); color:var(--c-accent); }
 #cv-popup-controls { display:flex; align-items:center; gap:0.3rem; flex-wrap:wrap; }
+#cv-popup-similar-caption { display:none; font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); text-align:right; margin-top:-0.1rem; }
+#cv-popup-similar-grid.open + #cv-popup-similar-caption { display:block; }
 #cv-popup-similar-grid { display:none; grid-template-columns:repeat(4,1fr); gap:0.3rem; }
 #cv-popup-similar-grid.open { display:grid; }
 .cv-popup-sim-thumb { cursor:pointer; border:1px solid var(--c-border-light); border-radius:3px; overflow:hidden; aspect-ratio:1; background:#f5f5f5; transition:border-color 0.1s; }
@@ -12343,9 +12345,9 @@ function buildCVSection() {
         </div>
         <span id="cv-popup-layer"></span>
         <div id="cv-popup-similar-grid"></div>
+        <div id="cv-popup-similar-caption">Similar images</div>
         <div id="cv-popup-controls">
           <button class="cv-ctrl-btn" id="cv-popup-random-btn">Random</button>
-          <button class="cv-ctrl-btn" id="cv-popup-similar-btn">Similar</button>
           <span class="cv-speed-bar">
             <span class="cv-speed-label">Speed</span>
             <button class="cv-ctrl-btn cv-popup-speed-btn" data-speed="0.5">×0.5</button>
@@ -12381,9 +12383,6 @@ function buildCVSection() {
     document.addEventListener('mouseup', () => { _drag = false; topBar.classList.remove('dragging'); });
     pop.querySelector('#cv-popup-random-btn').addEventListener('click', () => {
       cvPopupShow(cvRandomSha());
-    });
-    pop.querySelector('#cv-popup-similar-btn').addEventListener('click', () => {
-      if (cvPopupSha) cvPopupLoadSimilar(cvPopupSha);
     });
     pop.querySelectorAll('.cv-popup-speed-btn').forEach(btn => {
       btn.addEventListener('click', () => {
