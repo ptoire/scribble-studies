@@ -678,6 +678,8 @@ body {
 .cv-has-tip::after { content:attr(data-tip); position:absolute; left:0; bottom:calc(100% + 5px); background:var(--c-text); color:var(--c-bg); font-family:var(--font-body); font-style:normal; font-size:0.68rem; line-height:1.45; padding:0.35em 0.55em; border-radius:3px; width:max-content; max-width:210px; white-space:normal; pointer-events:none; opacity:0; transition:opacity 0.15s; z-index:200; }
 .cv-has-tip:hover::after { opacity:1; }
 .cv-controls { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; justify-content:flex-start; }
+.cv-speed-bar { display:flex; align-items:center; gap:0.25rem; margin-left:0.5rem; padding-left:0.6rem; border-left:1px solid var(--c-border-light); }
+.cv-speed-label { font-family:var(--font-mono); font-size:0.62rem; color:var(--c-text-tertiary); letter-spacing:0.04em; margin-right:0.1rem; }
 .cv-ctrl-btn { font-family:var(--font-mono); font-size:0.68rem; padding:0.3rem 0.7rem; border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-card); color:var(--c-text-secondary); cursor:pointer; transition:all 0.12s; }
 .cv-ctrl-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
 .cv-ctrl-btn.active { background:var(--c-text); color:#fff; border-color:var(--c-text); }
@@ -12224,6 +12226,7 @@ let cvLayerEnabled = CV_LAYERS.map(() => true);
 /* -- breathing -- */
 let cvBreathRaf = null;
 let cvBreathPaused = false;
+let cvBreathSpeed = 1;
 
 /* -- map -- */
 let cvMapCanvas = null;
@@ -12518,6 +12521,13 @@ function cvBuildSingleHTML() {
         <div class="cv-controls">
           <button class="cv-ctrl-btn" id="cv-btn-playpause">Pause</button>
           <button class="cv-ctrl-btn" id="cv-btn-random">Random</button>
+          <span class="cv-speed-bar">
+            <span class="cv-speed-label">Speed</span>
+            <button class="cv-ctrl-btn cv-speed-btn" data-speed="0.5">×0.5</button>
+            <button class="cv-ctrl-btn cv-speed-btn active" data-speed="1">×1</button>
+            <button class="cv-ctrl-btn cv-speed-btn" data-speed="2">×2</button>
+            <button class="cv-ctrl-btn cv-speed-btn" data-speed="3">×3</button>
+          </span>
         </div>
       </div>
       <div class="cv-single-right">
@@ -12581,6 +12591,13 @@ function cvInitSingleEvents(container) {
 
   container.querySelectorAll('.cv-layer-toggle input').forEach(cb => {
     cb.addEventListener('change', () => { cvLayerEnabled[parseInt(cb.dataset.layer)] = cb.checked; });
+  });
+
+  container.querySelectorAll('.cv-speed-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cvBreathSpeed = parseFloat(btn.dataset.speed);
+      container.querySelectorAll('.cv-speed-btn').forEach(b => b.classList.toggle('active', b === btn));
+    });
   });
 }
 
@@ -12729,7 +12746,7 @@ function cvStartBreathing(sha, preloadedImgs) {
 
     const dt = lastTime !== null ? now - lastTime : 0;
     lastTime = now;
-    if (!cvBreathPaused) effectiveTime += dt;
+    if (!cvBreathPaused) effectiveTime += dt * cvBreathSpeed;
 
     const activeLayers = CV_LAYERS.map((l,i) => ({...l, idx:i})).filter((_,i) => cvLayerEnabled[i] && !preloadedImgs[i]?._failed);
     if (!activeLayers.length) return;
