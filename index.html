@@ -3106,7 +3106,12 @@ function buildNav() {
   const taxBtn = document.createElement('button');
   taxBtn.className = 'nav-btn';
   taxBtn.innerHTML = '&#9783; Taxonomy &#9660;';
-  taxBtn.onclick = (e) => { e.stopPropagation(); wrap.classList.toggle('open'); };
+  taxBtn.onclick = (e) => {
+    e.stopPropagation();
+    wrap.classList.toggle('open');
+    document.getElementById('taxonomy-section').scrollIntoView({behavior:'smooth', block:'start'});
+    history.replaceState(null, '', '#taxonomy-section');
+  };
   wrap.appendChild(taxBtn);
 
   const menu = document.createElement('div');
