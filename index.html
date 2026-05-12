@@ -894,7 +894,13 @@ body {
   cursor:pointer; color:var(--c-text-secondary); }
 .arch-clear-btn:hover { background:var(--c-border); }
 .arch-selected-count { font-size:0.75rem; font-family:var(--font-mono); color:var(--c-text-secondary); }
-.arch-codes { display:flex; flex-wrap:wrap; gap:0.22rem; margin-top:0.35rem; }
+.arch-codes { display:grid; grid-template-columns:1fr 1fr; gap:0.2rem; margin-top:0.35rem; }
+.arch-group-hdr { width:100%; background:none; border:none; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:space-between; text-align:left; }
+.arch-group-hdr:hover .cv-panel-title { color:var(--c-accent); }
+.arch-side-section.arch-group-active .cv-panel-title { color:var(--c-accent); }
+.arch-group-sel { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-accent); white-space:nowrap; }
+.arch-ctrl-row { display:flex; gap:0.4rem; flex-wrap:wrap; align-items:center; }
+.arch-card-names { font-size:0.68rem; font-family:var(--font-mono); color:var(--c-text-secondary); margin-bottom:0.25rem; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .arch-btn { font-size:0.73rem; font-family:var(--font-mono); padding:0.18em 0.45em;
   border:1px solid var(--c-border-light); border-radius:3px; background:var(--c-tag-bg);
   color:var(--c-tag-text); cursor:pointer; transition:background 0.1s,color 0.1s,border-color 0.1s; }
@@ -4153,8 +4159,11 @@ function buildArchiveSection() {
     const btns = validCodes.map(([code]) =>
       `<button class="arch-btn" data-code="${code}" onclick="archiveToggle('${code}')" title="${codes[code]}">${code}</button>`
     ).join('');
-    return `<div class="arch-side-section">
-      <div class="cv-panel-title">${letter}. ${groupName}</div>
+    return `<div class="arch-side-section" data-group="${letter}">
+      <button class="arch-group-hdr" onclick="archiveToggleGroup('${letter}')">
+        <span class="cv-panel-title" style="pointer-events:none">${letter}. ${groupName}</span>
+        <span class="arch-group-sel" id="arch-gc-${letter}"></span>
+      </button>
       <div class="arch-codes">${btns}</div>
     </div>`;
   }).join('');
@@ -4178,95 +4187,118 @@ function buildArchiveSection() {
     <div class="arch-layout">
       <div class="arch-side">
         <div class="arch-side-section">
-          <div class="arch-clear-row">
-            <button class="arch-clear-btn" onclick="archiveClearAll()">Clear selection</button>
-            <span class="arch-selected-count" id="arch-count"></span>
+          <div class="arch-ctrl-row">
+            <button class="arch-clear-btn" onclick="archiveSelectAll()">Select all</button>
+            <button class="arch-clear-btn" onclick="archiveClearAll()">Clear all</button>
           </div>
+          <div class="arch-selected-count" id="arch-count" style="margin-top:0.4rem;font-size:0.72rem"></div>
         </div>
         ${filterHTML}
       </div>
       <div>
-        <div class="arch-grid" id="arch-grid">
-          <div class="arch-empty">Select one or more categories to browse annotated images.</div>
-        </div>
+        <div class="arch-grid-hdr" id="arch-grid-hdr" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--c-text-secondary);margin-bottom:0.5rem"></div>
+        <div class="arch-grid" id="arch-grid"></div>
       </div>
     </div>
   `;
   main.appendChild(section);
+  archiveRender();
 }
 
-function archiveToggle(code) {
-  const isMobile = window.innerWidth <= 900;
-  const wasSelected = archiveSelected.has(code);
-  if (isMobile) {
-    archiveSelected.clear();
-    if (!wasSelected) archiveSelected.add(code);
-  } else {
-    if (wasSelected) archiveSelected.delete(code);
-    else archiveSelected.add(code);
+function getCodeName(code) {
+  for (const codes of Object.values(ANN_TAXONOMY)) {
+    if (codes[code] && codes[code] !== code) return codes[code];
   }
+  return code;
+}
+
+function archiveUpdateUI() {
   document.querySelectorAll('#archive-section .arch-btn').forEach(b => {
     b.classList.toggle('active', archiveSelected.has(b.dataset.code));
   });
+  Object.entries(ANN_TAXONOMY).forEach(([group, codes]) => {
+    const letter = group.split('-')[1];
+    const validCodes = Object.entries(codes).filter(([c, n]) => n !== c).map(([c]) => c);
+    const selCount = validCodes.filter(c => archiveSelected.has(c)).length;
+    const gcEl = document.getElementById(`arch-gc-${letter}`);
+    const sectionEl = document.querySelector(`#archive-section .arch-side-section[data-group="${letter}"]`);
+    if (gcEl) gcEl.textContent = selCount ? `${selCount}/${validCodes.length}` : '';
+    if (sectionEl) sectionEl.classList.toggle('arch-group-active', selCount > 0);
+  });
   const count = document.getElementById('arch-count');
   if (count) count.textContent = archiveSelected.size ? `${archiveSelected.size} selected` : '';
+}
+
+function archiveToggle(code) {
+  if (archiveSelected.has(code)) archiveSelected.delete(code);
+  else archiveSelected.add(code);
+  archiveUpdateUI();
+  archiveRender();
+}
+
+function archiveToggleGroup(letter) {
+  const group = 'K-' + letter;
+  const codes = ANN_TAXONOMY[group];
+  if (!codes) return;
+  const validCodes = Object.entries(codes).filter(([c, n]) => n !== c).map(([c]) => c);
+  const allSelected = validCodes.every(c => archiveSelected.has(c));
+  if (allSelected) validCodes.forEach(c => archiveSelected.delete(c));
+  else validCodes.forEach(c => archiveSelected.add(c));
+  archiveUpdateUI();
+  archiveRender();
+}
+
+function archiveSelectAll() {
+  Object.entries(ANN_TAXONOMY).forEach(([group, codes]) => {
+    Object.entries(codes).filter(([c, n]) => n !== c).forEach(([c]) => archiveSelected.add(c));
+  });
+  archiveUpdateUI();
   archiveRender();
 }
 
 function archiveClearAll() {
   archiveSelected.clear();
-  document.querySelectorAll('#archive-section .arch-btn').forEach(b => b.classList.remove('active'));
-  const count = document.getElementById('arch-count');
-  if (count) count.textContent = '';
+  archiveUpdateUI();
   archiveRender();
 }
 
 function archiveRender() {
   const grid = document.getElementById('arch-grid');
+  const hdr = document.getElementById('arch-grid-hdr');
   if (!grid) return;
-  if (!archiveSelected.size) {
-    grid.innerHTML = '<div class="arch-empty">Select one or more categories above to browse images.</div>';
-    return;
-  }
   const sel = [...archiveSelected];
   const store = annStore();
   const results = [];
   (annItems || []).forEach(item => {
     const rec = store[item.sha] || {};
-    // Labels from two sources
     const prefillSet = new Set(item.prefill_labels || []);
     const manualSet  = new Set([...(rec.human_secondary || []), ...(rec.human_where || [])]);
-    // Only show if at least one selected category appears in either source
-    const matchPrefill = sel.some(c => prefillSet.has(c));
-    const matchManual  = sel.some(c => manualSet.has(c));
-    if (matchPrefill || matchManual) {
+    if (!sel.length) {
       results.push({ item, prefillSet, manualSet });
+    } else {
+      const matchPrefill = sel.some(c => prefillSet.has(c));
+      const matchManual  = sel.some(c => manualSet.has(c));
+      if (matchPrefill || matchManual) results.push({ item, prefillSet, manualSet });
     }
   });
+  const total = (annItems || []).length;
+  if (hdr) {
+    if (!sel.length) hdr.textContent = `showing all ${total}`;
+    else hdr.textContent = `showing ${results.length} of ${total}`;
+  }
   if (!results.length) {
     grid.innerHTML = '<div class="arch-empty">No images found for the selected categories.</div>';
     return;
   }
-  // On mobile with a single selection, show the category name above the grid
-  let mobileLabel = '';
-  if (window.innerWidth <= 900 && archiveSelected.size === 1) {
-    const selCode = [...archiveSelected][0];
-    const btn = document.querySelector(`.arch-btn[data-code="${selCode}"]`);
-    const name = btn?.title || '';
-    if (name) mobileLabel = `<div class="arch-mobile-label">${selCode} · ${name}</div>`;
-  }
-  grid.innerHTML = mobileLabel + results.map(({ item, prefillSet, manualSet }) => {
-    // Build chip list: manual first (highlighted), then prefill-only
+  grid.innerHTML = results.map(({ item, prefillSet, manualSet }) => {
     const allCodes = new Set([...manualSet, ...prefillSet]);
     const chips = [...allCodes].sort().map(code => {
-      const isManual  = manualSet.has(code);
-      const isPrefill = prefillSet.has(code);
-      const matchCls  = archiveSelected.has(code) ? ' match' : '';
-      const srcCls    = isManual ? ' arch-chip-manual' : ' arch-chip-prefill';
+      const isManual = manualSet.has(code);
+      const matchCls = archiveSelected.has(code) ? ' match' : '';
+      const srcCls   = isManual ? ' arch-chip-manual' : ' arch-chip-prefill';
       return `<span class="arch-chip${matchCls}${srcCls}" data-code="${code}"
         onmouseenter="annTagHoverOn(event,this)" onmouseleave="annTagHoverOff()">${code}</span>`;
     }).join('');
-    // Source badge
     const hasManual  = manualSet.size > 0;
     const hasPrefill = prefillSet.size > 0;
     let sourceBadge = '';
@@ -4277,11 +4309,14 @@ function archiveRender() {
     } else {
       sourceBadge = `<div class="arch-source"><span class="arch-src-prefill">pre-classified by Rhoda Kellogg</span></div>`;
     }
-    const pathShort = (item.orig_path || item.sha.substring(0, 12) + '…').split('/').pop();
+    // Natural language names: matched codes if filter active, else first 3 codes
+    const nameCodes = sel.length ? sel.filter(c => allCodes.has(c)) : [...allCodes].sort().slice(0, 3);
+    const namesStr = nameCodes.map(c => getCodeName(c)).filter(Boolean).join(', ');
+    const namesSuffix = (!sel.length && allCodes.size > 3) ? ` +${allCodes.size - 3}` : '';
     return `<div class="arch-card">
       <img src="${BASE_URL}${item.img_url}" alt="" loading="lazy">
       <div class="arch-card-meta">
-        <div class="arch-card-path" title="${item.orig_path || ''}">${pathShort}</div>
+        <div class="arch-card-names" title="${item.orig_path || ''}">${namesStr}${namesSuffix}</div>
         ${sourceBadge}
         <div class="arch-chips">${chips}</div>
       </div>
