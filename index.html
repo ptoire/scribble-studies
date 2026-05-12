@@ -906,6 +906,8 @@ body {
   color:var(--c-tag-text); cursor:pointer; transition:background 0.1s,color 0.1s,border-color 0.1s; }
 .arch-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
 .arch-btn.active { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+.arch-grid-wrap { height:72vh; overflow-y:auto; overscroll-behavior:contain; border:1px solid var(--c-border-light); border-radius:4px; padding:8px; }
+@media(max-width:900px){ .arch-grid-wrap { height:60vh; } }
 .arch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px; }
 .arch-card { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; cursor:pointer; transition:border-color 0.12s,box-shadow 0.12s; }
 .arch-card:hover { border-color:var(--c-accent); box-shadow:var(--shadow-sm); }
@@ -4195,8 +4197,8 @@ function buildArchiveSection() {
         </div>
         ${filterHTML}
       </div>
-      <div>
-        <div class="arch-grid-hdr" id="arch-grid-hdr" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--c-text-secondary);margin-bottom:0.5rem"></div>
+      <div class="arch-grid-wrap">
+        <div class="arch-grid-hdr" id="arch-grid-hdr" style="font-family:var(--font-mono);font-size:0.72rem;color:var(--c-text-secondary);margin-bottom:0.5rem;padding:0 2px"></div>
         <div class="arch-grid" id="arch-grid"></div>
       </div>
     </div>
