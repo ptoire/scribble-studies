@@ -918,7 +918,7 @@ body {
   border:1px solid var(--c-border-light); border-radius:3px; background:var(--c-tag-bg);
   color:var(--c-tag-text); cursor:pointer; text-align:left; white-space:nowrap;
   transition:background 0.1s,color 0.1s,border-color 0.1s; }
-.arch-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
+@media(hover:hover){ .arch-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); } }
 .arch-btn.active { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
 .arch-grid-wrap { height:90vh; overflow-y:auto; overscroll-behavior:contain; border:1px solid var(--c-border-light); border-radius:4px; padding:8px; }
 .arch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px; }
