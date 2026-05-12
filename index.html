@@ -884,25 +884,25 @@ body {
   user-select: none;
 }
 .archive-section .section-note details[open] summary { margin-bottom: 0.4rem; }
-.arch-filters { margin-bottom: 1.2rem; }
-.arch-clear-row { display:flex; align-items:center; gap:0.6rem; margin-bottom:0.7rem; }
+.arch-layout { display:grid; grid-template-columns:200px 1fr; gap:1.5rem; align-items:start; }
+@media(max-width:900px){ .arch-layout{grid-template-columns:1fr} .arch-side{order:1;position:static!important} }
+.arch-side { display:flex; flex-direction:column; gap:0.6rem; position:sticky; top:3.5rem; }
+.arch-side-section { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; padding:0.75rem 0.85rem; }
+.arch-clear-row { display:flex; align-items:center; gap:0.6rem; }
 .arch-clear-btn { font-size:0.75rem; font-family:var(--font-mono); padding:0.2em 0.7em;
   border:1px solid var(--c-border); border-radius:3px; background:var(--c-bg-warm);
   cursor:pointer; color:var(--c-text-secondary); }
 .arch-clear-btn:hover { background:var(--c-border); }
 .arch-selected-count { font-size:0.75rem; font-family:var(--font-mono); color:var(--c-text-secondary); }
-.arch-group { margin-bottom:0.5rem; }
-.arch-group-name { font-size:0.72rem; font-family:var(--font-mono); font-weight:700;
-  letter-spacing:0.08em; text-transform:uppercase; color:var(--c-text-secondary);
-  margin-bottom:0.3rem; }
-.arch-codes { display:flex; flex-wrap:wrap; gap:0.22rem; }
+.arch-codes { display:flex; flex-wrap:wrap; gap:0.22rem; margin-top:0.35rem; }
 .arch-btn { font-size:0.73rem; font-family:var(--font-mono); padding:0.18em 0.45em;
   border:1px solid var(--c-border-light); border-radius:3px; background:var(--c-tag-bg);
   color:var(--c-tag-text); cursor:pointer; transition:background 0.1s,color 0.1s,border-color 0.1s; }
 .arch-btn:hover { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
 .arch-btn.active { background:var(--c-accent); color:#fff; border-color:var(--c-accent); }
-.arch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1rem; margin-top:0.8rem; }
-.arch-card { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; }
+.arch-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:8px; }
+.arch-card { background:var(--c-bg-warm); border:1px solid var(--c-border-light); border-radius:4px; overflow:hidden; cursor:pointer; transition:border-color 0.12s,box-shadow 0.12s; }
+.arch-card:hover { border-color:var(--c-accent); box-shadow:var(--shadow-sm); }
 .arch-card img { display:block; width:100%; aspect-ratio:4/3; object-fit:contain; background:#fff; padding:0.3rem; box-sizing:border-box; }
 .arch-card-meta { padding:0.4rem 0.5rem; }
 .arch-card-path { font-size:0.68rem; font-family:var(--font-mono); color:var(--c-text-secondary);
@@ -2154,8 +2154,8 @@ body {
   .is-archive-grid { grid-template-columns:repeat(2,1fr) !important; gap:0.5rem; }
   .is-archive-card-meta { font-size:0.58rem; }
 
-  /* Kellogg Archive: 6-column browse grid, image only */
-  .arch-grid { grid-template-columns:repeat(6,1fr) !important; gap:0.2rem !important; margin-top:0.4rem; }
+  /* Kellogg Archive: compact 4-column image-only grid on mobile */
+  .arch-grid { grid-template-columns:repeat(4,1fr) !important; gap:0.2rem !important; }
   .arch-card img { aspect-ratio:1/1; padding:0.1rem; }
   .arch-card-meta { display:none; }
   .arch-mobile-label { grid-column:1/-1; font-family:var(--font-mono); font-size:0.7rem; color:var(--c-accent); padding:0.3rem 0.1rem 0.1rem; }
@@ -4145,17 +4145,16 @@ function buildArchiveSection() {
     return;
   }
 
-  // Build filter buttons grouped by taxonomy group
   const filterHTML = Object.entries(ANN_TAXONOMY).map(([group, codes]) => {
     const validCodes = Object.entries(codes).filter(([c, n]) => n !== c);
     if (!validCodes.length) return '';
-    const letter = group.split('-')[1]; // 'A', 'B', ...
+    const letter = group.split('-')[1];
     const groupName = ANN_GROUP_NAMES[letter] || group;
     const btns = validCodes.map(([code]) =>
       `<button class="arch-btn" data-code="${code}" onclick="archiveToggle('${code}')" title="${codes[code]}">${code}</button>`
     ).join('');
-    return `<div class="arch-group">
-      <div class="arch-group-name">${letter}. ${groupName}</div>
+    return `<div class="arch-side-section">
+      <div class="cv-panel-title">${letter}. ${groupName}</div>
       <div class="arch-codes">${btns}</div>
     </div>`;
   }).join('');
@@ -4176,22 +4175,28 @@ function buildArchiveSection() {
         <p class="section-source">Maurer, D., Riboni, C., &amp; Gujer, B. (2009). Early pictures in ontogeny. <em>IMAGE: Zeitschrift für interdisziplinäre Bildwissenschaft, 9</em>(1), 15–23.</p>
       </details>
     </div>
-    <div class="arch-filters">
-      <div class="arch-clear-row">
-        <button class="arch-clear-btn" onclick="archiveClearAll()">Clear selection</button>
-        <span class="arch-selected-count" id="arch-count"></span>
+    <div class="arch-layout">
+      <div class="arch-side">
+        <div class="arch-side-section">
+          <div class="arch-clear-row">
+            <button class="arch-clear-btn" onclick="archiveClearAll()">Clear selection</button>
+            <span class="arch-selected-count" id="arch-count"></span>
+          </div>
+        </div>
+        ${filterHTML}
       </div>
-      ${filterHTML}
-    </div>
-    <div class="arch-grid" id="arch-grid">
-      <div class="arch-empty">Select one or more categories above to browse annotated images.</div>
+      <div>
+        <div class="arch-grid" id="arch-grid">
+          <div class="arch-empty">Select one or more categories to browse annotated images.</div>
+        </div>
+      </div>
     </div>
   `;
   main.appendChild(section);
 }
 
 function archiveToggle(code) {
-  const isMobile = window.innerWidth <= 600;
+  const isMobile = window.innerWidth <= 900;
   const wasSelected = archiveSelected.has(code);
   if (isMobile) {
     archiveSelected.clear();
@@ -4200,27 +4205,11 @@ function archiveToggle(code) {
     if (wasSelected) archiveSelected.delete(code);
     else archiveSelected.add(code);
   }
-  // Update button states
   document.querySelectorAll('#archive-section .arch-btn').forEach(b => {
     b.classList.toggle('active', archiveSelected.has(b.dataset.code));
   });
-  // Update count label
   const count = document.getElementById('arch-count');
   if (count) count.textContent = archiveSelected.size ? `${archiveSelected.size} selected` : '';
-  // On mobile: move grid immediately below the selected group
-  if (isMobile) {
-    const grid = document.getElementById('arch-grid');
-    if (grid) {
-      if (archiveSelected.size) {
-        const activeBtn = document.querySelector(`.arch-btn[data-code="${code}"]`);
-        const group = activeBtn?.closest('.arch-group');
-        if (group) group.after(grid);
-      } else {
-        const filters = document.querySelector('#archive-section .arch-filters');
-        if (filters) filters.after(grid);
-      }
-    }
-  }
   archiveRender();
 }
 
@@ -4260,7 +4249,7 @@ function archiveRender() {
   }
   // On mobile with a single selection, show the category name above the grid
   let mobileLabel = '';
-  if (window.innerWidth <= 600 && archiveSelected.size === 1) {
+  if (window.innerWidth <= 900 && archiveSelected.size === 1) {
     const selCode = [...archiveSelected][0];
     const btn = document.querySelector(`.arch-btn[data-code="${selCode}"]`);
     const name = btn?.title || '';
