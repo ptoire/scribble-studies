@@ -3117,7 +3117,9 @@ function buildNav() {
     item.textContent = `${GROUP_LETTERS[g]}. ${g}`;
     item.onclick = () => {
       wrap.classList.remove('open');
-      document.getElementById(`group-${GROUP_LETTERS[g]}`).scrollIntoView({behavior:'smooth', block:'start'});
+      const gid = `group-${GROUP_LETTERS[g]}`;
+      document.getElementById(gid).scrollIntoView({behavior:'smooth', block:'start'});
+      history.replaceState(null, '', '#' + gid);
     };
     menu.appendChild(item);
   });
@@ -3131,7 +3133,7 @@ function buildNav() {
   const aboutBtn = document.createElement('button');
   aboutBtn.className = 'nav-btn';
   aboutBtn.textContent = '\u2605 About';
-  aboutBtn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  aboutBtn.onclick = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); history.replaceState(null, '', window.location.pathname); };
   nav.appendChild(aboutBtn);
 
   // ── Other sections (in page order) ───────────────────────────────────────
@@ -3151,10 +3153,14 @@ function buildNav() {
     if (cv) {
       btn.onclick = () => {
         document.getElementById(id).scrollIntoView({behavior:'smooth'});
+        history.replaceState(null, '', '#' + id);
         cvSwitchView(cvCurrentView, cvCurrentSha, true);
       };
     } else {
-      btn.onclick = () => document.getElementById(id).scrollIntoView({behavior:'smooth'});
+      btn.onclick = () => {
+        document.getElementById(id).scrollIntoView({behavior:'smooth'});
+        history.replaceState(null, '', '#' + id);
+      };
     }
     nav.appendChild(btn);
   });
