@@ -904,7 +904,16 @@ body {
 .arch-side-section.arch-group-active .cv-panel-title { color:var(--c-accent); }
 .arch-group-sel { font-family:var(--font-mono); font-size:0.65rem; color:var(--c-accent); white-space:nowrap; }
 .arch-ctrl-row { display:flex; gap:0.4rem; flex-wrap:wrap; align-items:center; }
-.arch-card-names { font-size:0.68rem; font-family:var(--font-mono); color:var(--c-text-secondary); margin-bottom:0.25rem; line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.arch-card-names { font-size:0.68rem; font-family:var(--font-mono); color:var(--c-text-secondary); margin-bottom:0.25rem; line-height:1.3; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+.arch-lightbox { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:500; align-items:center; justify-content:center; padding:1rem; cursor:pointer; }
+.arch-lightbox.open { display:flex; }
+.arch-lightbox-inner { background:var(--c-bg-card); border-radius:8px; max-width:480px; width:100%; max-height:90vh; overflow-y:auto; padding:1rem; position:relative; cursor:default; }
+.arch-lightbox-img { display:block; width:100%; aspect-ratio:1; object-fit:contain; background:#fff; border-radius:4px; margin-bottom:0.75rem; }
+.arch-lightbox-close { position:absolute; top:0.5rem; right:0.5rem; background:none; border:1px solid var(--c-border); border-radius:3px; font-size:1rem; line-height:1; cursor:pointer; color:var(--c-text-secondary); padding:0.2rem 0.5rem; }
+.arch-lightbox-close:hover { background:var(--c-bg-warm); }
+.arch-lightbox-names { font-family:var(--font-mono); font-size:0.85rem; font-weight:600; margin-bottom:0.4rem; line-height:1.4; }
+.arch-lightbox-source { font-size:0.72rem; color:var(--c-text-secondary); margin-bottom:0.5rem; }
+.arch-lightbox-chips { display:flex; flex-wrap:wrap; gap:0.25rem; }
 .arch-btn { font-size:0.73rem; font-family:var(--font-mono); padding:0.18em 0.25em;
   border:1px solid var(--c-border-light); border-radius:3px; background:var(--c-tag-bg);
   color:var(--c-tag-text); cursor:pointer; text-align:left; white-space:nowrap;
@@ -4226,6 +4235,15 @@ function buildArchiveSection() {
         <div class="arch-grid" id="arch-grid"></div>
       </div>
     </div>
+    <div class="arch-lightbox" id="arch-lightbox" onclick="archLightboxClose(event)">
+      <div class="arch-lightbox-inner">
+        <button class="arch-lightbox-close" onclick="document.getElementById('arch-lightbox').classList.remove('open')">&#215;</button>
+        <img class="arch-lightbox-img" id="arch-lb-img" src="" alt="">
+        <div class="arch-lightbox-names" id="arch-lb-names"></div>
+        <div class="arch-lightbox-source" id="arch-lb-source"></div>
+        <div class="arch-lightbox-chips" id="arch-lb-chips"></div>
+      </div>
+    </div>
   `;
   main.appendChild(section);
   archiveRender();
@@ -4339,15 +4357,49 @@ function archiveRender() {
     const nameCodes = sel.length ? sel.filter(c => allCodes.has(c)) : [...allCodes].sort().slice(0, 3);
     const namesStr = nameCodes.map(c => getCodeName(c)).filter(Boolean).join(', ');
     const namesSuffix = (!sel.length && allCodes.size > 3) ? ` +${allCodes.size - 3}` : '';
-    return `<div class="arch-card">
+    return `<div class="arch-card" onclick="archLightboxOpen('${item.sha}')">
       <img src="${BASE_URL}${item.img_url}" alt="" loading="lazy">
       <div class="arch-card-meta">
-        <div class="arch-card-names" title="${item.orig_path || ''}">${namesStr}${namesSuffix}</div>
+        <div class="arch-card-names">${namesStr}${namesSuffix}</div>
         ${sourceBadge}
         <div class="arch-chips">${chips}</div>
       </div>
     </div>`;
   }).join('');
+}
+
+function archLightboxOpen(sha) {
+  const item = (annItems || []).find(i => i.sha === sha);
+  if (!item) return;
+  const rec = annStore()[sha] || {};
+  const prefillSet = new Set(item.prefill_labels || []);
+  const manualSet  = new Set([...(rec.human_secondary || []), ...(rec.human_where || [])]);
+  const allCodes   = new Set([...manualSet, ...prefillSet]);
+  const sel = [...archiveSelected];
+  const nameCodes  = sel.length ? sel.filter(c => allCodes.has(c)) : [...allCodes].sort();
+  const namesStr   = nameCodes.map(c => getCodeName(c)).join(', ') || sha.slice(0, 12);
+  const hasManual  = manualSet.size > 0;
+  const hasPrefill = prefillSet.size > 0;
+  let sourceStr = '';
+  if (hasManual && hasPrefill) sourceStr = 'manually annotated + pre-classified by Rhoda Kellogg';
+  else if (hasManual) sourceStr = 'manually annotated';
+  else sourceStr = 'pre-classified by Rhoda Kellogg';
+  const chips = [...allCodes].sort().map(code => {
+    const isManual = manualSet.has(code);
+    const matchCls = archiveSelected.has(code) ? ' match' : '';
+    const srcCls   = isManual ? ' arch-chip-manual' : ' arch-chip-prefill';
+    return `<span class="arch-chip${matchCls}${srcCls}">${code}</span>`;
+  }).join('');
+  document.getElementById('arch-lb-img').src = BASE_URL + item.img_url;
+  document.getElementById('arch-lb-names').textContent = namesStr;
+  document.getElementById('arch-lb-source').textContent = sourceStr;
+  document.getElementById('arch-lb-chips').innerHTML = chips;
+  document.getElementById('arch-lightbox').classList.add('open');
+}
+
+function archLightboxClose(e) {
+  if (e && e.target !== document.getElementById('arch-lightbox')) return;
+  document.getElementById('arch-lightbox').classList.remove('open');
 }
 
 function buildAnnotatorSection() {
