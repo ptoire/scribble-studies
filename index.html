@@ -131,8 +131,11 @@ body {
 .nav-btn:hover { background: var(--c-accent); color: #fff; border-color: var(--c-accent); }
 .nav-btn.active { background: var(--c-text); color: #fff; border-color: var(--c-text); }
 
-/* Nav dropdown */
+/* Nav dropdown / split button */
 .nav-dropdown { position: relative; }
+.nav-split-btn { display:flex; }
+.nav-split-left  { border-radius:3px 0 0 3px !important; border-right:none !important; }
+.nav-split-right { border-radius:0 3px 3px 0 !important; padding:0.35rem 0.45rem !important; }
 .nav-dropdown-menu {
   display: none;
   position: absolute;
@@ -3099,20 +3102,36 @@ async function init() {
 function buildNav() {
   const nav = document.getElementById('nav');
 
-  // ── Taxonomy dropdown ────────────────────────────────────────────────────
+  // ── About (top of page) — first button ────────────────────────────
+  const aboutBtn = document.createElement('button');
+  aboutBtn.className = 'nav-btn';
+  aboutBtn.textContent = '★ About';
+  aboutBtn.onclick = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); history.replaceState(null, '', window.location.pathname); };
+  nav.appendChild(aboutBtn);
+
+  // ── Taxonomy split button (nav label + arrow) ───────────────────────────────
   const wrap = document.createElement('div');
   wrap.className = 'nav-dropdown';
 
-  const taxBtn = document.createElement('button');
-  taxBtn.className = 'nav-btn';
-  taxBtn.innerHTML = '&#9783; Taxonomy &#9660;';
-  taxBtn.onclick = (e) => {
-    e.stopPropagation();
-    wrap.classList.toggle('open');
+  const splitWrap = document.createElement('div');
+  splitWrap.className = 'nav-split-btn';
+
+  const taxNavBtn = document.createElement('button');
+  taxNavBtn.className = 'nav-btn nav-split-left';
+  taxNavBtn.innerHTML = '&#9783; Taxonomy';
+  taxNavBtn.onclick = () => {
     document.getElementById('taxonomy-section').scrollIntoView({behavior:'smooth', block:'start'});
     history.replaceState(null, '', '#taxonomy-section');
   };
-  wrap.appendChild(taxBtn);
+
+  const taxArrowBtn = document.createElement('button');
+  taxArrowBtn.className = 'nav-btn nav-split-right';
+  taxArrowBtn.innerHTML = '&#9660;';
+  taxArrowBtn.onclick = (e) => { e.stopPropagation(); wrap.classList.toggle('open'); };
+
+  splitWrap.appendChild(taxNavBtn);
+  splitWrap.appendChild(taxArrowBtn);
+  wrap.appendChild(splitWrap);
 
   const menu = document.createElement('div');
   menu.className = 'nav-dropdown-menu';
@@ -3133,13 +3152,6 @@ function buildNav() {
 
   // Close dropdown when clicking outside
   document.addEventListener('click', () => wrap.classList.remove('open'));
-
-  // ── About (top of page) ──────────────────────────────────────────────────
-  const aboutBtn = document.createElement('button');
-  aboutBtn.className = 'nav-btn';
-  aboutBtn.textContent = '\u2605 About';
-  aboutBtn.onclick = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); history.replaceState(null, '', window.location.pathname); };
-  nav.appendChild(aboutBtn);
 
   // ── Other sections (in page order) ───────────────────────────────────────
   const sections = [
