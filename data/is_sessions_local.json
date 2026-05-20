@@ -1020,5 +1020,20 @@
     "total_strokes": 2,
     "total_points": 104,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_SPLITTING_1779254216273",
+    "schema_code": "SPLITTING",
+    "schema_name": "Splitting",
+    "schema_group": "Composition",
+    "timestamp": "2026-05-20T05:16:59.924Z",
+    "author": {
+      "username": "anon_1qcc5u",
+      "created_at": "2026-05-20T05:16:59.924Z"
+    },
+    "location": "Berlin, Germany",
+    "total_strokes": 3,
+    "total_points": 108,
+    "stroke_annotations": []
   }
 ]
