@@ -1125,5 +1125,20 @@
     "total_strokes": 5,
     "total_points": 242,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_CENTER_PERIPHERY_1779255490619",
+    "schema_code": "CENTER_PERIPHERY",
+    "schema_name": "Center-Periphery",
+    "schema_group": "Orientational",
+    "timestamp": "2026-05-20T05:38:12.699Z",
+    "author": {
+      "username": "anon_1qcc5u",
+      "created_at": "2026-05-20T05:38:12.699Z"
+    },
+    "location": "Berlin, Germany",
+    "total_strokes": 1,
+    "total_points": 460,
+    "stroke_annotations": []
   }
 ]
