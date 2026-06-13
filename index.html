@@ -6141,7 +6141,7 @@ const IMAGE_SCHEMATA = [
   "group": "Spatial Primitive",
   "disl_classification": "spatial primitive: entity",
   "definition": "A discrete, bounded entity in the perceptual field. In DISL (Hedblom et al. 2025), following Mandler & Pagán Cánovas (2014), OBJECT is a foundational entity primitive: one of the first building blocks of spatial cognition in infancy. An OBJECT is distinguished from REGION (extended but not bounded) and from CONTAINER (which has the specific affordance of containing other objects).",
-  "drawing_scene": "There is something on the surface. It has edges: you can tell where it begins and where it ends. It is discrete: it is not the ground, not the background, not an area. It is a thing.",
+  "drawing_scene": "There is a mark on the surface that has edges: a place where it begins and a place where it ends. It is bounded and discrete, distinct from the background and from any extended area. It is a single thing.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Object(a)",
     "scenes": [
@@ -6191,7 +6191,7 @@ const IMAGE_SCHEMATA = [
   "group": "Spatial Primitive",
   "disl_classification": "spatial primitive: entity + primitive amalgamation",
   "definition": "A bounded region with a distinct interior, boundary, and exterior. CONTAINER is both a DISL entity primitive: a special kind of OBJECT with the affordance to contain other objects: and the basis of the CONTAINMENT family of image schemas. The boundary separates two qualitatively different zones: inside and outside. Attributes include OPEN/CLOSED (whether the boundary can be crossed) and EMPTY/OCCUPIED/FULL (degree of interior saturation). Johnson (1987) identifies it as arising from the bodily experience of the body itself as container.",
-  "drawing_scene": "There is an inside and an outside. A boundary separates them. Whatever is inside is enclosed, held, bounded, distinct from what is outside. The boundary itself is the structure of the schema: it does not matter what shape it takes, only that it closes.",
+  "drawing_scene": "A boundary closes on itself, separating an inside from an outside. Whatever is inside is enclosed by the boundary. The shape of the boundary does not matter, only that it closes.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Container(b), Closed(b), Empty(b)",
     "scenes": [
@@ -6246,7 +6246,7 @@ const IMAGE_SCHEMATA = [
   "group": "Spatial Primitive",
   "disl_classification": "spatial primitive: entity",
   "definition": "A trajectory through space: a sequence of contiguous locations forming a line of movement. In DISL (Hedblom et al. 2025), PATH is an entity primitive with no internal structure at its most basic level. It is the foundation of a family of increasingly complex schemas: PATH < PATH_GOAL (+ END_PATH) < SOURCE_PATH_GOAL (+ START_PATH + END_PATH). PATH does not inherently imply direction or destination: these are added by relational primitives START_PATH and END_PATH.",
-  "drawing_scene": "Something moves. Or something moved. There is a trace of a trajectory: a line that records a passage through space. It has no particular origin and no particular destination. It simply goes.",
+  "drawing_scene": "A line records a trajectory through space: the trace of a passage. It has no particular origin and no particular destination; it is simply the route.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Path(p), Start_Path(p,r1), End_Path(p,r2)",
     "scenes": [
@@ -6307,7 +6307,7 @@ const IMAGE_SCHEMATA = [
   "group": "Spatial Primitive",
   "disl_classification": "spatial primitive: relational",
   "definition": "The touching of two entities: the condition of two objects occupying adjacent or overlapping locations. In DISL (Hedblom et al. 2025), CONTACT is a relational spatial primitive: static, not involving change of state. It is explicitly distinguished from LINK (which adds force transfer between linked objects) and from dynamic force events such as BLOCKAGE (which add UMPH: the embodied experience of force). CONTACT is simply the spatial condition of adjacency.",
-  "drawing_scene": "Two things touch. That is all. There is no force, no motion, no consequence. Two elements are in the same place, or at the same edge. Their boundaries meet.",
+  "drawing_scene": "Two things are touching: their boundaries meet, or they occupy adjacent or overlapping locations. There is no force and no movement, only the spatial condition of adjacency.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Object(a), Object(b), Contact(a,b)",
     "scenes": [
@@ -6318,8 +6318,8 @@ const IMAGE_SCHEMATA = [
           "Object(b)",
           "Contact(a,b)"
         ],
-        "narrative": "Draw two things so that they touch. Their edges meet, or their lines cross. There is no force between them, no movement, no consequence, only adjacency. Two things, one point where they meet.",
-        "simple": "Draw two things and make them touch each other. They can just barely touch, or cross over. Nothing else needs to happen, just the touching."
+        "narrative": "Draw two things so that they touch: their edges meet, or their lines cross. There is no force between them and no movement, only their adjacency.",
+        "simple": "Draw two things and make them touch. They can just barely touch or cross over. Nothing else needs to happen."
       }
     ]
   },
@@ -6362,7 +6362,7 @@ const IMAGE_SCHEMATA = [
   "group": "Spatial Primitive",
   "disl_classification": "spatial primitive: entity (orientation)",
   "definition": "The direction of gravity: the orientation that anchors all vertical experience. In DISL (Hedblom et al. 2025), DOWN is an entity primitive that provides spatial orientation to an entire panel or field. DOWN and UP form a Gestalt pair; DISL uses DOWN as the representative of this pair. When added to a CONTACT relation between two objects, DOWN produces ABOVE: the orientation-specific relation underlying SUPPORT.",
-  "drawing_scene": "There is a direction that is not a choice: down. Everything falls toward it. The surface you draw on is already oriented by it; the bottom of the page is down, the top is up. This is the most basic spatial orientation: the one the body knows before anything else.",
+  "drawing_scene": "The field is oriented by the direction of gravity. The bottom of the page is down and the top is up; objects tend toward the ground. This is the basic spatial orientation of the surface.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Region(ground), Down(ground), Above(a,ground)",
     "scenes": [
@@ -6419,7 +6419,7 @@ const IMAGE_SCHEMATA = [
   "group": "Path Family",
   "disl_classification": "image schema",
   "definition": "A path directed toward a specific destination. PATH_GOAL adds END_PATH to the basic PATH primitive: the trajectory has a target, and the movement is oriented toward reaching it. Hedblom et al. (2015) show that PATH_GOAL is learned developmentally before SOURCE_PATH_GOAL: goal-directed movement precedes the conceptualisation of origin.",
-  "drawing_scene": "Something is moving toward something. The destination exists before the movement reaches it; it is already there, already defined. The movement is oriented: it is going somewhere specific.",
+  "drawing_scene": "An object moves toward a destination that is defined before the movement reaches it. The trajectory is oriented: it is directed at a specific target.",
   "drawing_instructions": {
     "strip_summary": "1 scene: End_Path(p,r), Motion_Along_Path(a,p), no Start_Path",
     "scenes": [
@@ -6481,7 +6481,7 @@ const IMAGE_SCHEMATA = [
   "group": "Path Family",
   "disl_classification": "image schema",
   "definition": "A complete trajectory with an explicit origin, a route, and a destination. Johnson (1987) identifies this as the most fully articulated path schema. SOURCE_PATH_GOAL adds START_PATH to PATH_GOAL: the movement has both a defined origin and a defined destination. The three components: source, path, and goal, are all present and legible.",
-  "drawing_scene": "There is a starting point, a journey, and a destination. All three are present. Something leaves from somewhere and arrives somewhere else. The origin and destination are both defined; neither is implied, both are explicit in the drawing.",
+  "drawing_scene": "A trajectory with a defined origin, a route, and a defined destination. An object leaves one place and arrives at another, and both the origin and the destination are explicit in the drawing.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: motion from r1 toward r2, arrival at r2",
     "scenes": [
@@ -6604,7 +6604,7 @@ const IMAGE_SCHEMATA = [
   "group": "Path Family",
   "disl_classification": "image schema",
   "definition": "A PATH in which END_PATH coincides with START_PATH: the trajectory returns to its point of origin. Johnson (1987) identifies CYCLE as the schema of periodic recurrence: seasons, days, repeated routines. The closed path creates a temporal circle: beginning, proceeding, returning.",
-  "drawing_scene": "Something moves in a loop: it departs and returns to the same place. The path closes on itself. There is no destination different from the origin: the ending is the beginning.",
+  "drawing_scene": "An object moves along a path that closes on itself, returning to its point of origin. The end of the trajectory coincides with its beginning.",
   "drawing_instructions": {
     "strip_summary": "General + 3 scenes: Start_Path(p,r) = End_Path(p,r)",
     "scenes": [
@@ -6653,7 +6653,7 @@ const IMAGE_SCHEMATA = [
           "Located_In(a,r)",
           "At_Rest(a)"
         ],
-        "narrative": "Arrive back at the origin and stop. The return to the starting place is not incidental, it is the whole structure.",
+        "narrative": "Arrive back at the origin and stop. The return to the starting region is the defining feature of the schema.",
         "simple": "Arrive back at the same spot where you started. You went around and came back."
       }
     ]
@@ -6730,7 +6730,7 @@ const IMAGE_SCHEMATA = [
   "group": "Containment Family",
   "disl_classification": "image schema",
   "definition": "An object moves from outside a container to inside it, crossing the boundary. In DISL (Hedblom et al. 2025), this is a three-panel strip: (1) OBJECT outside CONTAINER with PATH_GOAL directed inward; (2) OBJECT crossing the boundary (OPEN); (3) OBJECT inside CONTAINER, now CONTAINED, CONTAINER FULL or OCCUPIED. This is distinct from CONTAINER alone (which is static: just the boundary) and from CONTAINMENT (the static condition of being inside).",
-  "drawing_scene": "Something is outside. Something else is a bounded space with an opening. The outside thing moves toward the opening, passes through it, and is now inside. The inside is different from the outside: the crossing of the boundary changes the relationship.",
+  "drawing_scene": "An object outside a container moves toward an opening in its boundary, crosses it, and comes to rest inside. Crossing the boundary changes the relation: the object is now contained.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: approach, boundary contact, containment",
     "scenes": [
@@ -6855,7 +6855,7 @@ const IMAGE_SCHEMATA = [
   "group": "Containment Family",
   "disl_classification": "image schema",
   "definition": "The inverse of OBJECT_INTO_CONTAINER: an object moves from inside a container to outside, crossing the boundary outward. In DISL, the same three-panel structure applies in reverse: CONTAINED → crossing the boundary → OBJECT outside. Johnson (1987) treats Going_OUT as the symmetrical counterpart of Going_IN, both structuring the fundamental experience of enclosure and its dissolution.",
-  "drawing_scene": "Something is inside. The boundary is there, separating inside from outside. The inside thing moves toward the boundary, passes through an opening, and is now outside. The inside is now empty where it was not before.",
+  "drawing_scene": "An object inside a container moves toward an opening in its boundary, crosses it, and is now outside. The interior, which held the object, is now empty.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: containment, boundary contact from inside, exit",
     "scenes": [
@@ -6972,7 +6972,7 @@ const IMAGE_SCHEMATA = [
   "group": "Containment Family",
   "disl_classification": "attributive primitives",
   "definition": "The opposition between the presence and absence of content within a container. In DISL, FULL, EMPTY, and OCCUPIED are attributive primitives of CONTAINER: they describe the state of the container's interior. EMPTY: no content. OCCUPIED: some content. FULL: the container is at capacity. Hampe (2005) identifies FULL-EMPTY as a fundamental experiential opposition structuring hunger/satiation, emptiness/presence, absence/abundance.",
-  "drawing_scene": "There is a container. And there is the question of what is inside. The empty container has a visible, prominent interior; the emptiness is felt. The full container has no room: the interior is saturated, the boundary is under tension.",
+  "drawing_scene": "A container and the state of its interior. Empty: no content, the interior visible. Occupied: some content, with room remaining. Full: the interior at capacity. The container stays the same; only the interior state changes.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: Empty, Occupied, Full",
     "scenes": [
@@ -7062,7 +7062,7 @@ const IMAGE_SCHEMATA = [
   "group": "Contact Family",
   "disl_classification": "force dynamic primitive",
   "definition": "A connection between two entities that affords force transfer between them. In DISL (Hedblom et al. 2025), LINK is reclassified from spatial to force dynamic primitive: its defining characteristic is not proximity but the affordance of force transmission. Linked objects influence each other's trajectories. A LINK can exist without CONTACT (gravity links Earth and Moon without touching).",
-  "drawing_scene": "Two things are connected. Not just touching, but connected: what happens to one affects the other. There is a bond between them, a channel through which force or influence passes. The connection is the thing, not the touching.",
+  "drawing_scene": "Two things are connected by a bond that transmits force between them, so that what happens to one affects the other. The connection need not involve contact: it is the channel of force, not the touching, that defines the relation.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Contact(a,b), Link(a,b)",
     "scenes": [
@@ -7074,8 +7074,8 @@ const IMAGE_SCHEMATA = [
           "Contact(a,b)",
           "Link(a,b)"
         ],
-        "narrative": "Draw two things touching. Make the connection look structural and strong. A cross works well: two lines meeting at a shared central point where both lines need each other. The bond between them is the subject of the drawing.",
-        "simple": "Draw two things that are connected to each other at a point. A cross shape works well. The connection between them is the important part."
+        "narrative": "Draw two things joined by a structural connection. A cross works well: two lines meeting at a shared central point. The bond between them is what the drawing records.",
+        "simple": "Draw two things connected at a point. A cross shape works well. The connection between them is what matters here."
       }
     ]
   },
@@ -7119,7 +7119,7 @@ const IMAGE_SCHEMATA = [
   "group": "Contact Family",
   "disl_classification": "primitive amalgamation",
   "definition": "The amalgamation of CONTACT and LINK: two entities that are both touching and structurally connected through force transfer. In DISL (Hedblom et al. 2025), GLUE_LINK represents the case where the bond between objects is fully present in the form of direct contact: the connection is adhesive. Objects in GLUE_LINK cannot be separated without disrupting both.",
-  "drawing_scene": "Two things are stuck together. Not just near each other, not just touching. Fused at their edges. Moving one would drag the other. The connection is both physical (contact) and structural (link).",
+  "drawing_scene": "Two things are both touching and linked: they are in contact and the bond between them transmits force. Moving one moves the other, and they cannot be separated without disrupting both.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: static link, force applied, co-motion",
     "scenes": [
@@ -7223,7 +7223,7 @@ const IMAGE_SCHEMATA = [
   "group": "Contact Family",
   "disl_classification": "primitive amalgamation",
   "definition": "Contact between two objects in the vertical dimension, where the lower object prevents the upper one from falling. Mandler (1992) identifies SUPPORT as one of the first spatial relationships understood by infants. In DISL (Hedblom et al. 2025), SUPPORT = CONTACT + ABOVE, where ABOVE is derived from the entity primitive DOWN. SUPPORT is a primitive amalgamation: static, no change of state.",
-  "drawing_scene": "Something rests on something else. The lower element holds the upper element up, preventing it from falling. The relationship is asymmetric and vertical: one supports, one is supported. Gravity is felt as the force the support resists.",
+  "drawing_scene": "One object rests on another in the vertical dimension. The lower object holds the upper one and prevents it from falling. The relation is contact combined with above: asymmetric and static.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Contact(a,b), Above(a,b)",
     "scenes": [
@@ -7280,7 +7280,7 @@ const IMAGE_SCHEMATA = [
   "group": "Force Schemas",
   "disl_classification": "schematic integration",
   "definition": "A movement is arrested by an obstacle: the trajectory encounters a barrier and stops. In DISL (Hedblom et al. 2025), BLOCKAGE = MOTION_ON_PATH + CONTACT with blocking OBJECT + p-UMPH (passive force received) + AT_REST. It is a schematic integration, not a pure image schema, because it includes UMPH: the embodied experience of being stopped, of force meeting resistance. Johnson (1987) identifies BLOCKAGE as the foundational force schema of constraint.",
-  "drawing_scene": "Something is moving. In its path there is something else: an obstacle that does not move. The moving thing hits the obstacle and stops. It does not push through, does not go around: it stops. The stopping is caused by the encounter.",
+  "drawing_scene": "An object moving along a path meets a stationary obstacle and stops. It does not pass through or go around: the contact with the obstacle arrests the movement, and the object receives the force as it is stopped.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: motion toward obstacle, contact, complete arrest",
     "scenes": [
@@ -7398,7 +7398,7 @@ const IMAGE_SCHEMATA = [
   "group": "Force Schemas",
   "disl_classification": "schematic integration",
   "definition": "A trajectory is deflected by an encounter: the moving entity does not stop (that is BLOCKAGE) and does not merge with the obstacle: it changes direction, redirected by the force of the encounter. In DISL terms: MOTION_ON_PATH + CONTACT with deflecting entity + p-UMPH (force received) + new MOTION_ON_PATH in a different direction. Johnson (1987) identifies DIVERSION as the experience of being turned aside.",
-  "drawing_scene": "Something is moving in a direction. There is something in its path: not an obstacle that stops it, but something that deflects it. The moving thing touches the deflector and changes course: it goes off at an angle, it curves away, it bounces.",
+  "drawing_scene": "An object moving in one direction meets something in its path that deflects it rather than stopping it. On contact the object changes course and continues along a new direction.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: path p1, deflection at contact, new path p2",
     "scenes": [
@@ -7522,7 +7522,7 @@ const IMAGE_SCHEMATA = [
   "group": "Force Schemas",
   "disl_classification": "schematic integration",
   "definition": "Two forces of equal magnitude meet head-on, producing tension, arrest, or reversal. In DISL (Hedblom et al. 2025): two objects in MOTION_TOWARDS each other + CONTACT + bilateral a-UMPH and p-UMPH. Both exert force, both receive it. The result is either stalemate (both stop) or reversal (both bounce back). Johnson (1987) identifies COUNTERFORCE as the experience of pushing against something that pushes back with equal strength.",
-  "drawing_scene": "Two forces meet each other directly. Neither gives way entirely. There is a point of collision where both exert force and both receive it. The encounter is symmetrical: both are equally active, equally resisted.",
+  "drawing_scene": "Two objects move toward each other and meet. At the point of contact each exerts force and each receives it: the encounter is symmetrical, with neither object passive.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: two forces converging, bilateral contact, symmetric arrest",
     "scenes": [
@@ -7636,7 +7636,7 @@ const IMAGE_SCHEMATA = [
   "group": "Force Schemas",
   "disl_classification": "schematic integration",
   "definition": "Movement that continues beyond apparent intention: driven by an internal or external force that overrides volitional control. In DISL terms: PATH + MOTION + a-UMPH (active force exerted). This is a schematic integration, not a pure image schema, because it includes UMPH: the felt experience of force acting through the body. Johnson (1987) identifies COMPULSION as the force schema of necessity.",
-  "drawing_scene": "The movement does not stop when it could. Something drives it forward: an internal momentum, a necessity. The hand continues past the point where a decision would have halted it. The mark accumulates, repeats, perseverates.",
+  "drawing_scene": "A movement is driven by a force that does not cease, so the motion continues past the point where it could have stopped. The same gesture repeats and accumulates: an active force is present throughout.",
   "drawing_instructions": {
     "strip_summary": "General + 3 identical scenes: Active_Umph(a) permanent",
     "scenes": [
@@ -7670,7 +7670,7 @@ const IMAGE_SCHEMATA = [
           "Active_Umph(a)"
         ],
         "narrative": "The same gesture again. Scene 2 is identical to Scene 1. The motion continues because the force has not ceased.",
-        "simple": "Draw it moving again, the same way. It cannot stop."
+        "simple": "Draw it moving again, the same way. The motion continues."
       },
       {
         "label": "Scene 3",
@@ -7681,7 +7681,7 @@ const IMAGE_SCHEMATA = [
           "Motion(a)",
           "Active_Umph(a)"
         ],
-        "narrative": "The same gesture a third time. The repetition is not decorative: it encodes the inability to stop.",
+        "narrative": "The same gesture a third time. The repetition records the continuation of the motion, driven by the force that has not ceased.",
         "simple": "And again, the same. Three times, the same movement."
       }
     ]
@@ -7753,7 +7753,7 @@ const IMAGE_SCHEMATA = [
   "group": "Force Schemas",
   "disl_classification": "schematic integration",
   "definition": "The felt capacity for action: being in a position or condition from which motion or action is possible. Johnson (1987) identifies ENABLEMENT as the positive force schema: the conditions that make action available. It is the schema of affordance: what the environment, the body, or the situation makes possible. In DISL: a-UMPH (potential active force) + PATH (the available trajectory). The force is not yet exerted, but it is ready.",
-  "drawing_scene": "The surface is ready. The hand is poised. There is a sense of potential, of action about to begin. The field is activated, available, open. Nothing has happened yet, but everything is in place for it to happen.",
+  "drawing_scene": "An object is at rest at the start of a path, carrying a force that has not yet been released. Nothing has moved yet, but the conditions for movement are present.",
   "drawing_instructions": {
     "strip_summary": "2 scenes: At_Rest + latent Active_Umph, then Motion",
     "scenes": [
@@ -7836,7 +7836,7 @@ const IMAGE_SCHEMATA = [
   "group": "Force Schemas",
   "disl_classification": "schematic integration",
   "definition": "The experience of being held back: a force that prevents or limits movement. Johnson (1987) identifies RESTRAINT as the negative counterpart of ENABLEMENT: the conditions that make action impossible or restricted. In DISL: p-UMPH (passive force received) + CONTAINER (the restraining boundary). The restraint comes from outside the moving entity, constraining its trajectory.",
-  "drawing_scene": "Something wants to expand or move, but is held back. The boundary is there, and it cannot be crossed. The field contracts around the mark. The drawing stops before the edge: not because it has finished, but because the edge restrains it.",
+  "drawing_scene": "An object inside a container presses outward against the boundary, but the boundary holds and the object does not exit. The outward force is met by a force returned inward, and the object stays contained.",
   "drawing_instructions": {
     "strip_summary": "2 scenes: Contained + Active_Umph, then contact with boundary + Passive_Umph reflected back",
     "scenes": [
@@ -7921,7 +7921,7 @@ const IMAGE_SCHEMATA = [
   "group": "Orientational",
   "disl_classification": "spatial primitive (DOWN) + image schema family",
   "definition": "Vertical orientation relative to gravity. In DISL, DOWN is an entity primitive that anchors the orientation of an entire spatial field. Wachowiak, Gromann & Xu (2023) identify four distinct dimensions of VERTICALITY in use: (1) static vertical positioning; (2) dynamic vertical movement; (3) fictive/construed verticality: a static form that implies upward extension; (4) vertical associations between entities. Johnson (1987) roots UP-DOWN in the bodily experience of standing upright against gravity.",
-  "drawing_scene": "There is a top and a bottom. Gravity is felt. Something is higher, something is lower. The vertical axis organises the field; it is not neutral, not reversible: up and down are different.",
+  "drawing_scene": "A vertical axis organises the field: there is a top and a bottom, and one element is higher than another. The orientation is given by gravity and is not reversible.",
   "drawing_instructions": {
     "strip_summary": "1 scene: chain of Above predicates from ground up",
     "scenes": [
@@ -7986,7 +7986,7 @@ const IMAGE_SCHEMATA = [
   "group": "Orientational",
   "disl_classification": "primitive amalgamation",
   "definition": "Equilibrium of opposing forces or symmetrical spatial distribution. Johnson (1987) roots BALANCE in the bodily experience of maintaining an upright posture: a constant, mostly unconscious adjustment of forces. In DISL: OBJECT + LOCATION + DOWN (the gravitational reference). BALANCE is a primitive amalgamation: static, distinct from SUPPORT (asymmetric: one holds the other) in being symmetric: opposing forces are equal, neither dominates.",
-  "drawing_scene": "Two sides are equal. The weight on the left matches the weight on the right, or the top mirrors the bottom. There is a centre, and the elements on either side of it are in equilibrium. Nothing tips.",
+  "drawing_scene": "Two elements are positioned symmetrically about a centre, at equal distance on either side. Each exerts an equal force, and because the forces are equal the configuration is in equilibrium.",
   "drawing_instructions": {
     "strip_summary": "General + 2 scenes: symmetric Part_Of, then bilateral Active_Umph",
     "scenes": [
@@ -8092,7 +8092,7 @@ const IMAGE_SCHEMATA = [
   "group": "Orientational",
   "disl_classification": "primitive amalgamation",
   "definition": "A structure in which a central entity is more salient than surrounding peripheral entities, which diminish in importance with distance from the centre. Lakoff (1987) identifies CENTER-PERIPHERY as arising from the experience of having a body with a gravitational centre and a focal point of perceptual attention. The schema underlies the conceptualisation of importance (central = essential) and radial category structures.",
-  "drawing_scene": "There is a centre, a focal point, and things arranged around it at increasing distances. The centre is the most important, the most present. The further something is from the centre, the less central it is. The structure radiates outward from a single point.",
+  "drawing_scene": "A central point with elements arranged around it at increasing distances. The centre is the salient location, and the surrounding elements are defined by their distance from it.",
   "drawing_instructions": {
     "strip_summary": "1 scene: a Located_In center, b and c outside via Smaller",
     "scenes": [
@@ -8110,7 +8110,7 @@ const IMAGE_SCHEMATA = [
           "Above(a,c)"
         ],
         "narrative": "Draw a center first. Then place at least two elements at a distance from it, outside the central region. The center is the most salient spot. The peripheral elements are arranged around it at increasing distance. Above is used here as a salience relation, not strictly as a vertical one.",
-        "simple": "Draw something in the middle. Now draw other things around it, further away. The middle is the special place. Everything else goes around it."
+        "simple": "Draw something in the middle. Now draw other things around it, further away. The middle is the central spot, and everything else is arranged around it."
       }
     ]
   },
@@ -8160,7 +8160,7 @@ const IMAGE_SCHEMATA = [
   "group": "Composition",
   "disl_classification": "image schema",
   "definition": "A whole composed of parts in a specific configuration. Lakoff (1987) identifies PART-WHOLE as fundamental to understanding composition and structure. In DISL, PART_OF is a relational primitive; the dynamic schemas SPLITTING and MERGING are its temporal counterparts.",
-  "drawing_scene": "There is a whole, and it is made of parts. Each part has its own identity, but together they form something larger. The whole is not just the sum: the configuration of the parts is what makes it a whole.",
+  "drawing_scene": "A whole is composed of parts. Each part is distinct and belongs to the whole, and the whole is a single thing rather than a set of pieces placed side by side.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Object(whole), Part_Of(a,whole), Part_Of(b,whole)",
     "scenes": [
@@ -8220,7 +8220,7 @@ const IMAGE_SCHEMATA = [
   "group": "Composition",
   "disl_classification": "image schema",
   "definition": "One entity divides into two or more separate parts. In DISL (Hedblom et al. 2025), SPLITTING is a dynamic image schema: OBJECT → PART_OF + MOTION producing two sub-objects. It is the temporal event form of PART-WHOLE.",
-  "drawing_scene": "Something that was one becomes two. A division appears: a boundary that was not there before cuts through a unity and separates it into parts. The parts were together and are now apart.",
+  "drawing_scene": "A single whole becomes two. A division separates a unity into parts that were together and are now apart, each a part of the former whole.",
   "drawing_instructions": {
     "strip_summary": "2 scenes: whole + parts, then parts only",
     "scenes": [
@@ -8296,7 +8296,7 @@ const IMAGE_SCHEMATA = [
   "group": "Composition",
   "disl_classification": "image schema",
   "definition": "Two or more separate entities join into one. In DISL, MERGING is the temporal inverse of SPLITTING: two sub-objects combine into a single OBJECT. Hampe (2005) identifies MERGING as the schema of fusion and unification.",
-  "drawing_scene": "Two things that were separate come together and become one. The boundary between them dissolves; they are no longer two but one. The merger is irreversible: the new whole is not just the two parts adjacent.",
+  "drawing_scene": "Two separate things come together into one. Where there were two distinct elements, a single new whole is now present, of which both are parts.",
   "drawing_instructions": {
     "strip_summary": "2 scenes: parts only, then whole appears + Part_Of",
     "scenes": [
@@ -8372,7 +8372,7 @@ const IMAGE_SCHEMATA = [
   "group": "Composition",
   "disl_classification": "primitive amalgamation",
   "definition": "A grouping of multiple discrete units treated as a single entity. Hampe (2005) identifies COLLECTION as the schema of plurality as unity: a group, a pile, a set where the elements are individually distinct but collectively form one thing.",
-  "drawing_scene": "Many things, but treated as one. They are separate, you can count them, but they belong together. The grouping is intentional. The collection is the thing, not the individual elements.",
+  "drawing_scene": "Several separate things, countable and distinct, that are treated as one group. They share a region but do not connect or fuse: the grouping is what relates them, not any bond between them.",
   "drawing_instructions": {
     "strip_summary": "1 scene: a, b, c all Located_In(group), no Object(whole)",
     "scenes": [
@@ -8436,7 +8436,7 @@ const IMAGE_SCHEMATA = [
   "group": "Composition",
   "disl_classification": "primitive amalgamation",
   "definition": "Layering of one form or schema on top of another: two entities co-present in the same spatial region. Johnson (1987) identifies superimposition as the experience of overlap: two things occupying the same space.",
-  "drawing_scene": "Two things are in the same place. One is on top of the other, or through it. They overlap: their regions coincide. Both are present simultaneously.",
+  "drawing_scene": "Two things occupy the same region: one is drawn on top of or through the other, so their locations coincide. Both remain distinct and both are present at the same time.",
   "drawing_instructions": {
     "strip_summary": "2 scenes: a in r, then a and b both in r",
     "scenes": [
@@ -8513,7 +8513,7 @@ const IMAGE_SCHEMATA = [
   "group": "Rhythm",
   "disl_classification": "image schema",
   "definition": "The repetition of a unit or pattern: producing rhythm and accumulation. Hampe (2005) identifies ITERATION as the schema of rhythmic recurrence: the same gesture repeated, the same form multiplied. In DISL: MOTION + PERMANENCE (each instance persists) + OBJECT (the iterated unit).",
-  "drawing_scene": "The same thing happens again. And again. There is a rhythm: a unit that repeats, accumulates, builds into a pattern through repetition. Each instance is the same as the last. The repetition is the structure.",
+  "drawing_scene": "A single unit recurs: the same gesture is repeated, each instance equivalent to the last, accumulating into a pattern. The repetition itself is what the schema records.",
   "drawing_instructions": {
     "strip_summary": "General + 4 alternating scenes: motion, rest, motion, rest",
     "scenes": [
@@ -8554,7 +8554,7 @@ const IMAGE_SCHEMATA = [
           "Motion_Along_Path(a,p)",
           "Motion(a)"
         ],
-        "narrative": "Draw the same gesture again from the same starting point. The sameness across repetitions is the subject of the drawing, not the individual gesture.",
+        "narrative": "Draw the same gesture again from the same starting point. The correspondence across repetitions is what the strip records, rather than any single gesture.",
         "simple": "Draw the same one again from the same spot."
       },
       {
@@ -8640,7 +8640,7 @@ const IMAGE_SCHEMATA = [
   "group": "Rhythm",
   "disl_classification": "image schema family",
   "definition": "Graded degree or magnitude along a dimension. In DISL, SMALLER/LARGER is a relational primitive; GROWING and SHRINKING are the corresponding dynamic image schemas. Grady (2005) identifies SCALE as the schema of comparative quantity: more, less, same.",
-  "drawing_scene": "There is a difference in size, and the difference matters. One thing is clearly larger, another clearly smaller. Or: something grows; it was small and becomes large. The scale relation is the structure.",
+  "drawing_scene": "Two things differ in size, or one thing changes size across scenes. The size relation is what the schema records: one element is larger, another smaller, or the same element grows or shrinks.",
   "drawing_instructions": {
     "strip_summary": "General + 3 scenes: Permanence explicit, Smaller chain",
     "scenes": [
@@ -8740,7 +8740,7 @@ const IMAGE_SCHEMATA = [
   "group": "Existence",
   "disl_classification": "image schema",
   "definition": "The transition from absence to presence: an entity comes into existence in a field where there was none. In DISL (Hedblom et al. 2025), APPEAR is a two-panel strip: Scene 1 empty: Scene 2 contains OBJECT. Mandler & Pagán Cánovas (2014) classify APPEAR as a spatial event (change over time), making it an image schema proper. Its inverse is DISAPPEAR.",
-  "drawing_scene": "There is nothing. Then there is something. The surface was blank; now it is not. The mark comes into existence: it was not there, and now it is. This is the most fundamental drawing event.",
+  "drawing_scene": "In the first scene the surface is blank. In the second a mark is present. The schema is the transition from absence to presence between the two scenes.",
   "drawing_instructions": {
     "strip_summary": "2 scenes: empty, then Object(a)",
     "scenes": [
@@ -8755,8 +8755,8 @@ const IMAGE_SCHEMATA = [
         "formal": [
           "Object(a)"
         ],
-        "narrative": "Place one mark on the surface. The contrast between the empty first scene and the marked second scene is the whole drawing.",
-        "simple": "Then one thing appears on it. Before: empty. After: one thing is there."
+        "narrative": "Place one mark on the surface. The contrast between the empty first scene and the marked second scene is what the strip records.",
+        "simple": "Then one thing appears on it: empty before, one thing present after."
       }
     ]
   },
@@ -8801,7 +8801,7 @@ const IMAGE_SCHEMATA = [
   "group": "Ground",
   "disl_classification": "primitive amalgamation",
   "definition": "A planar face or field: the ground of inscription. Hampe (2005) identifies SURFACE as the schema of the two-dimensional plane: an extended region available for contact, inscription, and coverage. In drawing, SURFACE is the drawing field itself: the page as the primary affordance of the graphical act.",
-  "drawing_scene": "The surface is the ground: not empty, but available. It extends in all directions. It is not a thing on the surface: it is the surface itself, the field of inscription.",
+  "drawing_scene": "An extended region without a boundary, available as a field of inscription. It is not an object placed on the ground but the ground itself, on which marks can rest.",
   "drawing_instructions": {
     "strip_summary": "1 scene: Region(s), Located_In(a,s), Contact(a,s)",
     "scenes": [
@@ -8857,7 +8857,7 @@ const IMAGE_SCHEMATA = [
   "group": "Temporal",
   "disl_classification": "image schema",
   "definition": "An unfolding sequence of connected events over time: a directional, irreversible temporal progression. Hampe (2005) identifies PROCESS as the schema of becoming: change unfolds through connected states. In DISL: MOTION + PATH + PERMANENCE (each state persists into the next).",
-  "drawing_scene": "Something is happening, and it is not finished. There is a sequence, a development, a progression. Each moment leads to the next. The process is the structure, not any single state within it.",
+  "drawing_scene": "An object is in motion with no defined destination. The movement continues from one scene to the next, and each scene persists into the one after it. What is shown is the motion itself, not a starting state or an end state.",
   "drawing_instructions": {
     "strip_summary": "3 scenes: motion without End_Path, without Active_Umph, without return",
     "scenes": [
@@ -8892,8 +8892,8 @@ const IMAGE_SCHEMATA = [
           "Motion_Along_Path(a,p)",
           "Motion(a)"
         ],
-        "narrative": "The motion continues, unresolved. No return, no arrival, no compulsion. Draw something that is in the middle of becoming and has not finished.",
-        "simple": "Still moving. It has not finished. There is no end in sight."
+        "narrative": "The object is still in motion. There is no return, no arrival, and no driving force: the motion continues without resolving.",
+        "simple": "It is still moving. There is no end point."
       }
     ]
   },
