@@ -9230,18 +9230,24 @@ async function ghArchiveNewDrawings(newSessions) {
 async function ghFetchMissingThumbs() {
   if (!GH_WORKER_URL) return;
   const sessions = isGetSessions();
-  const missing = sessions.filter(s => s.session_id && !s.thumb_dataurl);
+  // Skip sessions that already have a data URI or are already in the in-memory cache
+  const missing = sessions.filter(s => s.session_id && !s.thumb_dataurl && !IS_THUMB_CACHE[s.session_id]);
   if (!missing.length) return;
   const results = await Promise.all(missing.map(async s => {
     try {
       const r = await fetch(GH_WORKER_URL + '/thumb/' + s.session_id);
       if (!r.ok) return null;
       const thumb = await r.text();
-      return thumb ? { session_id: s.session_id, thumb_dataurl: thumb } : null;
+      if (thumb && thumb.startsWith('data:')) {
+        IS_THUMB_CACHE[s.session_id] = thumb; // populate in-memory cache immediately
+        return { session_id: s.session_id, thumb_dataurl: thumb };
+      }
+      return null;
     } catch { return null; }
   }));
   const valid = results.filter(Boolean);
   if (!valid.length) return;
+  // Try to persist to localStorage (may be stripped if quota exceeded — cache remains in memory)
   const all = isGetSessions();
   const byId = Object.fromEntries(all.map(s => [s.session_id, s]));
   let changed = false;
@@ -10298,17 +10304,13 @@ function isRenderArchive() {
     const modLine = sess.modified_at
       ? `<div class="is-archive-card-mod">modified by author ${new Date(sess.modified_at).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>`
       : '';
-    // Always render a placeholder canvas; show img on top if thumb available.
-    // If img fails to load (thumb not in KV), fall back to static anim render on canvas.
-    const thumbSrc = sess.thumb_dataurl
-      || (GH_WORKER_URL ? GH_WORKER_URL + '/thumb/' + sess.session_id : null);
-    const imgHtml = thumbSrc
-      ? `<img class="is-archive-card-img" src="${thumbSrc}" alt="${sess.schema_name}">`
-      : '';
+    // Thumbnail: use cached data URI if available, otherwise fetch from Worker asynchronously.
+    // Never use the Worker URL directly as <img src> -- Worker returns text/plain (not image/*).
+    const cachedThumb = sess.thumb_dataurl || IS_THUMB_CACHE[sess.session_id] || null;
     card.innerHTML = `
       <div class="is-archive-card-img-wrap">
         <canvas class="is-archive-card-placeholder" width="300" height="200"></canvas>
-        ${imgHtml}
+        ${cachedThumb ? `<img class="is-archive-card-img" src="${cachedThumb}" alt="${sess.schema_name}">` : ''}
         <canvas class="is-archive-card-anim" width="300" height="200"></canvas>
       </div>
       <div class="is-archive-card-info">
@@ -10319,16 +10321,36 @@ function isRenderArchive() {
         ${authorLine}${modLine}
       </div>
       ${(sess.stroke_annotations||[]).length ? '<div class="is-archive-card-ann">' + [...new Set((sess.stroke_annotations||[]).flatMap(a=>a.codes))].map(c=>'<span class="is-archive-card-ann-chip">'+c+'</span>').join('') + '</div>' : ''}
-      ${canDelete ? '<div class="is-archive-card-del" title="Delete session">\u2715</div>' : ''}
+      ${canDelete ? '<div class="is-archive-card-del" title="Delete session">✕</div>' : ''}
     `;
     card.addEventListener('mouseenter', () => isCardHoverStart(card, sess));
     card.addEventListener('mouseleave', () => isCardHoverEnd(card));
     card._isSess = sess;
-    // If img fails to load (no thumb in KV), render static anim frame on placeholder canvas
     const cardImg = card.querySelector('.is-archive-card-img');
     const cardPh  = card.querySelector('.is-archive-card-placeholder');
     if (cardImg) {
+      // Data URI already set -- guard against corrupt data
       cardImg.addEventListener('error', () => { cardImg.style.display = 'none'; isRenderStaticAnim(cardPh, sess); });
+    } else if (GH_WORKER_URL) {
+      // No cached thumb yet: fetch data URI text from Worker, then inject img
+      (async () => {
+        try {
+          const r = await fetch(GH_WORKER_URL + '/thumb/' + sess.session_id);
+          if (r.ok) {
+            const dataUri = await r.text();
+            if (dataUri && dataUri.startsWith('data:')) {
+              IS_THUMB_CACHE[sess.session_id] = dataUri;
+              const img = document.createElement('img');
+              img.className = 'is-archive-card-img';
+              img.alt = sess.schema_name;
+              img.src = dataUri;
+              cardPh.parentNode.insertBefore(img, cardPh.nextSibling);
+              return;
+            }
+          }
+        } catch {}
+        isRenderStaticAnim(cardPh, sess);
+      })();
     } else if (cardPh) {
       isRenderStaticAnim(cardPh, sess);
     }
@@ -10428,7 +10450,8 @@ async function isRenderStaticAnim(canvas, sess) {
   });
 }
 
-const IS_ANIM_CACHE = {};
+const IS_ANIM_CACHE  = {};
+const IS_THUMB_CACHE = {}; // session_id → data URI (in-memory, avoids localStorage quota)
 async function isLoadAnim(session_id) {
   if (IS_ANIM_CACHE[session_id]) return IS_ANIM_CACHE[session_id];
   if (READONLY) {
