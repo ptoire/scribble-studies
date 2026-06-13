@@ -9545,7 +9545,7 @@ function isRenderChips() {
       chip.className = 'is-chip';
       chip.dataset.code  = schema.code;
       chip.dataset.group = schema.group;
-      chip.innerHTML = `<span class="is-chip-code">${schema.code}</span><span class="is-chip-name">${schema.name}</span>`;
+      chip.innerHTML = `<span class="is-chip-code">${schema.code}</span>`;
       chip.addEventListener('click', () => isSelectSchema(schema.code));
       area.appendChild(chip);
     });
@@ -10409,13 +10409,22 @@ async function isRenderStaticAnim(canvas, sess) {
     if (!pts.length) return;
     ctx.strokeStyle = Array.isArray(stroke) ? '#1A1A1E' : (stroke.color || '#1A1A1E');
     ctx.lineWidth = Math.max(0.8, (Array.isArray(stroke) ? 2 : (stroke.size || 2)) * sc);
-    ctx.beginPath();
-    let started = false;
-    for (const p of pts) {
-      if (!started) { ctx.moveTo(p.x * sc, p.y * sc); started = true; }
-      else ctx.lineTo(p.x * sc, p.y * sc);
+    const n = pts.length;
+    if (n === 1) {
+      ctx.beginPath();
+      ctx.arc(pts[0].x * sc, pts[0].y * sc, ctx.lineWidth / 2, 0, Math.PI * 2);
+      ctx.fill();
+      return;
     }
-    if (started) ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x * sc, pts[0].y * sc);
+    for (let i = 0; i < n - 1; i++) {
+      const mx = (pts[i].x + pts[i+1].x) / 2 * sc;
+      const my = (pts[i].y + pts[i+1].y) / 2 * sc;
+      ctx.quadraticCurveTo(pts[i].x * sc, pts[i].y * sc, mx, my);
+    }
+    ctx.lineTo(pts[n-1].x * sc, pts[n-1].y * sc);
+    ctx.stroke();
   });
 }
 
@@ -10480,14 +10489,22 @@ async function isCardHoverStart(card, sess) {
       if (!pts.length) return;
       ctx.strokeStyle = Array.isArray(stroke) ? '#1A1A1E' : (stroke.color || '#1A1A1E');
       ctx.lineWidth = Math.max(0.8, ((Array.isArray(stroke) ? 2 : (stroke.size || 2)) * sc));
-      let started = false;
-      ctx.beginPath();
+      // Collect visible points up to tCur
+      const vis = [];
       for (const p of pts) {
         if (p.t > tCur) break;
-        const px = p.x * scaleX, py = p.y * scaleY;
-        if (!started) { ctx.moveTo(px, py); started = true; } else ctx.lineTo(px, py);
+        vis.push(p);
       }
-      if (started) ctx.stroke();
+      if (!vis.length) return;
+      ctx.beginPath();
+      ctx.moveTo(vis[0].x * scaleX, vis[0].y * scaleY);
+      for (let i = 0; i < vis.length - 1; i++) {
+        const mx = (vis[i].x + vis[i+1].x) / 2 * scaleX;
+        const my = (vis[i].y + vis[i+1].y) / 2 * scaleY;
+        ctx.quadraticCurveTo(vis[i].x * scaleX, vis[i].y * scaleY, mx, my);
+      }
+      ctx.lineTo(vis[vis.length-1].x * scaleX, vis[vis.length-1].y * scaleY);
+      ctx.stroke();
     });
     if (progress < 1) {
       rafId = requestAnimationFrame(frame);
@@ -10617,7 +10634,11 @@ function isDet_renderStrokes() {
       ctx.fillStyle = ctx.strokeStyle; ctx.fill();
     } else {
       ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-      for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].x, pts[i].y);
+      for (let i = 0; i < pts.length - 1; i++) {
+        const mx = (pts[i].x + pts[i+1].x) / 2, my = (pts[i].y + pts[i+1].y) / 2;
+        ctx.quadraticCurveTo(pts[i].x, pts[i].y, mx, my);
+      }
+      ctx.lineTo(pts[pts.length-1].x, pts[pts.length-1].y);
       ctx.stroke();
     }
   });
@@ -10636,7 +10657,11 @@ function isDet_renderStrokes() {
           ctx.beginPath(); ctx.arc(pts[0].x, pts[0].y, sz / 2, 0, Math.PI * 2); ctx.fill();
         } else {
           ctx.beginPath(); ctx.moveTo(pts[0].x, pts[0].y);
-          for (let j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+          for (let j = 0; j < pts.length - 1; j++) {
+            const mx = (pts[j].x + pts[j+1].x) / 2, my = (pts[j].y + pts[j+1].y) / 2;
+            ctx.quadraticCurveTo(pts[j].x, pts[j].y, mx, my);
+          }
+          ctx.lineTo(pts[pts.length-1].x, pts[pts.length-1].y);
           ctx.stroke();
         }
         ctx.restore();
@@ -11258,18 +11283,23 @@ function isTogglePlay() {
       const origColor = _animColor(stroke) || '#1A1A1E';
       const origSize  = _animSize(stroke)  || 2;
       if (!pts.length) return;
-      ctx.strokeStyle = origColor;
-      ctx.lineWidth   = origSize;
-      let started = false, active = false;
-      ctx.beginPath();
+      ctx.lineWidth = origSize;
+      const vis = [], active = pts.length > 0 && pts[pts.length - 1].t > tCur;
       for (const p of pts) {
-        if (p.t > tCur) { active = true; break; }
-        if (!started) { ctx.moveTo(p.x, p.y); started = true; } else ctx.lineTo(p.x, p.y);
+        if (p.t > tCur) break;
+        vis.push(p);
       }
-      if (started) {
-        if (active) ctx.strokeStyle = '#C0392B';
-        ctx.stroke();
+      if (!vis.length) return;
+      ctx.strokeStyle = (active && vis.length < pts.length) ? '#C0392B' : origColor;
+      ctx.beginPath();
+      ctx.moveTo(vis[0].x, vis[0].y);
+      for (let i = 0; i < vis.length - 1; i++) {
+        const mx = (vis[i].x + vis[i+1].x) / 2;
+        const my = (vis[i].y + vis[i+1].y) / 2;
+        ctx.quadraticCurveTo(vis[i].x, vis[i].y, mx, my);
       }
+      ctx.lineTo(vis[vis.length-1].x, vis[vis.length-1].y);
+      ctx.stroke();
     });
     const pe = document.getElementById('anim-progress');
     if (pe) pe.textContent = `${Math.round(progress * 100)}%`;
