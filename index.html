@@ -9440,8 +9440,8 @@ function buildISStudioSection() {
   // Init username display
   const ud = document.getElementById('is-username-display');
   if (ud) ud.textContent = isGetUsername();
-  // Load remote sessions in background
-  isLoadFromServer();
+  // Load remote sessions in background, then fetch any missing thumbnails from Worker
+  isLoadFromServer().then(() => ghFetchMissingThumbs());
   // On localhost: push all local sessions (with thumbnails) to Worker on startup
   if (!READONLY) {
     const local = isGetSessions();
@@ -9478,6 +9478,8 @@ async function isAutoSync() {
     isUpdateChipCounts();
     // On localhost: fetch full drawings + anim from Worker KV and save to disk
     if (!READONLY) ghArchiveNewDrawings(newSessions);
+    // Fetch thumbnails from Worker for any sessions that don't have them cached locally
+    ghFetchMissingThumbs();
   } catch {}
 }
 
