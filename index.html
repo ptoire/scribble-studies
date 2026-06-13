@@ -10422,12 +10422,27 @@ async function isRenderStaticAnim(canvas, sess) {
 const IS_ANIM_CACHE = {};
 async function isLoadAnim(session_id) {
   if (IS_ANIM_CACHE[session_id]) return IS_ANIM_CACHE[session_id];
-  const url = READONLY
-    ? (GH_WORKER_URL ? GH_WORKER_URL + '/anim/' + session_id : null)
-    : '/data/drawings/' + session_id + '_anim.json';
-  if (!url) return null;
+  if (READONLY) {
+    const url = GH_WORKER_URL ? GH_WORKER_URL + '/anim/' + session_id : null;
+    if (!url) return null;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) return null;
+      IS_ANIM_CACHE[session_id] = await r.json();
+      return IS_ANIM_CACHE[session_id];
+    } catch { return null; }
+  }
+  // Localhost: try local file first, fall back to Worker KV if missing
   try {
-    const r = await fetch(url);
+    const r = await fetch('/data/drawings/' + session_id + '_anim.json');
+    if (r.ok) {
+      IS_ANIM_CACHE[session_id] = await r.json();
+      return IS_ANIM_CACHE[session_id];
+    }
+  } catch {}
+  if (!GH_WORKER_URL) return null;
+  try {
+    const r = await fetch(GH_WORKER_URL + '/anim/' + session_id);
     if (!r.ok) return null;
     IS_ANIM_CACHE[session_id] = await r.json();
     return IS_ANIM_CACHE[session_id];
