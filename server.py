@@ -129,8 +129,13 @@ def _forward_to_worker(sessions, deleted=None):
 
 
 def _startup_sync():
-    """On startup: push any local sessions missing from the Worker."""
+    """On startup: bi-directional sync with Worker KV.
+    - Pushes local-only sessions up to the Worker.
+    - Pulls Worker-only sessions + any missing anim/PNG files down to disk.
+    Runs in a background thread so it does not block the server from starting.
+    """
     try:
+        # ── Fetch Worker session list ──────────────────────────────────────────
         req = urllib.request.Request(
             WORKER_URL + "/sessions",
             headers={"User-Agent": "kellogg-localhost/1.0"},
@@ -139,13 +144,56 @@ def _startup_sync():
             worker_sessions = json.loads(resp.read().decode())
         worker_ids = {s["session_id"] for s in worker_sessions if "session_id" in s}
 
-        local = _load_is_sessions()  # already strips full_dataurl
-        missing = [s for s in local if s.get("session_id") not in worker_ids]
-        if missing:
-            print(f"·  Syncing {len(missing)} local session(s) missing from Worker...")
-            _forward_to_worker(missing)
-        else:
-            print(f"·  Worker already up to date ({len(worker_ids)} sessions)")
+        local = _load_is_sessions()
+        local_ids = {s["session_id"] for s in local if s.get("session_id")}
+
+        # 1. Push local-only sessions to Worker
+        missing_from_worker = [s for s in local if s.get("session_id") not in worker_ids]
+        if missing_from_worker:
+            print(f"·  Pushing {len(missing_from_worker)} local session(s) to Worker...")
+            _forward_to_worker(missing_from_worker)
+
+        # 2. Pull sessions from Worker that are missing from the local JSON
+        new_from_worker = [s for s in worker_sessions if s.get("session_id") not in local_ids]
+        if new_from_worker:
+            print(f"·  Pulling {len(new_from_worker)} new session(s) from Worker...")
+            _save_is_sessions(new_from_worker)
+
+        # 3. Download missing anim JSON and PNG files for all Worker sessions
+        DRAWINGS_DIR.mkdir(parents=True, exist_ok=True)
+        all_ids = list(worker_ids)
+        missing_anim = [sid for sid in all_ids
+                        if not (DRAWINGS_DIR / f"{sid}_anim.json").exists()]
+        missing_png  = [sid for sid in all_ids
+                        if not (DRAWINGS_DIR / f"{sid}.png").exists()]
+
+        if missing_anim:
+            print(f"·  Downloading {len(missing_anim)} missing anim file(s)...")
+            for sid in missing_anim:
+                try:
+                    r = urllib.request.urlopen(WORKER_URL + "/anim/" + sid, timeout=30)
+                    anim_data = json.loads(r.read().decode())
+                    with open(DRAWINGS_DIR / f"{sid}_anim.json", "w", encoding="utf-8") as f:
+                        json.dump(anim_data, f, ensure_ascii=False)
+                except Exception as e:
+                    print(f"  · anim {sid[:28]}: {e}")
+
+        if missing_png:
+            print(f"·  Downloading {len(missing_png)} missing PNG drawing(s)...")
+            for sid in missing_png:
+                try:
+                    r = urllib.request.urlopen(WORKER_URL + "/drawing/" + sid, timeout=30)
+                    dataurl = r.read().decode()
+                    if dataurl and "," in dataurl:
+                        _, b64 = dataurl.split(",", 1)
+                        (DRAWINGS_DIR / f"{sid}.png").write_bytes(base64.b64decode(b64))
+                except Exception as e:
+                    print(f"  · png  {sid[:28]}: {e}")
+
+        print(f"✓  Sync complete — Worker: {len(worker_ids)} sessions | "
+              f"pulled: {len(new_from_worker)} | "
+              f"anim: {len(missing_anim)} | PNG: {len(missing_png)}")
+
     except Exception as e:
         print(f"·  Startup sync skipped: {e}")
 
