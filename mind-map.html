@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mind Map — Scribble Studies</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; background: #FFFFFF; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #0A0A0A; }
+
+    .header {
+      border-top: 4px solid #0A0A0A;
+      border-bottom: 1px solid #B0B0B0;
+      height: 42px;
+      padding: 0 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: #FFFFFF;
+    }
+    .header-site {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #0A0A0A;
+      text-decoration: none;
+    }
+    .header-site:hover { text-decoration: underline; }
+    .header-sep { color: #B0B0B0; font-size: 0.85rem; }
+    .header-title {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: #3A3A3A;
+      letter-spacing: 0.05em;
+    }
+
+    .pdf-frame {
+      display: block;
+      width: 100%;
+      height: calc(100vh - 42px);
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a class="header-site" href="./">Scribble Studies</a>
+    <span class="header-sep">—</span>
+    <span class="header-title">Mind Map</span>
+  </header>
+  <iframe
+    class="pdf-frame"
+    src="mind-map.pdf"
+    title="Mind Map"
+  ></iframe>
+</body>
+</html>

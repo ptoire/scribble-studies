@@ -3279,6 +3279,13 @@ function buildNav() {
     }
     nav.appendChild(btn);
   });
+
+  // ── Mind Map (opens dedicated page in new tab) ────────────────────────────
+  const mmBtn = document.createElement('button');
+  mmBtn.className = 'nav-btn';
+  mmBtn.textContent = '◎ Mind Map';
+  mmBtn.onclick = () => window.open('mind-map.html', '_blank');
+  nav.appendChild(mmBtn);
 }
 
 /* ═══════════════════════════════════════════════════════════
