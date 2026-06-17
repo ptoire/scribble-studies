@@ -1590,8 +1590,8 @@ body {
   --c-is-ground:   #3a3a3a;
   --c-is-temporal: #4a1a7a;
   /* Kellogg mapping strength colours */
-  --c-km-direct:      #0d5e3a;
-  --c-km-partial:     #b85000;
+  --c-km-direct:      #C14EC5;
+  --c-km-partial:     #1AACE8;
   --c-km-none:        #666;
 }
 .is-studio-section {
@@ -1771,8 +1771,8 @@ body {
   font-family:var(--font-mono); font-size:0.56rem; font-weight:700;
   padding:0.08em 0.32em; border-radius:2px; letter-spacing:0.06em; text-transform:uppercase;
 }
-.is-km-badge.direct  { background:rgba(13,94,58,0.12);   color:var(--c-km-direct); }
-.is-km-badge.partial { background:rgba(184,80,0,0.12);   color:var(--c-km-partial); }
+.is-km-badge.direct  { background:rgba(193,78,197,0.1);  color:var(--c-km-direct); }
+.is-km-badge.partial { background:rgba(26,172,232,0.1);  color:var(--c-km-partial); }
 .is-km-badge.none    { background:rgba(100,100,100,0.1); color:var(--c-km-none); }
 .is-disl-class { font-family:var(--font-mono); font-size:0.58rem; color:var(--c-text-tertiary); padding:0.1rem 0.3rem; border:1px solid var(--c-border-light); border-radius:2px; }
 .is-definition {
@@ -2279,8 +2279,8 @@ body {
   font-family:var(--font-mono); font-size:0.56rem; padding:0.1rem 0.3rem;
   border-radius:2px; border:1px solid rgba(255,255,255,0.1); color:var(--gm-dim);
 }
-#gm-map-container .tt-tag.direct  { border-color:rgba(109,186,138,0.35); color:#6dba8a; }
-#gm-map-container .tt-tag.partial { border-color:rgba(212,180,90,0.35);  color:#d4b45a; }
+#gm-map-container .tt-tag.direct  { border-color:rgba(193,78,197,0.45); color:#C14EC5; }
+#gm-map-container .tt-tag.partial { border-color:rgba(26,172,232,0.45);  color:#1AACE8; }
 #gm-tt .tt-imgs { display:flex; gap:0.3rem; margin-top:0.5rem; }
 #gm-map-container .tt-img { width:64px; height:48px; object-fit:contain; border-radius:2px; border:1px solid var(--gm-border); background:rgba(255,255,255,0.03); }
 
@@ -2360,8 +2360,8 @@ body {
   font-family:var(--font-mono); font-size:0.52rem; padding:0.15rem 0.35rem;
   border-radius:2px; white-space:nowrap; align-self:start; margin-top:0.05rem;
 }
-#gm-map-container .map-str.direct  { background:rgba(109,186,138,0.12); color:#6dba8a; border:1px solid rgba(109,186,138,0.25); }
-#gm-map-container .map-str.partial { background:rgba(212,180,90,0.12);  color:#d4b45a; border:1px solid rgba(212,180,90,0.25); }
+#gm-map-container .map-str.direct  { background:rgba(193,78,197,0.1);  color:#C14EC5; border:1px solid rgba(193,78,197,0.25); }
+#gm-map-container .map-str.partial { background:rgba(26,172,232,0.1);   color:#1AACE8; border:1px solid rgba(26,172,232,0.25); }
 #gm-map-container .map-rationale {
   font-family:var(--font-sans); font-size:0.76rem; font-weight:300;
   line-height:1.55; color:rgba(232,230,224,0.62);
@@ -2460,12 +2460,12 @@ body {
 #gm-table td.k-code:hover { color:var(--c-text); }
 #gm-table td.k-name { opacity:0.82; }
 #gm-table td.is-list { color:var(--c-text-secondary); }
-#gm-table td.is-list span.direct  { color:#2a7a4a; }
-#gm-table td.is-list span.partial { color:#8b6a00; }
+#gm-table td.is-list span.direct  { color:#C14EC5; }
+#gm-table td.is-list span.partial { color:#1AACE8; }
 #gm-table tr:hover td { background:var(--c-bg-warm); }
 .gm-tbl-chip { display:inline-flex; align-items:center; gap:0.2rem; padding:0.1rem 0.35rem 0.1rem 0.4rem; border-radius:3px; margin:0.1rem 0.15rem 0.1rem 0; background:var(--c-bg-warm); border:1px solid var(--c-border-light); font-family:var(--font-mono); font-size:0.6rem; }
-.gm-tbl-chip.direct  { color:#2a7a4a; border-color:rgba(42,122,74,0.3); background:rgba(42,122,74,0.06); }
-.gm-tbl-chip.partial { color:#8b6a00; border-color:rgba(139,106,0,0.3); background:rgba(139,106,0,0.06); }
+.gm-tbl-chip.direct  { color:#C14EC5; border-color:rgba(193,78,197,0.35); background:rgba(193,78,197,0.07); }
+.gm-tbl-chip.partial { color:#1AACE8; border-color:rgba(26,172,232,0.35);  background:rgba(26,172,232,0.07); }
 .gm-tbl-chip-del { background:none; border:none; color:inherit; opacity:0.5; cursor:pointer; padding:0 0.1rem; font-size:0.7rem; line-height:1; }
 .gm-tbl-chip-del:hover { opacity:1; }
 .gm-tbl-add-wrap { display:inline-flex; align-items:center; gap:0.2rem; margin-left:0.3rem; vertical-align:middle; }
@@ -2588,11 +2588,11 @@ body {
 #is-ann-panel { background: rgba(255,255,255,0.97); border-left-color: var(--c-border-light); }
 #is-det-kpicker { background: rgba(255,255,255,0.97); border-left-color: var(--c-border-light); }
 
-/* Correspondence table mapping strength — greyscale */
-#gm-table td.is-list span.direct  { color: var(--c-text); }
-#gm-table td.is-list span.partial { color: var(--c-text-secondary); }
-.gm-tbl-chip.direct  { color: var(--c-text); border-color: var(--c-border-light); background: var(--c-bg-warm); }
-.gm-tbl-chip.partial { color: var(--c-text-secondary); border-color: var(--c-border-light); background: var(--c-bg-warm); }
+/* Correspondence table mapping strength — vivid pink-violet / shock blue */
+#gm-table td.is-list span.direct  { color: #C14EC5; }
+#gm-table td.is-list span.partial { color: #1AACE8; }
+.gm-tbl-chip.direct  { color: #C14EC5; border-color: rgba(193,78,197,0.35); background: rgba(193,78,197,0.07); }
+.gm-tbl-chip.partial { color: #1AACE8; border-color: rgba(26,172,232,0.35);  background: rgba(26,172,232,0.07); }
 
 /* Ann meta mine (was blue) */
 .ann-meta-mine { color: var(--c-text); }
@@ -11567,7 +11567,7 @@ function initGMSection() {
   function gmProj(x, y, z) { return gmMode==='3d' ? gmProj3d(x,y,z) : gmProj2d(x,y,z); }
 
   // Render
-  const GM_SCOL = { direct:[109,186,138], partial:[212,180,90], none:[100,100,120] };
+  const GM_SCOL = { direct:[193,78,197], partial:[26,172,232], none:[100,100,120] };
 
   function gmRender() {
     const W = gmCanvas.width, H = gmCanvas.height;
@@ -14134,8 +14134,8 @@ function cvGridRefreshVisible() {
       <div class="leg-section-title">Connections</div>
       <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(200,184,154,0.5)"></div><span class="leg-edge-lbl">IS hierarchy (parent&rarr;child)</span></div>
       <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(160,160,180,0.3);border-top:1px dashed rgba(160,160,180,0.4)"></div><span class="leg-edge-lbl">IS related</span></div>
-      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(109,186,138,0.6)"></div><span class="leg-edge-lbl">Direct Kellogg match</span></div>
-      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(212,180,90,0.5)"></div><span class="leg-edge-lbl">Partial Kellogg match</span></div>
+      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(193,78,197,0.75)"></div><span class="leg-edge-lbl">Direct Kellogg match</span></div>
+      <div class="leg-edge-row"><div class="leg-edge-line" style="background:rgba(26,172,232,0.75)"></div><span class="leg-edge-lbl">Partial Kellogg match</span></div>
     </div>
   </div>
 
@@ -14165,7 +14165,7 @@ function cvGridRefreshVisible() {
     <button id="gm-tbl-edit-btn" class="gm-edit-toggle" onclick="window.gmToggleTableEdit()" style="display:none">&#9998; Edit</button>
   </div>
   <div class="gm-tbl-subtitle">All Kellogg categories with their Image Schema correspondences. Sorted by Kellogg group.</div>
-  <div class="gm-tbl-subtitle" style="margin-top:-0.7rem;margin-bottom:1.2rem"><span style="color:#6dba8a;font-weight:600">Direct</span>: the form enacts this schema as its primary structural logic. <span style="color:#d4b45a;font-weight:600">Partial</span>: the form shares some but not all features of the schema.</div>
+  <div class="gm-tbl-subtitle" style="margin-top:-0.7rem;margin-bottom:1.2rem"><span style="color:#C14EC5;font-weight:600">Direct</span>: the form enacts this schema as its primary structural logic. <span style="color:#1AACE8;font-weight:600">Partial</span>: the form shares some but not all features of the schema.</div>
   <div id="gm-table-wrap">
     <table id="gm-table">
       <thead><tr>
