@@ -1259,5 +1259,19 @@
     "total_strokes": 27,
     "total_points": 1096,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_SOURCE_PATH_GOAL_1781818599240",
+    "schema_code": "SOURCE_PATH_GOAL",
+    "schema_name": "Source-Path-Goal",
+    "schema_group": "Path Family",
+    "timestamp": "2026-06-18T21:36:44.281Z",
+    "author": {
+      "username": "Author",
+      "created_at": "2026-06-18T21:36:44.282Z"
+    },
+    "total_strokes": 13,
+    "total_points": 699,
+    "stroke_annotations": []
   }
 ]
