@@ -1245,5 +1245,19 @@
     "total_strokes": 1,
     "total_points": 93,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_PATH_1781797339252",
+    "schema_code": "PATH",
+    "schema_name": "Path",
+    "schema_group": "Spatial Primitive",
+    "timestamp": "2026-06-18T15:42:20.941Z",
+    "author": {
+      "username": "Author",
+      "created_at": "2026-06-18T15:42:20.941Z"
+    },
+    "total_strokes": 27,
+    "total_points": 1096,
+    "stroke_annotations": []
   }
 ]
