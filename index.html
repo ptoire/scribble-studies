@@ -3154,11 +3154,17 @@ async function init() {
         localStorage.setItem('maurer_annotations', JSON.stringify({...srv.maurer, ...loc}));
       }
       if (srv.kellogg) {
-        // Merge at startup: local overrides server (local is always more recent).
-        // ANN_SERVER_KELLOGG becomes the single source of truth for annStore().
-        const loc = JSON.parse(localStorage.getItem(ANN_KEY) || '{}');
-        ANN_SERVER_KELLOGG = { ...srv.kellogg, ...loc };
-        try { localStorage.setItem(ANN_KEY, JSON.stringify(ANN_SERVER_KELLOGG)); } catch(e) {}
+        if (READONLY) {
+          // Public site: user cannot edit, so server data is always authoritative.
+          // Never merge localStorage here — stale local entries would overwrite
+          // spatial_annotations that were saved after the local snapshot was taken.
+          ANN_SERVER_KELLOGG = srv.kellogg;
+        } else {
+          // Localhost: local storage wins (more recent edits not yet pushed to server).
+          const loc = JSON.parse(localStorage.getItem(ANN_KEY) || '{}');
+          ANN_SERVER_KELLOGG = { ...srv.kellogg, ...loc };
+          try { localStorage.setItem(ANN_KEY, JSON.stringify(ANN_SERVER_KELLOGG)); } catch(e) {}
+        }
       }
     }
   } catch(e) {}
