@@ -198080,6 +198080,21 @@
       "updated_at": "2026-07-07T14:27:10.739Z"
     },
     "72e21304b4e5589875148c6aec7d7b95e89d489473dde6aade0a4cf690419193": {
+      "human_where": [
+        "K-BB"
+      ],
+      "human_primary": [
+        "K-H",
+        "K-HE"
+      ],
+      "human_secondary": [
+        "K-ACD",
+        "K-ACL",
+        "K-ACM",
+        "K-CF",
+        "K-DC",
+        "K-HD"
+      ],
       "spatial_annotations": [
         {
           "id": "sa_1783432668779_76",
@@ -211443,19 +211458,30 @@
           ],
           "label": "K-HD",
           "label_type": "kellogg"
+        },
+        {
+          "id": "sa_1783449743983_924",
+          "strokes": [
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.28875,
+                "y": 0.2691194089456869,
+                "w": 0.36000000000000004,
+                "h": 0.33865814696485624,
+                "cx": 0.46875,
+                "cy": 0.43844848242811507
+              }
+            }
+          ],
+          "label": "K-BB",
+          "label_type": "where"
         }
       ],
-      "human_secondary": [
-        "K-ACM",
-        "K-CF",
-        "K-ACD",
-        "K-ACL",
-        "K-DC",
-        "K-HD"
-      ],
-      "human_where": [
-        "K-BB"
-      ]
+      "status": "confirmed",
+      "updated_at": "2026-07-07T18:42:46.382Z"
     },
     "8621e85b5da8d5e52c173421bfc39023900b3ed58a7cf756f0c34d2a363b0b83": {
       "human_where": [
