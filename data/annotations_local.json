@@ -342519,6 +342519,14 @@
       "updated_at": "2026-07-07T19:42:04.700Z"
     },
     "80e6aa8156a312d697935a93fea7e18fda400f0ba482ba6d522f4a0e1d04f6dd": {
+      "human_where": [],
+      "human_primary": [
+        "K-A",
+        "K-AA",
+        "K-AC",
+        "K-ACB"
+      ],
+      "human_secondary": [],
       "spatial_annotations": [
         {
           "id": "sa_1783453335649_420",
@@ -342914,10 +342922,12 @@
               "soft": false
             }
           ],
-          "label": null,
-          "label_type": null
+          "label": "K-ACB",
+          "label_type": "kellogg"
         }
-      ]
+      ],
+      "status": "confirmed",
+      "updated_at": "2026-07-07T19:42:43.958Z"
     }
   }
 }
