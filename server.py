@@ -68,28 +68,36 @@ def _do_push():
                 ["git", "commit", "-m", "auto: sync annotations + IS sessions"],
                 cwd=SITE_DIR, capture_output=True
             )
-            result = subprocess.run(
+
+        # Push if there are new commits OR commits that failed to push last time
+        ahead = subprocess.run(
+            ["git", "log", "origin/main..HEAD", "--oneline"],
+            cwd=SITE_DIR, capture_output=True, text=True
+        )
+        if not ahead.stdout.strip():
+            print("·  No changes to push")
+            return
+
+        result = subprocess.run(
+            ["git", "push", "origin", "HEAD:main"],
+            cwd=SITE_DIR, capture_output=True, text=True
+        )
+        if result.returncode == 0:
+            print("✓  Data pushed to GitHub Pages")
+        else:
+            print("·  Push rejected, pulling remote changes first...")
+            subprocess.run(
+                ["git", "pull", "--rebase", "--autostash", "origin", "main"],
+                cwd=SITE_DIR, capture_output=True
+            )
+            result2 = subprocess.run(
                 ["git", "push", "origin", "HEAD:main"],
                 cwd=SITE_DIR, capture_output=True, text=True
             )
-            if result.returncode == 0:
-                print("✓  Data pushed to GitHub Pages")
+            if result2.returncode == 0:
+                print("✓  Data pushed to GitHub Pages (after pull)")
             else:
-                print("·  Push rejected, pulling remote changes first...")
-                subprocess.run(
-                    ["git", "pull", "--rebase", "--autostash", "origin", "main"],
-                    cwd=SITE_DIR, capture_output=True
-                )
-                result2 = subprocess.run(
-                    ["git", "push", "origin", "HEAD:main"],
-                    cwd=SITE_DIR, capture_output=True, text=True
-                )
-                if result2.returncode == 0:
-                    print("✓  Data pushed to GitHub Pages (after pull)")
-                else:
-                    print(f"✗  Push failed: {result2.stderr.strip()}")
-        else:
-            print("·  No changes to push")
+                print(f"✗  Push failed: {result2.stderr.strip()}")
     except Exception as e:
         print(f"✗  Push error: {e}")
 
@@ -206,6 +214,9 @@ def _startup_sync():
         print(f"✓  Sync complete — Worker: {len(worker_ids)} sessions | "
               f"pulled: {len(new_from_worker)} | "
               f"anim: {len(missing_anim)} | PNG: {len(missing_png)}")
+
+        # Push any local annotation changes that didn't make it out last session
+        schedule_push()
 
     except Exception as e:
         print(f"·  Startup sync skipped: {e}")
