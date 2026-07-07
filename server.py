@@ -21,6 +21,7 @@ import os
 import re
 import subprocess
 import threading
+import urllib.error
 import urllib.request
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
@@ -76,7 +77,7 @@ def _do_push():
             else:
                 print("·  Push rejected, pulling remote changes first...")
                 subprocess.run(
-                    ["git", "pull", "--rebase", "origin", "main"],
+                    ["git", "pull", "--rebase", "--autostash", "origin", "main"],
                     cwd=SITE_DIR, capture_output=True
                 )
                 result2 = subprocess.run(
@@ -171,10 +172,16 @@ def _startup_sync():
             print(f"·  Downloading {len(missing_anim)} missing anim file(s)...")
             for sid in missing_anim:
                 try:
-                    r = urllib.request.urlopen(WORKER_URL + "/anim/" + sid, timeout=30)
+                    req = urllib.request.Request(
+                        WORKER_URL + "/anim/" + sid,
+                        headers={"User-Agent": "kellogg-localhost/1.0"})
+                    r = urllib.request.urlopen(req, timeout=30)
                     anim_data = json.loads(r.read().decode())
                     with open(DRAWINGS_DIR / f"{sid}_anim.json", "w", encoding="utf-8") as f:
                         json.dump(anim_data, f, ensure_ascii=False)
+                except urllib.error.HTTPError as e:
+                    if e.code != 404:
+                        print(f"  · anim {sid[:28]}: HTTP {e.code}")
                 except Exception as e:
                     print(f"  · anim {sid[:28]}: {e}")
 
@@ -182,11 +189,17 @@ def _startup_sync():
             print(f"·  Downloading {len(missing_png)} missing PNG drawing(s)...")
             for sid in missing_png:
                 try:
-                    r = urllib.request.urlopen(WORKER_URL + "/drawing/" + sid, timeout=30)
+                    req = urllib.request.Request(
+                        WORKER_URL + "/drawing/" + sid,
+                        headers={"User-Agent": "kellogg-localhost/1.0"})
+                    r = urllib.request.urlopen(req, timeout=30)
                     dataurl = r.read().decode()
                     if dataurl and "," in dataurl:
                         _, b64 = dataurl.split(",", 1)
                         (DRAWINGS_DIR / f"{sid}.png").write_bytes(base64.b64decode(b64))
+                except urllib.error.HTTPError as e:
+                    if e.code != 404:
+                        print(f"  · png  {sid[:28]}: HTTP {e.code}")
                 except Exception as e:
                     print(f"  · png  {sid[:28]}: {e}")
 
