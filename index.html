@@ -4719,12 +4719,13 @@ function annBuildPanel(item, ann) {
     const dep = ANN_DEPRECATED_CODES[c];
     const displayCode = dep || c;
     const displayName = (ANN_INDEX_DATA.label_names || {})[displayCode] || '';
-    return `<span class="ann-tag" style="opacity:0.7;cursor:default;" title="${displayName}">${displayCode}</span>`;
+    const cursor = READONLY ? 'cursor:default' : 'cursor:pointer';
+    return `<span class="ann-tag" data-code="${displayCode}" data-prefill="1" style="opacity:0.7;${cursor};" title="${READONLY ? displayName : (displayName ? displayName + ' · click to assign to selected spatial label' : 'click to assign to selected spatial label')}">${displayCode}</span>`;
   }).join('');
   const prefillRow = (item.prefill_labels || []).length
     ? `<div class="ann-section" style="background:var(--c-bg-warm);">
-         <div class="ann-section-label">PREFILL · Original label(s)<span class="ann-hint">from the archive, read-only</span></div>
-         <div class="ann-tags">${prefillChips}</div>
+         <div class="ann-section-label">PREFILL · Original label(s)<span class="ann-hint">from the archive, read-only${READONLY ? '' : ' · click to assign to spatial label'}</span></div>
+         <div class="ann-tags" id="ann-prefill-tags">${prefillChips}</div>
          ${depNotice}
        </div>` : '';
 
@@ -4749,6 +4750,27 @@ function annBuildPanel(item, ann) {
 
   annAttach('ann-where-tags', 'sel-where', false);
   ANN_NON_B.forEach(l => annAttach(`ann-sg-${l}`, 'sel-secondary', true));
+
+  // Prefill chips: assign-only (never deselect) to the active spatial annotation
+  if (!READONLY) {
+    const prefillContainer = document.getElementById('ann-prefill-tags');
+    if (prefillContainer) {
+      prefillContainer.querySelectorAll('.ann-tag[data-prefill]').forEach(tag => {
+        tag.addEventListener('click', () => {
+          const code = tag.dataset.code;
+          if (!code || !saSelectedId) return;
+          const a = saAnnotations.find(x => x.id === saSelectedId);
+          if (!a) return;
+          // Assign label — never deassign (prefill labels are locked in)
+          if (a.label !== code) {
+            saAssignLabel(code, 'kellogg');
+            tag.style.outline = '2px solid #C0392B';
+            setTimeout(() => { tag.style.outline = ''; }, 600);
+          }
+        });
+      });
+    }
+  }
 
   // Hover tooltips: active in both readonly and editable mode
   ['ann-where-tags', ...ANN_NON_B.map(l => `ann-sg-${l}`)]
