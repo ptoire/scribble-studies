@@ -4,12 +4,12 @@ server.py — local dev server for Scribble Studies
 Serves the site + segmented images; auto-pushes to GitHub Pages after saves.
 
 Endpoints:
-  GET  /api/annotations       → annotations_local.json
-  POST /api/annotations       → save + schedule push
-  GET  /api/k_to_is           → k_to_is_local.json
-  POST /api/k_to_is           → save
-  GET  /api/is_sessions       → is_sessions_local.json  (skeleton only, no images)
-  POST /api/is_sessions       → merge sessions by session_id, schedule push
+  GET  /api/annotations       -> annotations_local.json
+  POST /api/annotations       -> save + schedule push
+  GET  /api/k_to_is           -> k_to_is_local.json
+  POST /api/k_to_is           -> save
+  GET  /api/is_sessions       -> is_sessions_local.json  (skeleton only, no images)
+  POST /api/is_sessions       -> merge sessions by session_id, schedule push
 
 Run:
     python server.py
@@ -296,7 +296,34 @@ class Handler(SimpleHTTPRequestHandler):
         return self.rfile.read(length)
 
     def do_GET(self):
-        if self.path == "/api/is_sessions":
+        if self.path == "/api/rescue":
+            html = (
+                "<!doctype html><html><head><meta charset='utf-8'>"
+                "<title>Rescue</title></head><body>"
+                "<h2 id='s'>Reading localStorage...</h2><script>"
+                "(async()=>{"
+                "const el=document.getElementById('s');"
+                "const raw=localStorage.getItem('kellogg_full_annotations');"
+                "if(!raw){el.textContent='Nothing in localStorage';return;}"
+                "let k;try{k=JSON.parse(raw);}catch(e){el.textContent='Parse error:'+e;return;}"
+                "const n=Object.keys(k).length;"
+                "el.textContent='Found '+n+' entries, saving...';"
+                "const m=JSON.parse(localStorage.getItem('maurer_annotations')||'{}');"
+                "const r=await fetch('/api/annotations',{method:'POST',"
+                "headers:{'Content-Type':'application/json'},"
+                "body:JSON.stringify({kellogg:k,maurer:m})});"
+                "const d=await r.json();"
+                "if(d.ok){el.textContent='SAVED '+n+' entries OK';el.style.color='green';}"
+                "else{el.textContent='Error:'+JSON.stringify(d);el.style.color='red';}"
+                "})();</script></body></html>"
+            ).encode("utf-8")
+            self.send_response(200)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(html)))
+            self.end_headers()
+            self.wfile.write(html)
+
+        elif self.path == "/api/is_sessions":
             try:
                 sessions = _load_is_sessions()
                 self._send_json({"sessions": sessions})
@@ -368,6 +395,33 @@ class Handler(SimpleHTTPRequestHandler):
             except Exception as e:
                 self._send_json({"error": str(e)}, 500)
 
+        elif self.path == "/api/annotation":
+            # Save a single kellogg entry by merging it into the existing file.
+            # Much smaller payload than the full POST — avoids connection aborts.
+            try:
+                data = json.loads(self._read_body())
+                sha   = data.get("sha")
+                entry = data.get("entry")
+                if not sha or entry is None:
+                    self._send_json({"error": "missing sha or entry"}, 400)
+                    return
+                existing = {}
+                if ANNOT_FILE.exists():
+                    try:
+                        existing = json.loads(ANNOT_FILE.read_text(encoding="utf-8"))
+                    except Exception:
+                        pass
+                if "kellogg" not in existing:
+                    existing["kellogg"] = {}
+                existing["kellogg"][sha] = entry
+                ANNOT_FILE.parent.mkdir(exist_ok=True)
+                with open(ANNOT_FILE, "w", encoding="utf-8") as f:
+                    json.dump(existing, f, ensure_ascii=False, indent=2)
+                self._send_json({"ok": True})
+                schedule_push()
+            except Exception as e:
+                self._send_json({"error": str(e)}, 500)
+
         elif self.path == "/api/section_intros":
             try:
                 data = json.loads(self._read_body())
@@ -399,8 +453,8 @@ class Handler(SimpleHTTPRequestHandler):
 
 
 os.chdir(SITE_DIR)
-print(f"Scribble Studies  →  http://localhost:{PORT}")
-print(f"Segmented images  →  {SEGMENTED_DIR}")
+print(f"Scribble Studies  ->  http://localhost:{PORT}")
+print(f"Segmented images  ->  {SEGMENTED_DIR}")
 print("Auto-push to GitHub Pages 15s after last save (annotations + IS sessions)")
 print("Ctrl+C to stop\n")
 threading.Thread(target=_startup_sync, daemon=True).start()

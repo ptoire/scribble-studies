@@ -4065,11 +4065,12 @@ function annStore() {
 function annStoreSet(s) {
   if (READONLY) return;
   try { localStorage.setItem(ANN_KEY, JSON.stringify(s)); } catch(e) {
-    console.warn('localStorage quota exceeded — relying on server save only', e.name);
+    console.warn('localStorage quota exceeded', e.name);
   }
-  // Keep in-memory reference current so annStore() reads correct data after navigation
   ANN_SERVER_KELLOGG = s;
-  // Pass s directly: if localStorage write failed, the in-memory s still has the new data
+  // Note: callers that go through annSet() already POST the single entry.
+  // annStoreSet is kept for cases like saSyncStore/annSetResume that update
+  // non-annotation fields; those are lightweight and can use the full POST.
   postAnnotationsToServer(s);
 }
 function postAnnotationsToServer(kelloggOverride) {
@@ -4100,8 +4101,21 @@ function annGet(sha) {
 
 function annSet(sha, data) {
   const store = annStore();
-  store[sha] = { ...data, updated_at: new Date().toISOString() };
-  annStoreSet(store);
+  const entry = { ...data, updated_at: new Date().toISOString() };
+  store[sha] = entry;
+  // Update in-memory store and localStorage cache
+  ANN_SERVER_KELLOGG = store;
+  try { localStorage.setItem(ANN_KEY, JSON.stringify(store)); } catch(e) {
+    console.warn('localStorage quota exceeded', e.name);
+  }
+  // POST only this single entry — tiny payload, never aborted mid-send
+  if (!READONLY) {
+    fetch('/api/annotation', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({sha, entry})
+    }).catch(() => {});
+  }
 }
 
 function annCountDone() {
