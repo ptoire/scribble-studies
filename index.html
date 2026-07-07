@@ -3160,9 +3160,20 @@ async function init() {
           // spatial_annotations that were saved after the local snapshot was taken.
           ANN_SERVER_KELLOGG = srv.kellogg;
         } else {
-          // Localhost: local storage wins (more recent edits not yet pushed to server).
+          // Localhost: merge entry-by-entry using updated_at to decide winner.
+          // Local wins only if its timestamp is strictly newer than the server's.
+          // This prevents stale localStorage entries (e.g. from a failed quota save)
+          // from overwriting server entries that have fresher data (spatial_annotations).
           const loc = JSON.parse(localStorage.getItem(ANN_KEY) || '{}');
-          ANN_SERVER_KELLOGG = { ...srv.kellogg, ...loc };
+          const merged = { ...srv.kellogg };
+          for (const sha of Object.keys(loc)) {
+            const localEntry  = loc[sha];
+            const serverEntry = srv.kellogg[sha];
+            if (!serverEntry || (localEntry.updated_at || '') > (serverEntry.updated_at || '')) {
+              merged[sha] = localEntry;
+            }
+          }
+          ANN_SERVER_KELLOGG = merged;
           try { localStorage.setItem(ANN_KEY, JSON.stringify(ANN_SERVER_KELLOGG)); } catch(e) {}
         }
       }
