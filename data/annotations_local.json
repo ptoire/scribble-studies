@@ -328867,6 +328867,7 @@
         "K-HE"
       ],
       "human_secondary": [
+        "K-ACG",
         "K-CF",
         "K-DC",
         "K-FA"
@@ -335868,12 +335869,12 @@
               "soft": false
             }
           ],
-          "label": null,
-          "label_type": null
+          "label": "K-ACG",
+          "label_type": "kellogg"
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T19:15:18.365Z"
+      "updated_at": "2026-07-07T19:15:51.125Z"
     }
   }
 }
