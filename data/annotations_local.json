@@ -339939,7 +339939,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -339992,7 +339992,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340141,7 +340141,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340218,7 +340218,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340271,7 +340271,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340352,7 +340352,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340421,7 +340421,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340530,7 +340530,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340583,7 +340583,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340656,7 +340656,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340797,7 +340797,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340874,7 +340874,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -340927,7 +340927,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341048,7 +341048,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341157,7 +341157,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341266,7 +341266,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341427,7 +341427,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341472,7 +341472,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341529,7 +341529,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341626,7 +341626,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341763,7 +341763,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -341856,7 +341856,7 @@
               "soft": false
             }
           ],
-          "label": "K-A",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -342177,7 +342177,7 @@
               "soft": false
             }
           ],
-          "label": "K-ACE",
+          "label": "K-ACA",
           "label_type": "kellogg"
         },
         {
@@ -342516,7 +342516,7 @@
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T19:42:04.700Z"
+      "updated_at": "2026-07-07T19:44:02.990Z"
     },
     "80e6aa8156a312d697935a93fea7e18fda400f0ba482ba6d522f4a0e1d04f6dd": {
       "human_where": [],
