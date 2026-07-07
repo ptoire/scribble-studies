@@ -86,6 +86,10 @@ def _do_push():
             print("✓  Data pushed to GitHub Pages")
         else:
             print("·  Push rejected, pulling remote changes first...")
+            import shutil
+            rebase_dir = SITE_DIR / ".git" / "rebase-merge"
+            if rebase_dir.exists():
+                shutil.rmtree(rebase_dir, ignore_errors=True)
             subprocess.run(
                 ["git", "pull", "--rebase", "--autostash", "origin", "main"],
                 cwd=SITE_DIR, capture_output=True
