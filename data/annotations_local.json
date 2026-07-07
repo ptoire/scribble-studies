@@ -328861,7 +328861,9 @@
       "updated_at": "2026-07-07T19:13:26.801Z"
     },
     "96bc6653666134cd3dbad2344bfd92c04deaebddea2fd93b5e7cb1ddc56b380d": {
-      "human_where": [],
+      "human_where": [
+        "K-BB"
+      ],
       "human_primary": [
         "K-H",
         "K-HE"
@@ -335871,10 +335873,30 @@
           ],
           "label": "K-ACG",
           "label_type": "kellogg"
+        },
+        {
+          "id": "sa_1783451774340_976",
+          "strokes": [
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.45375,
+                "y": 0.23854845276872963,
+                "w": 0.32000000000000006,
+                "h": 0.4820846905537459,
+                "cx": 0.61375,
+                "cy": 0.47959079804560256
+              }
+            }
+          ],
+          "label": "K-BB",
+          "label_type": "where"
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T19:15:51.125Z"
+      "updated_at": "2026-07-07T19:16:29.018Z"
     }
   }
 }
