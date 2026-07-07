@@ -473098,7 +473098,9 @@
       "updated_at": "2026-07-07T21:41:31.341Z"
     },
     "7777acf3793763922ec17c6c7a1502474de1f22ceec8a89bb9c5cedcbdaac0bb": {
-      "human_where": [],
+      "human_where": [
+        "K-BB"
+      ],
       "human_primary": [
         "K-A",
         "K-AA",
@@ -480569,13 +480571,35 @@
           ],
           "label": "K-ACO",
           "label_type": "kellogg"
+        },
+        {
+          "id": "sa_1783460510986_12",
+          "strokes": [
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.10875,
+                "y": 0.018965126811594204,
+                "w": 0.7525,
+                "h": 0.9456521739130435,
+                "cx": 0.485,
+                "cy": 0.49179121376811596
+              }
+            }
+          ],
+          "label": "K-BB",
+          "label_type": "where"
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T21:15:30.441Z"
+      "updated_at": "2026-07-07T21:41:54.608Z"
     },
     "b4287b284ae56d88c15a277b3509e202d1d031a11976a765d2c45b55aea6ce7e": {
-      "human_where": [],
+      "human_where": [
+        "K-BF"
+      ],
       "human_primary": [
         "K-A",
         "K-AA",
@@ -485849,13 +485873,48 @@
           ],
           "label": "K-ACK",
           "label_type": "kellogg"
+        },
+        {
+          "id": "sa_1783460519197_724",
+          "strokes": [
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.52375,
+                "y": 0.2222630033557047,
+                "w": 0.30499999999999994,
+                "h": 0.6812080536912751,
+                "cx": 0.67625,
+                "cy": 0.5628670302013423
+              }
+            },
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.18125,
+                "y": 0.47394085570469796,
+                "w": 0.10750000000000001,
+                "h": 0.42617449664429535,
+                "cx": 0.235,
+                "cy": 0.6870281040268457
+              }
+            }
+          ],
+          "label": "K-BF",
+          "label_type": "where"
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T21:17:04.224Z"
+      "updated_at": "2026-07-07T21:42:04.118Z"
     },
     "439e54fe32ca61c285bb04357c9032dc694000375fbab2c0d5e61ebd1cad5544": {
-      "human_where": [],
+      "human_where": [
+        "K-BD"
+      ],
       "human_primary": [
         "K-A",
         "K-AA",
@@ -487971,10 +488030,66 @@
           ],
           "label": "K-ACM",
           "label_type": "kellogg"
+        },
+        {
+          "id": "sa_1783460528410_517",
+          "strokes": [
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.18375,
+                "y": 0.14957016728624536,
+                "w": 0.225,
+                "h": 0.6654275092936802,
+                "cx": 0.29625,
+                "cy": 0.4822839219330855
+              }
+            }
+          ],
+          "label": "K-BD",
+          "label_type": "where"
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T21:24:34.969Z"
+      "updated_at": "2026-07-07T21:42:12.667Z"
+    },
+    "54f781c2b37682590aa074058b1f6348c820f55dcd97a0ab079b472998a8a65d": {
+      "human_where": [
+        "K-BB"
+      ],
+      "human_primary": [
+        "K-A",
+        "K-AA",
+        "K-AC",
+        "K-ACQ"
+      ],
+      "human_secondary": [],
+      "spatial_annotations": [
+        {
+          "id": "sa_1783460537795_340",
+          "strokes": [
+            {
+              "pts": [],
+              "size": 20,
+              "soft": true,
+              "placement_area": {
+                "x": 0.27375,
+                "y": 0.3201108870967742,
+                "w": 0.415,
+                "h": 0.3709677419354838,
+                "cx": 0.48124999999999996,
+                "cy": 0.5055947580645161
+              }
+            }
+          ],
+          "label": "K-BB",
+          "label_type": "where"
+        }
+      ],
+      "status": "confirmed",
+      "updated_at": "2026-07-07T21:42:26.709Z"
     }
   }
 }
