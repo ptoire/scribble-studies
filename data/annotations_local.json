@@ -328872,6 +328872,7 @@
         "K-ACG",
         "K-CF",
         "K-DC",
+        "K-DF",
         "K-FA"
       ],
       "spatial_annotations": [
@@ -336382,12 +336383,12 @@
               "soft": false
             }
           ],
-          "label": null,
-          "label_type": null
+          "label": "K-DF",
+          "label_type": "kellogg"
         }
       ],
       "status": "confirmed",
-      "updated_at": "2026-07-07T19:16:29.018Z"
+      "updated_at": "2026-07-07T19:18:51.186Z"
     }
   }
 }
