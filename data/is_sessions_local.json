@@ -1273,5 +1273,19 @@
     "total_strokes": 13,
     "total_points": 699,
     "stroke_annotations": []
+  },
+  {
+    "session_id": "IS_FULL_EMPTY_1786912597331",
+    "schema_code": "FULL_EMPTY",
+    "schema_name": "Full-Empty",
+    "schema_group": "Containment Family",
+    "timestamp": "2026-08-16T20:36:42.364Z",
+    "author": {
+      "username": "anon_29k991",
+      "created_at": "2026-08-16T20:36:42.364Z"
+    },
+    "total_strokes": 3,
+    "total_points": 457,
+    "stroke_annotations": []
   }
 ]
