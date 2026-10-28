@@ -1315,6 +1315,12 @@
     "location": "Genoa, Italy",
     "total_strokes": 23,
     "total_points": 23,
-    "stroke_annotations": []
+    "stroke_annotations": [],
+    "stroke_kellogg": {
+      "5": [
+        "K-A-01"
+      ]
+    },
+    "modified_at": "2026-10-28T07:36:27.968Z"
   }
 ]
